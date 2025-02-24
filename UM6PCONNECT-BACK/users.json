@@ -1,0 +1,25 @@
+[
+    {
+      "Nom": "EL Khammal",
+      "Prenom": "Wiam",
+      "Nationalite": "Morocco",
+      "Pole": "ST-Sciences & Technologies",
+      "Departement": "ACER CoE-Applied Chemistry & Engineering Research Centre of Excellence",
+      "Email": "wiam.el-khammal@esi.ac.ma",
+      "Status": "Pending",
+      "role": "postdoc",
+      "emailsent": false
+    },
+    {
+      "Nom": "EL Khammal",
+      "Prenom": "Wiam",
+      "Nationalite": "Morocco",
+      "Pole": "ST-Sciences & Technologies",
+      "Departement": "ACER CoE-Applied Chemistry & Engineering Research Centre of Excellence",
+      "Email": "khadouja19wiam@gmail.com",
+      "Status": "Pending",
+      "role": "professeur",
+      "emailsent": false
+    }
+  ]
+  
