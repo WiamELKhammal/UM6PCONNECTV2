@@ -1,0 +1,1482 @@
+[
+    {
+        "Nom": "belamfedelalaoui",
+        "Prenom": "sadek",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "UM6P-CS-UM6P School of Computer Science",
+        "Email": "sadek.belamfedelalaoui@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "faddouli",
+        "Prenom": "ali",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CBS-Chemical and Biochemical Sciences",
+        "Email": "ali.faddouli@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "radouane",
+        "Prenom": "nabil",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "AGC-African Genome Center",
+        "Email": "nabil.radouane@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "belbsir",
+        "Prenom": "hamza",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CBS-Chemical and Biochemical Sciences",
+        "Email": "hamza.belbsir@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "nouri",
+        "Prenom": "farouk",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "EIEA-Chair Industrial Economics of African Emergence",
+        "Email": "farouk.nouri@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "chaouni",
+        "Prenom": "bouchra",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "UM6P-FMS-UM6P Faculty of Medical Sciences",
+        "Email": "bouchra.chaouni@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "moumouh",
+        "Prenom": "jihane",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "IWRI-International Water Research Institute",
+        "Email": "jihane.moumouh@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "kooumy",
+        "Prenom": "yassine",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CBS-Chemical and Biochemical Sciences",
+        "Email": "yassine.kooumy@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "zerouaoui",
+        "Prenom": "hasnae",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "UM6P-CS-UM6P School of Computer Science",
+        "Email": "hasnae.zerouaoui@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "ouzemou",
+        "Prenom": "jamal-eddine",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CRSA-Center for Remote Sensing Application",
+        "Email": "jamal-eddine.ouzemou@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "ettoumi",
+        "Prenom": "mouna",
+        "Nationalite": "Tunisia",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "GSMI-Geology & Sustainable Mining Institute",
+        "Email": "mouna.ettoumi@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "hakam",
+        "Prenom": "oualid",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "IWRI-International Water Research Institute",
+        "Email": "oualid.hakam@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "malainine",
+        "Prenom": "cheikh elwali",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "GSMI-Geology & Sustainable Mining Institute",
+        "Email": "cheikh.elwali.malainine@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "amou",
+        "Prenom": "mohja",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ACER CoE-Applied Chemistry & Engineering Research Centre of Excellence",
+        "Email": "mohja.amou@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "akhrouuf",
+        "Prenom": "asmaa",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "LIMSET-Laboratory of Inorganic Materials for Sustainable Energy Technologies",
+        "Email": "asmaa.akhrouuf@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "chchiyai",
+        "Prenom": "zakaria",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "LIMSET-Laboratory of Inorganic Materials for Sustainable Energy Technologies",
+        "Email": "zakaria.chchiyai@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "sani",
+        "Prenom": "luqman abdullahi",
+        "Nationalite": "Nigeria",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ACER CoE-Applied Chemistry & Engineering Research Centre of Excellence",
+        "Email": "luqman.abdullahi.sani@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "lamkaouane",
+        "Prenom": "hind",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ACER CoE-Applied Chemistry & Engineering Research Centre of Excellence",
+        "Email": "hind.lamkaouane@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "mellalou",
+        "Prenom": "abderrahman",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "MSN-Materials Science Energy and Nano-engineering",
+        "Email": "abderrahman.mellalou@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "el mahmoudi",
+        "Prenom": "ayoub",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CBS-Chemical and Biochemical Sciences",
+        "Email": "ayoub.elmahmoudi@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "boukrouh",
+        "Prenom": "soumaya",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ASARI-African Sustainable Agriculture Research Institute",
+        "Email": "soumaya.boukrouh@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "azenoud",
+        "Prenom": "khalil",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "khalil.azenoud@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "el alaoui el fels",
+        "Prenom": "abdelhafid",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "GSMI-Geology & Sustainable Mining Institute",
+        "Email": "abdelhafid.elalaouielfels@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "boutahir",
+        "Prenom": "salima",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "AGC-African Genome Center",
+        "Email": "salima.boutahir@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "kasbaji",
+        "Prenom": "meriem",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "MSN-Materials Science Energy and Nano-engineering",
+        "Email": "meriem.kasbaji@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "lougdali",
+        "Prenom": "meriem",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ACER CoE-Applied Chemistry & Engineering Research Centre of Excellence",
+        "Email": "meriem.lougdali@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "filahe",
+        "Prenom": "ismail",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ACER CoE-Applied Chemistry & Engineering Research Centre of Excellence",
+        "Email": "ismail.filahe@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "el haissoufi",
+        "Prenom": "wissal",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "wissal.elhaissoufi@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "elmisaoi",
+        "Prenom": "safae",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "COLCOM-College of Computing",
+        "Email": "safae.elmisaoi@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "jarni",
+        "Prenom": "imane",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "MSDA-Modeling Simulation and Data Analysis",
+        "Email": "imane.jarni@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "bouharras",
+        "Prenom": "fatima ezzahra",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "HTMR-High Throughput Multidisciplinary Research Laboratory",
+        "Email": "fatima.ezzahra.bouharras@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "kassem",
+        "Prenom": "ihsane",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "MSN-Materials Science Energy and Nano-engineering",
+        "Email": "ihsane.kassem@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "aziz",
+        "Prenom": "khalid",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "MSN-Materials Science Energy and Nano-engineering",
+        "Email": "khalid.aziz@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "seyid abdella",
+        "Prenom": "ebnou abdem",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CUS-Center of Urban Systems",
+        "Email": "ebnou.abdem.seyidabdella@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "bouziani",
+        "Prenom": "ilyas",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "LIMSET-Laboratory of Inorganic Materials for Sustainable Energy Technologies",
+        "Email": "ilyas.bouziani@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "benbrik",
+        "Prenom": "brahim",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "AGBS-AGROBIOSCIENCES",
+        "Email": "brahim.benbrik@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "eddouibi",
+        "Prenom": "jaouad",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ACER CoE-Applied Chemistry & Engineering Research Centre of Excellence",
+        "Email": "jaouad.eddouibi@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "lazaar",
+        "Prenom": "ayoub",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CESFRA-Center of Excellence in Soil and Fertilizer Research in Africa",
+        "Email": "ayoub.lazaar@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "aliyat",
+        "Prenom": "fatima zahra",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "AGC-African Genome Center",
+        "Email": "fatima.zahra.aliyat@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "akalouch",
+        "Prenom": "mohammed",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "COLCOM-College of Computing",
+        "Email": "mohammed.akalouch@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "lalioi",
+        "Prenom": "hafid",
+        "Nationalite": "Morocco",
+        "Pole": "BM-Pôle Business Management",
+        "Departement": "ABS-Africa Business School",
+        "Email": "hafid.lalioi@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "hlal",
+        "Prenom": "mohammed",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CUS-Center of Urban Systems",
+        "Email": "mohammed.hlal@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "serbouti",
+        "Prenom": "imane",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CUS-Center of Urban Systems",
+        "Email": "imane.serbouti@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "lamaoui",
+        "Prenom": "abderrahman",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "SusMat-Chair of Sustainable Materials",
+        "Email": "abderrahman.lamaoui@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "elmersly",
+        "Prenom": "lekbira",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "HTMR-High Throughput Multidisciplinary Research Laboratory",
+        "Email": "lekbira.elmersly@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "ajani",
+        "Prenom": "clement kehinde",
+        "Nationalite": "Nigeria",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "clement.kehinde.ajani@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "akkouri",
+        "Prenom": "nacer",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "HTMR-High Throughput Multidisciplinary Research Laboratory",
+        "Email": "nacer.akkouri@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "jamal",
+        "Prenom": "bouchaib",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "bouchaib.jamal@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "gautam",
+        "Prenom": "gautam",
+        "Nationalite": "India",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ACER CoE-Applied Chemistry & Engineering Research Centre of Excellence",
+        "Email": "gautam.gautam@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "mennani",
+        "Prenom": "mehdi",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "MSN-Materials Science Energy and Nano-engineering",
+        "Email": "mehdi.mennani@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "bounabi",
+        "Prenom": "mariem",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CUS-Center of Urban Systems",
+        "Email": "mariem.bounabi@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "rezouki",
+        "Prenom": "ibtissam",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "GSMI-Geology & Sustainable Mining Institute",
+        "Email": "ibtissam.rezouki@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "el ouali",
+        "Prenom": "mohamed",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "GSMI-Geology & Sustainable Mining Institute",
+        "Email": "mohamed.elouali@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "nayad",
+        "Prenom": "abdallah",
+        "Nationalite": "Comoros",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "HTMR-High Throughput Multidisciplinary Research Laboratory",
+        "Email": "abdallah.nayad@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "haounati",
+        "Prenom": "redouane",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CBS-Chemical and Biochemical Sciences",
+        "Email": "redouane.haounati@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "adardor",
+        "Prenom": "said",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "GSMI-Geology & Sustainable Mining Institute",
+        "Email": "said.adardor@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "jaouat",
+        "Prenom": "marouane",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "IAS-Institute of Advanced Studies",
+        "Email": "marouane.jaouat@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "taia",
+        "Prenom": "soufiane",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "soufiane.taia@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "karim",
+        "Prenom": "rezaul",
+        "Nationalite": "Pakistan",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "AGC-African Genome Center",
+        "Email": "rezaul.karim@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "hussain",
+        "Prenom": "zakir",
+        "Nationalite": "Pakistan",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "UM6P-FMS-UM6P Faculty of Medical Sciences",
+        "Email": "zakir.hussain@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "akhtach",
+        "Prenom": "sihame",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CBS-Chemical and Biochemical Sciences",
+        "Email": "sihame.akhtach@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "kaleh",
+        "Prenom": "abdussabur muktar",
+        "Nationalite": "Nigeria",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "abdussabur.muktar.kaleh@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "gom",
+        "Prenom": "buntubonke",
+        "Nationalite": "South Africa",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "AGC-African Genome Center",
+        "Email": "buntubonke.gom@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "bouya",
+        "Prenom": "houceine",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "houceine.bouya@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "oulguidoum",
+        "Prenom": "abdeladim",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "MAScIR-Moroccan Foundation for Advanced Science innovation and Research",
+        "Email": "abdeladim.oulguidoum@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "kitri",
+        "Prenom": "mohamed nour",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "EMINES-School of Industrial Management",
+        "Email": "mohamed.nour.kitri@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "ech-charfi",
+        "Prenom": "nour-edddine",
+        "Nationalite": "Morocco",
+        "Pole": "BM-Pôle Business Management",
+        "Departement": "ABS-Africa Business School",
+        "Email": "nour-edddine.echcharfi@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "ikram",
+        "Prenom": "wasiq",
+        "Nationalite": "Pakistan",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "wasiq.ikram@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "el idrissi essebtey",
+        "Prenom": "salma",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "salma.elidrisiessebtey@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "rezki",
+        "Prenom": "boutaina",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CBS-Chemical and Biochemical Sciences",
+        "Email": "boutaina.rezki@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "saidi",
+        "Prenom": "lamiae",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "lamiae.saidi@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "el amri",
+        "Prenom": "abdelhay",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "MAScIR-Moroccan Foundation for Advanced Science innovation and Research",
+        "Email": "abdelhay.elamri@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "channab",
+        "Prenom": "badr-edddine",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "badr-edddine.channab@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "el attar",
+        "Prenom": "imane",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "imane.elattar@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "lahrar",
+        "Prenom": "el houcine",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "LIMSET-Laboratory of Inorganic Materials for Sustainable Energy Technologies",
+        "Email": "el.houcine.lahrar@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "lamhani",
+        "Prenom": "mohammed",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "LIMSET-Laboratory of Inorganic Materials for Sustainable Energy Technologies",
+        "Email": "mohammed.lamhani@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "idrissi",
+        "Prenom": "siham",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "LIMSET-Laboratory of Inorganic Materials for Sustainable Energy Technologies",
+        "Email": "siham.idrissi@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "aannir",
+        "Prenom": "marouane",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ACER CoE-Applied Chemistry & Engineering Research Centre of Excellence",
+        "Email": "marouane.aannir@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "haouas",
+        "Prenom": "hayat",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "LIMSET-Laboratory of Inorganic Materials for Sustainable Energy Technologies",
+        "Email": "hayat.haouas@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "arshad",
+        "Prenom": "zeeshan",
+        "Nationalite": "Pakistan",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ACER CoE-Applied Chemistry & Engineering Research Centre of Excellence",
+        "Email": "zeeshan.arshad@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "abid",
+        "Prenom": "abbas ali",
+        "Nationalite": "Pakistan",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "abbas.ali.abid@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "el fadili",
+        "Prenom": "hamza",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "GSMI-Geology & Sustainable Mining Institute",
+        "Email": "hamza.elfadili@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "el moujahed",
+        "Prenom": "sara",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "SusMat-Chair of Sustainable Materials",
+        "Email": "sara.elmoujahed@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "kaur",
+        "Prenom": "baljinder",
+        "Nationalite": "India",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "SusMat-Chair of Sustainable Materials",
+        "Email": "baljinder.kaur@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "rouchdi",
+        "Prenom": "khadija",
+        "Nationalite": "Morocco",
+        "Pole": "SH-Sciences humaines, economiques et sociales",
+        "Departement": "FGSES-Humanities",
+        "Email": "khadija.rouchdi@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "kandoussi",
+        "Prenom": "malak",
+        "Nationalite": "Morocco",
+        "Pole": "SH-Sciences humaines, economiques et sociales",
+        "Departement": "FGSES-Humanities",
+        "Email": "malak.kandoussi@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "kinda",
+        "Prenom": "harouna",
+        "Nationalite": "Burkina Faso",
+        "Pole": "BM-Pôle Business Management",
+        "Departement": "ABS-Africa Business School",
+        "Email": "harouna.kinda@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "keno terfa",
+        "Prenom": "berhanu",
+        "Nationalite": "Ethiopiane",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CRSA-Center for Remote Sensing Application",
+        "Email": "berhanu.kenoterfa@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "desapogu",
+        "Prenom": "rajesh",
+        "Nationalite": "Indienne",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "IAP-Institute of Applied Physics",
+        "Email": "rajesh.desapogu@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "benlakhouy",
+        "Prenom": "nadia",
+        "Nationalite": "Marocaine",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "IAP-Institute of Applied Physics",
+        "Email": "nadia.benlakhouy@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "el hamdaoui",
+        "Prenom": "jawad",
+        "Nationalite": "Marocaine",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "IAP-Institute of Applied Physics",
+        "Email": "jawad.elhamdaoui@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "santhoshkumar",
+        "Prenom": "raman",
+        "Nationalite": "Indienne",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "AGBS-AGROBIOSCIENCES",
+        "Email": "raman.santhoshkumar@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "ogou",
+        "Prenom": "faustin katchele",
+        "Nationalite": "Benin",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "IWRI-International Water Research Institute",
+        "Email": "faustin.katchele.ogou@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "baqloul",
+        "Prenom": "asmae",
+        "Nationalite": "Marocaine",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "IWRI-International Water Research Institute",
+        "Email": "asmae.baqloul@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "charqui",
+        "Prenom": "zouhair",
+        "Nationalite": "Marocaine",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ASARI-African Sustainable Agriculture Research Institute",
+        "Email": "zouhair.charqui@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "khourchi",
+        "Prenom": "said",
+        "Nationalite": "Marocaine",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ASARI-African Sustainable Agriculture Research Institute",
+        "Email": "said.khourchi@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "toufik",
+        "Prenom": "el mehdi",
+        "Nationalite": "Marocaine",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "HTMR-High Throughput Multidisciplinary Research Laboratory",
+        "Email": "el.mehdi.toufik@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "brik",
+        "Prenom": "abdelmalik",
+        "Nationalite": "Marocaine",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "HTMR-High Throughput Multidisciplinary Research Laboratory",
+        "Email": "abdelmalik.brik@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "elaouzy",
+        "Prenom": "youssef",
+        "Nationalite": "Marocaine",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ACER CoE-Applied Chemistry & Engineering Research Centre of Excellence",
+        "Email": "youssef.elaouzy@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "nadi",
+        "Prenom": "sami",
+        "Nationalite": "Marocaine",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "COLCOM-College of Computing",
+        "Email": "sami.nadi@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "sidikou",
+        "Prenom": "abdel aziz hassane",
+        "Nationalite": "Niger",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ASARI-African Sustainable Agriculture Research Institute",
+        "Email": "abdel.aziz.hassane.sidikou@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "bennis",
+        "Prenom": "meryeme",
+        "Nationalite": "Marocaine",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "AGBS-AGROBIOSCIENCES",
+        "Email": "meryeme.bennis@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "Khadija",
+        "Prenom": "El Hazzam",
+        "Nationalite": "Marocaine",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "AGBS-AGROBIOSCIENCES",
+        "Email": "khadija.elhazzam@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "Safae",
+        "Prenom": "ER RAOUAN",
+        "Nationalite": "Marocaine",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "AGBS-AGROBIOSCIENCES",
+        "Email": "safae.erraouan@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "Lucie Agnès Tania",
+        "Prenom": "TARDY",
+        "Nationalite": "France",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ACPPS-Arab Classical Philosophy and Philosophy of Sciences",
+        "Email": "lucieagnes.tardy@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "EL AMINE",
+        "Prenom": "Bouthayna",
+        "Nationalite": "Marocaine",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "bouthayna.elamine@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "Weniga Anuga",
+        "Prenom": "Samuel",
+        "Nationalite": "Ghana",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "samuel.weniga@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "ASSEBBAN",
+        "Prenom": "Ismael",
+        "Nationalite": "Marocaine",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ACPPS-Arab Classical Philosophy and Philosophy of Sciences",
+        "Email": "ismael.assebban@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "KHETTOUCH",
+        "Prenom": "Athmane",
+        "Nationalite": "Marocaine",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "athmane.khettouch@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "Hakam",
+        "Prenom": "Sabrine Salima",
+        "Nationalite": "Marocaine",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CAS-Center Of African Studies",
+        "Email": "sabrinesalima.hakam@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "CISSE",
+        "Prenom": "Boubacar Amadou",
+        "Nationalite": "Mali",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "boubacaramadou.cisse@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "FAL",
+        "Prenom": "Soufiane",
+        "Nationalite": "Marocaine",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "MAScIR-Moroccan Foundation for Advanced Science innovation and Research",
+        "Email": "soufiane.fal@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "Vincent José",
+        "Prenom": "TEIXEIRA",
+        "Nationalite": "France",
+        "Pole": "SH-Sciences humaines, econonomiques et sociales",
+        "Departement": "FGSES-Humanities",
+        "Email": "vincentjose.teixeira@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "Rémi Louis-Marie",
+        "Prenom": "CASTÉRA",
+        "Nationalite": "Morocco",
+        "Pole": "BM-Pôle Business Management",
+        "Departement": "CMTJ-Centre Marocain de Théorie des Jeux",
+        "Email": "remi.louis-marie.castera@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "Julien François Raymond",
+        "Prenom": "FIXARY",
+        "Nationalite": "France",
+        "Pole": "BM-Pôle Business Management",
+        "Departement": "CMTJ-Centre Marocain de Théorie des Jeux",
+        "Email": "julienfrancoisraymond.fixary@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "Peter Nkachukwu",
+        "Prenom": "Chukwurah",
+        "Nationalite": "Nigeria",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "AGC-African Genome Center",
+        "Email": "peternkachukwurah.chukwurah@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "Ibrahim",
+        "Prenom": "SAIRA",
+        "Nationalite": "Pakistan",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "AGC-African Genome Center",
+        "Email": "ibrahim.saira@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "BELGADA",
+        "Prenom": "Abdessamad",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "abdessamad.belgada@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "SAFRI",
+        "Prenom": "Ibrahim",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ACPPS-Arab Classical Philosophy and Philosophy of Sciences",
+        "Email": "ibrahim.safri@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "BAHDDOU",
+        "Prenom": "Sophia",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "sophia.bahddou@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "Ait Haddouch",
+        "Prenom": "Mohammed",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "MSN-Materials Science Energy and Nano-engineering",
+        "Email": "mohammed.ait.haddouch@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "NIYA",
+        "Prenom": "BTISSAM",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CBS-Chemical and Biochemical Sciences",
+        "Email": "btissam.niya@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "EL OMRANI",
+        "Prenom": "Abdelali",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "LIMSET-Laboratory of Inorganic Materials for Sustainable Energy Technologies",
+        "Email": "abdelali.el.omrani@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "EJJOUMMANY",
+        "Prenom": "Abdelaziz",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CBS-Chemical and Biochemical Sciences",
+        "Email": "abdelaziz.ejjoummany@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "BHAT",
+        "Prenom": "Mushtaq ahmad",
+        "Nationalite": "Indienne",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "SusMat-Chair of Sustainable Materials",
+        "Email": "mushtaqahmad.bhat@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "EDDAHAOUI",
+        "Prenom": "Fatima Ezzahra",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CBS-Chemical and Biochemical Sciences",
+        "Email": "fatimaezzahra.eddahaoui@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "Cherkaoui Dekkaki",
+        "Prenom": "Othman",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "COLCOM-College of Computing",
+        "Email": "othman.cherkaouidekkaki@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "MAHER",
+        "Prenom": "Majdouline",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "MSN-Materials Science Energy and Nano-engineering",
+        "Email": "majdouline.maher@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "Slimani",
+        "Prenom": "Aiman",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CSAES-College for Sustainable Agriculture and Environmental Science",
+        "Email": "aiman.slimani@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "BENTBIB",
+        "Prenom": "Rachad",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "Vanguard-The UM6P Vanguard Center",
+        "Email": "rachad.bentbib@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "Maxime Dimitri",
+        "Prenom": "AGIUS",
+        "Nationalite": "France",
+        "Pole": "BM-Pôle Business Management",
+        "Departement": "ABS-Africa Business School",
+        "Email": "maximedimitri.agius@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "EL BOUAZZAOUI",
+        "Prenom": "IMANE",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "IWRI-International Water Research Institute",
+        "Email": "imane.elbouazzaoui@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "BOUTRIOUIA",
+        "Prenom": "EL Hassan",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CBS-Chemical and Biochemical Sciences",
+        "Email": "elhassan.boutriouia@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "MOURATIB",
+        "Prenom": "Rajaa",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "SusMat-Chair of Sustainable Materials",
+        "Email": "rajaa.mouratib@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "BOUJIJANE",
+        "Prenom": "Samir",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CRSA-Center for Remote Sensing Application",
+        "Email": "samir.boujijane@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "BOUMASMOUD",
+        "Prenom": "SOUFIANE",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "CRSA-Center for Remote Sensing Application",
+        "Email": "soufiane.boumasmoud@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "EL ASRI",
+        "Prenom": "Youssef",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "COLCOM-College of Computing",
+        "Email": "youssef.elasri@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "BEN AMAR",
+        "Prenom": "Ismail",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "GSMI-Geology & Sustainable Mining Institute",
+        "Email": "ismail.benamar@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "EL BOUAIDI",
+        "Prenom": "Widad",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ASARI-African Sustainable Agriculture Research Institute",
+        "Email": "widad.elbouaidi@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "Saqib",
+        "Prenom": "Shahab",
+        "Nationalite": "Pakistan",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "GTI-Green Tech Institute",
+        "Email": "shahab.saqib@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "Sigue",
+        "Prenom": "Samya",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ACER CoE-Applied Chemistry & Engineering Research Centre of Excellence",
+        "Email": "samya.sigue@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "BELKAMEL",
+        "Prenom": "Amal",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ACPPS-Arab Classical Philosophy and Philosophy of Sciences",
+        "Email": "amal.belkamel@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "AKACHOUD",
+        "Prenom": "Oumaima",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "AGBT-Agrobiotec",
+        "Email": "oumaima.akachoud@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "El Boukhari",
+        "Prenom": "Mohammed EL Mehdi",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "AGBT-Agrobiotec",
+        "Email": "mohammedelmehdi.elboukhari@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "MOUJANNI",
+        "Prenom": "Abdessamad",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "AGBT-Agrobiotec",
+        "Email": "abdessamad.moujanni@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "LAAMECH",
+        "Prenom": "Nouha",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "COLCOM-UM6P School of Computer Science",
+        "Email": "nouha.laamech@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "Oubahmane",
+        "Prenom": "Mehdi",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "SusMat-Chair of Sustainable Materials",
+        "Email": "mehdi.oubahmane@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    },
+    {
+        "Nom": "DERRAJI",
+        "Prenom": "KAOUTHER",
+        "Nationalite": "Morocco",
+        "Pole": "ST-Sciences & Technologies",
+        "Departement": "ACER CoE-Applied Chemistry & Engineering Research Centre of Excellence",
+        "Email": "kaouther.derraji@um6p.ma",
+        "Status": "Pending",
+        "role": "postdoc"
+    }
+]
