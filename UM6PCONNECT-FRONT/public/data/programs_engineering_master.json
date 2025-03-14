@@ -1,0 +1,123 @@
+[
+    {
+      "name": "Science and Technology",
+      "schools": [
+        {
+          "name": "Cycle Ingénieur en Management Industriel (EMINES)",
+          "description": "A high-level engineering program focusing on industrial management.",
+          "closing_date": "15 mai 2025",
+          "application_link": "#",
+          "logo": "assets/images/logo/UM6P I EMINES.svg"
+        },
+        {
+          "name": "Cycle Ingénieur en Computer Sciences (English) (UM6P-CC)",
+          "description": "A computer sciences engineering program with an English curriculum.",
+          "closing_date": "20 avril 2025",
+          "application_link": "#",
+          "logo": "assets/images/logo/UM6P I CC.svg"
+        },
+        {
+          "name": "Cycle Ingénieur en Ingénierie Physique (IST&I)",
+          "description": "A specialized engineering program in physical sciences.",
+          "closing_date": "10 mai 2025",
+          "application_link": "#",
+          "logo": "assets/images/logo/UM6P I IST&I.svg"
+        },
+        {
+          "name": "Master Technologies Industrielles pour l’Usine du Futur (GTI)",
+          "description": "A master’s program in industrial technologies for the factory of the future.",
+          "closing_date": "15 avril 2025",
+          "application_link": "#",
+          "logo": "assets/images/logo/UM6P I GTI.svg"
+        },
+        {
+          "name": "Master Ingénierie Electrique pour les Energies Renouvelables et les Réseaux Intelligents (GTI)",
+          "description": "A master’s program specializing in electrical engineering for renewable energies and smart grids.",
+          "closing_date": "15 avril 2025",
+          "application_link": "#",
+          "logo": "assets/images/logo/UM6P I GTI.svg"
+        },
+        {
+          "name": "Master Ingénierie des Bâtiments Verts et Efficacité Energétique (SAP+D)",
+          "description": "A master’s program focused on green buildings and energy efficiency.",
+          "closing_date": "15 avril 2025",
+          "application_link": "#",
+          "logo": "assets/images/logo/UM6P I SAP+D.svg"
+        }
+      ]
+    },
+    {
+      "name": "Business and Management",
+      "schools": [
+        {
+          "name": "Master Collective Intelligence (English) (SCI)",
+          "description": "A master’s program focusing on collective intelligence strategies.",
+          "closing_date": "15 avril 2025",
+          "application_link": "#",
+          "logo": "assets/images/logo/UM6P I SCI.svg"
+        },
+        {
+          "name": "Master International Management (English) (ABS)",
+          "description": "A global business management program.",
+          "closing_date": "15 avril 2025",
+          "application_link": "#",
+          "logo": "assets/images/logo/UM6P I ABS.svg"
+        },
+        {
+          "name": "Master AgriBusiness Innovation (English) (ABS)",
+          "description": "A master’s program focused on agribusiness innovation.",
+          "closing_date": "15 avril 2025",
+          "application_link": "#",
+          "logo": "assets/images/logo/UM6P I ABS.svg"
+        },
+        {
+          "name": "Master Financial Engineering (English) (ABS)",
+          "description": "A financial engineering master’s program covering risk and investment strategies.",
+          "closing_date": "15 avril 2025",
+          "application_link": "#",
+          "logo": "assets/images/logo/UM6P I ABS.svg"
+        }
+      ]
+    },
+    {
+      "name": "Social Sciences, Economics, and Humanities",
+      "schools": [
+        {
+          "name": "Master Global Affairs (FGSES)",
+          "description": "A master's program covering international relations and global politics.",
+          "closing_date": "31 mars 2025",
+          "application_link": "#",
+          "logo": "assets/images/logo/UM6P I  FGSES.png"
+        },
+        {
+          "name": "Master Analyse Economique et Politiques Publiques (FGSES)",
+          "description": "An advanced economics and public policy program.",
+          "closing_date": "31 mars 2025",
+          "application_link": "#",
+          "logo": "assets/images/logo/UM6P I  FGSES.png"
+        },
+        {
+          "name": "Master Behavioral and Social Sciences for Public Policy (FGSES)",
+          "description": "A master’s program exploring behavioral sciences in policymaking.",
+          "closing_date": "31 mars 2025",
+          "application_link": "#",
+          "logo": "assets/images/logo/UM6P I  FGSES.png"
+        },
+        {
+          "name": "Master Economie Quantitative (FGSES)",
+          "description": "A master’s program specializing in quantitative economics.",
+          "closing_date": "31 mars 2025",
+          "application_link": "#",
+          "logo": "assets/images/logo/UM6P I  FGSES.png"
+        },
+        {
+          "name": "Master Political Science (FGSES)",
+          "description": "An advanced political science program focusing on governance and policy analysis.",
+          "closing_date": "31 mars 2025",
+          "application_link": "#",
+          "logo": "assets/images/logo/UM6P I  FGSES.png"
+        }
+      ]
+    }
+  ]
+  

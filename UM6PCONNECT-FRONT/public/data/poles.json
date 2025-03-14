@@ -1,0 +1,113 @@
+[
+    {
+      "name": "Health",
+      "schools": [
+        {
+          "name": "Doctorate in Medicine (English) (FMS)",
+          "description": "A high-level medical program offering advanced clinical training.",
+          "website": "#",
+          "logo": "assets/images/logo/UM6P I FMS.svg"
+        },
+        {
+          "name": "Doctorate in Pharmacy (English) (FMS)",
+          "description": "A specialized program for pharmaceutical sciences and research.",
+          "website": "#",
+          "logo": "assets/images/logo/UM6P I FMS.svg"
+        },
+        {
+          "name": "Bachelor in Nursing Care, Polyvalent Nurse Option (ISSBP)",
+          "description": "A nursing degree focusing on polyvalent nursing care.",
+          "website": "#",
+          "logo": "assets/images/logo/UM6P I ISSBP.svg"
+        }
+      ]
+    },
+    {
+      "name": "Science and Technology",
+      "schools": [
+        {
+          "name": "Preparatory Cycle for Industrial Management Engineering (EMINES)",
+          "description": "A preparatory cycle for Industrial Management Engineering.",
+          "website": "#",
+          "logo": "assets/images/logo/UM6P I EMINES.svg"
+        },
+        {
+          "name": "Integrated Preparatory Cycle for Computer Sciences Engineering (BAC+5) (CC)",
+          "description": "A 5-year integrated program in computer sciences.",
+          "website": "#",
+          "logo": "assets/images/logo/UM6P I CC.svg"
+        },
+        {
+          "name": "Integrated Preparatory Cycle for Agricultural and Environmental Systems Engineering (BAC+5) (ESAFE)",
+          "description": "A preparatory cycle for agricultural and environmental engineering.",
+          "website": "#",
+          "logo": "assets/images/logo/UM6P I ESAFE.svg"
+        },
+        {
+          "name": "Integrated Preparatory Cycle for Chemical, Mineral, and Biotechnological Engineering (BAC+5) (IST&I)",
+          "description": "A preparatory cycle in chemical, mineral, and biotechnological engineering.",
+          "website": "#",
+          "logo": "assets/images/logo/UM6P I IST&I.svg"
+        },
+        {
+          "name": "Architect Degree - BAC+6 (SAP+D)",
+          "description": "An architecture degree program preparing students for professional practice.",
+          "website": "#",
+          "logo": "assets/images/logo/UM6P I SAP+D.svg"
+        },
+        {
+          "name": "Bachelor of Science in Applied Sciences and Business (English)",
+          "description": "A multidisciplinary program combining applied sciences and business studies.",
+          "website": "#",
+          "logo": "assets/images/logo/UM6P I ABS.svg"
+        }
+      ]
+    },
+    {
+      "name": "Business and Management",
+      "schools": [
+        {
+          "name": "Bachelor in Hospitality Business and Management (English) (SHBM)",
+          "description": "A global business program focused on hospitality and management.",
+          "website": "#",
+          "logo": "assets/images/logo/UM6P I SHBM.svg"
+        }
+      ]
+    },
+    {
+      "name": "Social Sciences, Economics, and Humanities",
+      "schools": [
+        {
+          "name": "Bachelor in Applied Economics (FGSES)",
+          "description": "An economics program combining theory and real-world application.",
+          "website": "#",
+          "logo": "assets/images/logo/UM6P I  FGSES.png"
+        },
+        {
+          "name": "Bachelor in Political Science (FGSES)",
+          "description": "A political science program analyzing governance and public policy.",
+          "website": "#",
+          "logo": "assets/images/logo/UM6P I  FGSES.png"
+        },
+        {
+          "name": "Bachelor in Behavioral Sciences for Public Policies (FGSES)",
+          "description": "A behavioral sciences program focused on public policies.",
+          "website": "#",
+          "logo": "assets/images/logo/UM6P I  FGSES.png"
+        },
+        {
+          "name": "Bachelor in International Relations (FGSES)",
+          "description": "A degree in international relations covering global political systems.",
+          "website": "#",
+          "logo": "assets/images/logo/UM6P I  FGSES.png"
+        },
+        {
+          "name": "Bachelor in Public Law (FGSES)",
+          "description": "A public law program addressing constitutional and administrative law.",
+          "website": "#",
+          "logo": "assets/images/logo/UM6P I  FGSES.png"
+        }
+      ]
+    }
+  ]
+  
