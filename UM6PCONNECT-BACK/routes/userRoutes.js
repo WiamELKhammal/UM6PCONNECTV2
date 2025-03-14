@@ -26,14 +26,13 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Create a new user (signup is already handled in server.js)
-router.post('/', async (req, res) => {
+
+router.get('/', async (req, res) => {
   try {
-    const newUser = new User(req.body);
-    await newUser.save();
-    res.status(201).json(newUser);
+    const users = await User.find({ Status: "Active" }); 
+    res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ error: 'Failed to create user' });
+    res.status(500).json({ error: 'Failed to fetch users' });
   }
 });
 

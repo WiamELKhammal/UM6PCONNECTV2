@@ -19,9 +19,13 @@ const experienceRoutes = require("./routes/experienceRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const licenseRoutes = require("./routes/licenseRoutes");
 const publicationRoutes = require("./routes/publicationRoutes");
+const profileRoutes = require("./routes/profileRoutes");
 const tagRoutes = require("./routes/tagRoutes");
-
-
+const filterRoutes = require("./routes/filterRoutes");
+const saveRoutes = require("./routes/saveRoutes");
+const followRoutes = require("./routes/followRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
+const Complete = require('./routes/Complete');
 // Connexion MongoDB
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/um6pconnect';
 
@@ -64,7 +68,13 @@ app.use("/api/experience", experienceRoutes);
 app.use("/api/licenses", licenseRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/publications", publicationRoutes);
-app.use("/api/tagRoutes", tagRoutes);
+app.use("/api/profile", profileRoutes);
+app.use('/api/complete', Complete);
+app.use('/api/tags', tagRoutes);
+app.use('/api/filter', filterRoutes);
+app.use('/api/save', saveRoutes);
+app.use('/api/follow', followRoutes);
+app.use('/api/notification', notificationRoutes);
 
 
 // Démarrer le serveur

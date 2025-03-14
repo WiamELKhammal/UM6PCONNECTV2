@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
   Prenom: { type: String, required: true },
@@ -7,18 +7,30 @@ const UserSchema = new mongoose.Schema({
   telephone: { type: String },
   password: { type: String, required: false },
   
-  role: { type: String, enum: ['postdoc', 'professeur'], required: true },
-  Domaine: { type: String },  // Spécifique aux postdocs
-  Universite: { type: String }, // Spécifique aux postdocs
-  Pole: { type: String }, // Spécifique aux professeurs
-  College: { type: String }, // Spécifique aux professeurs
-  Departement: { type: String }, // Spécifique aux professeurs
-  Nationalite: { type: String }, // Spécifique aux professeurs
-  JobClassification: { type: String }, // Spécifique aux professeurs
-  Status: { type: String, default: "Pending" }, // Appliqué aux deux rôles
-  emailsent: { type: Boolean, default: false } ,// Suivi des emails envoyés
-  hashedTemporaryPass: { type: String, required: false }
+  Status: { type: String, default: "Pending" },
+  emailsent: { type: Boolean, default: false },
+  hashedTemporaryPass: { type: String, required: false },
+
+  // Additional profile fields
+  bio: { type: String, default: "" },       // User's biography (limit to 200 words on the front-end)
+  headline: { type: String, default: "" },    // Short professional tagline
+  location: { type: String, default: "" },    // Geographical location
+  address: { type: String, default: "" },     // Physical address
+  birthDate: { type: Date, default: null },   // Birth date, using Date type for better handling
+  url: { type: String, default: "" },          // Link to a website or social profile
+
+  // Referencing other collections using ObjectId
+  educations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Education' }],
+  experiences: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Experience' }],
+  languages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Language' }],
+  licenses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'License' }],
+  projects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }],
+
+
+  
 });
 
-const User = mongoose.models.User || mongoose.model('User', UserSchema);
+// Create or retrieve the model
+const User = mongoose.models.User || mongoose.model("User", UserSchema);
+
 module.exports = User;

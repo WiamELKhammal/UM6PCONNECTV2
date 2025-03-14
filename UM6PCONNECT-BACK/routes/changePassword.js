@@ -38,15 +38,17 @@ router.post('/', async (req, res) => {
             return res.status(401).json({ message: 'Invalid temporary password.' });
         }
 
+        // Hachage du nouveau mot de passe
         const hashedNewPassword = await bcrypt.hash(newPassword, 10);
         user.password = hashedNewPassword;
         user.hashedTemporaryPass = null;
         user.emailsent = true;
+        user.Status = "Active"; 
 
         await user.save();
-        console.log("Password changed successfully");
+        console.log("Password changed successfully and account activated");
 
-        res.status(200).json({ message: 'Password changed successfully.' });
+        res.status(200).json({ message: 'Password changed successfully. Account activated.' });
     } catch (error) {
         console.error("Server error:", error);
         res.status(500).json({ message: 'Server error.' });

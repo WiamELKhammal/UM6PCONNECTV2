@@ -1,122 +1,138 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const Publication = require("../models/Publication");
+const multer = require("multer");
 
 const router = express.Router();
+const upload = multer(); // Pas de stockage sur disque, on garde le fichier en mémoire
 
-// Ajouter une publication
-router.post("/", async (req, res) => {
-  try {
-    let { userId, title, journal, publicationDate, description } = req.body;
+// 📌 Ajouter une publication avec un fichier en Base64
+router.post("/", upload.single("file"), async (req, res) => {
+    try {
+        const { userId, type, title, authors, date, link } = req.body;
 
-    if (!userId || !title || !journal || !publicationDate) {
-      return res.status(400).json({ message: "userId, title, journal et publicationDate sont obligatoires" });
+        let fileData = null;
+        let fileType = null;
+
+        if (req.file) {
+            fileData = req.file.buffer.toString("base64"); // Conversion en Base64
+            fileType = req.file.mimetype; // Type de fichier (ex: application/pdf)
+        }
+
+        const newPublication = new Publication({
+            userId,
+            type,
+            title,
+            authors: JSON.parse(authors), // Conversion en tableau
+            date,
+            link,
+            fileData,
+            fileType,
+        });
+
+        await newPublication.save();
+
+        res.status(201).json({ message: "Publication added successfully", publication: newPublication });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error", error: error.message });
     }
-
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(400).json({ message: "Invalid userId format" });
-    }
-
-    // Vérifier si publicationDate est une date valide
-    if (isNaN(Date.parse(publicationDate))) {
-      return res.status(400).json({ message: "Invalid publicationDate format" });
-    }
-
-    const newPublication = new Publication({
-      userId: new mongoose.Types.ObjectId(userId),
-      title,
-      journal,
-      publicationDate: new Date(publicationDate),
-      description
-    });
-
-    await newPublication.save();
-    res.status(201).json(newPublication);
-  } catch (error) {
-    console.error("Error saving publication:", error);
-    res.status(500).json({ message: "Server error" });
-  }
 });
 
-// Récupérer toutes les publications d'un utilisateur
+//  Récupérer les publications d’un utilisateur spécifique
 router.get("/:userId", async (req, res) => {
-  try {
-    const { userId } = req.params;
+    try {
+        const { userId } = req.params;
+        const publications = await Publication.find({ userId });
 
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(400).json({ message: "Invalid userId format" });
+        if (!publications.length) {
+            return res.status(404).json({ message: "No publications found" });
+        }
+
+        res.json(publications);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error", error: error.message });
     }
-
-    const publications = await Publication.find({ userId: new mongoose.Types.ObjectId(userId) });
-
-    // Formater les dates avant d'envoyer la réponse
-    const formattedPublications = publications.map(pub => ({
-      ...pub._doc,
-      publicationDate: pub.publicationDate.toISOString().split("T")[0] // YYYY-MM-DD
-    }));
-
-    res.json(formattedPublications);
-  } catch (error) {
-    console.error("Error fetching publications:", error);
-    res.status(500).json({ message: "Server error" });
-  }
 });
 
-// Mettre à jour une publication par ID
-router.put("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    let { publicationDate } = req.body;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: "Invalid publication ID" });
-    }
-
-    // Vérifier si publicationDate est une date valide
-    if (publicationDate && isNaN(Date.parse(publicationDate))) {
-      return res.status(400).json({ message: "Invalid publicationDate format" });
-    }
-
-    const updatedPublication = await Publication.findByIdAndUpdate(
-      id,
-      {
-        ...req.body,
-        publicationDate: publicationDate ? new Date(publicationDate) : undefined
-      },
-      { new: true }
-    );
-
-    if (!updatedPublication) {
-      return res.status(404).json({ message: "Publication not found" });
-    }
-
-    res.json(updatedPublication);
-  } catch (error) {
-    console.error("Error updating publication:", error);
-    res.status(500).json({ message: "Server error" });
-  }
-});
-
-// Supprimer une publication par ID
+//  Supprimer une publication
 router.delete("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
+    try {
+        const { id } = req.params;
+        const deletedPublication = await Publication.findByIdAndDelete(id);
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: "Invalid publication ID" });
+        if (!deletedPublication) {
+            return res.status(404).json({ message: "Publication not found" });
+        }
+
+        res.status(200).json({ message: "Publication deleted successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error", error: error.message });
     }
+});
+//  Télécharger un fichier d'une publication
+router.get("/:id/file", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const publication = await Publication.findById(id);
 
-    const deletedPublication = await Publication.findByIdAndDelete(id);
+        if (!publication || !publication.fileData) {
+            return res.status(404).json({ message: "File not found" });
+        }
 
-    if (!deletedPublication) {
-      return res.status(404).json({ message: "Publication not found" });
+        const fileBuffer = Buffer.from(publication.fileData, "base64");
+
+        res.setHeader("Content-Type", publication.fileType);
+        res.setHeader("Content-Disposition", `attachment; filename="${publication.title}.pdf"`);
+        res.send(fileBuffer);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error", error: error.message });
     }
+});
+//  Obtenir le fichier en base64 pour affichage
+router.get("/:id/preview", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const publication = await Publication.findById(id);
 
-    res.status(200).json({ message: "Publication deleted successfully" });
-  } catch (error) {
-    console.error("Error deleting publication:", error);
-    res.status(500).json({ message: "Server error" });
-  }
+        if (!publication || !publication.fileData) {
+            return res.status(404).json({ message: "File not found" });
+        }
+
+        res.json({ fileData: publication.fileData, fileType: publication.fileType });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
+});
+
+// Modifier une publication
+router.put("/:id", upload.single("file"), async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { title, type, authors, date, link } = req.body;
+
+        let updateFields = { title, type, authors: JSON.parse(authors), date, link };
+
+        if (req.file) {
+            updateFields.fileData = req.file.buffer.toString("base64");
+            updateFields.fileType = req.file.mimetype;
+        }
+
+        const updatedPublication = await Publication.findByIdAndUpdate(id, updateFields, { new: true });
+
+        if (!updatedPublication) {
+            return res.status(404).json({ message: "Publication not found" });
+        }
+
+        res.status(200).json({ message: "Publication updated successfully", publication: updatedPublication });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error", error: error.message });
+    }
 });
 
 module.exports = router;
