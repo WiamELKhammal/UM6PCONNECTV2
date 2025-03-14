@@ -14,6 +14,7 @@ const LandingPage2 = () => {
         justifyContent: "space-between",
         padding: "60px 80px",
         height: "auto",
+        paddingTop: "90px"
       }}
     >
       {/* Left Text Content */}
@@ -71,6 +72,8 @@ const LandingPage2 = () => {
               padding: "8px 16px", // Adjust padding for a smaller button
               fontSize: "14px", // Adjust font size
               transition: "transform 0.3s ease",
+              borderColor: "#d84b2b",
+              backgroundColor: "#d84b2b",
               "&:hover": {
                 transform: "scale(1.1)",
               },
@@ -81,24 +84,26 @@ const LandingPage2 = () => {
           <Button
             variant="outlined"
             color="error"
-            size="medium" // Adjusted size to medium
+            size="medium"
+            onClick={() => window.location.href = "/programs"}
             sx={{
-              padding: "8px 16px", // Adjust padding for a smaller button
-              fontSize: "14px", // Adjust font size
+              padding: "8px 16px",
+              fontSize: "14px",
               transition: "transform 0.3s ease",
-              backgroundColor: "white", // Ensure the background stays white
-              borderColor: "#d84b2b", // Set border color to red
-              color: "#d84b2b", // Set text color to red
+              backgroundColor: "white",
+              borderColor: "#d84b2b",
+              color: "#d84b2b",
               "&:hover": {
                 transform: "scale(1.1)",
-                borderColor: "#c32c13", // Set border color on hover to dark red
-                color: "#c32c13", // Set text color on hover to dark red
-                backgroundColor: "white", // Ensure background stays white on hover
+                borderColor: "#d84b2b",
+                color: "#d84b2b",
+                backgroundColor: "white",
               },
             }}
           >
             Explore Academic Programs
           </Button>
+
         </div>
       </div>
 

@@ -1,0 +1,57 @@
+import React, { useState, useEffect } from "react";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Button from "@mui/material/Button";
+import CircularProgress from "@mui/material/CircularProgress";
+
+const DeleteProject = ({ open, onClose, projectId, fetchProjects }) => {
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (!open) setLoading(false);
+  }, [open]);
+
+  const handleDelete = async () => {
+    if (!projectId) return;
+    setLoading(true);
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/projects/${projectId}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete project.");
+      }
+
+      await fetchProjects();
+      onClose();
+    } catch (error) {
+      console.error("Error deleting project:", error);
+      alert("Failed to delete project. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Dialog open={open} onClose={onClose}>
+      <DialogTitle>Confirm Deletion</DialogTitle>
+      <DialogContent>
+        <DialogContentText>Are you sure you want to delete this project entry? This action cannot be undone.</DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose} disabled={loading} style={{ color: "#666" }}>Cancel</Button>
+        <Button onClick={handleDelete} disabled={loading} style={{ color: "#d84b2b" }}>
+          {loading ? <CircularProgress size={24} /> : "Delete"}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+export default DeleteProject;
