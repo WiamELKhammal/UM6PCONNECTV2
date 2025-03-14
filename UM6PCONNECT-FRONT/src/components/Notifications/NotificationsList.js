@@ -37,9 +37,25 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
   const markAllAsRead = async () => {
     try {
       await axios.put(`http://localhost:5000/api/notification/markAllAsRead/${userId}`);
-      setNotifications((prev) => prev.map((notif) => ({ ...notif, read: true })));
+      setNotifications((prev) => prev.map((notif) => ({ ...notif, isRead: true })));
     } catch (error) {
       console.error("Error marking notifications as read:", error);
+    }
+  };
+
+  const markAsRead = async (notificationId) => {
+    try {
+      // API call to mark a specific notification as read
+      await axios.put(`http://localhost:5000/api/notification/mark-as-read/${notificationId}`);
+
+      // Update notification state to reflect the 'read' status
+      setNotifications((prev) =>
+        prev.map((notif) =>
+          notif._id === notificationId ? { ...notif, isRead: true } : notif
+        )
+      );
+    } catch (error) {
+      console.error("Error marking notification as read:", error);
     }
   };
 
@@ -50,8 +66,8 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
       onClose={handleMenuClose}
       sx={{
         maxHeight: 400,
-        marginTop:"25px",
-         marginLeft: "-180px",
+        marginTop: "25px",
+        marginLeft: "-180px",
         overflowY: "auto",
         "& .MuiPaper-root": {
           borderRadius: "12px",
@@ -65,19 +81,11 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          
           padding: "12px 16px",
           borderBottom: "1px solid #ddd",
         }}
       >
-        <Typography
-          variant="h6"
-          sx={{
-            fontWeight: "500",
-            fontSize: "18px",
-            color: "#000",
-          }}
-        >
+        <Typography variant="h6" sx={{ fontWeight: "500", fontSize: "18px", color: "#000" }}>
           Notifications
         </Typography>
         <Tooltip title="Mark all as read">
@@ -133,13 +141,13 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
             gap: 2,
             p: 2,
             borderBottom: "1px solid #ddd",
-
-            backgroundColor: notification.read ? "transparent" : "#f9f9f9",
+            backgroundColor: notification.isRead ? "transparent" : "#f9f9f9",
             transition: "background-color 0.2s ease",
             "&:hover": {
               backgroundColor: "#f5f5f5",
             },
           }}
+          onClick={() => markAsRead(notification._id)} // Mark the notification as read when clicked
         >
           {/* User Avatar */}
           <Avatar
@@ -164,13 +172,7 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
               }}
             >
               {notification.senderId?.Prenom} {notification.senderId?.Nom}{" "}
-              <span
-                style={{
-                  color: "#666",
-                  fontWeight: "semi-bold",
-                  fontSize: "16px",
-                }}
-              >
+              <span style={{ color: "#666", fontWeight: "semi-bold", fontSize: "16px" }}>
                 started following you
               </span>
             </Typography>
