@@ -26,7 +26,7 @@ router.put("/mark-as-read/:id", async (req, res) => {
   try {
     const notification = await Notification.findByIdAndUpdate(
       id,
-      { isRead: true },
+      { isRead: true }, // Update isRead field to true
       { new: true }
     );
 
@@ -40,33 +40,25 @@ router.put("/mark-as-read/:id", async (req, res) => {
     res.status(500).json({ message: "Failed to mark notification as read" });
   }
 });
+
 // Get unread notifications count for the user
 router.get('/unreadCount/:userId', async (req, res) => {
     try {
-      const count = await Notification.countDocuments({ receiverId: req.params.userId, read: false });
+      const count = await Notification.countDocuments({ recipientId: req.params.userId, isRead: false }); // Corrected field to isRead
       res.json({ count });
     } catch (error) {
       res.status(500).json({ error: "Error fetching unread notifications." });
     }
-  });
-  // Mark a notification as read
-  router.put('/markAsRead/:notificationId', async (req, res) => {
-    try {
-      await Notification.updateOne({ _id: req.params.notificationId }, { $set: { read: true } });
-      res.status(200).send("Notification marked as read.");
-    } catch (error) {
-      res.status(500).send("Error marking notification as read.");
-    }
-  });
-  
-// Mark all notifications as read
+});
+
+// Mark all notifications as read for a user
 router.put('/markAllAsRead/:userId', async (req, res) => {
     try {
-      await Notification.updateMany({ receiverId: req.params.userId, read: false }, { $set: { read: true } });
+      await Notification.updateMany({ recipientId: req.params.userId, isRead: false }, { $set: { isRead: true } }); // Corrected field to isRead
       res.status(200).send("All notifications marked as read.");
     } catch (error) {
       res.status(500).send("Error marking all notifications as read.");
     }
-  });
-  
+});
+
 module.exports = router;
