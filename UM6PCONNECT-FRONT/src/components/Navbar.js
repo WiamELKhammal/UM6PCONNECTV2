@@ -10,6 +10,7 @@ import {
   Divider,
   Typography,
   Button,
+  Badge, // Import Badge component
 } from "@mui/material";
 import { Home, Message, Notifications, KeyboardArrowDown } from "@mui/icons-material";
 import { UserContext } from "../context/UserContext";
@@ -21,7 +22,7 @@ const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null); // For profile menu
   const [notificationAnchorEl, setNotificationAnchorEl] = useState(null); // For notifications menu
   const [scrolled, setScrolled] = useState(false);
-  const [unreadCount, setUnreadCount] = useState(0); // To store the unread notifications count
+  const [unreadCount, setUnreadCount] = useState(0); // State for unread notifications count
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -30,16 +31,17 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    const fetchUnreadCount = async () => {
-      try {
-        const response = await axios.get(`/api/notification/unreadCount/${user._id}`);
-        setUnreadCount(response.data.count);
-      } catch (error) {
-        console.error("Error fetching unread notifications count:", error);
-      }
-    };
-
     if (user) {
+      // Fetch unread notifications count when the user is logged in
+      const fetchUnreadCount = async () => {
+        try {
+          const response = await axios.get(`http://localhost:5000/api/notification/unreadCount/${user._id}`);
+          setUnreadCount(response.data.count); // Set unread count state
+        } catch (error) {
+          console.error("Error fetching unread notifications count", error);
+        }
+      };
+
       fetchUnreadCount();
     }
   }, [user]);
@@ -81,31 +83,22 @@ const Navbar = () => {
         <Box sx={{ display: "flex", gap: 10, alignItems: "center" }}>
           {[{ icon: <Home />, label: "Home", link: "/" },
             { icon: <Message />, label: "Messages", link: "/messages" },
-            { icon: <Notifications />, label: "Notifications", link: "#" }]
-            .map(({ icon, label, link }) => (
-              <Box key={label} sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            { icon: <Notifications />, label: "Notifications", link: "#" }].map(({ icon, label, link }) => (
+              <Box key={label} sx={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}>
                 <IconButton
                   onClick={label === "Notifications" ? handleNotificationMenuOpen : null}
                   sx={{ color: "#404040" }}
                 >
-                  {icon}
-                  {label === "Notifications" && unreadCount > 0 && (
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        top: -5,
-                        right: -5,
-                        backgroundColor: "#d84b2b",
-                        color: "white",
-                        borderRadius: "50%",
-                        padding: "2px 6px",
-                        fontSize: "12px",
-                      }}
-                    >
-                      {unreadCount > 9 ? "9+" : unreadCount}
-                    </Box>
-                  )}
+                  {/* Wrap the Notifications icon in Badge component */}
+                  <Badge
+                    badgeContent={label === "Notifications" ? unreadCount : 0}
+                    color="error" // Color the badge red
+                    sx={{ "& .MuiBadge-dot": { backgroundColor: "#d84b2b" } }} // Customize badge color
+                  >
+                    {icon}
+                  </Badge>
                 </IconButton>
+
                 <Typography variant="caption" sx={{ color: "#707070" }}>
                   {label}
                 </Typography>
