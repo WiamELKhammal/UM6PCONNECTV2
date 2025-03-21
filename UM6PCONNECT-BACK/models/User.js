@@ -6,11 +6,12 @@ const UserSchema = new mongoose.Schema({
   Email: { type: String, required: true, unique: true },
   telephone: { type: String },
   password: { type: String, required: false },
-  
+
   Status: { type: String, default: "Pending" },
   emailsent: { type: Boolean, default: false },
   hashedTemporaryPass: { type: String, required: false },
-
+  profilePicture: { type: String, default: "" }, // Base64-encoded image
+  coverPicture: { type: String, default: "" },
   // Additional profile fields
   bio: { type: String, default: "" },       // User's biography (limit to 200 words on the front-end)
   headline: { type: String, default: "" },    // Short professional tagline
@@ -27,7 +28,7 @@ const UserSchema = new mongoose.Schema({
   projects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }],
 
 
-  
+
 });
 
 // Create or retrieve the model

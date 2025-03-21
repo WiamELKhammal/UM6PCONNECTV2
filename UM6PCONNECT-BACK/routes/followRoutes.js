@@ -85,7 +85,7 @@ router.get("/following/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    const following = await Follow.find({ follower: userId }).populate("following", "Prenom Nom email profilePic headline tags bio Departement tags");
+    const following = await Follow.find({ follower: userId }).populate("following", "Prenom Nom email profilePicture headline tags bio Departement tags");
     res.json(following);
   } catch (error) {
     res.status(500).json({ message: "Error retrieving followed users", error });
@@ -97,7 +97,7 @@ router.get("/followers/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    const followers = await Follow.find({ following: userId }).populate("follower", "Prenom Nom email profilePic headline tags bio Departement tags");
+    const followers = await Follow.find({ following: userId }).populate("follower", "Prenom Nom email profilePicture headline tags bio Departement tags");
     res.json(followers);
   } catch (error) {
     res.status(500).json({ message: "Error retrieving followers", error });

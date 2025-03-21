@@ -2,13 +2,22 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const bcrypt = require('bcrypt');
-const User = require('./models/User'); // Assurez-vous que ce modèle existe
-const jwt = require('jsonwebtoken');
-const app = express();
+const http = require('http'); // Import HTTP for WebSocket support
+const initializeSocket = require('./socket');
+const bodyParser = require('body-parser'); // Import body-parser
 
+const app = express();
+const server = http.createServer(app); // Create HTTP server
+
+// Middleware
 app.use(cors());
-app.use(express.json());
+
+// ✅ Increase Payload Size Limit (50MB)
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+
 const { sendPasswordsToUnsentUsers } = require("./controllers/authController");
 const userRoutes = require('./routes/userRoutes'); 
 const changePasswordRoutes = require('./routes/changePassword');
@@ -25,8 +34,11 @@ const filterRoutes = require("./routes/filterRoutes");
 const saveRoutes = require("./routes/saveRoutes");
 const followRoutes = require("./routes/followRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
+const messageRoutes = require("./routes/messageRoutes");
 const Complete = require('./routes/Complete');
-// Connexion MongoDB
+const profilepictureRoutes = require('./routes/profilepictureRoutes');
+
+// Connect MongoDB
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/um6pconnect';
 
 const connectDB = async () => {
@@ -43,7 +55,7 @@ const connectDB = async () => {
     if (mongoose.connection.readyState === 1) {
       console.log("Checking for emailsent=false...");
       try {
-        await sendPasswordsToUnsentUsers(); // Call the function here
+        await sendPasswordsToUnsentUsers();
         console.log("Emails sent successfully at startup");
       } catch (emailError) {
         console.error("Error sending emails:", emailError);
@@ -57,8 +69,7 @@ const connectDB = async () => {
   }
 };
 
-
-
+// API Routes
 app.use("/api/users", userRoutes);
 app.use("/api/change-password", changePasswordRoutes);
 app.use("/api/signin", signinRoutes);
@@ -75,13 +86,17 @@ app.use('/api/filter', filterRoutes);
 app.use('/api/save', saveRoutes);
 app.use('/api/follow', followRoutes);
 app.use('/api/notification', notificationRoutes);
+app.use('/api/messages', messageRoutes);
+app.use('/api/profilepicture', profilepictureRoutes);
 
+// Initialize WebSockets
+initializeSocket(server); // Call WebSocket function with the HTTP server
 
-// Démarrer le serveur
+// Start the server
 const PORT = process.env.PORT || 5000;
 
 connectDB().then(() => {
-  app.listen(PORT, () => {
+  server.listen(PORT, () => { // Start server with WebSockets support
     console.log(`Server running on port ${PORT}`);
   });
 }).catch(err => {

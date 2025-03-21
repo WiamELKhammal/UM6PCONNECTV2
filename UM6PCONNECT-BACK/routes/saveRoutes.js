@@ -42,7 +42,7 @@ router.get("/saved/:userId", async (req, res) => {
     const userId = req.params.userId;
 
     const savedResearchers = await Save.find({ user: userId })
-      .populate("researcher", "Prenom Nom email profilePic headline tags bio Departement") // Include all necessary fields
+      .populate("researcher", "Prenom Nom email profilePicture headline tags bio Departement") // Include all necessary fields
       .exec();
 
     res.json(savedResearchers);

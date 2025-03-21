@@ -14,7 +14,7 @@ router.post("/", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    user.profilePic = image;
+    user.profilePicture = image;
     await user.save();
 
     res.status(200).json({ message: "Profile picture updated successfully" });

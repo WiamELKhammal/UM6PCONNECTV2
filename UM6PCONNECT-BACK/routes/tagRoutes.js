@@ -35,15 +35,16 @@ router.get("/user/:userId", async (req, res) => {
     const tags = await Tag.find({ userId });
 
     if (!tags || tags.length === 0) {
-      return res.status(404).json({ message: "No tags found for this user." });
+      return res.status(200).json({ tags: [] }); // Return empty array instead of 404
     }
 
-    res.status(200).json(tags); // Return the list of tag objects
+    res.status(200).json({ tags: tags.map(tag => tag.name) }); // Return array of tag names
   } catch (error) {
     console.error("Error fetching tags:", error);
     res.status(500).json({ message: "Internal server error." });
   }
 });
+
 router.get("/tag/:tagName", async (req, res) => {
   try {
     const { tagName } = req.params;
