@@ -111,7 +111,7 @@ const FollowList = ({ activeTab }) => {
                                         textAlign: "center",
                                     }}
                                 >
-                                    <PersonAddOutlinedIcon sx={{ fontSize: "48px", color: "#d84b2b", mb: 2 }} />
+                                    <PersonAddOutlinedIcon sx={{ fontSize: "48px", color: "#ea3b15", mb: 2 }} />
 
                                     <h4 style={{ fontWeight: "400", fontSize: "18px", color: "#000" }}>
                                         Your followers list is currently empty. When someone follows  you , it appears here.
@@ -140,7 +140,7 @@ const FollowList = ({ activeTab }) => {
                                                 <Box sx={{ display: "flex", alignItems: "center", gap: 2, flex: 1, overflow: "hidden" }}>
                                                     <ListItemAvatar>
                                                         <Avatar
-                                                            src={follower.follower.profilePic || "/assets/images/default-profile.png"}
+                                                            src={follower.follower.profilePicture || "/assets/images/default-profile.png"}
                                                             sx={{ width: 50, height: 50, border: "2px solid #ddd" }}
                                                         />
                                                     </ListItemAvatar>
@@ -232,7 +232,7 @@ const FollowList = ({ activeTab }) => {
                                         textAlign: "center",
                                     }}
                                 >
-                                    <PersonAddOutlinedIcon sx={{ fontSize: "48px", color: "#d84b2b", mb: 2 }} />
+                                    <PersonAddOutlinedIcon sx={{ fontSize: "48px", color: "#ea3b15", mb: 2 }} />
                          
                                     <h4 style={{ fontWeight: "400", fontSize: "18px", color: "#000" }}>
                                         Your following list is currently empty. When you follow  someone , it appears here.
@@ -261,7 +261,7 @@ const FollowList = ({ activeTab }) => {
                                                 <Box sx={{ display: "flex", alignItems: "center", gap: 2, flex: 1, overflow: "hidden" }}>
                                                     <ListItemAvatar>
                                                         <Avatar
-                                                            src={followedUser.following.profilePic || "/assets/images/default-profile.png"}
+                                                            src={followedUser.following.profilePicture || "/assets/images/default-profile.png"}
                                                             sx={{ width: 50, height: 50, border: "2px solid #ddd" }}
                                                         />
                                                     </ListItemAvatar>
@@ -333,7 +333,7 @@ const FollowList = ({ activeTab }) => {
 
                                                 {/* Unfollow Button */}
                                                 <IconButton
-                                                    sx={{ color: "#d84b2b" }}
+                                                    sx={{ color: "#ea3b15" }}
                                                     onClick={() => handleUnfollow(followedUser.following._id)}
                                                 >
                                                     <PersonRemoveOutlinedIcon fontSize="small" />

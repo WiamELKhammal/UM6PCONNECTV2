@@ -6,17 +6,17 @@ const cards = [
   {
     title: "Connect with Researchers",
     description: "Establish connections and collaborate with professionals in your field.",
-    icon: <GroupAdd sx={{ fontSize: 60, color: "#d84b2b" }} />,  // Updated icon
+    icon: <GroupAdd sx={{ fontSize: 60, color: "#ea3b15" }} />,  // Updated icon
   },
   {
     title: "Engage in Knowledge Exchange",
     description: "Communicate and share research findings with fellow researchers.",
-    icon: <ChatBubbleOutline sx={{ fontSize: 60, color: "#d84b2b" }} />,  // Updated icon
+    icon: <ChatBubbleOutline sx={{ fontSize: 60, color: "#ea3b15" }} />,  // Updated icon
   },
   {
     title: "Monitor Your Research Impact",
     description: "Track the influence and citations of your published work over time.",
-    icon: <TrendingUp sx={{ fontSize: 60, color: "#d84b2b" }} />,  // Updated icon
+    icon: <TrendingUp sx={{ fontSize: 60, color: "#ea3b15" }} />,  // Updated icon
   },
 ];
 

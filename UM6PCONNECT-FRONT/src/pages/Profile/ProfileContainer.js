@@ -49,14 +49,14 @@ const ProfileContainer = () => {
                   fontWeight: "400",
                   px: 3,
                   py: 1.5,
-                  backgroundColor: activeTab === tab.id ? "#d84b2b" : "white",
+                  backgroundColor: activeTab === tab.id ? "#ea3b15" : "white",
                   color: activeTab === tab.id ? "white" : "black",
                   transition: "0.3s",
                   border: activeTab === tab.id ? "none" : "1px solid #ccc", // Border for non-active tabs
                   borderBottom: activeTab === tab.id ? "none" : "1px solid #ccc", // Prevent bottom double border
                   borderRadius: index === 0 ? "6px 0 0 0" : index === tabs.length - 1 ? "0 6px 0 0" : "0", // Left top corner for first, right top for last
                   "&:hover": {
-                    backgroundColor: activeTab === tab.id ? "#d84b2b" : "#f5f5f5",
+                    backgroundColor: activeTab === tab.id ? "#ea3b15" : "#f5f5f5",
                   },
                   "&.Mui-selected": {
                     color: "white",

@@ -135,11 +135,11 @@ const SignInPage = () => {
               <p
                 style={{
                   fontSize: "14px",
-                  color: "#d84b2b",
+                  color: "#ea3b15",
                   marginBottom: "7px",
                 }}
               >
-                <a href="#" style={{ color: "#d84b2b", fontWeight: "600" }}>
+                <a href="#" style={{ color: "#ea3b15", fontWeight: "600" }}>
                   Forgot Password?
                 </a>
               </p>
@@ -161,7 +161,7 @@ const SignInPage = () => {
               <button
                 className="button"
                 style={{
-                  backgroundColor: "#d84b2b",
+                  backgroundColor: "#ea3b15",
                   color: "white",
                   width: "100%",
                   borderRadius: "30px",
@@ -170,7 +170,7 @@ const SignInPage = () => {
                   transition: "background-color 0.3s ease",
                 }}
                 onMouseOver={(e) => { e.currentTarget.style.backgroundColor = "#c83b15"; }}
-                onMouseOut={(e) => { e.currentTarget.style.backgroundColor = "#d84b2b"; }}
+                onMouseOut={(e) => { e.currentTarget.style.backgroundColor = "#ea3b15"; }}
                 onClick={handleSignIn}
               >
                 Sign In
@@ -184,15 +184,15 @@ const SignInPage = () => {
               <br></br>
 
                 By clicking accept, you agree to our{" "}
-                <span style={{ color: "#d84b2b" }}>Terms of Use</span>,{" "}
-                <span style={{ color: "#d84b2b" }}>Privacy Policy</span>, and{" "}
-                <span style={{ color: "#d84b2b" }}>Cookie Policy</span>.
+                <span style={{ color: "#ea3b15" }}>Terms of Use</span>,{" "}
+                <span style={{ color: "#ea3b15" }}>Privacy Policy</span>, and{" "}
+                <span style={{ color: "#ea3b15" }}>Cookie Policy</span>.
               </p>
 
               {/* Don't have an account? */}
               <p style={{ fontSize: "14px", color: "black", textAlign: "center", marginTop: "10px" }}>
                 Don't have an account?{" "}
-                <a href="/signup" style={{ color: "#d84b2b", fontWeight: "600" }}>
+                <a href="/signup" style={{ color: "#ea3b15", fontWeight: "600" }}>
                   Sign up
                 </a>
               </p>

@@ -1,130 +1,140 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Grid, Card, CardContent, Button } from "@mui/material";
+import { Box, Typography, Card, CardContent, Button, Pagination } from "@mui/material";
 
-const PostBacPrograms = () => {
+const PostBacPrograms = ({ filters, searchQuery }) => {
   const [poles, setPoles] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
 
   useEffect(() => {
-    fetch("/data/poles.json") // Load JSON from public/data/
+    fetch("/data/poles.json")
       .then((response) => response.json())
       .then((data) => setPoles(data))
       .catch((error) => console.error("Error loading poles data:", error));
   }, []);
 
+  // Flatten all schools into a single array
+  const schoolsList = poles.flatMap((pole) => pole.schools);
+
+  // **Apply Filters and Search**
+  const filteredSchools = schoolsList.filter((school) => {
+    const matchesSearch =
+      searchQuery
+        ? school.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          school.description.toLowerCase().includes(searchQuery.toLowerCase())
+        : true; // If no search query, match all schools
+
+    return (
+      matchesSearch &&
+      (!filters.category || school.category === filters.category) &&
+      (!filters.school || school.name.toLowerCase().includes(filters.school.toLowerCase())) &&
+      (!filters.degreeType || school.degreeType === filters.degreeType) &&
+      (!filters.duration || school.duration === filters.duration)
+    );
+  });
+
+  // Apply pagination AFTER filtering
+  const totalPages = Math.ceil(filteredSchools.length / itemsPerPage);
+  const currentSchools = filteredSchools.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
   return (
-    <Box sx={{ padding: "40px" }}>
-      <Grid container spacing={3}>
-        {poles.map((pole, idx) =>
-          pole.schools.map((school, schoolIdx) => (
-            <Grid item xs={12} sm={6} md={4} key={`${idx}-${schoolIdx}`}>
-              <Card
-                sx={{
-                  borderRadius: "8px",
-                  display: "flex",
-                  flexDirection: "column",
-                  height: "100%", // Ensures uniform height
-                }}
-              >
-                {/* Pole Header */}
-                <Box
-                  sx={{
-                    backgroundColor: "#f0f0f0",
-                    padding: "12px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderTopLeftRadius: "8px",
-                    borderTopRightRadius: "8px",
-                  }}
-                >
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold", color: "black", textAlign: "center" }}>
+    <Box sx={{ padding: "40px", maxWidth: "900px", margin: "0 auto" }}>
+      {/* Display message if no programs found */}
+      {filteredSchools.length === 0 && (
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+          <Typography variant="h6" sx={{ color: "#818485", fontSize: "18px" }}>
+            No programs found matching your filters or search query.
+          </Typography>
+        </Box>
+      )}
 
-                    {pole.name}
-                  </Typography>
-                </Box>
+      {currentSchools.map((school, schoolIdx) => (
+        <Card
+          key={schoolIdx}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            borderRadius: "12px",
+            overflow: "hidden",
+            border: "1px solid #ccc",
+            boxShadow: "none",
+            marginBottom: "20px",
+            padding: "15px",
+            width: "100%",
+            gap: "20px",
+          }}
+        >
+          {/* Left Side - BIGGER Logo Image */}
+          <Box>
+            <img
+              src={school.logo}
+              alt={school.name}
+              style={{
+                width: "180px",
+                height: "180px",
+                objectFit: "contain",
+              }}
+            />
+          </Box>
 
-                {/* School Content */}
-                <CardContent
-                  sx={{
-                    textAlign: "center",
-                    padding: "20px",
-                    flexGrow: 1, // Allows content to occupy available space for uniform height
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                  }}
-                >
-                  {/* Logo Display */}
-                  {school.logo ? (
-                    <Box
-                      sx={{
-                        width: "100%",
-                        height: "80px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginBottom: "15px",
-                      }}
-                    >
-                      <img
-                        src={school.logo}
-                        alt={school.name}
-                        style={{
-                          maxHeight: "150px",
-                          objectFit: "contain",
-                          width: school.logo.includes("FGSES") ? "550px" : "auto", // Increase width only for FGSES logos
-                        }}
-                      />
-                    </Box>
-                  ) : (
-                    <Box
-                      sx={{
-                        width: "100%",
-                        height: "80px",
-                        backgroundColor: "#f0f0f0",
-                        marginBottom: "15px",
-                      }}
-                    />
-                  )}
+          {/* Center - Text Details */}
+          <CardContent sx={{ flex: 1, padding: "0", textAlign: "justify" }}>
+            <Typography variant="h6" sx={{ fontWeight: "bold", fontSize: "20px", color: "#333" }}>
+              {school.name}
+            </Typography>
+            <Typography variant="body2" sx={{ color: "gray", mt: 1, textAlign: "justify" }}>
+              {school.description}
+            </Typography>
+          </CardContent>
 
-                  {/* School Name */}
-                  <Typography
-                    variant="h7"
-                    sx={{ fontWeight: "bold", marginBottom: "10px" }}
-                  >
-                    {school.name}
-                  </Typography>
+          {/* Right Side - Apply Button */}
+          <Box sx={{ flexShrink: 0 }}>
+            <Button
+              sx={{
+                backgroundColor: "#ea3b15",
+                color: "#fff",
+                fontWeight: "bold",
+                borderRadius: "8px",
+                padding: "8px 16px",
+                minWidth: "140px",
+                "&:hover": { backgroundColor: "#c93210" },
+              }}
+              href={school.apply_link}
+              target="_blank"
+            >
+              Apply
+            </Button>
+          </Box>
+        </Card>
+      ))}
 
-                  {/* Description with Reduced Size */}
-                  <Typography
-                    variant="body2"
-                    sx={{ color: "gray", fontSize: "0.85rem", marginBottom: "15px" }}
-                  >
-                    {school.description}
-                  </Typography>
-                </CardContent>
-
-                {/* Full-width button */}
-                <Button
-                  fullWidth
-                  sx={{
-                    backgroundColor: "#f0f0f0",
-                    color: "black",
-                    textTransform: "none",
-                    borderBottomLeftRadius: "8px",
-                    borderBottomRightRadius: "8px",
-                    fontWeight: "bold", 
-                    padding: "12px",
-                    "&:hover": { backgroundColor: "#ccc" },
-                  }}
-                >
-                  Candidater
-                </Button>
-              </Card>
-            </Grid>
-          ))
-        )}
-      </Grid>
+      {/* Pagination (Below Programs) */}
+      {totalPages > 1 && (
+        <Box sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={(event, value) => setCurrentPage(value)}
+            variant="outlined"
+            shape="rounded"
+            sx={{
+              "& .MuiPaginationItem-root": {
+                color: "#ea3b15",
+                borderColor: "#ea3b15",
+              },
+              "& .MuiPaginationItem-root.Mui-selected": {
+                backgroundColor: "#ea3b15",
+                color: "#fff",
+              },
+              "& .MuiPaginationItem-root:hover": {
+                backgroundColor: "#f28c6f",
+                color: "#fff",
+              },
+            }}
+          />
+        </Box>
+      )}
     </Box>
   );
 };

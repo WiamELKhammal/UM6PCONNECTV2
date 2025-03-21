@@ -18,7 +18,7 @@ const UserProfile = () => {
 
   return (
     <div className="container">
-      <img src={user.profilePic || "/assets/images/default-profile.png"} alt={user.Nom} />
+      <img src={user.profilePicture || "/assets/images/default-profile.png"} alt={user.Nom} />
       <h2>{user.Prenom} {user.Nom}</h2>
       <p>{user.Departement}</p>
       <p>{user.Email}</p>

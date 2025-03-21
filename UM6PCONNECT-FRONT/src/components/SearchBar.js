@@ -1,27 +1,18 @@
 import React, { useState } from "react";
-import { Paper, InputBase, Box, IconButton, Collapse } from "@mui/material";
+import { Paper, InputBase, Box, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import Tags from "../pages/Home/Tags"; // Assuming the Tags component is in the same folder
-import FilterPage from "./FilterPage"; // Import the FilterPage component
 
-const SearchBar = ({ onSearch, tags, onTagClick }) => {
-  const [isFilterOpen, setIsFilterOpen] = useState(false); // State to toggle the filter visibility
-
-  const handleFilterToggle = () => {
-    setIsFilterOpen((prev) => !prev); // Toggle the filter options
-  };
-
-  const handleApplyFilter = (filters) => {
-    console.log("Applied Filters: ", filters); // Process the filters as needed
-    // You can also pass these filters to the parent or backend
-    setIsFilterOpen(false); // Close the filter page after applying
+const SearchBar = ({ onSearch }) => {
+  // Function to handle search
+  const handleSearch = (event) => {
+    const query = event.target.value.toLowerCase(); // Normalize to lower case
+    onSearch(query); // Pass the query to the parent component
   };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 2 }}>
-      {/* Search Bar with Tags in the same line */}
-      <Box sx={{ display: "flex", alignItems: "center", width: "100%", gap: 2 }}>
+      {/* Search Bar with Increased Width */}
+      <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
         <Paper
           component="form"
           sx={{
@@ -30,10 +21,10 @@ const SearchBar = ({ onSearch, tags, onTagClick }) => {
             px: 2,
             py: 1,
             borderRadius: 20,
-            width: "30%",
+            width: "830px", // Set a fixed width as you requested
             boxShadow: "none",
             backgroundColor: "#fafafa",
-            borderColor: "#ccc",
+            borderColor: "1px solid #ccc",
           }}
         >
           <IconButton sx={{ color: "#818485" }}>
@@ -41,24 +32,11 @@ const SearchBar = ({ onSearch, tags, onTagClick }) => {
           </IconButton>
           <InputBase
             sx={{ ml: 1, flex: 1 }}
-            placeholder="Search..."
-            onChange={(e) => onSearch(e.target.value)}
+            placeholder="Search here ..."
+            onChange={handleSearch} // Handle the search input
           />
-          <IconButton sx={{ color: "#818485" }} onClick={handleFilterToggle}>
-            <FilterListIcon />
-          </IconButton>
         </Paper>
-
-        {/* Tags displayed in the same line as the search bar */}
-        <Tags tags={tags} onTagClick={onTagClick} />
       </Box>
-
-      {/* FilterPage - Displayed below the search bar when the filter icon is clicked */}
-      <Collapse in={isFilterOpen}>
-        <Box sx={{ mt: 2 }}>
-          <FilterPage onApplyFilter={handleApplyFilter} />
-        </Box>
-      </Collapse>
     </Box>
   );
 };

@@ -75,8 +75,8 @@ const Languages = () => {
           onClick={() => handleOpen(null)}
           style={{
             cursor: "pointer",
-            color: "#d84b2b",
-            border: "1px solid #d84b2b",
+            color: "#ea3b15",
+            border: "1px solid #ea3b15",
             borderRadius: "8px",
             padding: "5px",
             fontSize: "30px",
@@ -110,7 +110,7 @@ const Languages = () => {
                     backgroundColor: "#f4e9e7",
                   }}
           >
-            <LanguageIcon style={{ color: "#d84b2b", fontSize: "26px" }} />
+            <LanguageIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
           </div>
           <div>
             <p style={{ fontWeight: "600", fontSize: "16px" }}>Language Name</p>
@@ -153,7 +153,7 @@ const Languages = () => {
                     backgroundColor: "#f4e9e7",
                   }}
                 >
-                  <LanguageIcon style={{ color: "#d84b2b", fontSize: "26px" }} />
+                  <LanguageIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
                 </div>
                 <div>
                   <p style={{ fontWeight: "600", fontSize: "16px" }}>
@@ -170,7 +170,7 @@ const Languages = () => {
                   onClick={() => handleOpen(language)}
                   style={{
                     cursor: "pointer",
-                    color: "#d84b2b",
+                    color: "#ea3b15",
                     fontSize: "24px",
                     transition: "all 0.3s ease",
                   }}
@@ -181,7 +181,7 @@ const Languages = () => {
                   onClick={() => setDeleteLanguageId(language._id)}
                   style={{
                     cursor: "pointer",
-                    color: "#d84b2b",
+                    color: "#ea3b15",
                     fontSize: "24px",
                     transition: "all 0.3s ease",
                   }}

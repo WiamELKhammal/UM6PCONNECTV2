@@ -16,6 +16,7 @@ const UserProfile = () => {
                 minHeight: "100vh", 
                 display: "flex", 
                 flexDirection: "column", 
+                paddingTop: "80px" ,
                 backgroundColor: "#fafafa" // Correct way to apply background color
             }}
         >

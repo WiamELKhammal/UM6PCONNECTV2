@@ -78,8 +78,8 @@ const Education = () => {
                     onClick={() => handleOpen(null)}
                     style={{
                         cursor: "pointer",
-                        color: "#d84b2b",
-                        border: "1px solid #d84b2b",
+                        color: "#ea3b15",
+                        border: "1px solid #ea3b15",
                         borderRadius: "8px",
                         padding: "5px",
                         fontSize: "30px",
@@ -113,7 +113,7 @@ const Education = () => {
                                         backgroundColor: "#f4e9e7",
                         }}
                     >
-                        <SchoolIcon style={{ color: "#d84b2b", fontSize: "26px" }} />
+                        <SchoolIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
                     </div>
                     <div>
                         <p style={{ fontWeight: "600", fontSize: "16px" }}>School Name</p>
@@ -157,7 +157,7 @@ const Education = () => {
                                         backgroundColor: "#f4e9e7",
                                     }}
                                 >
-                                    <SchoolIcon style={{ color: "#d84b2b", fontSize: "26px" }} />
+                                    <SchoolIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
                                 </div>
                                 <div>
                                     <p style={{ fontWeight: "600", fontSize: "16px" }}>{edu.schoolName || "School Name"}</p>
@@ -173,7 +173,7 @@ const Education = () => {
                                     onClick={() => handleOpen(edu)}
                                     style={{
                                         cursor: "pointer",
-                                        color: "#d84b2b",
+                                        color: "#ea3b15",
                                         fontSize: "24px",
                                         transition: "all 0.3s ease",
                                     }}
@@ -184,7 +184,7 @@ const Education = () => {
                                     onClick={() => setDeleteEducationId(edu._id)}
                                     style={{
                                         cursor: "pointer",
-                                        color: "#d84b2b",
+                                        color: "#ea3b15",
                                         fontSize: "24px",
                                         transition: "all 0.3s ease",
                                     }}

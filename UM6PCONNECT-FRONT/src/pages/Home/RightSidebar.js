@@ -11,24 +11,27 @@ import {
   IconButton,
   Divider,
   Button,
+  Chip,
 } from "@mui/material";
 import { UserContext } from "../../context/UserContext";
-import SearchBar from "../../components/SearchBar.js";
+import SearchBar2 from "../../components/SearchBar2.js";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import Save from "../Save/Save"; // Import the Save component
-import Follow from "../Follow/Follow"; // Import the Follow component
-
-const RightSidebar = () => {
-  const { user } = useContext(UserContext); // Get the logged-in user from context
+import Save from "../Save/Save";
+import Follow from "../Follow/Follow";
+import MessageModal from "../../components/Messages/MessageModal";
+import ShareIcon from '@mui/icons-material/Share'; const RightSidebar = () => {
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
   const [researchers, setResearchers] = useState([]);
   const [filteredResearchers, setFilteredResearchers] = useState([]);
   const [tags, setTags] = useState([]);
-  const [researcherTags, setResearcherTags] = useState({}); // Store tags by researcher ID
-  const navigate = useNavigate();
+  const [researcherTags, setResearcherTags] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedResearcherId, setSelectedResearcherId] = useState(null);
+  const [selectedResearcherName, setSelectedResearcherName] = useState("");
 
-  // Fetch all users and tags on mount
+  // Fetch users & tags on mount
   useEffect(() => {
-    // Fetch all users and exclude the logged-in user
     fetch("http://localhost:5000/api/users")
       .then((res) => res.json())
       .then((data) => {
@@ -36,36 +39,41 @@ const RightSidebar = () => {
           (u) => u.Status === "Active" && u._id !== user?._id
         );
         setResearchers(activeResearchers);
-        setFilteredResearchers(activeResearchers); // Initially show all users except the logged-in user
+        setFilteredResearchers(activeResearchers);
       })
       .catch((err) => console.error("Failed to fetch users:", err));
 
-    // Fetch all tags
     fetch("http://localhost:5000/api/tags")
       .then((res) => res.json())
       .then((data) => setTags(data))
       .catch((err) => console.error("Failed to fetch tags:", err));
   }, [user]);
 
-  // Fetch tags for each researcher after researchers are loaded
+  // Fetch tags for each researcher
   useEffect(() => {
-    researchers.forEach((researcher) => {
-      fetch(`http://localhost:5000/api/tags/user/${researcher._id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setResearcherTags((prevTags) => ({
-            ...prevTags,
-            [researcher._id]: data, // Store tags in state by researcher ID
-          }));
-        })
-        .catch((err) => console.error("Failed to fetch tags for user:", err));
-    });
+    const fetchTags = async () => {
+      let tagsMap = {};
+      for (const researcher of researchers) {
+        try {
+          const res = await fetch(`http://localhost:5000/api/tags/user/${researcher._id}`);
+          const data = await res.json();
+          tagsMap[researcher._id] = data.tags || [];
+        } catch (err) {
+          console.error(`Failed to fetch tags for user ${researcher._id}:`, err);
+          tagsMap[researcher._id] = [];
+        }
+      }
+      setResearcherTags(tagsMap);
+    };
+
+    if (researchers.length > 0) {
+      fetchTags();
+    }
   }, [researchers]);
 
-  // Handle search query
+  // Handle search
   const handleSearch = (query) => {
     let filteredList = researchers;
-
     if (query) {
       filteredList = filteredList.filter(
         (researcher) =>
@@ -73,7 +81,6 @@ const RightSidebar = () => {
           researcher.Nom.toLowerCase().includes(query.toLowerCase())
       );
     }
-
     setFilteredResearchers(filteredList);
   };
 
@@ -82,22 +89,33 @@ const RightSidebar = () => {
     fetch(`http://localhost:5000/api/tags/tag/${tagName}`)
       .then((res) => res.json())
       .then((data) => {
-        setFilteredResearchers(data);
+        // Exclude logged-in user from search results
+        const filteredResults = data.filter(
+          (researcher) => researcher._id !== user?._id
+        );
+        setFilteredResearchers(filteredResults);
       })
       .catch((err) => console.error("Failed to fetch users by tag:", err));
   };
 
   // Show all researchers
   const handleShowAll = () => {
-    setFilteredResearchers(researchers); // Reset the filter and show all users
+    setFilteredResearchers(researchers);
+  };
+
+  // Handle message click
+  const handleMessageClick = (researcherId, researcherName) => {
+    setSelectedResearcherId(researcherId);
+    setSelectedResearcherName(researcherName);
+    setIsModalOpen(true);
   };
 
   return (
     <Box sx={{ flex: 1, bgcolor: "#fff", borderRadius: "10px", overflow: "hidden" }}>
       {/* Search Bar */}
-      <SearchBar onSearch={handleSearch} tags={tags} onTagClick={handleTagClick} />
+      <SearchBar2 onSearch={handleSearch} tags={tags} onTagClick={handleTagClick} />
 
-      {/* Title and Show All Users button aligned on the same line */}
+      {/* Title & Show All Users button */}
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 2 }}>
         <Typography variant="body1" sx={{ color: "#000", fontWeight: "semi-bold", mr: 2 }}>
           Our Researchers:
@@ -139,18 +157,10 @@ const RightSidebar = () => {
               onClick={() => navigate(`/Userprofile/${researcher._id}`)} // Navigate to profile
             >
               {/* Researcher Details */}
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 2,
-                  flex: 1,
-                  overflow: "hidden",
-                }}
-              >
+              <Box sx={{ display: "flex", alignItems: "center", gap: 2, flex: 1, overflow: "hidden" }}>
                 <ListItemAvatar>
                   <Avatar
-                    src={researcher.profilePic || "/assets/images/default-profile.png"}
+                    src={researcher.profilePicture || "/assets/images/default-profile.png"}
                     sx={{ width: 50, height: 50, border: "2px solid #ddd" }}
                   />
                 </ListItemAvatar>
@@ -172,63 +182,65 @@ const RightSidebar = () => {
                         {researcher.bio || "No bio available."}
                       </Typography>
 
-                      {/* Display tags inline */}
+                      {/* Tags Section (Below Bio) */}
                       {researcherTags[researcher._id] &&
-                      researcherTags[researcher._id].length > 0 ? (
-                        <Box sx={{ mt: 1, display: "flex", flexWrap: "wrap" }}>
-                          {researcherTags[researcher._id].map((tag) => (
-                            <Button
-                              key={tag._id}
-                              variant="outlined"
-                              size="small"
-                              sx={{
-                                borderRadius: 20,
-                                borderColor: "#ccc",
-                                color: "#3b444b ",
-                                minWidth: "auto",
-                                px: 2,
-                                mx: 0.3,
-                                backgroundColor: "#f7f7f7",
-                                "&:hover": {
-                                  backgroundColor: "#fafafa",
-                                  borderColor: "#ccc",
-                                },
-                              }}
-                              onClick={(e) => {
-                                e.stopPropagation(); // Prevent parent click
-                                handleTagClick(tag.name);
-                              }}
-                            >
-                              {tag.name}
-                            </Button>
-                          ))}
-                        </Box>
-                      ) : (
-                        <Typography fontSize="12px" color="textSecondary">
-                          No tags available.
-                        </Typography>
-                      )}
+                        researcherTags[researcher._id].length > 0 && (
+                          <Box sx={{ display: "flex", flexWrap: "wrap", mt: 1 }}>
+                            {researcherTags[researcher._id].map((tag, index) => (
+                              <Chip
+                                key={index}
+                                label={tag}
+                                size="small"
+                                sx={{
+                                  bgcolor: "#f7f7f7",
+                                  color: "#6e6e6e",
+                                  fontSize: "11px",
+                                  mt: 0.5,
+                                  mr: 0.5,
+                                  "&:hover": { bgcolor: "#ddd", cursor: "pointer" },
+                                }}
+                                onClick={() => handleTagClick(tag)}
+                              />
+                            ))}
+                          </Box>
+                        )}
                     </>
                   }
                 />
               </Box>
 
               {/* Action Buttons */}
+
               <Box sx={{ display: "flex", gap: 1 }}>
-                {/* Follow Button */}
                 <Follow researcherId={researcher._id} user={user} />
-                {/* Save Button */}
                 <Save researcherId={researcher._id} user={user} />
-                {/* Chat Button */}
-                <IconButton sx={{ color: "#d84b2b" }}>
+                <IconButton
+                  sx={{ color: "#ea3b15" }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMessageClick(researcher._id, `${researcher.Prenom} ${researcher.Nom}`);
+                  }}
+                >
                   <ChatBubbleOutlineIcon fontSize="small" />
                 </IconButton>
+                <IconButton
+                  sx={{ color: "#ea3b15" }} // Red color
+                  onClick={(e) => e.stopPropagation()} // Add share functionality here if needed
+                >
+                  <ShareIcon fontSize="small" />
+                </IconButton>
               </Box>
+
             </ListItem>
             <Divider />
           </React.Fragment>
         ))}
       </List>
+
+      {/* Message Modal */}
+      {isModalOpen && (
+        <MessageModal open={isModalOpen} onClose={() => setIsModalOpen(false)} recipientId={selectedResearcherId} recipientName={selectedResearcherName} />
+      )}
     </Box>
   );
 };

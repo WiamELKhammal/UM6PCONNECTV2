@@ -62,7 +62,7 @@ const TagsModal = ({ isOpen, onClose, onAddTags, selectedTags }) => {
                 justifyContent: "center",
                 padding: "8px 16px",
                 borderRadius: "20px",
-                backgroundColor: selectedTags.includes(tag.name) ? "#d84b2b" : "#f5f5f5",
+                backgroundColor: selectedTags.includes(tag.name) ? "#ea3b15" : "#f5f5f5",
                 color: selectedTags.includes(tag.name) ? "#fff" : "#444",
                 cursor: "pointer",
                 transition: "background-color 0.3s ease",
@@ -79,7 +79,7 @@ const TagsModal = ({ isOpen, onClose, onAddTags, selectedTags }) => {
           onClick={onClose}
           style={{
             marginTop: "20px",
-            backgroundColor: "#d84b2b",
+            backgroundColor: "#ea3b15",
             color: "#fff",
             textTransform: "none",
           }}

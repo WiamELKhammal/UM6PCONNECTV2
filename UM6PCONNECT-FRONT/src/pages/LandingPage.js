@@ -125,13 +125,13 @@ Lorem ipsum dolor sit amet, <br></br>consectetur <br></br>adipiscing elit.      
                 }}
               >
                 to the{" "}
-                <span style={{ color: "#d84b2b" }}>Terms of Use</span>, the{" "}
-                <span style={{ color: "#d84b2b" }}>Privacy Policy</span>, and the{" "}
-                <span style={{ color: "#d84b2b" }}>Cookie Policy</span>.
+                <span style={{ color: "#ea3b15" }}>Terms of Use</span>, the{" "}
+                <span style={{ color: "#ea3b15" }}>Privacy Policy</span>, and the{" "}
+                <span style={{ color: "#ea3b15" }}>Cookie Policy</span>.
               </p>
               <p style={{ color: "black", fontSize: "16px", marginBottom: "20px" }}>
                 New to UM6P Connect?{" "}
-                <Link to="/signup" style={{ color: "#d84b2b", fontWeight: "600" }}>
+                <Link to="/signup" style={{ color: "#ea3b15", fontWeight: "600" }}>
                   Sign up
                 </Link>
               </p>

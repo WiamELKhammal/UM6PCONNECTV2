@@ -153,7 +153,7 @@ const EditProfileForm = ({ open, onClose, onSave }) => {
                 <TextField label="Department" name="department" value={formData.department} onChange={handleChange} fullWidth variant="outlined" sx={{ marginBottom: "20px" }} />
 
                 <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
-                    <Button variant="contained" onClick={handleSave} style={{ backgroundColor: "#d84b2b", color: "#fff", width: "100%" }} disabled={loading}>
+                    <Button variant="contained" onClick={handleSave} style={{ backgroundColor: "#ea3b15", color: "#fff", width: "100%" }} disabled={loading}>
                         {loading ? <CircularProgress size={24} color="inherit" /> : "Save"}
                     </Button>
                 </div>

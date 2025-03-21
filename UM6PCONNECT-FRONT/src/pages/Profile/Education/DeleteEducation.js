@@ -50,7 +50,7 @@ const DeleteEducation = ({ open, onClose, educationId, fetchEducation }) => {
         <Button onClick={onClose} disabled={loading} style={{ color: "#666" }}>
           Cancel
         </Button>
-        <Button onClick={handleDelete} disabled={loading} style={{ color: "#d84b2b" }}>
+        <Button onClick={handleDelete} disabled={loading} style={{ color: "#ea3b15" }}>
           {loading ? <CircularProgress size={24} /> : "Delete"}
         </Button>
       </DialogActions>

@@ -157,7 +157,7 @@ const Tags = () => {
                   </span>
                 }
                 sx={{
-                  backgroundColor: "#d84b2b",
+                  backgroundColor: "#ea3b15",
                   color: "#fff",
                   border: "1px solid #ddd",
                   cursor: "pointer",
@@ -183,7 +183,7 @@ const Tags = () => {
             <IconButton
               onClick={handleAddCustomTag}
               sx={{
-                backgroundColor: "#d84b2b",
+                backgroundColor: "#ea3b15",
                 color: "#fff",
                 padding: "8px",
               }}

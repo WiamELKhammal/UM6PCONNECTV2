@@ -39,7 +39,7 @@ const DeleteLicense = ({ open, onClose, licenseId, fetchLicenses }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} style={{ color: "black" }}>Cancel</Button>
-        <Button onClick={handleDelete} style={{ backgroundColor: "#d84b2b", color: "#fff" }}>Delete</Button>
+        <Button onClick={handleDelete} style={{ backgroundColor: "#ea3b15", color: "#fff" }}>Delete</Button>
       </DialogActions>
     </Dialog>
   );

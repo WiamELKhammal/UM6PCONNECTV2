@@ -94,7 +94,7 @@ const UserProfile = () => {
             <LinearProgress
               variant="determinate"
               value={completionPercentage}
-              sx={{ flexGrow: 1, height: 8, borderRadius: 4, backgroundColor: "#efeef1", "& .MuiLinearProgress-bar": { backgroundColor: "#d84b2b" } }}
+              sx={{ flexGrow: 1, height: 8, borderRadius: 4, backgroundColor: "#efeef1", "& .MuiLinearProgress-bar": { backgroundColor: "#ea3b15" } }}
             />
           </Box>
 
@@ -104,13 +104,13 @@ const UserProfile = () => {
               <Typography variant="body2" sx={{ flexGrow: 1, marginLeft: "10px", color: "black" }}>
                 {fieldSentences[field] || `Complete your ${field}`}
               </Typography>
-              <ArrowCircleRightOutlinedIcon sx={{ color: "#d84b2b", fontSize: 24, borderRadius: "50%" }} />
+              <ArrowCircleRightOutlinedIcon sx={{ color: "#ea3b15", fontSize: 24, borderRadius: "50%" }} />
             </Box>
           ))}
 
           {displayCompletedFields.map((field, index) => (
             <Box key={index} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderRadius: 4, padding: "10px", border: "1px solid #ededed", mb: 1, backgroundColor: "#fff" }}>
-              <TaskAltIcon sx={{ color: "#d84b2b", fontSize: 24 }} />
+              <TaskAltIcon sx={{ color: "#ea3b15", fontSize: 24 }} />
               <Typography variant="body2" sx={{ flexGrow: 1, marginLeft: "10px", textDecoration: "line-through", color: "#908f95" }}>
                 {field}
               </Typography>
@@ -122,7 +122,7 @@ const UserProfile = () => {
           <Box sx={{ textAlign: "left", mt: 2 }}>
             <Typography
               variant="body2"
-              sx={{ fontWeight: "bold", color: "#d84b2b", cursor: "pointer" }}
+              sx={{ fontWeight: "bold", color: "#ea3b15", cursor: "pointer" }}
               onClick={() => navigate("/profile")}
             >
               View More

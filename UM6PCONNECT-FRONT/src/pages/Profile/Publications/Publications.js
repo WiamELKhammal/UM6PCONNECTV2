@@ -74,15 +74,15 @@ const Publications = () => {
         }}
       >
         <div>
-          <h4 style={{ fontWeight: "600", fontSize: "18px", color: "#d84b2b" }}>Publications</h4>
+          <h4 style={{ fontWeight: "600", fontSize: "18px", color: "#ea3b15" }}>Publications</h4>
           <p style={{ fontSize: "14px", color: "#000" }}>Add your research publications to showcase your work.</p>
         </div>
         <AddIcon
           onClick={() => handleOpen(null)}
           style={{
             cursor: "pointer",
-            color: "#d84b2b",
-            border: "1px solid #d84b2b",
+            color: "#ea3b15",
+            border: "1px solid #ea3b15",
             borderRadius: "8px",
             padding: "5px",
             fontSize: "30px",
@@ -134,7 +134,7 @@ const Publications = () => {
                   onClick={() => handleOpen(pub)}
                   style={{
                     cursor: "pointer",
-                    color: "#d84b2b",
+                    color: "#ea3b15",
                     fontSize: "24px",
                   }}
                 />
@@ -142,7 +142,7 @@ const Publications = () => {
                   onClick={() => setDeletePublicationId(pub._id)}
                   style={{
                     cursor: "pointer",
-                    color: "#d84b2b",
+                    color: "#ea3b15",
                     fontSize: "24px",
                   }}
                 />

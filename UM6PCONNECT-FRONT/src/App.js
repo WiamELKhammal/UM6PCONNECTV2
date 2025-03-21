@@ -14,25 +14,27 @@ import ProfilePage from "./pages/Profile/ProfilePage";
 import ProfileContainer from "./pages/Profile/ProfileContainer";
 import HomePage from "./pages/Home/HomePage";
 import UserProfile from "./pages/Home/Userprofile/Userprofile";
-import UserList from "./components/UserList";
+import MessageParent from "./components/Messages/MessageParent";
 const Layout = () => {
   const location = useLocation(); // Get current route
 
   return (
     <>
       {/* Hide Navbar on SignUp, SignIn, and Changepassword Pages */}
-      {!["/signup", "/signin", "/ChangeYourTempPass"].includes(location.pathname) && <Navbar />}
+      {!["/signup", "/signin", "/ChangeYourTempPass","/messages"].includes(location.pathname) && <Navbar />}
+
 
       <Routes>
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/ChangeYourTempPass" element={<ChangeYourTempPass />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/ProfilePage" element={<ProfilePage />} />
-        <Route path="/LandingPage2" element={<LandingPage2 />} />
-        <Route path="/programs" element={<ProgramsParent />} />
+        <Route path="/" element={<LandingPage2 />} />
+        <Route path="/Our-Programs" element={<ProgramsParent />} />
         <Route path="/profile" element={<ProfileContainer />} />
-        <Route path="/" element={<HomePage />} />
+        <Route path="/Our-Researchers" element={<HomePage />} />
         <Route path="/Userprofile/:userId" element={<UserProfile />} />
+        <Route path="/messages" element={<MessageParent />} />
 
         <Route path="/profile/:id" element={<UserProfile />} />
       </Routes>

@@ -59,7 +59,7 @@ const AddPublication = ({ open, onClose, fetchPublications }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} style={{ color: "black" }}>Cancel</Button>
-        <Button onClick={handleSave} style={{ backgroundColor: "#d84b2b", color: "#fff" }}>Save</Button>
+        <Button onClick={handleSave} style={{ backgroundColor: "#ea3b15", color: "#fff" }}>Save</Button>
       </DialogActions>
     </Dialog>
   );

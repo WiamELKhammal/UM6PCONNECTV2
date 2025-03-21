@@ -24,7 +24,7 @@ const UsersList = () => {
               <div className="media">
                 <div className="media-left">
                   <figure className="image is-96x96">
-                    <img src={user.profilePic || "/assets/images/default-profile.png"} alt={user.Nom} className="is-rounded"/>
+                    <img src={user.profilePicture || "/assets/images/default-profile.png"} alt={user.Nom} className="is-rounded"/>
                   </figure>
                 </div>
                 <div className="media-content">

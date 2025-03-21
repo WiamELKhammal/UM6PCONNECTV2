@@ -77,7 +77,7 @@ const EditLicense = ({ open, onClose, licenseData, fetchLicenses }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} style={{ color: "black" }}>Cancel</Button>
-        <Button onClick={handleUpdate} style={{ backgroundColor: "#d84b2b", color: "#fff" }}>Update</Button>
+        <Button onClick={handleUpdate} style={{ backgroundColor: "#ea3b15", color: "#fff" }}>Update</Button>
       </DialogActions>
     </Dialog>
   );

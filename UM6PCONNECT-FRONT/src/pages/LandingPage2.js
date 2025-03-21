@@ -7,33 +7,37 @@ const LandingPage2 = () => {
     <section
       className="section"
       style={{
-        fontFamily: "'Segoe UI', Tahoma, Geneva, sans-serif",
+        fontFamily: "'Roboto', Arial, sans-serif", // Changed font family
         display: "flex",
         flexWrap: "wrap",
         alignItems: "center",
         justifyContent: "space-between",
         padding: "60px 80px",
         height: "auto",
-        paddingTop: "90px"
+        paddingTop: "90px",
       }}
     >
       {/* Left Text Content */}
       <div style={{ maxWidth: "50%", minWidth: "300px", marginBottom: "20px" }}>
         <h3
           style={{
-            color: "#d84b2b",
-            fontWeight: "650",
+            color: "#ea3b15",
+            fontWeight: "700",
             marginBottom: "10px",
+            marginTop: "-100px",
             display: "flex",
             alignItems: "center",
             gap: "10px",
+            textTransform: "uppercase",
+            letterSpacing: "1px",
+            fontSize: "26px", // Increased font size
           }}
         >
           <span
             style={{
-              width: "15px",
-              height: "2px",
-              backgroundColor: "#d84b2b",
+              width: "20px",
+              height: "3px",
+              backgroundColor: "#ea3b15",
               display: "inline-block",
             }}
           ></span>
@@ -41,19 +45,22 @@ const LandingPage2 = () => {
         </h3>
         <h1
           style={{
-            fontSize: "48px",
+            fontSize: "56px", // Increased font size
             fontWeight: "700",
             marginBottom: "20px",
-            lineHeight: "1.2",
+            lineHeight: "1.3",
+            color: "#333",
           }}
         >
-          Lorem ipsum dolor sit amet consectetur adipiscing elit.
+          Unlock a World of Knowledge & Innovation
         </h1>
-        <p style={{ fontSize: "18px", color: "grey", lineHeight: "1.6" }}>
-          Lorem ipsum dolor sit amet consectetur adipiscing elit. Dolor posuere
-          vel venenatis eu sit massa volutpat massa rhoncus odio feugiat tellus,
-          elit massa sed.
+        <p style={{ fontSize: "20px", color: "#555", lineHeight: "1.7" }}>
+          {/* Increased font size */}
+          Discover the leading researchers, academic programs, and groundbreaking
+          innovations at UM6P. Join a thriving community of scholars and professionals
+          shaping the future.
         </p>
+
 
         {/* CTA Buttons */}
         <div
@@ -67,15 +74,21 @@ const LandingPage2 = () => {
           <Button
             variant="contained"
             color="error"
-            size="medium" // Adjusted size to medium
+            size="medium"
+            onClick={() => window.location.href = "/Our-Researchers"}
             sx={{
-              padding: "8px 16px", // Adjust padding for a smaller button
-              fontSize: "14px", // Adjust font size
-              transition: "transform 0.3s ease",
-              borderColor: "#d84b2b",
-              backgroundColor: "#d84b2b",
+              padding: "12px 25px", // Adjusted padding for bigger button
+              fontSize: "16px", // Increased font size
+              fontWeight: "600",
+              textTransform: "none",
+              transition: "color 0.3s ease, box-shadow 0.3s ease", // Changed hover effect
+              borderColor: "#ea3b15",
+              backgroundColor: "#ea3b15",
+              boxShadow: "0 4px 10px rgba(216, 75, 43, 0.2)",
               "&:hover": {
-                transform: "scale(1.1)",
+                color: "#ea3b15", // Text color change on hover
+                boxShadow: "0 6px 14px rgba(216, 75, 43, 0.3)",
+                textDecoration: "underline", // Underline effect on hover
               },
             }}
           >
@@ -85,29 +98,29 @@ const LandingPage2 = () => {
             variant="outlined"
             color="error"
             size="medium"
-            onClick={() => window.location.href = "/programs"}
+            onClick={() => window.location.href = "/Our-Programs"}
             sx={{
-              padding: "8px 16px",
-              fontSize: "14px",
-              transition: "transform 0.3s ease",
+              padding: "12px 25px", // Adjusted padding for bigger button
+              fontSize: "16px", // Increased font size
+              fontWeight: "600",
+              textTransform: "none",
+              transition: "color 0.3s ease, border-color 0.3s ease", // Changed hover effect
               backgroundColor: "white",
-              borderColor: "#d84b2b",
-              color: "#d84b2b",
+              borderColor: "#ea3b15",
+              color: "#ea3b15",
               "&:hover": {
-                transform: "scale(1.1)",
-                borderColor: "#d84b2b",
-                color: "#d84b2b",
-                backgroundColor: "white",
+                color: "#ea3b15", // Text color change on hover
+                borderColor: "#ea3b15",
+                backgroundColor: "#fff5f3", // Light background on hover
               },
             }}
           >
             Explore Academic Programs
           </Button>
-
         </div>
       </div>
 
-      {/* Right Section with Video */}
+      {/* Right Section with Custom Image */}
       <div
         style={{
           maxWidth: "50%",
@@ -116,17 +129,15 @@ const LandingPage2 = () => {
           textAlign: "center",
         }}
       >
-        {/* Embedded YouTube Video */}
-        <iframe
-          width="600"
-          height="433"
-          src="https://www.youtube.com/embed/yvuIRAmphrg?autoplay=1&mute=1"
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          style={{ borderRadius: "12px", boxShadow: "0 4px 6px rgba(0,0,0,0.1)" }}
-        ></iframe>
+        <img
+          src="/assets/images/landpage2.png" // Custom image
+          alt="UM6P Research"
+          style={{
+            width: "100%", // Reduced image size
+            maxWidth: "750px", // Reduced image max-width
+            height: "auto",
+          }}
+        />
       </div>
     </section>
   );

@@ -35,7 +35,7 @@ const SavedList = () => {
                         headline: saved.researcher.headline || "No headline available",
                         bio: saved.researcher.bio || "No bio available.",
                         Departement: saved.researcher.Departement || "No department available",
-                        profilePic: saved.researcher.profilePic || "/assets/images/default-profile.png",
+                        profilePic: saved.researcher.profilePicture || "/assets/images/default-profile.png",
                     }));
                     setSavedResearchers(standardizedResearchers);
                     setLoading(false);
@@ -112,7 +112,7 @@ const SavedList = () => {
                     <BookmarkBorderIcon
                         sx={{
                             fontSize: "48px",
-                            color: "#d84b2b", // Match your app's theme color
+                            color: "#ea3b15", // Match your app's theme color
                             mb: 2,
                         }}
                     />
@@ -211,10 +211,10 @@ const SavedList = () => {
 
                                 {/* Unsave Button */}
                                 <IconButton
-                                    sx={{ color: "#d84b2b" }}
+                                    sx={{ color: "#ea3b15" }}
                                     onClick={() => handleUnsaveResearcher(researcher._id)}
                                 >
-                                    <BookmarkIcon fontSize="small" sx={{ color: "#d84b2b" }} />
+                                    <BookmarkIcon fontSize="small" sx={{ color: "#ea3b15" }} />
                                 </IconButton>
                             </ListItem>
                             <Divider />

@@ -57,7 +57,7 @@ const Follow = ({ researcherId, user }) => {
 
   return (
     <IconButton
-      sx={{ color: "#d84b2b" }}
+      sx={{ color: "#ea3b15" }}
       onClick={(e) => {
         e.stopPropagation(); // Prevent parent click
         if (isFollowing) {
@@ -69,7 +69,7 @@ const Follow = ({ researcherId, user }) => {
       disabled={loading}
     >
       {isFollowing ? (
-        <PersonRemoveOutlinedIcon fontSize="small" sx={{ color: "#d84b2b" }} /> // Red if following
+        <PersonRemoveOutlinedIcon fontSize="small" sx={{ color: "#ea3b15" }} /> // Red if following
       ) : (
         <PersonAddOutlinedIcon fontSize="small" /> // Default color if not following
       )}

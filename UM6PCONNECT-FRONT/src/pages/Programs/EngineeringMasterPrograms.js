@@ -1,89 +1,140 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Grid, Card, CardContent, Button } from "@mui/material";
+import { Box, Typography, Card, CardContent, Button, Pagination } from "@mui/material";
 
-const EngineeringMasterPrograms = () => {
+const EngineeringMasterPrograms = ({ filters, searchQuery }) => {
   const [domains, setDomains] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
 
   useEffect(() => {
-    fetch("/data/programs_engineering_master.json") // Charge les données JSON
+    fetch("/data/programs_engineering_master.json")
       .then((response) => response.json())
       .then((data) => setDomains(data))
-      .catch((error) => console.error("Erreur de chargement des programmes :", error));
+      .catch((error) => console.error("Error loading programs:", error));
   }, []);
 
+  // Flatten all schools into a single array for filtering and pagination
+  const schoolsList = domains.flatMap((domain) => domain.schools);
+
+  // **Apply Filters and Search**
+  const filteredSchools = schoolsList.filter((school) => {
+    const matchesSearch =
+      searchQuery
+        ? school.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          school.description.toLowerCase().includes(searchQuery.toLowerCase())
+        : true; // If no search query, match all schools
+
+    return (
+      matchesSearch &&
+      (!filters.category || school.category === filters.category) &&
+      (!filters.school || school.name.toLowerCase().includes(filters.school.toLowerCase())) &&
+      (!filters.degreeType || school.degreeType === filters.degreeType) &&
+      (!filters.duration || school.duration === filters.duration)
+    );
+  });
+
+  // Apply pagination AFTER filtering
+  const totalPages = Math.ceil(filteredSchools.length / itemsPerPage);
+  const currentSchools = filteredSchools.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
   return (
-    <Box sx={{ padding: "40px" }}>
-      <Grid container spacing={3}>
-        {domains.map((domain, domainIdx) =>
-          domain.schools.map((school, schoolIdx) => (
-            <Grid item xs={12} sm={6} md={4} key={`${domainIdx}-${schoolIdx}`}>
-              <Card sx={{ borderRadius: "8px", display: "flex", flexDirection: "column", height: "100%" }}>
-                
-                {/* En-tête du domaine */}
-                <Box
-                  sx={{
-                    backgroundColor: "#f0f0f0",
-                    padding: "12px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderTopLeftRadius: "8px",
-                    borderTopRightRadius: "8px",
-                  }}
-                >
-                  <Typography variant="subtitle1" sx={{ fontWeight: "bold", color: "black", textAlign: "center" }}>
-                    {domain.name}
-                  </Typography>
-                </Box>
+    <Box sx={{ padding: "40px", maxWidth: "900px", margin: "0 auto" }}>
+      {/* Display message if no programs found */}
+      {filteredSchools.length === 0 && (
+        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+          <Typography variant="h6" sx={{ color: "#818485", fontSize: "18px" }}>
+            No programs found matching your filters or search query.
+          </Typography>
+        </Box>
+      )}
 
-                {/* Contenu de l'école */}
-                <CardContent sx={{ textAlign: "center", padding: "20px", flexGrow: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                  
-                  {/* Affichage du logo */}
-                  {school.logo ? (
-                    <Box sx={{ width: "100%", height: "80px", display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "15px" }}>
-                      <img src={school.logo} alt={school.name} style={{ maxHeight: "100px", objectFit: "contain" }} />
-                    </Box>
-                  ) : (
-                    <Box sx={{ width: "100%", height: "80px", backgroundColor: "#f0f0f0", marginBottom: "15px" }} />
-                  )}
+      {currentSchools.map((school, schoolIdx) => (
+        <Card
+          key={schoolIdx}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            borderRadius: "12px",
+            overflow: "hidden",
+            border: "1px solid #ccc",
+            boxShadow: "none",
+            marginBottom: "20px",
+            padding: "15px",
+            width: "100%",
+            gap: "20px",
+          }}
+        >
+          {/* Left Side - BIGGER Logo Image */}
+          <Box>
+            <img
+              src={school.logo}
+              alt={school.name}
+              style={{
+                width: "180px",
+                height: "180px",
+                objectFit: "contain",
+              }}
+            />
+          </Box>
 
-                  {/* Nom de l'école */}
-                  <Typography variant="h6" sx={{ fontWeight: "bold", marginBottom: "10px" }}>
-                    {school.name}
-                  </Typography>
+          {/* Center - Text Details */}
+          <CardContent sx={{ flex: 1, padding: "0", textAlign: "justify" }}>
+            <Typography variant="h6" sx={{ fontWeight: "bold", fontSize: "20px", color: "#333" }}>
+              {school.name}
+            </Typography>
+            <Typography variant="body2" sx={{ color: "gray", mt: 1, textAlign: "justify" }}>
+              {school.description}
+            </Typography>
+          </CardContent>
 
-                  {/* Description */}
-                  <Typography variant="body2" sx={{ color: "gray", fontSize: "0.85rem", marginBottom: "15px" }}>
-                    {school.description}
-                  </Typography>
+          {/* Right Side - Apply Button */}
+          <Box sx={{ flexShrink: 0 }}>
+            <Button
+              sx={{
+                backgroundColor: "#ea3b15",
+                color: "#fff",
+                fontWeight: "bold",
+                borderRadius: "8px",
+                padding: "8px 16px",
+                minWidth: "140px",
+                "&:hover": { backgroundColor: "#c93210" },
+              }}
+              href={school.application_link}
+              target="_blank"
+            >
+              Apply
+            </Button>
+          </Box>
+        </Card>
+      ))}
 
-                </CardContent>
-
-                {/* Bouton de candidature */}
-                <Button
-                  fullWidth
-                  href={school.application_link}
-                  target="_blank"
-                  sx={{
-                    backgroundColor: "#f0f0f0",
-                    color: "black",
-                    textTransform: "none",
-                    borderBottomLeftRadius: "8px",
-                    borderBottomRightRadius: "8px",
-                    padding: "12px",
-                    fontWeight: "bold", 
-
-                    "&:hover": { backgroundColor: "#ccc" },
-                  }}
-                >
-                  Candidater
-                </Button>
-              </Card>
-            </Grid>
-          ))
-        )}
-      </Grid>
+      {/* Pagination (Below Programs) */}
+      {totalPages > 1 && (
+        <Box sx={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={(event, value) => setCurrentPage(value)}
+            variant="outlined"
+            shape="rounded"
+            sx={{
+              "& .MuiPaginationItem-root": {
+                color: "#ea3b15",
+                borderColor: "#ea3b15",
+              },
+              "& .MuiPaginationItem-root.Mui-selected": {
+                backgroundColor: "#ea3b15",
+                color: "#fff",
+              },
+              "& .MuiPaginationItem-root:hover": {
+                backgroundColor: "#f28c6f",
+                color: "#fff",
+              },
+            }}
+          />
+        </Box>
+      )}
     </Box>
   );
 };

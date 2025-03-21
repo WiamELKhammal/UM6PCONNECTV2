@@ -92,7 +92,7 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
           <Typography
             variant="body2"
             sx={{
-              color: "#d84b2b",
+              color: "#ea3b15",
               fontWeight: "semi-bold",
               cursor: "pointer",
               "&:hover": {
@@ -151,7 +151,7 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
         >
           {/* User Avatar */}
           <Avatar
-            src={notification.senderId?.profilePic || "/assets/images/default-profile.png"}
+            src={notification.senderId?.profilePicture || "/assets/images/default-profile.png"}
             alt={`${notification.senderId?.Prenom} ${notification.senderId?.Nom}`}
             sx={{
               width: 40,

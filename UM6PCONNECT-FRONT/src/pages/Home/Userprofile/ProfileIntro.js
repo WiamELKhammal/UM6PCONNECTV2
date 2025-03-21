@@ -25,23 +25,24 @@ const ProfileIntro = ({ userId }) => {
     }, [userId]);
 
     if (!user) {
-        return <div>Loading...</div>;  // Optionally, show loading indicator until user data is fetched
+        return <div>Loading...</div>;  
     }
 
-    const fullName = `${user.Prenom} ${user.Nom}`;
-    const profilePic = user?.profilePic || "/assets/images/default-profile.png";
-    const coverPic = user?.coverPic || "/assets/images/default-cover.png";
+    //  Ensure correct handling of profile and cover pictures
+    const profilePic = user?.profilePicture
+        ? user.profilePicture.startsWith("data:image")
+            ? user.profilePicture
+            : `data:image/png;base64,${user.profilePicture}`
+        : "/assets/images/default-profile.png";
 
-    const bio = user?.bio;
-    const headline = user?.headline;
-    const location = user?.location;
-    const departement = user?.Departement;
-    const email = user?.Email;
-    const phone = user?.phone;
-    const website = user?.url;
+    const coverPic = user?.coverPicture
+        ? user.coverPicture.startsWith("data:image")
+            ? user.coverPicture
+            : `data:image/png;base64,${user.coverPicture}`
+        : "/assets/images/default-cover.png"; // Fallback default cover
 
     return (
-        <div className="container py-5">
+        <div className="container py-5 ">
             <div
                 className="box"
                 style={{
@@ -56,7 +57,7 @@ const ProfileIntro = ({ userId }) => {
                     boxShadow: "none",
                 }}
             >
-                {/* Image de couverture */}
+                {/* ✅ Cover Image (Ensures it loads properly) */}
                 <div
                     style={{
                         backgroundImage: `url(${coverPic})`,
@@ -67,7 +68,7 @@ const ProfileIntro = ({ userId }) => {
                         position: "relative",
                     }}
                 >
-                    {/* Photo de profil */}
+                    {/* Profile Picture */}
                     <div style={{ position: "absolute", bottom: "-40px", left: "20px" }}>
                         <figure
                             className="image is-128x128"
@@ -82,7 +83,7 @@ const ProfileIntro = ({ userId }) => {
                     </div>
                 </div>
 
-                {/* Infos utilisateur */}
+                {/* User Info */}
                 <div className="ml-5 mt-6" style={{ padding: "20px" }}>
                     <div
                         style={{
@@ -91,35 +92,30 @@ const ProfileIntro = ({ userId }) => {
                             alignItems: "center",
                         }}
                     >
-                        <h4
-                            className="title is-4"
-                            style={{
-                                fontWeight: "500",
-                                marginBottom: "5px",
-                            }}
-                        >
-                            {fullName}
+                        <h4 className="title is-4" style={{ fontWeight: "500", marginBottom: "5px" }}>
+                            {user.Prenom} {user.Nom}
                         </h4>
 
-                        {/* Message and Follow buttons */}
+                        {/* Buttons */}
                         <div style={{ display: "flex", gap: "10px" }}>
                             <Button 
-                             variant="contained"
+                                variant="contained"
                                 style={{
-                                    border: "1px solid #d84b2b",
-                                    backgroundColor: "#d84b2b",
+                                    border: "1px solid #ea3b15",
+                                    backgroundColor: "#ea3b15",
                                     color: "#fff",
                                     boxShadow: "none",
                                 }}
-                                size="small">
+                                size="small"
+                            >
                                 Message
                             </Button>
                             <Button
                                 variant="contained"
                                 style={{
-                                    border: "1px solid #d84b2b",
+                                    border: "1px solid #ea3b15",
                                     backgroundColor: "white",
-                                    color: "#d84b2b",
+                                    color: "#ea3b15",
                                     boxShadow: "none",
                                 }}
                                 size="small"
@@ -127,45 +123,36 @@ const ProfileIntro = ({ userId }) => {
                                 Follow
                             </Button>
                         </div>
-
                     </div>
 
                     {/* Headline */}
-                    {headline && (
-                        <p
-                            className="subtitle is-6"
-                            style={{
-                                fontSize: "14px",
-                                color: "#000",
-                                marginBottom: "10px",
-                                fontWeight: "500",
-                            }}
-                        >
-                            {headline}
+                    {user.headline && (
+                        <p className="subtitle is-6" style={{ fontSize: "14px", color: "#000", marginBottom: "10px", fontWeight: "500" }}>
+                            {user.headline}
                         </p>
                     )}
 
-                    {/* Département et autres infos */}
-                    <div
-                        style={{
-                            fontSize: "14px",
-                            color: "#000",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "20px",
-                            flexWrap: "wrap",
-                        }}
-                    >
-                        {departement && (
+                    {/* Department */}
+                    {user.Departement && (
+                        <div
+                            style={{
+                                fontSize: "14px",
+                                color: "#000",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "20px",
+                                flexWrap: "wrap",
+                            }}
+                        >
                             <span className="is-flex is-align-items-center">
                                 <BusinessIcon fontSize="small" style={{ color: "#000", marginRight: "5px" }} />
-                                {departement}
+                                {user.Departement}
                             </span>
-                        )}
-                    </div>
+                        </div>
+                    )}
 
                     {/* Bio */}
-                    {bio && (
+                    {user.bio && (
                         <p
                             style={{
                                 fontSize: "14px",
@@ -174,7 +161,7 @@ const ProfileIntro = ({ userId }) => {
                                 lineHeight: "1.5",
                             }}
                         >
-                            {bio}
+                            {user.bio}
                         </p>
                     )}
 
@@ -190,35 +177,35 @@ const ProfileIntro = ({ userId }) => {
                             marginTop: "10px",
                         }}
                     >
-                        {location && (
+                        {user.location && (
                             <span className="is-flex is-align-items-center">
                                 <LocationOn fontSize="small" style={{ color: "#000", marginRight: "5px" }} />
-                                {location}
+                                {user.location}
                             </span>
                         )}
-                        {email && (
+                        {user.Email && (
                             <span className="is-flex is-align-items-center">
                                 <Email fontSize="small" style={{ color: "#000", marginRight: "5px" }} />
-                                <a href={`mailto:${email}`} style={{ textDecoration: "none", color: "#000" }}>
-                                    {email}
+                                <a href={`mailto:${user.Email}`} style={{ textDecoration: "none", color: "#000" }}>
+                                    {user.Email}
                                 </a>
                             </span>
                         )}
-                        {phone && (
+                        {user.phone && (
                             <span className="is-flex is-align-items-center">
                                 <Phone fontSize="small" style={{ color: "#000", marginRight: "5px" }} />
-                                {phone}
+                                {user.phone}
                             </span>
                         )}
                     </div>
 
                     {/* Website */}
-                    {website && (
+                    {user.url && (
                         <div style={{ marginTop: "10px", fontSize: "14px", color: "#000" }}>
                             <span className="is-flex is-align-items-center">
                                 <Language fontSize="small" style={{ color: "#000", marginRight: "5px" }} />
-                                <a href={website} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000" }}>
-                                    {website}
+                                <a href={user.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000" }}>
+                                    {user.url}
                                 </a>
                             </span>
                         </div>

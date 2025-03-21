@@ -56,7 +56,7 @@ const Save = ({ researcherId, user }) => {
 
   return (
     <IconButton
-      sx={{ color: "#d84b2b" }}
+      sx={{ color: "#ea3b15" }}
       onClick={(e) => {
         e.stopPropagation(); // Prevent parent click
         if (isSaved) {
@@ -68,7 +68,7 @@ const Save = ({ researcherId, user }) => {
       disabled={loading}
     >
       {isSaved ? (
-        <BookmarkIcon fontSize="small" sx={{ color: "#d84b2b" }} /> // Green if saved
+        <BookmarkIcon fontSize="small" sx={{ color: "#ea3b15" }} /> // Green if saved
       ) : (
         <BookmarkBorderIcon fontSize="small" /> // Default color if not saved
       )}

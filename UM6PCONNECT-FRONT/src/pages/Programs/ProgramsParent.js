@@ -1,63 +1,103 @@
-import React, { useState } from "react";
-import { Button, ButtonGroup, Fab } from "@mui/material";
-import ChatIcon from "@mui/icons-material/Chat";
+import React, { useState, useEffect } from "react";
+import { Box, Button, ButtonGroup, Fab } from "@mui/material";
 import SearchBar from "../../components/SearchBar";
 import PostBacPrograms from "./PostBacPrograms";
 import EngineeringMasterPrograms from "./EngineeringMasterPrograms";
+import FilterPage from "../../components/FilterPage";
+import { Bot } from "lucide-react";
+import CombinedPrograms from "./CombinedPrograms";
 
 const ProgramsParent = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [filters, setFilters] = useState({
+    category: "",
+    school: "",
+    degreeType: "",
+    programDuration: "",
+    hasWebsite: false,
+    hasApplyLink: false,
+  });
 
   const handleSearch = (query) => {
-    setSearchQuery(query);
-    console.log("Search query:", query);
+    setSearchQuery(query.toLowerCase()); // Store the search query
   };
 
-  const handleFilterClick = () => {
-    console.log("Filter button clicked");
+  const handleApplyFilters = (newFilters) => {
+    setFilters(newFilters); // Update the filters state
   };
 
   return (
-    <div style={{ padding: "40px", textAlign: "center", position: "relative",paddingTop: "90px" }}>
-      <h1 style={{ marginBottom: "20px", fontSize: "36px", color: "#000" }}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      </h1>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        padding: "40px",
+        paddingTop: "90px",
+        maxWidth: "1300px",
+        margin: "0 auto",
+      }}
+    >
+      {/* Left Content (Programs & Filters) */}
+      <Box sx={{ flex: 1 }}>
+        <h1 style={{ fontSize: "36px", color: "#000", textAlign: "left", marginLeft: "55px" }}>
+          Explore Our Programs
+        </h1>
+        {/* Subtitle */}
+        <h2 style={{ fontSize: "24px", color: "#555", textAlign: "left", marginTop: "10px", marginLeft: "55px" }}>
+          Discover a wide range of programs designed to help you achieve your academic and career goals.
+        </h2>
 
-      {/* Search Bar */}
-      <div style={{ maxWidth: "900px", margin: "0 auto" }}>
-        <SearchBar onSearch={handleSearch} onFilterClick={handleFilterClick} />
-      </div>
+        {/* Search Bar */}
+        <Box sx={{ marginLeft: "55px", marginTop: "10px" }}>
+          <SearchBar onSearch={handleSearch} />
+        </Box>
 
-      {/* Category Buttons */}
-      <ButtonGroup sx={{ marginBottom: "20px", marginTop: "20px" }}>
-        {[
-          { label: "All", value: "all" },
-          { label: "Post-Bac Programs", value: "postbac" },
-          { label: "Engineering Programs", value: "ingenieur" },
-          { label: "Master Programs", value: "master" },
-          { label: "Schools Programs", value: "schools" }, // Nouveau bouton
-          { label: "Scholarship Programs", value: "scholarship" },
-        ].map((category) => (
-          <Button
-            key={category.value}
-            onClick={() => setSelectedCategory(category.value)}
-            variant={selectedCategory === category.value ? "contained" : "outlined"}
-            sx={{
-              backgroundColor: selectedCategory === category.value ? "#d84b2b" : "transparent",
-              color: selectedCategory === category.value ? "#fff" : "#d84b2b",
-              borderColor: "#d84b2b",
-              "&:hover": { backgroundColor: "#b63e24", color: "#fff" },
-            }}
-          >
-            {category.label}
-          </Button>
-        ))}
-      </ButtonGroup>
+        {/* Category Buttons */}
+        <ButtonGroup
+          sx={{
+            marginBottom: "20px",
+            marginTop: "20px",
+            width: "100%",
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+          }}
+        >
+          {[
+            { label: "All", value: "all" },
+            { label: "Post-Bac Programs", value: "postbac" },
+            { label: "Master Programs and Engineering Programs", value: "master" },
+            { label: "Scholarship Programs", value: "scholarship" },
+          ].map((category) => (
+            <Button
+              key={category.value}
+              onClick={() => setSelectedCategory(category.value)}
+              variant={selectedCategory === category.value ? "contained" : "outlined"}
+              sx={{
+                backgroundColor: selectedCategory === category.value ? "#ea3b15" : "transparent",
+                color: selectedCategory === category.value ? "#fff" : "#ea3b15",
+                borderColor: "#ea3b15",
+                whiteSpace: "nowrap",
+                "&:hover": { backgroundColor: "#ea3b15", color: "#fff" },
+              }}
+            >
+              {category.label}
+            </Button>
+          ))}
+        </ButtonGroup>
 
-      {/* Conditional Rendering of Programs */}
-      {(selectedCategory === "all" || selectedCategory === "postbac") && <PostBacPrograms />}
-      {(selectedCategory === "all" || selectedCategory === "ingenieur" || selectedCategory === "master") && <EngineeringMasterPrograms />}
+        {/* Render Programs with Filters and Search */}
+        {(selectedCategory === "all") && <CombinedPrograms filters={filters} searchQuery={searchQuery} />}
+        {(selectedCategory === "postbac") && <PostBacPrograms filters={filters} searchQuery={searchQuery} />}
+        {(selectedCategory === "master") && <EngineeringMasterPrograms filters={filters} searchQuery={searchQuery} />}
+      </Box>
+
+      {/* Right Side - FilterPage */}
+      <Box sx={{ width: "250px", marginLeft: "20px" }}>
+        <FilterPage onFilterChange={handleApplyFilters} />
+      </Box>
 
       {/* Chatbot Floating Button */}
       <Fab
@@ -66,14 +106,14 @@ const ProgramsParent = () => {
           position: "fixed",
           bottom: "20px",
           right: "20px",
-          backgroundColor: "#d84b2b",
+          backgroundColor: "#ea3b15",
           boxShadow: "none",
-          "&:hover": { backgroundColor: "#b63e24" },
+          "&:hover": { backgroundColor: "#ea3b15" },
         }}
       >
-        <ChatIcon />
+        <Bot />
       </Fab>
-    </div>
+    </Box>
   );
 };
 

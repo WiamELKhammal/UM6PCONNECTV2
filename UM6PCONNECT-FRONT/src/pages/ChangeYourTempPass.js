@@ -207,7 +207,7 @@ const ChangeYourTempPass = () => {
                     style={{
                         width: "100%",
                         padding: "10px",
-                        backgroundColor: passwordMismatch ? "#d84b2b" : "#d84b2b",
+                        backgroundColor: passwordMismatch ? "#ea3b15" : "#ea3b15",
                         color: "#fff",
                         border: "none",
                         borderRadius: "5px",

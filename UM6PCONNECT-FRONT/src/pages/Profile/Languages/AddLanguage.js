@@ -128,7 +128,7 @@ const AddLanguage = ({ open, onClose, fetchLanguages }) => {
         <Button onClick={onClose} style={{ color: "black" }}>
           Cancel
         </Button>
-        <Button onClick={handleSave} style={{ backgroundColor: "#d84b2b", color: "#fff" }}>
+        <Button onClick={handleSave} style={{ backgroundColor: "#ea3b15", color: "#fff" }}>
           Save
         </Button>
       </DialogActions>

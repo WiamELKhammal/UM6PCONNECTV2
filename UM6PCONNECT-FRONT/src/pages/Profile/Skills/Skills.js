@@ -49,7 +49,7 @@ const Skills = () => {
                     <h4 style={{ fontWeight: "600", fontSize: "18px", color: "#000" }}>Skills</h4>
                     <p style={{ fontSize: "14px", color: "#000" }}>Add your skills to showcase your expertise.</p>
                 </div>
-                <AddIcon onClick={() => handleOpen(null)} style={{ cursor: "pointer", color: "#d84b2b", border: "1px solid #d84b2b", borderRadius: "8px", padding: "5px", fontSize: "30px" }} />
+                <AddIcon onClick={() => handleOpen(null)} style={{ cursor: "pointer", color: "#ea3b15", border: "1px solid #ea3b15", borderRadius: "8px", padding: "5px", fontSize: "30px" }} />
             </div>
 
             {skillsList.length > 0 ? (
@@ -66,8 +66,8 @@ const Skills = () => {
                                 </div>
                             </div>
                             <div style={{ display: "flex", gap: "10px" }}>
-                                <EditIcon onClick={() => handleOpen(skill)} style={{ cursor: "pointer", color: "#d84b2b", fontSize: "24px" }} />
-                                <DeleteIcon onClick={() => setDeleteSkillId(skill._id)} style={{ cursor: "pointer", color: "#d84b2b", fontSize: "24px" }} />
+                                <EditIcon onClick={() => handleOpen(skill)} style={{ cursor: "pointer", color: "#ea3b15", fontSize: "24px" }} />
+                                <DeleteIcon onClick={() => setDeleteSkillId(skill._id)} style={{ cursor: "pointer", color: "#ea3b15", fontSize: "24px" }} />
                             </div>
                         </div>
                         {index < skillsList.length - 1 && <Divider style={{ margin: "10px 0" }} />}
