@@ -4,14 +4,6 @@ const User = require('../models/User');
 const { sendWelcomeEmail } = require('../services/emailService');
 
 // Get all users (for testing or admin purposes)
-router.get('/', async (req, res) => {
-  try {
-    const users = await User.find();
-    res.status(200).json(users);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch users' });
-  }
-});
 
 // Get a specific user by ID
 router.get('/:id', async (req, res) => {

@@ -1,35 +1,38 @@
-// routes/followRoutes.js
 const express = require("express");
 const Follow = require("../models/Follow"); 
-const router = express.Router();
 const Notification = require("../models/Notification"); 
+const User = require("../models/User"); // <== To update counts
+const router = express.Router();
 
-// Follow user route
+// Follow user
 router.post("/follow", async (req, res) => {
   try {
     const { followerId, followingId } = req.body;
 
-    // Check if already following
+    // Prevent self-follow
+    if (followerId === followingId) {
+      return res.status(400).json({ message: "You cannot follow yourself" });
+    }
+
     const existingFollow = await Follow.findOne({ follower: followerId, following: followingId });
     if (existingFollow) {
       return res.status(400).json({ message: "Already following" });
     }
 
-    // Create new follow entry
     const newFollow = new Follow({ follower: followerId, following: followingId });
     await newFollow.save();
 
-    // Create a notification for the followed user
     const notification = new Notification({
       recipientId: followingId,
       senderId: followerId,
       type: "follow",
-      message: `${followerId} followed you`, // Optional message
+      message: `${followerId} followed you`,
     });
 
-    console.log("Notification to be saved:", notification); // Log to check if the notification is created
+    await notification.save();
 
-    await notification.save(); // Save notification to the DB
+    await User.findByIdAndUpdate(followingId, { $inc: { followersCount: 1 } });
+    await User.findByIdAndUpdate(followerId, { $inc: { followingCount: 1 } });
 
     res.json({
       message: "User followed successfully",
@@ -43,8 +46,7 @@ router.post("/follow", async (req, res) => {
 });
 
 
-// Unfollow a user
-// Unfollow a user
+// Unfollow user
 router.post("/unfollow", async (req, res) => {
   try {
     const { followerId, followingId } = req.body;
@@ -53,24 +55,20 @@ router.post("/unfollow", async (req, res) => {
       return res.status(400).json({ message: "Missing followerId or followingId" });
     }
 
-    // Remove the follow entry
     const deletedFollow = await Follow.findOneAndDelete({ follower: followerId, following: followingId });
     if (!deletedFollow) {
       return res.status(404).json({ message: "Follow entry not found" });
     }
 
-    // Remove the notification for this follow (if it exists)
-    const deletedNotification = await Notification.findOneAndDelete({
+    await Notification.findOneAndDelete({
       recipientId: followingId,
       senderId: followerId,
       type: "follow",
     });
 
-    if (!deletedNotification) {
-      console.log("No notification found to delete");
-    } else {
-      console.log("Notification deleted:", deletedNotification);
-    }
+    // Decrement counts
+    await User.findByIdAndUpdate(followingId, { $inc: { followersCount: -1 } });
+    await User.findByIdAndUpdate(followerId, { $inc: { followingCount: -1 } });
 
     res.json({ message: "User unfollowed successfully" });
   } catch (error) {
@@ -79,28 +77,47 @@ router.post("/unfollow", async (req, res) => {
   }
 });
 
-
-// Get all users followed by a specific user
+// Get users followed by a specific user
 router.get("/following/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
-
-    const following = await Follow.find({ follower: userId }).populate("following", "Prenom Nom email profilePicture headline tags bio Departement tags");
+    const following = await Follow.find({ follower: userId }).populate(
+      "following",
+      "Prenom Nom email profilePicture headline tags bio Departement tags followersCount"
+    );
     res.json(following);
   } catch (error) {
     res.status(500).json({ message: "Error retrieving followed users", error });
   }
 });
 
-// Get all users who are following a specific user
+// Get users who follow a specific user
 router.get("/followers/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
-
-    const followers = await Follow.find({ following: userId }).populate("follower", "Prenom Nom email profilePicture headline tags bio Departement tags");
+    const followers = await Follow.find({ following: userId }).populate(
+      "follower",
+      "Prenom Nom email profilePicture headline tags bio Departement tags followersCount"
+    );
     res.json(followers);
   } catch (error) {
     res.status(500).json({ message: "Error retrieving followers", error });
+  }
+});
+
+// Optional: Get follow count for a user
+router.get("/follow-count/:userId", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId).select("followersCount followingCount");
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.json({
+      userId: user._id,
+      followersCount: user.followersCount,
+      followingCount: user.followingCount,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving follow count", error });
   }
 });
 

@@ -44,8 +44,8 @@ const sendEmail = async (to, fullname, tempPassword, userRole) => {
       <table style="width: 80%; border-collapse: collapse; border: 1px solid #ddd;">
         <thead>
           <tr>
-            <th style="text-align: left; padding: 10px; border: 1px solid #ddd; font-size: 16px; background-color: #e73d18; color: #fff;">Email</th>
-            <th style="text-align: left; padding: 10px; border: 1px solid #ddd; font-size: 16px; background-color: #e73d18; color: #fff;">Temporary Password</th>
+            <th style="text-align: left; padding: 10px; border: 1px solid #ddd; font-size: 16px; background-color: #d84b2b; color: #fff;">Email</th>
+            <th style="text-align: left; padding: 10px; border: 1px solid #ddd; font-size: 16px; background-color: #d84b2b; color: #fff;">Temporary Password</th>
           </tr>
         </thead>
         <tbody>
@@ -60,7 +60,7 @@ const sendEmail = async (to, fullname, tempPassword, userRole) => {
     <p style="font-size: 16px; margin-top: 20px; text-align: center;">Please log in to complete your profile and update your password.</p>
     
     <div style="text-align: center; margin-top: 20px;">
-      <a href="${loginURL}" style="display: inline-block; padding: 12px 25px; background-color: #e73d18; color: #fff; font-size: 16px; text-decoration: none; border-radius: 5px; text-align: center;">Go to Profile</a>
+      <a href="${loginURL}" style="display: inline-block; padding: 12px 25px; background-color: #d84b2b; color: #fff; font-size: 16px; text-decoration: none; border-radius: 5px; text-align: center;">Go to Profile</a>
     </div>
     
     <p style="font-size: 16px; margin-top: 20px";padding: 20px;>Best Regards,</p>

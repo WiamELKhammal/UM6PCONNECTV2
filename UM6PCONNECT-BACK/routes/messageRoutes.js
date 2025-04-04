@@ -5,6 +5,7 @@ const User = require('../models/User');
 // Send a new message
 const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Types;
+const { getUserStatus } = require("../utils/userStatus");
 
 const multer = require("multer");
 
@@ -289,6 +290,12 @@ router.post("/archive", async (req, res) => {
     res.status(500).json({ error: "Failed to archive chat" });
   }
 });
+router.get("/user-status/:id", async (req, res) => {
+  const userId = req.params.id;
+  const status = await getUserStatus(userId);
+  res.json(status);
+});
+
 
 module.exports = router;
 

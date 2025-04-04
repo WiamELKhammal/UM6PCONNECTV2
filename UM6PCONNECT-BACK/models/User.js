@@ -10,28 +10,36 @@ const UserSchema = new mongoose.Schema({
   Status: { type: String, default: "Pending" },
   emailsent: { type: Boolean, default: false },
   hashedTemporaryPass: { type: String, required: false },
-  profilePicture: { type: String, default: "" }, // Base64-encoded image
+  profilePicture: { type: String, default: "" },
   coverPicture: { type: String, default: "" },
-  // Additional profile fields
-  bio: { type: String, default: "" },       // User's biography (limit to 200 words on the front-end)
-  headline: { type: String, default: "" },    // Short professional tagline
-  location: { type: String, default: "" },    // Geographical location
-  address: { type: String, default: "" },     // Physical address
-  birthDate: { type: Date, default: null },   // Birth date, using Date type for better handling
-  url: { type: String, default: "" },          // Link to a website or social profile
+badged: { type: Boolean, default: false },
 
-  // Referencing other collections using ObjectId
+  // Additional profile fields
+  bio: { type: String, default: "" },
+  Departement: { type: String, default: "" },
+
+  headline: { type: String, default: "" },
+  location: { type: String, default: "" },
+  address: { type: String, default: "" },
+  birthDate: { type: Date, default: null },
+  url: { type: String, default: "" },
+  linkedIn: { type: String, default: "" },
+  researchGate: { type: String, default: "" },
+
+  // Referencing other collections
   educations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Education' }],
   experiences: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Experience' }],
   languages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Language' }],
   licenses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'License' }],
   projects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }],
 
+  // Stats
+  saveCount: { type: Number, default: 0 },
+  followersCount: { type: Number, default: 0 },
+  followingCount: { type: Number, default: 0 },
 
-
+  lastSeen: { type: Date, default: null },
 });
 
-// Create or retrieve the model
 const User = mongoose.models.User || mongoose.model("User", UserSchema);
-
 module.exports = User;
