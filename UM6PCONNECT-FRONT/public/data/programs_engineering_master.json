@@ -1,123 +1,117 @@
 [
-    {
-      "name": "Science and Technology",
-      "schools": [
-        {
-          "name": "Cycle Ingénieur en Management Industriel (EMINES)",
-          "description": "A high-level engineering program focusing on industrial management.",
-          "closing_date": "15 mai 2025",
-          "application_link": "#",
-          "logo": "assets/images/logo/UM6P I EMINES.svg"
-        },
-        {
-          "name": "Cycle Ingénieur en Computer Sciences (English) (UM6P-CC)",
-          "description": "A computer sciences engineering program with an English curriculum.",
-          "closing_date": "20 avril 2025",
-          "application_link": "#",
-          "logo": "assets/images/logo/UM6P I CC.svg"
-        },
-        {
-          "name": "Cycle Ingénieur en Ingénierie Physique (IST&I)",
-          "description": "A specialized engineering program in physical sciences.",
-          "closing_date": "10 mai 2025",
-          "application_link": "#",
-          "logo": "assets/images/logo/UM6P I IST&I.svg"
-        },
-        {
-          "name": "Master Technologies Industrielles pour l’Usine du Futur (GTI)",
-          "description": "A master’s program in industrial technologies for the factory of the future.",
-          "closing_date": "15 avril 2025",
-          "application_link": "#",
-          "logo": "assets/images/logo/UM6P I GTI.svg"
-        },
-        {
-          "name": "Master Ingénierie Electrique pour les Energies Renouvelables et les Réseaux Intelligents (GTI)",
-          "description": "A master’s program specializing in electrical engineering for renewable energies and smart grids.",
-          "closing_date": "15 avril 2025",
-          "application_link": "#",
-          "logo": "assets/images/logo/UM6P I GTI.svg"
-        },
-        {
-          "name": "Master Ingénierie des Bâtiments Verts et Efficacité Energétique (SAP+D)",
-          "description": "A master’s program focused on green buildings and energy efficiency.",
-          "closing_date": "15 avril 2025",
-          "application_link": "#",
-          "logo": "assets/images/logo/UM6P I SAP+D.svg"
-        }
-      ]
-    },
-    {
-      "name": "Business and Management",
-      "schools": [
-        {
-          "name": "Master Collective Intelligence (English) (SCI)",
-          "description": "A master’s program focusing on collective intelligence strategies.",
-          "closing_date": "15 avril 2025",
-          "application_link": "#",
-          "logo": "assets/images/logo/UM6P I SCI.svg"
-        },
-        {
-          "name": "Master International Management (English) (ABS)",
-          "description": "A global business management program.",
-          "closing_date": "15 avril 2025",
-          "application_link": "#",
-          "logo": "assets/images/logo/UM6P I ABS.svg"
-        },
-        {
-          "name": "Master AgriBusiness Innovation (English) (ABS)",
-          "description": "A master’s program focused on agribusiness innovation.",
-          "closing_date": "15 avril 2025",
-          "application_link": "#",
-          "logo": "assets/images/logo/UM6P I ABS.svg"
-        },
-        {
-          "name": "Master Financial Engineering (English) (ABS)",
-          "description": "A financial engineering master’s program covering risk and investment strategies.",
-          "closing_date": "15 avril 2025",
-          "application_link": "#",
-          "logo": "assets/images/logo/UM6P I ABS.svg"
-        }
-      ]
-    },
-    {
-      "name": "Social Sciences, Economics, and Humanities",
-      "schools": [
-        {
-          "name": "Master Global Affairs (FGSES)",
-          "description": "A master's program covering international relations and global politics.",
-          "closing_date": "31 mars 2025",
-          "application_link": "#",
-          "logo": "assets/images/logo/UM6P I  FGSES.png"
-        },
-        {
-          "name": "Master Analyse Economique et Politiques Publiques (FGSES)",
-          "description": "An advanced economics and public policy program.",
-          "closing_date": "31 mars 2025",
-          "application_link": "#",
-          "logo": "assets/images/logo/UM6P I  FGSES.png"
-        },
-        {
-          "name": "Master Behavioral and Social Sciences for Public Policy (FGSES)",
-          "description": "A master’s program exploring behavioral sciences in policymaking.",
-          "closing_date": "31 mars 2025",
-          "application_link": "#",
-          "logo": "assets/images/logo/UM6P I  FGSES.png"
-        },
-        {
-          "name": "Master Economie Quantitative (FGSES)",
-          "description": "A master’s program specializing in quantitative economics.",
-          "closing_date": "31 mars 2025",
-          "application_link": "#",
-          "logo": "assets/images/logo/UM6P I  FGSES.png"
-        },
-        {
-          "name": "Master Political Science (FGSES)",
-          "description": "An advanced political science program focusing on governance and policy analysis.",
-          "closing_date": "31 mars 2025",
-          "application_link": "#",
-          "logo": "assets/images/logo/UM6P I  FGSES.png"
-        }
-      ]
-    }
-  ]
-  
+  {
+    "name": "Science and Technology",
+    "schools": [
+      {
+        "name": "Cycle Ingénieur en Management Industriel (EMINES)",
+        "description": "This high-level engineering program focuses on industrial management, equipping students with the skills to optimize industrial processes, enhance productivity, and lead in manufacturing and service industries. The curriculum integrates engineering principles with management strategies to prepare graduates for leadership roles in industrial settings.",
+        "closing_date": "May 15, 2025",
+        "application_link": "https://emines-ingenieur.org/connexion",
+        "logo": "assets/images/logo/UM6P I EMINES.svg",
+        "category": "Science and Technology",
+        "degreeType": "Engineering",
+        "duration": "BAC+5"
+      },
+      {
+        "name": "Cycle Ingénieur en Computer Sciences (English) (UM6P-CC)",
+        "description": "This program offers an English-taught curriculum in computer sciences engineering, covering areas such as software development, data structures, algorithms, and artificial intelligence. It prepares students to tackle complex computing challenges and innovate in the rapidly evolving tech industry.",
+        "closing_date": "April 20, 2025",
+        "application_link": "https://www.um6p.ma/apply",
+        "logo": "assets/images/logo/UM6P I CC.svg",
+        "category": "Science and Technology",
+        "degreeType": "Engineering",
+        "duration": "BAC+5"
+      },
+      {
+        "name": "Cycle Ingénieur en Ingénierie Physique (IST&I)",
+        "description": "A specialized engineering program in physical sciences, focusing on the application of physics principles to solve engineering problems. Students gain expertise in areas such as materials science, nanotechnology, and applied optics, preparing them for careers in research and high-tech industries.",
+        "closing_date": "May 10, 2025",
+        "application_link": "https://www.um6p.ma/apply",
+        "logo": "assets/images/logo/UM6P I IST&I.svg",
+        "category": "Science and Technology",
+        "degreeType": "Engineering",
+        "duration": "BAC+5"
+      },
+      {
+        "name": "Master Technologies Industrielles pour l’Usine du Futur (GTI)",
+        "description": "This master's program centers on industrial technologies for the factory of the future, emphasizing smart manufacturing, automation, and digital transformation. It prepares students to lead innovations in industrial settings, focusing on efficiency and advanced manufacturing techniques.",
+        "closing_date": "April 15, 2025",
+        "application_link": "https://www.um6p.ma/apply",
+        "logo": "assets/images/logo/UM6P I GTI.svg",
+        "category": "Science and Technology",
+        "degreeType": "Master",
+        "duration": "BAC+5"
+      }
+    ]
+  },
+  {
+    "name": "Business and Management",
+    "schools": [
+      {
+        "name": "Master Collective Intelligence (English) (SCI)",
+        "description": "This master's program focuses on collective intelligence strategies, exploring how groups, organizations, and societies can harness collective knowledge and decision-making. It integrates insights from psychology, sociology, and technology to enhance collaborative processes and innovation.",
+        "closing_date": "April 15, 2025",
+        "application_link": "https://www.um6p.ma/apply",
+        "logo": "assets/images/logo/UM6P I CSI.svg",
+        "category": "Business and Management",
+        "degreeType": "Master",
+        "duration": "BAC+5"
+      },
+      {
+        "name": "Master International Management (English) (ABS)",
+        "description": "A global business management program that prepares students for leadership roles in international contexts. The curriculum covers global strategy, cross-cultural management, and international marketing, equipping graduates to navigate the complexities of global business environments.",
+        "closing_date": "April 15, 2025",
+        "application_link": "https://www.um6p.ma/apply",
+        "logo": "assets/images/logo/UM6P I ABS.svg",
+        "category": "Business and Management",
+        "degreeType": "Master",
+        "duration": "BAC+5"
+      },
+      {
+        "name": "Master AgriBusiness Innovation (English) (ABS)",
+        "description": "This master's program focuses on agribusiness innovation, addressing the challenges of modern agriculture through technological advancements and innovative business models. It prepares students to drive transformation in the agricultural sector, enhancing productivity and sustainability.",
+        "closing_date": "April 15, 2025",
+        "application_link": "https://www.um6p.ma/apply",
+        "logo": "assets/images/logo/UM6P I ABS.svg",
+        "category": "Business and Management",
+        "degreeType": "Master",
+        "duration": "BAC+5"
+      }
+    ]
+  },
+  {
+    "name": "Social Sciences, Economics, and Humanities",
+    "schools": [
+      {
+        "name": "Master Global Affairs (FGSES)",
+        "description": "A master's program covering international relations and global politics, focusing on diplomacy, global governance, and international conflict resolution. Students develop a deep understanding of geopolitical trends and the complexities of the international system.",
+        "closing_date": "March 31, 2025",
+        "application_link": "https://admission.fgses-um6p.ma/login",
+        "logo": "assets/images/logo/UM6P I  FGSES.png",
+        "category": "Social Sciences, Economics, and Humanities",
+        "degreeType": "Master",
+        "duration": "BAC+5"
+      },
+      {
+        "name": "Master Analyse Economique et Politiques Publiques (FGSES)",
+        "description": "An advanced economics and public policy program that combines economic theory with practical policy analysis. It prepares students to evaluate and design effective public policies addressing economic and social issues.",
+        "closing_date": "March 31, 2025",
+        "application_link": "https://admission.fgses-um6p.ma/login",
+        "logo": "assets/images/logo/UM6P I  FGSES.png",
+        "category": "Social Sciences, Economics, and Humanities",
+        "degreeType": "Master",
+        "duration": "BAC+5"
+      },
+      {
+        "name": "Master Behavioral and Social Sciences for Public Policy (FGSES)",
+        "description": "This master's program explores the application of behavioral sciences in policymaking, examining how human behavior and decision-making processes influence public policy outcomes. Students gain insights into cognitive biases, social influences, and economic behaviors that shape policy decisions.",
+        "closing_date": "March 31, 2025",
+        "application_link": "https://admission.fgses-um6p.ma/login",
+        "logo": "assets/images/logo/UM6P I  FGSES.png",
+        "category": "Social Sciences, Economics, and Humanities",
+        "degreeType": "Master",
+        "duration": "BAC+5"
+      }
+    ]
+  }
+]

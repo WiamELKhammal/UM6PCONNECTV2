@@ -1,113 +1,122 @@
 [
-    {
-      "name": "Health",
-      "schools": [
-        {
-          "name": "Doctorate in Medicine (English) (FMS)",
-          "description": "A high-level medical program offering advanced clinical training.",
-          "website": "#",
-          "logo": "assets/images/logo/UM6P I FMS.svg"
-        },
-        {
-          "name": "Doctorate in Pharmacy (English) (FMS)",
-          "description": "A specialized program for pharmaceutical sciences and research.",
-          "website": "#",
-          "logo": "assets/images/logo/UM6P I FMS.svg"
-        },
-        {
-          "name": "Bachelor in Nursing Care, Polyvalent Nurse Option (ISSBP)",
-          "description": "A nursing degree focusing on polyvalent nursing care.",
-          "website": "#",
-          "logo": "assets/images/logo/UM6P I ISSBP.svg"
-        }
-      ]
-    },
-    {
-      "name": "Science and Technology",
-      "schools": [
-        {
-          "name": "Preparatory Cycle for Industrial Management Engineering (EMINES)",
-          "description": "A preparatory cycle for Industrial Management Engineering.",
-          "website": "#",
-          "logo": "assets/images/logo/UM6P I EMINES.svg"
-        },
-        {
-          "name": "Integrated Preparatory Cycle for Computer Sciences Engineering (BAC+5) (CC)",
-          "description": "A 5-year integrated program in computer sciences.",
-          "website": "#",
-          "logo": "assets/images/logo/UM6P I CC.svg"
-        },
-        {
-          "name": "Integrated Preparatory Cycle for Agricultural and Environmental Systems Engineering (BAC+5) (ESAFE)",
-          "description": "A preparatory cycle for agricultural and environmental engineering.",
-          "website": "#",
-          "logo": "assets/images/logo/UM6P I ESAFE.svg"
-        },
-        {
-          "name": "Integrated Preparatory Cycle for Chemical, Mineral, and Biotechnological Engineering (BAC+5) (IST&I)",
-          "description": "A preparatory cycle in chemical, mineral, and biotechnological engineering.",
-          "website": "#",
-          "logo": "assets/images/logo/UM6P I IST&I.svg"
-        },
-        {
-          "name": "Architect Degree - BAC+6 (SAP+D)",
-          "description": "An architecture degree program preparing students for professional practice.",
-          "website": "#",
-          "logo": "assets/images/logo/UM6P I SAP+D.svg"
-        },
-        {
-          "name": "Bachelor of Science in Applied Sciences and Business (English)",
-          "description": "A multidisciplinary program combining applied sciences and business studies.",
-          "website": "#",
-          "logo": "assets/images/logo/UM6P I ABS.svg"
-        }
-      ]
-    },
-    {
-      "name": "Business and Management",
-      "schools": [
-        {
-          "name": "Bachelor in Hospitality Business and Management (English) (SHBM)",
-          "description": "A global business program focused on hospitality and management.",
-          "website": "#",
-          "logo": "assets/images/logo/UM6P I SHBM.svg"
-        }
-      ]
-    },
-    {
-      "name": "Social Sciences, Economics, and Humanities",
-      "schools": [
-        {
-          "name": "Bachelor in Applied Economics (FGSES)",
-          "description": "An economics program combining theory and real-world application.",
-          "website": "#",
-          "logo": "assets/images/logo/UM6P I  FGSES.png"
-        },
-        {
-          "name": "Bachelor in Political Science (FGSES)",
-          "description": "A political science program analyzing governance and public policy.",
-          "website": "#",
-          "logo": "assets/images/logo/UM6P I  FGSES.png"
-        },
-        {
-          "name": "Bachelor in Behavioral Sciences for Public Policies (FGSES)",
-          "description": "A behavioral sciences program focused on public policies.",
-          "website": "#",
-          "logo": "assets/images/logo/UM6P I  FGSES.png"
-        },
-        {
-          "name": "Bachelor in International Relations (FGSES)",
-          "description": "A degree in international relations covering global political systems.",
-          "website": "#",
-          "logo": "assets/images/logo/UM6P I  FGSES.png"
-        },
-        {
-          "name": "Bachelor in Public Law (FGSES)",
-          "description": "A public law program addressing constitutional and administrative law.",
-          "website": "#",
-          "logo": "assets/images/logo/UM6P I  FGSES.png"
-        }
-      ]
-    }
-  ]
-  
+  {
+    "name": "Health",
+    "schools": [
+      {
+        "name": "Doctorate in Medicine (English) (FMS)",
+        "description": "This comprehensive program offers advanced clinical training, preparing students to become proficient medical practitioners with a strong foundation in medical sciences and patient care.",
+        "website": "https://www.um6p.ma/en/faculty-medical-sciences",
+        "logo": "assets/images/logo/UM6P I FMS.svg",
+        "apply_link": "https://www.um6p.ma/apply",
+        "category": "Health",
+        "degreeType": "Doctorate",
+        "duration": "BAC+8"
+      },
+      {
+        "name": "Doctorate in Pharmacy (English) (FMS)",
+        "description": "Focused on pharmaceutical sciences and research, this program trains students in the development, production, and safe use of medications.",
+        "website": "https://www.um6p.ma/en/faculty-medical-sciences",
+        "logo": "assets/images/logo/UM6P I FMS.svg",
+        "apply_link": "https://www.um6p.ma/apply",
+        "category": "Health",
+        "degreeType": "Doctorate",
+        "duration": "BAC+8"
+      },
+      {
+        "name": "Bachelor in Nursing Care, Polyvalent Nurse Option (ISSBP)",
+        "description": "This degree focuses on polyvalent nursing care, equipping students with the skills to provide comprehensive healthcare services.",
+        "website": "https://www.um6p.ma/en/institut-superieur-des-sciences-biologiques-et-paramedicales",
+        "logo": "assets/images/logo/UM6P I ISSBP.svg",
+        "apply_link": "https://www.um6p.ma/apply",
+        "category": "Health",
+        "degreeType": "Bachelor",
+        "duration": "BAC+3"
+      }
+    ]
+  },
+  {
+    "name": "Science and Technology",
+    "schools": [
+      {
+        "name": "Preparatory Cycle for Industrial Management Engineering (EMINES)",
+        "description": "This preparatory program lays the groundwork for a career in industrial management engineering.",
+        "website": "https://emines-ingenieur.org/",
+        "logo": "assets/images/logo/UM6P I EMINES.svg",
+        "apply_link": "https://emines-ingenieur.org/connexion",
+        "category": "Science and Technology",
+        "degreeType": "Preparatory Cycle",
+        "duration": "BAC+2"
+      },
+      {
+        "name": "Integrated Preparatory Cycle for Computer Sciences Engineering (BAC+5) (CC)",
+        "description": "A 5-year integrated program that immerses students in computer sciences.",
+        "website": "https://cc.um6p.ma/",
+        "logo": "assets/images/logo/UM6P I CC.svg",
+        "apply_link": "https://www.um6p.ma/apply",
+        "category": "Science and Technology",
+        "degreeType": "Integrated Cycle",
+        "duration": "BAC+5"
+      },
+      {
+        "name": "Architect Degree - BAC+6 (SAP+D)",
+        "description": "An architecture degree program that prepares students for professional practice.",
+        "website": "https://www.um6p.ma/en/school-architecture-planning-and-design",
+        "logo": "assets/images/logo/UM6P I SAP+D.svg",
+        "apply_link": "https://www.um6p.ma/apply",
+        "category": "Science and Technology",
+        "degreeType": "Architect Degree",
+        "duration": "BAC+6"
+      }
+    ]
+  },
+  {
+    "name": "Business and Management",
+    "schools": [
+      {
+        "name": "Bachelor in Hospitality Business and Management (English) (SHBM)",
+        "description": "A global business program focused on hospitality and management.",
+        "website": "https://www.um6p.ma/en/school-hospitality-business-and-management",
+        "logo": "assets/images/logo/UM6P I SHBM.svg",
+        "apply_link": "https://www.um6p.ma/apply",
+        "category": "Business and Management",
+        "degreeType": "Bachelor",
+        "duration": "BAC+3"
+      }
+    ]
+  },
+  {
+    "name": "Social Sciences, Economics, and Humanities",
+    "schools": [
+      {
+        "name": "Bachelor in Applied Economics (FGSES)",
+        "description": "An economics program that combines theoretical frameworks with real-world applications.",
+        "website": "https://www.um6p.ma/en/faculty-governance-economics-and-social-sciences",
+        "logo": "assets/images/logo/UM6P I  FGSES.png",
+        "apply_link": "https://admission.fgses-um6p.ma/login",
+        "category": "Social Sciences, Economics, and Humanities",
+        "degreeType": "Bachelor",
+        "duration": "BAC+3"
+      },
+      {
+        "name": "Bachelor in International Relations (FGSES)",
+        "description": "A degree in international relations covering diplomacy, global governance, and international conflict resolution.",
+        "website": "https://www.um6p.ma/en/faculty-governance-economics-and-social-sciences",
+        "logo": "assets/images/logo/UM6P I  FGSES.png",
+        "apply_link": "https://admission.fgses-um6p.ma/login",
+        "category": "Social Sciences, Economics, and Humanities",
+        "degreeType": "Bachelor",
+        "duration": "BAC+3"
+      },
+      {
+        "name": "Bachelor in Public Law (FGSES)",
+        "description": "This program provides students with a strong foundation in constitutional, administrative, and public international law.",
+        "website": "https://www.um6p.ma/en/faculty-governance-economics-and-social-sciences",
+        "logo": "assets/images/logo/UM6P I  FGSES.png",
+        "apply_link": "https://admission.fgses-um6p.ma/login",
+        "category": "Social Sciences, Economics, and Humanities",
+        "degreeType": "Bachelor",
+        "duration": "BAC+3"
+      }
+    ]
+  }
+]
