@@ -1,57 +1,101 @@
 import React, { useState, useContext } from "react";
-import { UserContext } from "../../../context/UserContext";
-import { Button, IconButton, Box, Typography } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  Box,
+  Typography,
+  Avatar,
+  Paper,
+  Stack,
+  Link as MuiLink,
+  Modal,
+} from "@mui/material";
 import { Edit } from "@mui/icons-material";
-import BusinessIcon from "@mui/icons-material/Business";
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+
+import { UserContext } from "../../../context/UserContext";
 import ProfileSetup from "./ProfileSetup";
 import EditProfilePic from "./EditProfilePic";
 import EditCoverPic from "./EditCoverPic";
-import ContactInfoModal from "./ContactInfoModal";
+import VerificationStepper from "../../VerificationStepper/VerificationStepper";
+
+const extractUsername = (url) => {
+  if (!url) return null;
+  try {
+    const parts = new URL(url).pathname.split("/").filter(Boolean);
+    return parts[parts.length - 1];
+  } catch {
+    return null;
+  }
+};
+
+const InfoLine = ({ value, icon }) => {
+  const username = extractUsername(value);
+  return (
+    <Box display="flex" alignItems="center" gap={1}>
+      {icon}
+      {value ? (
+        <MuiLink
+          href={value}
+          target="_blank"
+          rel="noopener"
+          fontSize={18}
+          color="#111827"
+          underline="hover"
+        >
+          {username}
+        </MuiLink>
+      ) : (
+        <Typography fontSize={18} color="#999">
+          Not provided
+        </Typography>
+      )}
+    </Box>
+  );
+};
 
 const ProfileIntro = () => {
-  const { user, setUser } = useContext(UserContext); // ✅ Get setUser to update context instantly
-
+  const { user, setUser } = useContext(UserContext);
   const [isProfileSetupOpen, setIsProfileSetupOpen] = useState(false);
   const [isEditProfilePicOpen, setIsEditProfilePicOpen] = useState(false);
   const [isEditCoverPicOpen, setIsEditCoverPicOpen] = useState(false);
-  const [isContactInfoOpen, setIsContactInfoOpen] = useState(false);
+  const [isVerificationOpen, setIsVerificationOpen] = useState(false);
 
   const fullName = user ? `${user.Prenom} ${user.Nom}` : "Guest";
-
   const profilePic = user?.profilePicture || "/assets/images/default-profile.png";
   const coverPic = user?.coverPicture || "/assets/images/default-cover.png";
-
-  const bio = user?.bio;
   const headline = user?.headline;
   const departement = user?.Departement;
+  const linkedIn = user?.linkedIn;
+  const researchGate = user?.researchGate;
 
   return (
-    <div className="container py-5">
-      <div
-        className="box"
-        style={{
+    <Box pt={6}>
+      <Paper
+        elevation={0}
+        sx={{
           width: "90%",
-          margin: "0 auto",
-          border: "1px solid #ddd",
-          borderRadius: "10px",
-          padding: "0",
+          margin: "20px auto",
+          borderRadius: 3,
+          border: "1px solid #e0e0e0",
+          backgroundColor: "#fff",
           overflow: "hidden",
-          position: "relative",
-          boxShadow: "none",
         }}
       >
         {/* Cover Image */}
-        <div
-          style={{
-            backgroundImage: `url(${coverPic})`,
-            height: "250px",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            borderRadius: "10px 10px 0 0",
-            position: "relative",
-          }}
-        >
-          {/* Edit Cover Button */}
+        <Box position="relative" minHeight={200}>
+          <Box
+            component="img"
+            src={coverPic}
+            alt="Cover"
+            sx={{
+              width: "100%",
+              height: 200,
+              objectFit: "cover",
+              display: "block",
+            }}
+          />
           <IconButton
             onClick={() => setIsEditCoverPicOpen(true)}
             sx={{
@@ -64,43 +108,29 @@ const ProfileIntro = () => {
           >
             <Edit fontSize="small" />
           </IconButton>
+        </Box>
 
-          {/* Profile Picture */}
-          <Box
-            sx={{
-              position: "absolute",
-              bottom: "-40px",
-              left: "20px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <Box
-              sx={{
-                width: "100px",
-                height: "100px",
-                borderRadius: "50%",
-                overflow: "hidden",
-                border: "5px solid white",
-                position: "relative",
-              }}
-            >
-              <img
+        {/* Profile Picture + Info */}
+        <Box mt={-6} px={4} pb={4}>
+          <Stack alignItems="flex-start" spacing={1}>
+            {/* Avatar + Edit */}
+            <Box position="relative">
+              <Avatar
                 src={profilePic}
                 alt="Profile"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
+                sx={{
+                  width: 100,
+                  height: 100,
+                  border: "3px solid white",
+                  backgroundColor: "#eee",
                 }}
               />
-              {/* Edit Profile Picture Button */}
               <IconButton
                 onClick={() => setIsEditProfilePicOpen(true)}
                 sx={{
                   position: "absolute",
-                  bottom: "5px",
-                  right: "5px",
+                  bottom: 0,
+                  right: 0,
                   backgroundColor: "rgba(255, 255, 255, 0.8)",
                   "&:hover": { backgroundColor: "rgba(255, 255, 255, 1)" },
                 }}
@@ -108,84 +138,144 @@ const ProfileIntro = () => {
                 <Edit fontSize="small" />
               </IconButton>
             </Box>
-          </Box>
-        </div>
 
-        {/* User Information */}
-        <div className="ml-5 mt-6" style={{ padding: "20px" }}>
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <Typography variant="h5">{fullName}</Typography>
-
-            {/* Edit Profile Button */}
-            <Button
-              variant="outlined"
+            {/* Name + Badge + Edit Profile */}
+            <Box
               sx={{
-                color: "#ea3b15",
-                borderColor: "#ea3b15",
-                fontSize: "14px",
-                fontWeight: "500",
-                textTransform: "none",
-                padding: "6px 16px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "100%",
                 mt: 1,
-                "&:hover": { backgroundColor: "#fff" },
-                boxShadow: "none",
               }}
-              onClick={() => setIsProfileSetupOpen(true)}
             >
-              Edit Profile
-            </Button>
-          </Box>
+              <Box display="flex" alignItems="center" gap={1} flexWrap="wrap">
+                <Typography fontSize={26} fontWeight="600" color="#000">
+                  {fullName}
+                </Typography>
+                <Box
+                  display="flex"
+                  alignItems="center"
+                  gap={0.5}
+                  onClick={() => {
+                    if (!user?.badged) setIsVerificationOpen(true);
+                  }}
+                  sx={{
+                    border: user?.badged ? "1px dotted #ffbf00" : "1px dotted #bbb",
+                    borderRadius: "12px",
+                    px: 1,
+                    py: 0.3,
+                    backgroundColor: user?.badged ? "#fff7d0" : "#f5f5f5",
+                    cursor: user?.badged ? "default" : "pointer",
+                  }}
+                >
+                  <WorkspacePremiumIcon
+                    sx={{
+                      fontSize: 20,
+                      color: user?.badged ? "#ffbf00" : "#999",
+                    }}
+                  />
+                  <Typography
+                    fontSize={14}
+                    fontWeight={500}
+                    color={user?.badged ? "#ffbf00" : "#999"}
+                  >
+                    {user?.badged ? "Elite Member" : "Unlock Elite Badge"}
+                  </Typography>
+                </Box>
+              </Box>
 
-          {/* Headline */}
-          {headline && (
-            <Typography variant="subtitle1" sx={{ fontSize: "14px", color: "#000", mb: 1 }}>
-              {headline}
-            </Typography>
-          )}
-
-          {/* Department */}
-          {departement && (
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1, fontSize: "14px", color: "#000" }}>
-              <BusinessIcon fontSize="small" />
-              {departement}
+              <Button
+                variant="outlined"
+                onClick={() => setIsProfileSetupOpen(true)}
+                sx={{
+                  color: "#ea3b15",
+                  borderColor: "#ea3b15",
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  textTransform: "none",
+                  "&:hover": { backgroundColor: "#fff" },
+                }}
+              >
+                Edit Profile
+              </Button>
             </Box>
-          )}
 
-          {/* Bio */}
-          {bio && (
-            <Typography sx={{ fontSize: "14px", color: "#333", mt: 2, lineHeight: "1.5" }}>
-              {bio}
-            </Typography>
-          )}
+            {/* Headline */}
+            {headline && (
+              <Typography fontSize={18} color="text.secondary">
+                {headline}
+              </Typography>
+            )}
 
-          {/* Contact Info Button */}
-          <Button
-            onClick={() => setIsContactInfoOpen(true)}
-            sx={{
-              backgroundColor: "#ea3b15",
-              color: "white",
-              fontSize: "14px",
-              fontWeight: "500",
-              padding: "6px 16px",
-              "&:hover": { backgroundColor: "#c43b2a" },
-              boxShadow: "none",
-              mt: 2,
-            }}
-          >
-            Contact Info
-          </Button>
-        </div>
-      </div>
+            {/* Department */}
+            {departement && (
+              <Box display="flex" alignItems="center" gap={1}>
+                <ApartmentIcon fontSize="medium" />
+                <Typography fontSize={18} color="#000">
+                  {departement}
+                </Typography>
+              </Box>
+            )}
 
-      {/* Modals */}
-      {isProfileSetupOpen && <ProfileSetup onClose={() => setIsProfileSetupOpen(false)} />}
-      {isEditProfilePicOpen && <EditProfilePic onClose={() => setIsEditProfilePicOpen(false)} updateUser={setUser} />}
-      {isEditCoverPicOpen && <EditCoverPic onClose={() => setIsEditCoverPicOpen(false)} updateUser={setUser} />}
+            {/* Social Links */}
+            <Box mt={2}>
+              <Stack spacing={1}>
+                <InfoLine
+                  value={linkedIn}
+                  icon={
+                    <Box
+                      component="img"
+                      src="/assets/images/linkedin.svg"
+                      alt="LinkedIn"
+                      sx={{ width: 20, height: 20 }}
+                    />
+                  }
+                />
+                <InfoLine
+                  value={researchGate}
+                  icon={
+                    <Box
+                      component="img"
+                      src="/assets/images/researchgate.svg"
+                      alt="ResearchGate"
+                      sx={{ width: 20, height: 20 }}
+                    />
+                  }
+                />
+              </Stack>
+            </Box>
+          </Stack>
+        </Box>
 
-      {isContactInfoOpen && (
-        <ContactInfoModal open={isContactInfoOpen} onClose={() => setIsContactInfoOpen(false)} onSave={() => setIsContactInfoOpen(false)} />
-      )}
-    </div>
+        {/* Modals */}
+        {isProfileSetupOpen && (
+          <ProfileSetup onClose={() => setIsProfileSetupOpen(false)} />
+        )}
+        {isEditProfilePicOpen && (
+          <EditProfilePic onClose={() => setIsEditProfilePicOpen(false)} updateUser={setUser} />
+        )}
+        {isEditCoverPicOpen && (
+          <EditCoverPic onClose={() => setIsEditCoverPicOpen(false)} updateUser={setUser} />
+        )}
+      </Paper>
+
+      {/* Verification Stepper Modal */}
+      <Modal open={isVerificationOpen} onClose={() => setIsVerificationOpen(false)}>
+        <Box
+          sx={{
+            width: "100%",
+            maxWidth: 500,
+            margin: "100px auto",
+            borderRadius: 3,
+            p: 3,
+            outline: "none",
+          }}
+        >
+          <VerificationStepper onClose={() => setIsVerificationOpen(false)} />
+        </Box>
+      </Modal>
+    </Box>
   );
 };
 

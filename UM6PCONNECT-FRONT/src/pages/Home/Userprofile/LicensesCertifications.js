@@ -79,16 +79,16 @@ const LicensesCertifications = ({ userId }) => {
               <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
                 <div
                   style={{
-                    border: "2px solid #CCC",
+                    border: "2px solid #fff",
                     padding: "12px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     borderRadius: "50%",
-                    backgroundColor: "#CCC",
+                    backgroundColor: "#f4e9e7",
                   }}
                 >
-                  <VerifiedIcon style={{ color: "#ffffff", fontSize: "30px" }} />
+                  <VerifiedIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
                 </div>
                 <div>
                   <p style={{ fontWeight: "600", fontSize: "16px" }}>{license.licenseName || "Certification Name"}</p>
@@ -116,18 +116,19 @@ const LicensesCertifications = ({ userId }) => {
             fontSize: "14px",
           }}
         >
+
           <div
             style={{
-              border: "2px solid #CCC",
+              border: "2px solid #fff",
               padding: "12px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               borderRadius: "50%",
-              backgroundColor: "#CCC",
+              backgroundColor: "#f4e9e7",
             }}
           >
-            <VerifiedIcon style={{ color: "#ffffff", fontSize: "30px" }} />
+            <VerifiedIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
           </div>
           <div>
             <p style={{ fontWeight: "600", fontSize: "16px" }}>Certification Name</p>

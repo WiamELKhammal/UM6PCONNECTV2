@@ -1,79 +1,74 @@
-// components/Follow/Follow.js
 import React, { useEffect, useState } from "react";
-import { IconButton } from "@mui/material";
+import { Button } from "@mui/material";
 import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
 import PersonRemoveOutlinedIcon from "@mui/icons-material/PersonRemoveOutlined";
 
 const Follow = ({ researcherId, user }) => {
-  const [isFollowing, setIsFollowing] = useState(false); // Track if the user is following the researcher
-  const [loading, setLoading] = useState(false); // Loading state for follow/unfollow
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  // Fetch followed users for the logged-in user on mount
   useEffect(() => {
     if (user?._id) {
       fetch(`http://localhost:5000/api/follow/following/${user._id}`)
         .then((res) => res.json())
         .then((data) => {
-          const followingIds = data.map((follow) => follow.following._id); // Extract followed user IDs
-          setIsFollowing(followingIds.includes(researcherId)); // Check if current researcher is followed
+          const followingIds = data.map((follow) => follow.following._id);
+          setIsFollowing(followingIds.includes(researcherId));
         })
         .catch((err) => console.error("Failed to fetch followed users:", err));
     }
   }, [researcherId, user]);
 
-  // Follow a researcher
-  const handleFollowResearcher = async () => {
+  const handleToggleFollow = async () => {
     setLoading(true);
-    try {
-      await fetch("http://localhost:5000/api/follow/follow", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ followerId: user._id, followingId: researcherId }),
-      });
-      setIsFollowing(true); // Update local state
-    } catch (error) {
-      console.error("Error following researcher:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const url = isFollowing
+      ? "http://localhost:5000/api/follow/unfollow"
+      : "http://localhost:5000/api/follow/follow";
 
-  // Unfollow a researcher
-  const handleUnfollowResearcher = async () => {
-    setLoading(true);
     try {
-      await fetch("http://localhost:5000/api/follow/unfollow", {
+      await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ followerId: user._id, followingId: researcherId }),
+        body: JSON.stringify({
+          followerId: user._id,
+          followingId: researcherId,
+        }),
       });
-      setIsFollowing(false); // Update local state
+      setIsFollowing(!isFollowing);
     } catch (error) {
-      console.error("Error unfollowing researcher:", error);
+      console.error("Error toggling follow:", error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <IconButton
-      sx={{ color: "#ea3b15" }}
+    <Button
       onClick={(e) => {
-        e.stopPropagation(); // Prevent parent click
-        if (isFollowing) {
-          handleUnfollowResearcher(); // Unfollow if already following
-        } else {
-          handleFollowResearcher(); // Follow if not following
-        }
+        e.stopPropagation();
+        handleToggleFollow();
+      }}
+      startIcon={
+        isFollowing ? (
+          <PersonRemoveOutlinedIcon fontSize="small" />
+        ) : (
+          <PersonAddOutlinedIcon fontSize="small" />
+        )
+      }
+      sx={{
+        border: "1px solid #ea3b15",
+        color: "#ea3b15",
+        textTransform: "none",
+        fontSize: "13px",
+        flex: 1,
+        "&:hover": {
+          backgroundColor: "transparent",
+        },
       }}
       disabled={loading}
     >
-      {isFollowing ? (
-        <PersonRemoveOutlinedIcon fontSize="small" sx={{ color: "#ea3b15" }} /> // Red if following
-      ) : (
-        <PersonAddOutlinedIcon fontSize="small" /> // Default color if not following
-      )}
-    </IconButton>
+      {isFollowing ? "Unfollow" : "Follow"}
+    </Button>
   );
 };
 

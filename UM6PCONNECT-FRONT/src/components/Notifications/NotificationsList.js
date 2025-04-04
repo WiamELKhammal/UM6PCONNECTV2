@@ -5,16 +5,24 @@ import {
   Divider,
   Typography,
   Box,
-  IconButton,
   Avatar,
   Tooltip,
+  useMediaQuery,
+  Dialog,
+  DialogTitle,
+  IconButton,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
-import { formatDistanceToNow, format } from "date-fns"; // Importing date-fns for time formatting
+import { formatDistanceToNow, format } from "date-fns";
+import { useTheme } from "@mui/material/styles";
 
 const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
   const [notifications, setNotifications] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -45,10 +53,7 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
 
   const markAsRead = async (notificationId) => {
     try {
-      // API call to mark a specific notification as read
       await axios.put(`http://localhost:5000/api/notification/mark-as-read/${notificationId}`);
-
-      // Update notification state to reflect the 'read' status
       setNotifications((prev) =>
         prev.map((notif) =>
           notif._id === notificationId ? { ...notif, isRead: true } : notif
@@ -59,33 +64,20 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
     }
   };
 
-  return (
-    <Menu
-      anchorEl={anchorEl}
-      open={Boolean(anchorEl)}
-      onClose={handleMenuClose}
-      sx={{
-        maxHeight: 400,
-        marginTop: "25px",
-        marginLeft: "-180px",
-        overflowY: "auto",
-        "& .MuiPaper-root": {
-          borderRadius: "12px",
-          boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
-        },
-      }}
-    >
-      {/* Notification Header */}
+  const content = (
+    <Box sx={{ width: isMobile ? "100%" : 400, maxHeight: 500, overflowY: "auto" }}>
+      {/* Header */}
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          padding: "12px 16px",
+          px: 2,
+          py: 1.5,
           borderBottom: "1px solid #ddd",
         }}
       >
-        <Typography variant="h6" sx={{ fontWeight: "500", fontSize: "18px", color: "#000" }}>
+        <Typography variant="h6" sx={{ fontWeight: 500 }}>
           Notifications
         </Typography>
         <Tooltip title="Mark all as read">
@@ -93,11 +85,9 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
             variant="body2"
             sx={{
               color: "#ea3b15",
-              fontWeight: "semi-bold",
+              fontWeight: 500,
               cursor: "pointer",
-              "&:hover": {
-                textDecoration: "underline",
-              },
+              "&:hover": { textDecoration: "underline" },
             }}
             onClick={markAllAsRead}
           >
@@ -106,32 +96,32 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
         </Tooltip>
       </Box>
 
-      {/* Loading State */}
+      {/* Loading */}
       {isLoading && (
         <MenuItem disabled>
           <Typography>Loading notifications...</Typography>
         </MenuItem>
       )}
 
-      {/* Empty State */}
+      {/* Empty */}
       {!isLoading && notifications.length === 0 && (
         <Box
           sx={{
+            py: 4,
+            px: 2,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "center",
-            height: 200,
             textAlign: "center",
           }}
         >
-          <Typography variant="body1" sx={{ fontWeight: "semi_bold", color: "#707070" }}>
+          <Typography variant="body1" sx={{ color: "#707070", fontWeight: 500 }}>
             No new notifications
           </Typography>
         </Box>
       )}
 
-      {/* Notifications List */}
+      {/* List */}
       {notifications.map((notification) => (
         <MenuItem
           key={notification._id}
@@ -139,61 +129,66 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
             display: "flex",
             alignItems: "center",
             gap: 2,
-            p: 2,
-            borderBottom: "1px solid #ddd",
+            py: 2,
+            px: 2,
+            borderBottom: "1px solid #eee",
             backgroundColor: notification.isRead ? "transparent" : "#f9f9f9",
-            transition: "background-color 0.2s ease",
-            "&:hover": {
-              backgroundColor: "#f5f5f5",
-            },
+            "&:hover": { backgroundColor: "#f5f5f5" },
           }}
-          onClick={() => markAsRead(notification._id)} // Mark the notification as read when clicked
+          onClick={() => markAsRead(notification._id)}
         >
-          {/* User Avatar */}
           <Avatar
             src={notification.senderId?.profilePicture || "/assets/images/default-profile.png"}
             alt={`${notification.senderId?.Prenom} ${notification.senderId?.Nom}`}
-            sx={{
-              width: 40,
-              height: 40,
-              border: "2px solid #ddd",
-            }}
+            sx={{ width: 40, height: 40 }}
           />
-
-          {/* Notification Content */}
-          <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "row", alignItems: "center" }}>
+          <Box sx={{ flexGrow: 1 }}>
             <Typography
-              variant="body1"
+              variant="body2"
               sx={{
-                fontWeight: "semi-bold",
                 color: "#000",
-                mb: 0.5,
-                whiteSpace: "nowrap", // Prevents wrapping
+                fontWeight: 500,
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
               }}
             >
-              {notification.senderId?.Prenom} {notification.senderId?.Nom}{" "}
-              <span style={{ color: "#666", fontWeight: "semi-bold", fontSize: "16px" }}>
+              {notification.senderId?.Prenom} {notification.senderId?.Nom}
+              <span style={{ color: "#666", fontWeight: 400, marginLeft: 6 }}>
                 started following you
               </span>
             </Typography>
+            <Typography variant="caption" sx={{ color: "#707070", fontSize: "12px" }}>
+              {notification.createdAt &&
+                (new Date() - new Date(notification.createdAt) < 24 * 60 * 60 * 1000
+                  ? formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })
+                  : format(new Date(notification.createdAt), "MM/dd/yyyy"))}
+            </Typography>
           </Box>
-
-          {/* Time or Date */}
-          <Typography
-            variant="caption"
-            sx={{
-              color: "#707070",
-              fontSize: "12px",
-              textAlign: "right",
-            }}
-          >
-            {notification.createdAt &&
-              (new Date() - new Date(notification.createdAt) < 24 * 60 * 60 * 1000
-                ? formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })
-                : format(new Date(notification.createdAt), "MM/dd/yyyy"))}
-          </Typography>
         </MenuItem>
       ))}
+    </Box>
+  );
+
+  return isMobile ? (
+    <Dialog fullWidth open={Boolean(anchorEl)} onClose={handleMenuClose} scroll="paper">
+
+      {content}
+    </Dialog>
+  ) : (
+    <Menu
+      anchorEl={anchorEl}
+      open={Boolean(anchorEl)}
+      onClose={handleMenuClose}
+      PaperProps={{
+        sx: {
+          width: 400,
+          borderRadius: 2,
+          boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
+        },
+      }}
+    >
+      {content}
     </Menu>
   );
 };

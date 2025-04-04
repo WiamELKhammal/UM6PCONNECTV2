@@ -1,81 +1,102 @@
 import React, { useState } from 'react';
-import { Button, Menu, MenuItem, Typography, Box } from '@mui/material';
+import {
+  Box,
+  Button,
+  Menu,
+  MenuItem,
+  Typography
+} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const Tags = ({ tags, onTagClick }) => {
+const Tags = ({ tags, selectedTag, onTagClick }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleClick = (event) => {
+  const handleMoreClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleMoreClose = () => {
     setAnchorEl(null);
   };
 
-  // Remove duplicates by converting the tags array to a Set and back to an array
   const uniqueTags = [...new Set(tags.map(tag => tag.name))];
 
+  const getButtonStyles = (active) => ({
+    backgroundColor: active ? "#ea3b15" : "#fff",
+    color: active ? "#fff" : "#000",
+    fontWeight: 600,
+    border: "1px solid #ddd",
+    borderRadius: "12px",
+    px: 2.5,
+    py: 1.3,
+    textTransform: "none",
+    boxShadow: "none",
+    "&:hover": {
+      backgroundColor: active ? "#d73a12" : "#f9f9f9",
+    },
+    fontSize: { xs: "12px", sm: "13px" },
+  });
+
+  const getMenuItemStyles = (active) => ({
+    fontWeight: active ? 700 : 400,
+    backgroundColor: active ? "#ea3b15" : "transparent",
+    color: active ? "#fff" : "#000",
+    "&:hover": {
+      backgroundColor: active ? "#d73a12" : "#f5f5f5",
+    }
+  });
+
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
-      <Typography variant="body1" sx={{ color: "#000", fontWeight: "semi-bold", mr: 2 }}>
-        Tags:
+    <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1, mt: 1 }}>
+      <Typography
+        variant="body1"
+        sx={{
+          color: "#000",
+          fontWeight: 600,
+          fontSize: { xs: "14px", sm: "16px" },
+          mr: 1,
+        }}
+      >
+        Field Of Work:
       </Typography>
 
+      {/* First 4 Tags */}
       {uniqueTags.slice(0, 4).map((tag) => (
         <Button
           key={tag}
-          variant="outlined"
-          size="small"
-          sx={{
-            borderRadius: 20,
-            borderColor: "#f7f7f7",
-            color: "#6e6e6e ",
-            minWidth: "auto",
-            px: 2,
-            mx: 0.3,
-            backgroundColor: "#f7f7f7",
-            "&:hover": {
-              backgroundColor: "#fafafa",
-              borderColor: "#f7f7f7",
-            },
-          }}
           onClick={() => onTagClick(tag)}
+          sx={getButtonStyles(selectedTag === tag)}
         >
           {tag}
         </Button>
       ))}
 
       {/* More Dropdown */}
-      <Button
-        variant="outlined"
-        size="small"
-        endIcon={<ExpandMoreIcon />}
-        onClick={handleClick}
-        sx={{
-          borderRadius: 20,
-          borderColor: "#f7f7f7",
-          color: "#6e6e6e ",
-          minWidth: "auto",
-          px: 2,
-          mx: 0.3,
-          backgroundColor: "#f7f7f7",
-          "&:hover": {
-            backgroundColor: "#fafafa",
-            borderColor: "#f7f7f7",
-          },
-        }}
-      >
-        More
-      </Button>
-
-      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-        {uniqueTags.slice(4).map((tag) => (
-          <MenuItem key={tag} onClick={() => { onTagClick(tag); handleClose(); }}>
-            {tag}
-          </MenuItem>
-        ))}
-      </Menu>
+      {uniqueTags.length > 4 && (
+        <>
+          <Button
+            endIcon={<ExpandMoreIcon />}
+            onClick={handleMoreClick}
+            sx={getButtonStyles(false)}
+          >
+            More
+          </Button>
+          <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMoreClose}>
+            {uniqueTags.slice(4).map((tag) => (
+              <MenuItem
+                key={tag}
+                onClick={() => {
+                  onTagClick(tag);
+                  handleMoreClose();
+                }}
+                sx={getMenuItemStyles(selectedTag === tag)}
+              >
+                {tag}
+              </MenuItem>
+            ))}
+          </Menu>
+        </>
+      )}
     </Box>
   );
 };

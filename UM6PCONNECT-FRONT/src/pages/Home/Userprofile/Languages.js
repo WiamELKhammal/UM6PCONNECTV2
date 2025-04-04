@@ -76,16 +76,16 @@ const Languages = ({ userId }) => {
               <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
                 <div
                   style={{
-                    border: "2px solid #CCC",
+                    border: "2px solid #fff",
                     padding: "12px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     borderRadius: "50%",
-                    backgroundColor: "#CCC",
+                    backgroundColor: "#f4e9e7",
                   }}
                 >
-                  <LanguageIcon style={{ color: "#ffffff", fontSize: "26px" }} />
+                  <LanguageIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
                 </div>
                 <div>
                   <p style={{ fontWeight: "600", fontSize: "16px" }}>{language.name || "Language Name"}</p>
@@ -112,17 +112,18 @@ const Languages = ({ userId }) => {
         >
           <div
             style={{
-              border: "2px solid #CCC",
+              border: "2px solid #fff",
               padding: "12px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               borderRadius: "50%",
-              backgroundColor: "#CCC",
+              backgroundColor: "#f4e9e7",
             }}
           >
-            <LanguageIcon style={{ color: "#ffffff", fontSize: "26px" }} />
+            <LanguageIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
           </div>
+
           <div>
             <p style={{ fontWeight: "600", fontSize: "16px" }}>Language Name</p>
             <p style={{ color: "#333", fontSize: "14px" }}>Proficiency Level</p>

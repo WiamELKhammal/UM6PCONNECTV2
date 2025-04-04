@@ -80,16 +80,16 @@ const Projects = ({ userId }) => {
               <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
                 <div
                   style={{
-                    border: "2px solid #CCC",
+                    border: "2px solid #fff",
                     padding: "12px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     borderRadius: "50%",
-                    backgroundColor: "#CCC",
+                    backgroundColor: "#f4e9e7",
                   }}
                 >
-                  <BuildIcon style={{ color: "#ffffff", fontSize: "26px" }} />
+                  <BuildIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
                 </div>
                 <div>
                   <p style={{ fontWeight: "600", fontSize: "16px" }}>{project.name || "Project Name"}</p>
@@ -119,18 +119,19 @@ const Projects = ({ userId }) => {
             fontSize: "14px",
           }}
         >
+
           <div
             style={{
-              border: "2px solid #CCC",
+              border: "2px solid #fff",
               padding: "12px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               borderRadius: "50%",
-              backgroundColor: "#CCC",
+              backgroundColor: "#f4e9e7",
             }}
           >
-            <BuildIcon style={{ color: "#ffffff", fontSize: "26px" }} />
+            <BuildIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
           </div>
           <div>
             <p style={{ fontWeight: "600", fontSize: "16px" }}>Project Name</p>

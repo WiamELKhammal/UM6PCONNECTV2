@@ -8,29 +8,43 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemText,
-  IconButton,
   Divider,
   Button,
-  Chip,
+  Stack,
+  Link as MuiLink,
+  Tooltip
 } from "@mui/material";
-import { UserContext } from "../../context/UserContext";
-import SearchBar2 from "../../components/SearchBar2.js";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+import { UserContext } from "../../context/UserContext";
+import SearchBar2 from "../../components/SearchBar2";
+import MessageModal from "../../components/Messages/MessageModal";
 import Save from "../Save/Save";
 import Follow from "../Follow/Follow";
-import MessageModal from "../../components/Messages/MessageModal";
-import ShareIcon from '@mui/icons-material/Share'; const RightSidebar = () => {
+
+const extractUsername = (url) => {
+  if (!url) return null;
+  try {
+    const parts = new URL(url).pathname.split("/").filter(Boolean);
+    return parts[parts.length - 1];
+  } catch {
+    return null;
+  }
+};
+
+const RightSidebar = () => {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
+
   const [researchers, setResearchers] = useState([]);
   const [filteredResearchers, setFilteredResearchers] = useState([]);
   const [tags, setTags] = useState([]);
   const [researcherTags, setResearcherTags] = useState({});
+  const [selectedTag, setSelectedTag] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedResearcherId, setSelectedResearcherId] = useState(null);
   const [selectedResearcherName, setSelectedResearcherName] = useState("");
 
-  // Fetch users & tags on mount
   useEffect(() => {
     fetch("http://localhost:5000/api/users")
       .then((res) => res.json())
@@ -49,75 +63,65 @@ import ShareIcon from '@mui/icons-material/Share'; const RightSidebar = () => {
       .catch((err) => console.error("Failed to fetch tags:", err));
   }, [user]);
 
-  // Fetch tags for each researcher
   useEffect(() => {
     const fetchTags = async () => {
       let tagsMap = {};
-      for (const researcher of researchers) {
+      for (const r of researchers) {
         try {
-          const res = await fetch(`http://localhost:5000/api/tags/user/${researcher._id}`);
+          const res = await fetch(`http://localhost:5000/api/tags/user/${r._id}`);
           const data = await res.json();
-          tagsMap[researcher._id] = data.tags || [];
-        } catch (err) {
-          console.error(`Failed to fetch tags for user ${researcher._id}:`, err);
-          tagsMap[researcher._id] = [];
+          tagsMap[r._id] = data.tags || [];
+        } catch {
+          tagsMap[r._id] = [];
         }
       }
       setResearcherTags(tagsMap);
     };
 
-    if (researchers.length > 0) {
-      fetchTags();
-    }
+    if (researchers.length > 0) fetchTags();
   }, [researchers]);
 
-  // Handle search
   const handleSearch = (query) => {
-    let filteredList = researchers;
-    if (query) {
-      filteredList = filteredList.filter(
-        (researcher) =>
-          researcher.Prenom.toLowerCase().includes(query.toLowerCase()) ||
-          researcher.Nom.toLowerCase().includes(query.toLowerCase())
-      );
-    }
-    setFilteredResearchers(filteredList);
+    const result = researchers.filter(
+      (r) =>
+        r.Prenom.toLowerCase().includes(query.toLowerCase()) ||
+        r.Nom.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredResearchers(result);
   };
 
-  // Handle tag click
-  const handleTagClick = (tagName) => {
-    fetch(`http://localhost:5000/api/tags/tag/${tagName}`)
+  const handleTagClick = (tag) => {
+    setSelectedTag(tag);
+    fetch(`http://localhost:5000/api/tags/tag/${tag}`)
       .then((res) => res.json())
-      .then((data) => {
-        // Exclude logged-in user from search results
-        const filteredResults = data.filter(
-          (researcher) => researcher._id !== user?._id
-        );
-        setFilteredResearchers(filteredResults);
-      })
+      .then((data) =>
+        setFilteredResearchers(data.filter((r) => r._id !== user?._id && r.Status === "Active"))
+      )
       .catch((err) => console.error("Failed to fetch users by tag:", err));
   };
 
-  // Show all researchers
   const handleShowAll = () => {
-    setFilteredResearchers(researchers);
+    setSelectedTag(null);
+    setFilteredResearchers(researchers.filter((r) => r._id !== user?._id));
   };
 
-  // Handle message click
-  const handleMessageClick = (researcherId, researcherName) => {
-    setSelectedResearcherId(researcherId);
-    setSelectedResearcherName(researcherName);
+  const handleMessageClick = (id, name) => {
+    setSelectedResearcherId(id);
+    setSelectedResearcherName(name);
     setIsModalOpen(true);
   };
 
   return (
-    <Box sx={{ flex: 1, bgcolor: "#fff", borderRadius: "10px", overflow: "hidden" }}>
-      {/* Search Bar */}
-      <SearchBar2 onSearch={handleSearch} tags={tags} onTagClick={handleTagClick} />
+    <Box sx={{ flex: 1, bgcolor: "#fff", borderRadius: "10px", p: { xs: 2, sm: 3 } }}>
+      <SearchBar2
+        onSearch={handleSearch}
+        tags={tags}
+        onTagClick={handleTagClick}
+        selectedTag={selectedTag}
+      />
 
-      {/* Title & Show All Users button */}
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 2 }}>
-        <Typography variant="body1" sx={{ color: "#000", fontWeight: "semi-bold", mr: 2 }}>
+        <Typography variant="body1" sx={{ color: "#000", fontWeight: 600 }}>
           Our Researchers:
         </Typography>
         <Button
@@ -125,121 +129,159 @@ import ShareIcon from '@mui/icons-material/Share'; const RightSidebar = () => {
           variant="contained"
           sx={{
             color: "#000",
-            fontWeight: "semi-bold",
+            fontWeight: 400,
             bgcolor: "#f7f7f7",
             border: "1px solid #CCC",
             borderRadius: "10px",
             boxShadow: "none",
             "&:hover": { boxShadow: "none" },
+            fontSize: { xs: "12px", sm: "14px" },
           }}
         >
           All Researchers
         </Button>
       </Box>
 
-      {/* List of Researchers */}
-      <List sx={{ display: "flex", flexDirection: "column", gap: 2, pb: 1 }}>
-        {filteredResearchers.map((researcher) => (
-          <React.Fragment key={researcher._id}>
+      <List sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        {filteredResearchers.map((r) => (
+          <React.Fragment key={r._id}>
             <ListItem
               sx={{
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
+                flexDirection: "column",
+                alignItems: "flex-start",
                 p: 2,
                 bgcolor: "#FFF",
                 border: "1px solid #CCC",
                 borderRadius: "10px",
                 cursor: "pointer",
-                mb: 2,
-                "&:hover": { bgcolor: "#f5f5f5" },
+                gap: 2,
               }}
-              onClick={() => navigate(`/Userprofile/${researcher._id}`)} // Navigate to profile
+              onClick={() => navigate(`/Userprofile/${r._id}`)}
             >
-              {/* Researcher Details */}
-              <Box sx={{ display: "flex", alignItems: "center", gap: 2, flex: 1, overflow: "hidden" }}>
+              <Box sx={{ display: "flex", gap: 2, alignItems: "center", width: "100%" }}>
                 <ListItemAvatar>
                   <Avatar
-                    src={researcher.profilePicture || "/assets/images/default-profile.png"}
+                    src={r.profilePicture || "/assets/images/default-profile.png"}
                     sx={{ width: 50, height: 50, border: "2px solid #ddd" }}
                   />
                 </ListItemAvatar>
                 <ListItemText
                   primary={
-                    <Typography fontWeight="bold" fontSize="14px">
-                      {researcher.Prenom} {researcher.Nom}
-                    </Typography>
+                    <Box display="flex" alignItems="center" gap={1} justifyContent="space-between" width="100%">
+                      <Typography fontWeight="bold" fontSize="16px">
+                        {r.Prenom} {r.Nom}
+                      </Typography>
+                      {r.badged && (
+                        <Box display="flex" alignItems="center" gap={0.5} sx={{ border: "1px dotted #ffbf00", borderRadius: "12px", px: 1, py: 0.3, backgroundColor: "#fff7d0" }}>
+                          <WorkspacePremiumIcon sx={{ color: "#ffbf00", fontSize: 20 }} />
+                          <Typography fontSize={13} color="#ffbf00">
+                            Elite Member
+                          </Typography>
+                        </Box>
+                      )}
+                    </Box>
                   }
                   secondary={
                     <>
-                      <Typography fontSize="12px" fontWeight="500" color="textPrimary">
-                        {researcher.headline || "No headline available"}
+                      <Typography fontSize="14px" fontWeight={500} color="text.primary">
+                        {r.headline || "No headline available"}
                       </Typography>
-                      <Typography fontSize="12px" color="textSecondary">
-                        {researcher.Departement}
-                      </Typography>
-                      <Typography fontSize="12px" color="textSecondary">
-                        {researcher.bio || "No bio available."}
+                      <Typography fontSize="14px" color="text.secondary">
+                        {r.Departement}
                       </Typography>
 
-                      {/* Tags Section (Below Bio) */}
-                      {researcherTags[researcher._id] &&
-                        researcherTags[researcher._id].length > 0 && (
-                          <Box sx={{ display: "flex", flexWrap: "wrap", mt: 1 }}>
-                            {researcherTags[researcher._id].map((tag, index) => (
-                              <Chip
-                                key={index}
-                                label={tag}
-                                size="small"
-                                sx={{
-                                  bgcolor: "#f7f7f7",
-                                  color: "#6e6e6e",
-                                  fontSize: "11px",
-                                  mt: 0.5,
-                                  mr: 0.5,
-                                  "&:hover": { bgcolor: "#ddd", cursor: "pointer" },
-                                }}
-                                onClick={() => handleTagClick(tag)}
-                              />
-                            ))}
-                          </Box>
+                      <Stack direction="row" spacing={1} mt={1}>
+                        {r.linkedIn && (
+                          <MuiLink
+                            href={r.linkedIn}
+                            target="_blank"
+                            underline="hover"
+                            fontSize={14}
+                            color="#555"
+                          >
+                            {extractUsername(r.linkedIn)}
+                          </MuiLink>
                         )}
+                        {r.researchGate && (
+                          <MuiLink
+                            href={r.researchGate}
+                            target="_blank"
+                            underline="hover"
+                            fontSize={14}
+                            color="#555"
+                          >
+                            {extractUsername(r.researchGate)}
+                          </MuiLink>
+                        )}
+                      </Stack>
+
+                      {researcherTags[r._id]?.length > 0 && (
+                        <Box sx={{ display: "flex", flexWrap: "wrap", mt: 1 }}>
+                          {researcherTags[r._id].map((tag, i) => (
+                            <Button
+                              key={i}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleTagClick(tag);
+                              }}
+                              sx={{
+                                fontSize: "13px",
+                                py: 0.8,
+                                px: 2,
+                                m: 0.5,
+                                borderRadius: "20px",
+                                border: "1px solid #f0f0f0",
+                                backgroundColor: selectedTag === tag ? "#ea3b15" : "#f7f7f7",
+                                color: selectedTag === tag ? "#fff" : "#6e6e6e",
+                                "&:hover": {
+                                  backgroundColor: selectedTag === tag ? "#d73a12" : "#eee",
+                                },
+                              }}
+                            >
+                              {tag}
+                            </Button>
+                          ))}
+                        </Box>
+                      )}
                     </>
                   }
                 />
               </Box>
 
-              {/* Action Buttons */}
-
-              <Box sx={{ display: "flex", gap: 1 }}>
-                <Follow researcherId={researcher._id} user={user} />
-                <Save researcherId={researcher._id} user={user} />
-                <IconButton
-                  sx={{ color: "#ea3b15" }}
+              <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between", mt: 2, gap: 1 }}>
+                <Button
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleMessageClick(researcher._id, `${researcher.Prenom} ${researcher.Nom}`);
+                    handleMessageClick(r._id, `${r.Prenom} ${r.Nom}`);
+                  }}
+                  startIcon={<ChatBubbleOutlineIcon />}
+                  sx={{
+                    border: "1px solid #ea3b15",
+                    color: "#ea3b15",
+                    textTransform: "none",
+                    flex: 1,
+                    "&:hover": { bgcolor: "transparent" },
                   }}
                 >
-                  <ChatBubbleOutlineIcon fontSize="small" />
-                </IconButton>
-                <IconButton
-                  sx={{ color: "#ea3b15" }} // Red color
-                  onClick={(e) => e.stopPropagation()} // Add share functionality here if needed
-                >
-                  <ShareIcon fontSize="small" />
-                </IconButton>
+                  Connect
+                </Button>
+                <Follow researcherId={r._id} user={user} />
+                <Save researcherId={r._id} user={user} />
               </Box>
-
             </ListItem>
-            <Divider />
+            <Divider sx={{ height: "1px", bgcolor: "#fff", my: 1 }} />
           </React.Fragment>
         ))}
       </List>
 
-      {/* Message Modal */}
       {isModalOpen && (
-        <MessageModal open={isModalOpen} onClose={() => setIsModalOpen(false)} recipientId={selectedResearcherId} recipientName={selectedResearcherName} />
+        <MessageModal
+          open={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          recipientId={selectedResearcherId}
+          recipientName={selectedResearcherName}
+        />
       )}
     </Box>
   );

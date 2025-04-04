@@ -79,16 +79,16 @@ const Education = ({ userId }) => {
                             <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
                                 <div
                                     style={{
-                                        border: "2px solid #CCC",
+                                        border: "2px solid #fff",
                                         padding: "12px",
                                         display: "flex",
                                         alignItems: "center",
                                         justifyContent: "center",
                                         borderRadius: "50%",
-                                        backgroundColor: "#CCC",
+                                        backgroundColor: "#f4e9e7",
                                     }}
                                 >
-                                    <SchoolIcon style={{ color: "#ffffff", fontSize: "26px" }} />
+                                    <SchoolIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
                                 </div>
                                 <div>
                                     <p style={{ fontWeight: "600", fontSize: "16px" }}>{edu.schoolName || "School Name"}</p>
@@ -118,16 +118,16 @@ const Education = ({ userId }) => {
                 >
                     <div
                         style={{
-                            border: "2px solid #CCC",
+                            border: "2px solid #fff",
                             padding: "12px",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
                             borderRadius: "50%",
-                            backgroundColor: "#CCC",
+                            backgroundColor: "#f4e9e7",
                         }}
                     >
-                        <SchoolIcon style={{ color: "#ffffff", fontSize: "26px" }} />
+                        <SchoolIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
                     </div>
                     <div>
                         <p style={{ fontWeight: "600", fontSize: "16px" }}>School Name</p>

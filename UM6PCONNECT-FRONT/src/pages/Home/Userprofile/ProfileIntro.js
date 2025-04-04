@@ -1,219 +1,257 @@
-import React, { useState, useEffect } from "react";
-import "bulma/css/bulma.min.css";
-import { LocationOn, Email, Phone, Language } from "@mui/icons-material";
-import { Button } from "@mui/material";
-import BusinessIcon from "@mui/icons-material/Business";
+import React, { useEffect, useState, useContext } from "react";
+import {
+    Button,
+    Box,
+    Typography,
+    Avatar,
+    Paper,
+    Stack,
+    Link as MuiLink,
+} from "@mui/material";
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 
-const ProfileIntro = ({ userId }) => {
-    const [user, setUser] = useState(null);
+import { UserContext } from "../../../context/UserContext";
+import Follow from "../../Follow/Follow";
+import MessageModal from "../../../components/Messages/MessageModal";
 
-    // Fetch user data based on the userId
+const extractUsername = (url) => {
+    if (!url) return null;
+    try {
+        const parts = new URL(url).pathname.split("/").filter(Boolean);
+        return parts[parts.length - 1];
+    } catch {
+        return null;
+    }
+};
+
+const InfoLine = ({ value, icon }) => {
+    const username = extractUsername(value);
+    return (
+        <Box display="flex" alignItems="center" gap={1}>
+            {icon}
+            {value ? (
+                <MuiLink
+                    href={value}
+                    target="_blank"
+                    rel="noopener"
+                    fontSize={18}
+                    color="#111827"
+                    underline="hover"
+                >
+                    {username}
+                </MuiLink>
+            ) : (
+                <Typography fontSize={18} color="#999">
+                    Not provided
+                </Typography>
+            )}
+        </Box>
+    );
+};
+
+const PublicProfileIntro = ({ userId }) => {
+    const [userProfile, setUserProfile] = useState(null);
+    const { user } = useContext(UserContext); // logged-in user
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     useEffect(() => {
         const fetchUserData = async () => {
             try {
                 const response = await fetch(`http://localhost:5000/api/users/${userId}`);
                 const data = await response.json();
-                setUser(data);
+                setUserProfile(data);
             } catch (error) {
                 console.error("Error fetching user data:", error);
             }
         };
 
-        if (userId) {
-            fetchUserData();
-        }
+        if (userId) fetchUserData();
     }, [userId]);
 
-    if (!user) {
-        return <div>Loading...</div>;  
-    }
+    if (!userProfile) return <div>Loading...</div>;
 
-    //  Ensure correct handling of profile and cover pictures
-    const profilePic = user?.profilePicture
-        ? user.profilePicture.startsWith("data:image")
-            ? user.profilePicture
-            : `data:image/png;base64,${user.profilePicture}`
-        : "/assets/images/default-profile.png";
-
-    const coverPic = user?.coverPicture
-        ? user.coverPicture.startsWith("data:image")
-            ? user.coverPicture
-            : `data:image/png;base64,${user.coverPicture}`
-        : "/assets/images/default-cover.png"; // Fallback default cover
+    const profilePic = userProfile?.profilePicture || "/assets/images/default-profile.png";
+    const coverPic = userProfile?.coverPicture || "/assets/images/default-cover.png";
 
     return (
-        <div className="container py-5 ">
-            <div
-                className="box"
-                style={{
+        <Box pt={6}>
+            <Paper
+                elevation={0}
+                sx={{
                     width: "90%",
-                    margin: "0 auto",
-                    border: "1px solid #ddd",
-                    borderRadius: "10px",
-                    padding: "0",
+                    margin: "20px auto",
+                    borderRadius: 3,
+                    border: "1px solid #e0e0e0",
+                    backgroundColor: "#fff",
                     overflow: "hidden",
-                    fontFamily: "'Segoe UI', Tahoma, Geneva, sans-serif",
-                    position: "relative",
-                    boxShadow: "none",
                 }}
             >
-                {/* ✅ Cover Image (Ensures it loads properly) */}
-                <div
-                    style={{
-                        backgroundImage: `url(${coverPic})`,
-                        height: "250px",
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        borderRadius: "10px 10px 0 0",
-                        position: "relative",
-                    }}
-                >
-                    {/* Profile Picture */}
-                    <div style={{ position: "absolute", bottom: "-40px", left: "20px" }}>
-                        <figure
-                            className="image is-128x128"
-                            style={{
-                                borderRadius: "50%",
-                                border: "5px solid white",
-                                position: "relative",
-                            }}
-                        >
-                            <img src={profilePic} alt="Profile" className="is-rounded" />
-                        </figure>
-                    </div>
-                </div>
-
-                {/* User Info */}
-                <div className="ml-5 mt-6" style={{ padding: "20px" }}>
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
+                {/* Cover Image */}
+                <Box position="relative" minHeight={200}>
+                    <Box
+                        component="img"
+                        src={coverPic}
+                        alt="Cover"
+                        sx={{
+                            width: "100%",
+                            height: 200,
+                            objectFit: "cover",
+                            display: "block",
                         }}
-                    >
-                        <h4 className="title is-4" style={{ fontWeight: "500", marginBottom: "5px" }}>
-                            {user.Prenom} {user.Nom}
-                        </h4>
+                    />
+                </Box>
 
-                        {/* Buttons */}
-                        <div style={{ display: "flex", gap: "10px" }}>
-                            <Button 
-                                variant="contained"
-                                style={{
-                                    border: "1px solid #ea3b15",
-                                    backgroundColor: "#ea3b15",
-                                    color: "#fff",
-                                    boxShadow: "none",
+                {/* Profile Picture + Info */}
+                <Box mt={-6} px={4} pb={4}>
+                    <Stack alignItems="flex-start" spacing={1}>
+                        <Box position="relative">
+                            <Avatar
+                                src={profilePic}
+                                alt="Profile"
+                                sx={{
+                                    width: 100,
+                                    height: 100,
+                                    border: "3px solid white",
+                                    backgroundColor: "#eee",
                                 }}
-                                size="small"
-                            >
-                                Message
-                            </Button>
-                            <Button
-                                variant="contained"
-                                style={{
-                                    border: "1px solid #ea3b15",
-                                    backgroundColor: "white",
-                                    color: "#ea3b15",
-                                    boxShadow: "none",
-                                }}
-                                size="small"
-                            >
-                                Follow
-                            </Button>
-                        </div>
-                    </div>
+                            />
+                        </Box>
 
-                    {/* Headline */}
-                    {user.headline && (
-                        <p className="subtitle is-6" style={{ fontSize: "14px", color: "#000", marginBottom: "10px", fontWeight: "500" }}>
-                            {user.headline}
-                        </p>
-                    )}
-
-                    {/* Department */}
-                    {user.Departement && (
-                        <div
-                            style={{
-                                fontSize: "14px",
-                                color: "#000",
+                        {/* Name + Elite Badge + Actions */}
+                        <Box
+                            sx={{
                                 display: "flex",
+                                justifyContent: "space-between",
                                 alignItems: "center",
-                                gap: "20px",
+                                width: "100%",
                                 flexWrap: "wrap",
+                                mt: 1,
+                                gap: 2,
                             }}
                         >
-                            <span className="is-flex is-align-items-center">
-                                <BusinessIcon fontSize="small" style={{ color: "#000", marginRight: "5px" }} />
-                                {user.Departement}
-                            </span>
-                        </div>
-                    )}
+                            <Box display="flex" alignItems="center" gap={1} flexWrap="wrap">
+                                <Typography fontSize={26} fontWeight="600" color="#000">
+                                    {userProfile.Prenom} {userProfile.Nom}
+                                </Typography>
 
-                    {/* Bio */}
-                    {user.bio && (
-                        <p
-                            style={{
-                                fontSize: "14px",
-                                color: "#333",
-                                marginTop: "10px",
-                                lineHeight: "1.5",
-                            }}
-                        >
-                            {user.bio}
-                        </p>
-                    )}
+                                {userProfile?.badged ? (
+                                    <Box
+                                        display="flex"
+                                        alignItems="center"
+                                        gap={0.5}
+                                        sx={{
+                                            border: "2px dotted #ffbf00",
+                                            borderRadius: "20px",
+                                            px: 2,
+                                            py: 0.5,
+                                            backgroundColor: "#fff",
+                                        }}
+                                    >
+                                        <WorkspacePremiumIcon sx={{ color: "#ffbf00", fontSize: 22 }} />
+                                        <Typography fontSize={14} fontWeight={600} color="#ffbf00">
+                                            Elite Member
+                                        </Typography>
+                                    </Box>
 
-                    {/* Contact Info */}
-                    <div
-                        style={{
-                            fontSize: "14px",
-                            color: "#000",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "20px",
-                            flexWrap: "wrap",
-                            marginTop: "10px",
-                        }}
-                    >
-                        {user.location && (
-                            <span className="is-flex is-align-items-center">
-                                <LocationOn fontSize="small" style={{ color: "#000", marginRight: "5px" }} />
-                                {user.location}
-                            </span>
-                        )}
-                        {user.Email && (
-                            <span className="is-flex is-align-items-center">
-                                <Email fontSize="small" style={{ color: "#000", marginRight: "5px" }} />
-                                <a href={`mailto:${user.Email}`} style={{ textDecoration: "none", color: "#000" }}>
-                                    {user.Email}
-                                </a>
-                            </span>
-                        )}
-                        {user.phone && (
-                            <span className="is-flex is-align-items-center">
-                                <Phone fontSize="small" style={{ color: "#000", marginRight: "5px" }} />
-                                {user.phone}
-                            </span>
-                        )}
-                    </div>
+                                ) : (
+                                    <Box display="flex" alignItems="center" gap={0.5}
+                                                                            sx={{
+                                            border: "2px dotted #999",
+                                            borderRadius: "20px",
+                                            px: 2,
+                                            py: 0.5,
+                                            backgroundColor: "#fff",
+                                        }}
+                                    >
+                                        <WorkspacePremiumIcon sx={{ color: "#999", fontSize: 22 }} />
+                                        <Typography fontSize={14} fontWeight={500} color="#999">
+                                            Not Elite Yet
+                                        </Typography>
+                                    </Box>
+                                )}
+                            </Box>
 
-                    {/* Website */}
-                    {user.url && (
-                        <div style={{ marginTop: "10px", fontSize: "14px", color: "#000" }}>
-                            <span className="is-flex is-align-items-center">
-                                <Language fontSize="small" style={{ color: "#000", marginRight: "5px" }} />
-                                <a href={user.url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", color: "#000" }}>
-                                    {user.url}
-                                </a>
-                            </span>
-                        </div>
-                    )}
-                </div>
-            </div>
-        </div>
+                            {/* Follow & Connect Buttons */}
+                            <Box display="flex" gap={1}>
+                                <Follow user={user} researcherId={userId} />
+                                <Button
+                                    onClick={() => setIsModalOpen(true)}
+                                    variant="outlined"
+                                    startIcon={<ChatBubbleOutlineIcon fontSize="small" />}
+                                    sx={{
+                                        border: "1px solid #ea3b15",
+                                        color: "#fff",
+                                        backgroundColor: "#ea3b15",
+                                        fontSize: "13px",
+                                        textTransform: "none",
+                                    }}
+                                >
+                                    Connect
+                                </Button>
+                            </Box>
+                        </Box>
+
+                        {/* Headline */}
+                        {userProfile.headline && (
+                            <Typography fontSize={18} color="text.secondary">
+                                {userProfile.headline}
+                            </Typography>
+                        )}
+
+                        {/* Department */}
+                        {userProfile.Departement && (
+                            <Box display="flex" alignItems="center" gap={1}>
+                                <ApartmentIcon fontSize="medium" />
+                                <Typography fontSize={18} color="#000">
+                                    {userProfile.Departement}
+                                </Typography>
+                            </Box>
+                        )}
+
+                        {/* Social Links */}
+                        <Box mt={2}>
+                            <Stack spacing={1}>
+                                <InfoLine
+                                    value={userProfile.linkedIn}
+                                    icon={
+                                        <Box
+                                            component="img"
+                                            src="/assets/images/linkedin.svg"
+                                            alt="LinkedIn"
+                                            sx={{ width: 20, height: 20 }}
+                                        />
+                                    }
+                                />
+                                <InfoLine
+                                    value={userProfile.researchGate}
+                                    icon={
+                                        <Box
+                                            component="img"
+                                            src="/assets/images/researchgate.svg"
+                                            alt="ResearchGate"
+                                            sx={{ width: 20, height: 20 }}
+                                        />
+                                    }
+                                />
+                            </Stack>
+                        </Box>
+                    </Stack>
+                </Box>
+            </Paper>
+
+            {/* Connect Modal */}
+            {isModalOpen && (
+                <MessageModal
+                    open={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    recipientId={userProfile._id}
+                    recipientName={`${userProfile.Prenom} ${userProfile.Nom}`}
+                />
+            )}
+        </Box>
     );
 };
 
-export default ProfileIntro;
+export default PublicProfileIntro;

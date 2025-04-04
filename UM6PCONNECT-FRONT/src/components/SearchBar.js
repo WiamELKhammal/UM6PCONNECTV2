@@ -10,7 +10,7 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 2 }}>
+    <Box sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 2,alignItems: "center",justifyContent:"center",paddingLeft:"170px" }}>
       {/* Search Bar with Increased Width */}
       <Box sx={{ display: "flex", alignItems: "center", width: "100%" }}>
         <Paper
@@ -20,14 +20,15 @@ const SearchBar = ({ onSearch }) => {
             alignItems: "center",
             px: 2,
             py: 1,
-            borderRadius: 20,
-            width: "830px", // Set a fixed width as you requested
+            borderRadius: "12px",
+            
+            width: "90%", // Set a fixed width as you requested
             boxShadow: "none",
-            backgroundColor: "#fafafa",
-            borderColor: "1px solid #ccc",
+            backgroundColor: "#FFF",
+            border: "1px solid #ccc",
           }}
         >
-          <IconButton sx={{ color: "#818485" }}>
+          <IconButton sx={{ color: "#CCC" }}>
             <SearchIcon />
           </IconButton>
           <InputBase
