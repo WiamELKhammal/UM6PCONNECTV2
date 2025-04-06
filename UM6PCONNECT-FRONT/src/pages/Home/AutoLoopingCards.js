@@ -1,37 +1,95 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Card,
   CardContent,
   Typography,
   Box,
   Chip,
-  LinearProgress
+  LinearProgress,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LockClockIcon from "@mui/icons-material/LockClock";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
-
-const achievements = [
-  { title: "Share your first research", points: 10, unlocked: true },
-  { title: "Follow 10 people", points: 20, unlocked: false },
-  { title: "Reach 10 followers", points: 50, unlocked: false },
-  { title: "Complete your profile", points: 30, unlocked: true },
-  { title: "Add a project", points: 15, unlocked: true },
-  { title: "Get your first follower", points: 5, unlocked: true },
-  { title: "Invite a friend", points: 10, unlocked: false }
-];
+import { UserContext } from "../../context/UserContext";
 
 const UserAchievements = () => {
+  const { user, setUser } = useContext(UserContext);
   const [expanded, setExpanded] = useState(false);
+  const [stats, setStats] = useState({
+    following: 0,
+    followers: 0,
+    researchCount: 0,
+    completedProfile: false,
+  });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!user?._id) return;
+
+      const [followRes, researchRes, profileRes] = await Promise.all([
+        fetch(`http://localhost:5000/api/follow/follow-count/${user._id}`).then((r) => r.json()),
+        fetch(`http://localhost:5000/api/research/user/${user._id}`).then((r) => r.json()),
+        fetch(`http://localhost:5000/api/profile/${user._id}`).then((r) => r.json()),
+      ]);
+
+      const completed = profileRes?.completionPercentage >= 100;
+
+      setStats({
+        following: followRes.followingCount,
+        followers: followRes.followersCount,
+        researchCount: researchRes.length,
+        completedProfile: completed,
+      });
+
+      if (
+        followRes.followersCount >= 10 &&
+        followRes.followingCount >= 10 &&
+        researchRes.length >= 10 &&
+        completed
+      ) {
+        // update badged to true
+        await fetch(`http://localhost:5000/api/users/${user._id}/badge`, {
+          method: "PUT",
+        });
+
+        setUser({ ...user, badged: true });
+      }
+    };
+
+    fetchData();
+  }, [user?._id]);
+
+  const achievements = [
+    {
+      title: "Follow 10 users",
+      points: 20,
+      unlocked: stats.following >= 10,
+    },
+    {
+      title: "Reach 10 followers",
+      points: 50,
+      unlocked: stats.followers >= 10,
+    },
+    {
+      title: "Post 10 research entries",
+      points: 10,
+      unlocked: stats.researchCount >= 10,
+    },
+    {
+      title: "Complete your profile",
+      points: 20,
+      unlocked: stats.completedProfile,
+    },
+  ];
 
   const totalPoints = achievements
     .filter((a) => a.unlocked)
     .reduce((sum, a) => sum + a.points, 0);
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <Card
         sx={{
           width: 360,
@@ -62,7 +120,6 @@ const UserAchievements = () => {
 
           {expanded && (
             <>
-    
               {achievements.map((a, index) => (
                 <Box
                   key={index}
@@ -106,7 +163,6 @@ const UserAchievements = () => {
                 </Box>
               ))}
 
-              {/* Verified Section */}
               {totalPoints >= 100 ? (
                 <Box mt={2}>
                   <Box
@@ -137,7 +193,7 @@ const UserAchievements = () => {
                     "Advanced profile analytics",
                     "Pin top research or projects",
                     "Custom tags and banners",
-                    "Early access to new features"
+                    "Early access to new features",
                   ].map((feature, i) => (
                     <Box
                       key={i}

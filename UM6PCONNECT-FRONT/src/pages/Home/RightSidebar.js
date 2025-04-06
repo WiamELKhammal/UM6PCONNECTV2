@@ -12,7 +12,7 @@ import {
   Button,
   Stack,
   Link as MuiLink,
-  Tooltip
+  Tooltip,
 } from "@mui/material";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
@@ -21,16 +21,6 @@ import SearchBar2 from "../../components/SearchBar2";
 import MessageModal from "../../components/Messages/MessageModal";
 import Save from "../Save/Save";
 import Follow from "../Follow/Follow";
-
-const extractUsername = (url) => {
-  if (!url) return null;
-  try {
-    const parts = new URL(url).pathname.split("/").filter(Boolean);
-    return parts[parts.length - 1];
-  } catch {
-    return null;
-  }
-};
 
 const RightSidebar = () => {
   const { user } = useContext(UserContext);
@@ -173,7 +163,18 @@ const RightSidebar = () => {
                         {r.Prenom} {r.Nom}
                       </Typography>
                       {r.badged && (
-                        <Box display="flex" alignItems="center" gap={0.5} sx={{ border: "1px dotted #ffbf00", borderRadius: "12px", px: 1, py: 0.3, backgroundColor: "#fff7d0" }}>
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          gap={0.5}
+                          sx={{
+                            border: "1px dotted #ffbf00",
+                            borderRadius: "12px",
+                            px: 1,
+                            py: 0.3,
+                            backgroundColor: "#fff7d0",
+                          }}
+                        >
                           <WorkspacePremiumIcon sx={{ color: "#ffbf00", fontSize: 20 }} />
                           <Typography fontSize={13} color="#ffbf00">
                             Elite Member
@@ -191,31 +192,35 @@ const RightSidebar = () => {
                         {r.Departement}
                       </Typography>
 
+                      {/* Social Icons */}
                       <Stack direction="row" spacing={1} mt={1}>
                         {r.linkedIn && (
-                          <MuiLink
-                            href={r.linkedIn}
-                            target="_blank"
-                            underline="hover"
-                            fontSize={14}
-                            color="#555"
-                          >
-                            {extractUsername(r.linkedIn)}
-                          </MuiLink>
+                          <Tooltip title="LinkedIn">
+                            <MuiLink href={r.linkedIn} target="_blank">
+                              <Box
+                                component="img"
+                                src="/assets/images/linkedin.svg"
+                                alt="LinkedIn"
+                                sx={{ width: 20, height: 20 }}
+                              />
+                            </MuiLink>
+                          </Tooltip>
                         )}
                         {r.researchGate && (
-                          <MuiLink
-                            href={r.researchGate}
-                            target="_blank"
-                            underline="hover"
-                            fontSize={14}
-                            color="#555"
-                          >
-                            {extractUsername(r.researchGate)}
-                          </MuiLink>
+                          <Tooltip title="ResearchGate">
+                            <MuiLink href={r.researchGate} target="_blank">
+                              <Box
+                                component="img"
+                                src="/assets/images/researchgate.svg"
+                                alt="ResearchGate"
+                                sx={{ width: 20, height: 20 }}
+                              />
+                            </MuiLink>
+                          </Tooltip>
                         )}
                       </Stack>
 
+                      {/* Tags */}
                       {researcherTags[r._id]?.length > 0 && (
                         <Box sx={{ display: "flex", flexWrap: "wrap", mt: 1 }}>
                           {researcherTags[r._id].map((tag, i) => (
@@ -249,6 +254,7 @@ const RightSidebar = () => {
                 />
               </Box>
 
+              {/* Action Buttons */}
               <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between", mt: 2, gap: 1 }}>
                 <Button
                   onClick={(e) => {

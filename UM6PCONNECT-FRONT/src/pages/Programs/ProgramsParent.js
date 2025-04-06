@@ -1,11 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Box, Button, ButtonGroup, Fab } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Typography,
+  Fab,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import SearchBar from "../../components/SearchBar";
+import FilterPage from "../../components/FilterPage";
 import PostBacPrograms from "./PostBacPrograms";
 import EngineeringMasterPrograms from "./EngineeringMasterPrograms";
-import FilterPage from "../../components/FilterPage";
-import { Bot } from "lucide-react";
 import CombinedPrograms from "./CombinedPrograms";
+import { Bot } from "lucide-react";
 
 const ProgramsParent = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -19,101 +26,173 @@ const ProgramsParent = () => {
     hasApplyLink: false,
   });
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const handleSearch = (query) => {
-    setSearchQuery(query.toLowerCase()); // Store the search query
+    setSearchQuery(query.toLowerCase());
   };
 
   const handleApplyFilters = (newFilters) => {
-    setFilters(newFilters); // Update the filters state
+    setFilters(newFilters);
   };
 
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        padding: "40px",
-        paddingTop: "90px",
-        maxWidth: "1300px",
-        margin: "0 auto",
-      }}
-    >
-      {/* Left Content (Programs & Filters) */}
-      <Box sx={{ flex: 1 }}>
-        <h1 style={{ fontSize: "36px", color: "#000", textAlign: "left", marginLeft: "55px" }}>
-          Explore Our Programs
-        </h1>
-        {/* Subtitle */}
-        <h2 style={{ fontSize: "24px", color: "#555", textAlign: "left", marginTop: "10px", marginLeft: "55px" }}>
-          Discover a wide range of programs designed to help you achieve your academic and career goals.
-        </h2>
+  const categories = [
+    { label: "All", value: "all" },
+    { label: "Post-Bac Programs", value: "postbac" },
+    { label: "Master Programs and Engineering Programs", value: "master" },
+    { label: "Scholarship Programs", value: "scholarship" },
+  ];
 
-        {/* Search Bar */}
-        <Box sx={{ marginLeft: "55px", marginTop: "10px" }}>
+  return (
+    <>
+      <Box
+        sx={{
+          maxWidth: "1400px",
+          mx: "auto",
+          px: 3,
+          pt: 10,
+        }}
+      >
+        {/* HEADER */}
+        <Typography  fontWeight={700} color="#000" mb={1} textAlign="center" fontSize= "33px">
+          Explore Our Programs
+        </Typography>
+        <Typography
+        fontSize= "25px"
+          color="#555"
+          mb={3}
+          sx={{
+            textAlign: "justify",
+            mx: "auto",
+            maxWidth: "90%",
+          }}
+        >
+          Browse a diverse selection of academic programs tailored to empower
+          your educational journey, enhance your professional skills, and open
+          doors to a successful and fulfilling career in your chosen field.
+        </Typography>
+
+        <Box mb={3} display="flex" justifyContent="center">
           <SearchBar onSearch={handleSearch} />
         </Box>
 
-        {/* Category Buttons */}
-        <ButtonGroup
+        {/* CATEGORIES */}
+        <Box
           sx={{
-            marginBottom: "20px",
-            marginTop: "20px",
-            width: "100%",
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "center",
+            gap: "10px",
+            mb: 4,
           }}
         >
-          {[
-            { label: "All", value: "all" },
-            { label: "Post-Bac Programs", value: "postbac" },
-            { label: "Master Programs and Engineering Programs", value: "master" },
-            { label: "Scholarship Programs", value: "scholarship" },
-          ].map((category) => (
+          {categories.map((category) => (
             <Button
               key={category.value}
               onClick={() => setSelectedCategory(category.value)}
-              variant={selectedCategory === category.value ? "contained" : "outlined"}
               sx={{
-                backgroundColor: selectedCategory === category.value ? "#ea3b15" : "transparent",
-                color: selectedCategory === category.value ? "#fff" : "#ea3b15",
-                borderColor: "#ea3b15",
-                whiteSpace: "nowrap",
-                "&:hover": { backgroundColor: "#ea3b15", color: "#fff" },
+                backgroundColor: selectedCategory === category.value ? "#ea3b15" : "#fff",
+                color: selectedCategory === category.value ? "#fff" : "#000",
+                fontWeight: 600,
+                border: "1px solid #ddd",
+                borderRadius: "12px",
+                px: 2.5,
+                py: 1.3,
+                textTransform: "none",
+                boxShadow:
+                  selectedCategory === category.value
+                    ? "0 2px 6px rgba(234, 59, 21, 0.2)"
+                    : "none",
+                "&:hover": {
+                  backgroundColor:
+                    selectedCategory === category.value ? "#d73a12" : "#f9f9f9",
+                },
               }}
             >
               {category.label}
             </Button>
           ))}
-        </ButtonGroup>
+        </Box>
 
-        {/* Render Programs with Filters and Search */}
-        {(selectedCategory === "all") && <CombinedPrograms filters={filters} searchQuery={searchQuery} />}
-        {(selectedCategory === "postbac") && <PostBacPrograms filters={filters} searchQuery={searchQuery} />}
-        {(selectedCategory === "master") && <EngineeringMasterPrograms filters={filters} searchQuery={searchQuery} />}
+        {/* PROGRAMS + FILTERS */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: isMobile ? "column" : "row",
+            alignItems: "flex-start",
+            gap: 4,
+          }}
+        >
+          {/* LEFT: Programs */}
+          <Box sx={{ flex: 1 }}>
+            {selectedCategory === "all" && (
+              <CombinedPrograms filters={filters} searchQuery={searchQuery} />
+            )}
+            {selectedCategory === "postbac" && (
+              <PostBacPrograms filters={filters} searchQuery={searchQuery} />
+            )}
+            {selectedCategory === "master" && (
+              <EngineeringMasterPrograms
+                filters={filters}
+                searchQuery={searchQuery}
+              />
+            )}
+          </Box>
+
+          {/* RIGHT: Filters aligned with content, not title */}
+          <Box sx={{ width: isMobile ? "100%" : "280px", flexShrink: 0 }}>
+            <FilterPage onFilterChange={handleApplyFilters} />
+          </Box>
+        </Box>
       </Box>
 
-      {/* Right Side - FilterPage */}
-      <Box sx={{ width: "250px", marginLeft: "20px" }}>
-        <FilterPage onFilterChange={handleApplyFilters} />
+      {/* CHATBOT TOOLTIP */}
+      <Box
+        sx={{
+          position: "fixed",
+          bottom: "90px",
+          right: "24px",
+          backgroundColor: "#fff",
+          color: "#000",
+          fontSize: "14px",
+          padding: "10px 16px",
+          borderRadius: "12px",
+          border: "1px solid #FFF",
+          textAlign: "center",
+          zIndex: 1301,
+          maxWidth: 220,
+          fontWeight: 500,
+          boxShadow: "0px 4px 10px rgba(0,0,0,0.08)",
+          "::after": {
+            content: '""',
+            position: "absolute",
+            bottom: "-10px",
+            right: "24px",
+            borderWidth: "10px 10px 0 10px",
+            borderStyle: "solid",
+            borderColor: "#fff transparent transparent transparent",
+          },
+        }}
+      >
+        Need help? Chat with us!
       </Box>
 
-      {/* Chatbot Floating Button */}
+      {/* CHATBOT ICON */}
       <Fab
-        color="primary"
         sx={{
           position: "fixed",
           bottom: "20px",
           right: "20px",
           backgroundColor: "#ea3b15",
-          boxShadow: "none",
-          "&:hover": { backgroundColor: "#ea3b15" },
+          color: "#fff",
+          "&:hover": { backgroundColor: "#d73a12" },
+          zIndex: 1300,
         }}
       >
         <Bot />
       </Fab>
-    </Box>
+    </>
   );
 };
 
