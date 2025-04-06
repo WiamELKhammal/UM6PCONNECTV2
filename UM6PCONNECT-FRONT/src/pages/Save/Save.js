@@ -1,78 +1,71 @@
 import React, { useEffect, useState } from "react";
-import { IconButton } from "@mui/material";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
+import { Button } from "@mui/material";
+import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
+import BookmarkRemoveOutlinedIcon from "@mui/icons-material/BookmarkRemoveOutlined";
 
 const Save = ({ researcherId, user }) => {
-  const [isSaved, setIsSaved] = useState(false); // Track if the researcher is saved
-  const [loading, setLoading] = useState(false); // Loading state for save/unsave
+  const [isSaved, setIsSaved] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  // Fetch saved researchers for the logged-in user on mount
   useEffect(() => {
     if (user?._id) {
       fetch(`http://localhost:5000/api/save/saved/${user._id}`)
         .then((res) => res.json())
         .then((data) => {
-          const savedIds = data.map((saved) => saved.researcher._id); // Extract researcher IDs
-          setIsSaved(savedIds.includes(researcherId)); // Check if current researcher is saved
+          const savedIds = data.map((saved) => saved.researcher._id);
+          setIsSaved(savedIds.includes(researcherId));
         })
         .catch((err) => console.error("Failed to fetch saved researchers:", err));
     }
   }, [researcherId, user]);
 
-  // Save a researcher
-  const handleSaveResearcher = async () => {
+  const handleToggleSave = async () => {
     setLoading(true);
-    try {
-      await fetch("http://localhost:5000/api/save/save", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user._id, researcherId }),
-      });
-      setIsSaved(true); // Update local state
-    } catch (error) {
-      console.error("Error saving researcher:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+    const url = isSaved
+      ? "http://localhost:5000/api/save/unsave"
+      : "http://localhost:5000/api/save/save";
 
-  // Unsave a researcher
-  const handleUnsaveResearcher = async () => {
-    setLoading(true);
     try {
-      await fetch("http://localhost:5000/api/save/unsave", {
+      await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: user._id, researcherId }),
       });
-      setIsSaved(false); // Update local state
+      setIsSaved(!isSaved);
     } catch (error) {
-      console.error("Error unsaving researcher:", error);
+      console.error("Error toggling save:", error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <IconButton
-      sx={{ color: "#ea3b15" }}
+    <Button
       onClick={(e) => {
-        e.stopPropagation(); // Prevent parent click
-        if (isSaved) {
-          handleUnsaveResearcher(); // Unsave if already saved
-        } else {
-          handleSaveResearcher(); // Save if not saved
-        }
+        e.stopPropagation();
+        handleToggleSave();
+      }}
+      startIcon={
+        isSaved ? (
+          <BookmarkRemoveOutlinedIcon fontSize="small" />
+        ) : (
+          <BookmarkAddOutlinedIcon fontSize="small" />
+        )
+      }
+      sx={{
+        border: "1px solid #ea3b15",
+        color: "#ea3b15",
+        textTransform: "none",
+        fontSize: "13px",
+        flex: 1,
+        "&:hover": {
+          backgroundColor: "transparent",
+        },
       }}
       disabled={loading}
     >
-      {isSaved ? (
-        <BookmarkIcon fontSize="small" sx={{ color: "#ea3b15" }} /> // Green if saved
-      ) : (
-        <BookmarkBorderIcon fontSize="small" /> // Default color if not saved
-      )}
-    </IconButton>
+      {isSaved ? "Unsave" : "Save"}
+    </Button>
   );
 };
 

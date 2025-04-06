@@ -46,8 +46,8 @@ const CombinedPrograms = ({ filters, searchQuery }) => {
   const currentPrograms = filteredPrograms.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   return (
-    <Box sx={{ padding: "40px", maxWidth: "900px", margin: "0 auto" }}>
-      {/* Display message if no programs found */}
+<Box sx={{ width: "100%" }}>
+{/* Display message if no programs found */}
       {filteredPrograms.length === 0 && (
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
           <Typography variant="h6" sx={{ color: "#818485", fontSize: "18px" }}>
