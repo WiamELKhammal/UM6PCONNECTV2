@@ -8,11 +8,13 @@ const { ObjectId } = mongoose.Types;
 const { getUserStatus } = require("../utils/userStatus");
 
 const multer = require("multer");
+const extractLinks = require("../utils/extractLinks");
 
 // ✅ Configure Multer for Handling File Uploads
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB limit
+
 
 router.post("/send", upload.single("file"), async (req, res) => {
   try {
@@ -27,12 +29,11 @@ router.post("/send", upload.single("file"), async (req, res) => {
       return res.status(400).json({ error: "Message content cannot be empty." });
     }
 
-    // ✅ Handle uploaded file (Multer)
+    // ✅ Multer file
     if (req.file) {
       if (req.file.size > MAX_FILE_SIZE) {
         return res.status(400).json({ error: "File size exceeds 10MB. Please upload a smaller file." });
       }
-
       files.push({
         name: req.file.originalname,
         data: `data:${req.file.mimetype};base64,${req.file.buffer.toString("base64")}`,
@@ -40,7 +41,7 @@ router.post("/send", upload.single("file"), async (req, res) => {
       });
     }
 
-    // ✅ Handle base64-encoded images
+    // ✅ Base64 files
     if (req.body.files) {
       try {
         const parsedFiles = JSON.parse(req.body.files);
@@ -48,9 +49,8 @@ router.post("/send", upload.single("file"), async (req, res) => {
           if (file.name && file.data && file.type) {
             const fileSize = Buffer.from(file.data, "base64").length;
             if (fileSize > MAX_FILE_SIZE) {
-              return res.status(400).json({ error: "File size exceeds 10MB. Please upload a smaller file." });
+              return res.status(400).json({ error: "File size exceeds 10MB." });
             }
-
             files.push({
               name: file.name,
               data: file.data.startsWith("data:") ? file.data : `data:${file.type};base64,${file.data}`,
@@ -58,11 +58,13 @@ router.post("/send", upload.single("file"), async (req, res) => {
             });
           }
         });
-      } catch (error) {
-        console.error("Error parsing JSON files:", error);
+      } catch (err) {
         return res.status(400).json({ error: "Invalid file format." });
       }
     }
+
+    // ✅ Extract links
+    const links = extractLinks(text);
 
     const message = new Message({
       senderId: new ObjectId(senderId),
@@ -70,6 +72,7 @@ router.post("/send", upload.single("file"), async (req, res) => {
       text: text.trim(),
       isRead: false,
       files,
+      links, // ✅ Store links
     });
 
     await message.save();
@@ -87,6 +90,7 @@ router.post("/send", upload.single("file"), async (req, res) => {
     res.status(500).json({ error: "Failed to send the message." });
   }
 });
+
 router.get("/conversation/:userId/:recipientId", async (req, res) => {
   const { userId, recipientId } = req.params;
 
@@ -317,13 +321,17 @@ router.post("/mark-read", async (req, res) => {
 });
 router.get("/files-between/:userId/:contactId", async (req, res) => {
   const { userId, contactId } = req.params;
+
   try {
     const messages = await Message.find({
       $or: [
         { senderId: userId, receiverId: contactId },
         { senderId: contactId, receiverId: userId }
       ],
-      files: { $exists: true, $ne: [] }
+      $or: [
+        { files: { $exists: true, $ne: [] } },
+        { links: { $exists: true, $ne: [] } }
+      ]
     })
     .sort({ createdAt: 1 })
     .lean();
@@ -334,6 +342,7 @@ router.get("/files-between/:userId/:contactId", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch shared files." });
   }
 });
+
 
 
 module.exports = router;

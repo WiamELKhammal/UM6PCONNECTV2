@@ -20,6 +20,7 @@ const messageSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    links: { type: [String], default: [] },
     archived: { type: Boolean, default: false },
     senderDeleted: { type: Boolean, default: false },  
     receiverDeleted: { type: Boolean, default: false }, 
