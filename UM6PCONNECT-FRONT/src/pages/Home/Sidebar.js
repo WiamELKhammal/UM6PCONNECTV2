@@ -124,7 +124,7 @@ const UserProfile = () => {
                     height: 8,
                     borderRadius: 4,
                     backgroundColor: "#efeef1",
-                    "& .MuiLinearProgress-bar": { backgroundColor: "#ea3b15" },
+                    "& .MuiLinearProgress-bar": { backgroundColor: "#e04c2c" },
                   }}
                 />
               </Box>
@@ -150,7 +150,7 @@ const UserProfile = () => {
                   >
                     {fieldSentences[field] || `Complete your ${field}`}
                   </Typography>
-                  <ArrowCircleRightOutlinedIcon sx={{ color: "#ea3b15", fontSize: 24 }} />
+                  <ArrowCircleRightOutlinedIcon sx={{ color: "#e04c2c", fontSize: 24 }} />
                 </Box>
               ))}
 
@@ -168,7 +168,7 @@ const UserProfile = () => {
                     backgroundColor: "#fff",
                   }}
                 >
-                  <TaskAltIcon sx={{ color: "#ea3b15", fontSize: 24 }} />
+                  <TaskAltIcon sx={{ color: "#e04c2c", fontSize: 24 }} />
                   <Typography
                     variant="body2"
                     sx={{
@@ -187,7 +187,7 @@ const UserProfile = () => {
               <Box sx={{ textAlign: "left", mt: 2 }}>
                 <Typography
                   variant="body2"
-                  sx={{ fontWeight: "bold", color: "#ea3b15", cursor: "pointer" }}
+                  sx={{ fontWeight: "bold", color: "#e04c2c", cursor: "pointer" }}
                   onClick={() => navigate("/profile")}
                 >
                   View More

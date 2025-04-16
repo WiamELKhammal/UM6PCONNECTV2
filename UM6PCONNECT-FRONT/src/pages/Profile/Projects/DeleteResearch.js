@@ -40,7 +40,7 @@ const DeleteResearch = ({ open, onClose, researchId, onDelete }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} disabled={loading} color="inherit">Cancel</Button>
-        <Button onClick={handleDelete} disabled={loading} sx={{ color: "#ea3b15" }}>
+        <Button onClick={handleDelete} disabled={loading} sx={{ color: "#e04c2c" }}>
           {loading ? <CircularProgress size={20} /> : "Delete"}
         </Button>
       </DialogActions>

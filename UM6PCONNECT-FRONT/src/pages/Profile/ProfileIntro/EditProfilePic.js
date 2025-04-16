@@ -160,9 +160,9 @@ const EditProfilePic = ({ onClose }) => {
                 startIcon={<UploadFile />}
                 sx={{
                   backgroundColor: "#fff",
-                  color: "#ea3b15",
+                  color: "#e04c2c",
                   boxShadow: "none",
-                  border: "1px solid #ea3b15",
+                  border: "1px solid #e04c2c",
                   "&:hover": { backgroundColor: "#b53c24", boxShadow: "none", color: "#fff" },
                 }}
                 onClick={triggerFileInput}
@@ -175,9 +175,9 @@ const EditProfilePic = ({ onClose }) => {
                 startIcon={<CameraAlt />}
                 sx={{
                   backgroundColor: "#fff",
-                  color: "#ea3b15",
+                  color: "#e04c2c",
                   boxShadow: "none",
-                  border: "1px solid #ea3b15",
+                  border: "1px solid #e04c2c",
                   "&:hover": { backgroundColor: "#b53c24", color: "#fff", boxShadow: "none" },
                 }}
                 onClick={() => setShowCamera(true)}
@@ -193,7 +193,7 @@ const EditProfilePic = ({ onClose }) => {
             <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
               <Button
                 sx={{
-                  color: "#ea3b15",
+                  color: "#e04c2c",
                   "&:hover": { backgroundColor: "#fbe4e0" },
                 }}
                 onClick={onClose}
@@ -206,7 +206,7 @@ const EditProfilePic = ({ onClose }) => {
                   variant="contained"
                   onClick={saveImage}
                   sx={{
-                    backgroundColor: "#ea3b15",
+                    backgroundColor: "#e04c2c",
                     color: "white",
                     "&:hover": { backgroundColor: "#b53c24" },
                   }}

@@ -85,7 +85,7 @@ const Languages = ({ userId }) => {
                     backgroundColor: "#f4e9e7",
                   }}
                 >
-                  <LanguageIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
+                  <LanguageIcon style={{ color: "#e04c2c", fontSize: "26px" }} />
                 </div>
                 <div>
                   <p style={{ fontWeight: "600", fontSize: "16px" }}>{language.name || "Language Name"}</p>
@@ -121,7 +121,7 @@ const Languages = ({ userId }) => {
               backgroundColor: "#f4e9e7",
             }}
           >
-            <LanguageIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
+            <LanguageIcon style={{ color: "#e04c2c", fontSize: "26px" }} />
           </div>
 
           <div>

@@ -22,7 +22,7 @@ const Tags = ({ tags, selectedTag, onTagClick }) => {
   const uniqueTags = [...new Set(tags.map(tag => tag.name))];
 
   const getButtonStyles = (active) => ({
-    backgroundColor: active ? "#ea3b15" : "#fff",
+    backgroundColor: active ? "#e04c2c" : "#fff",
     color: active ? "#fff" : "#000",
     fontWeight: 600,
     border: "1px solid #ddd",
@@ -39,7 +39,7 @@ const Tags = ({ tags, selectedTag, onTagClick }) => {
 
   const getMenuItemStyles = (active) => ({
     fontWeight: active ? 700 : 400,
-    backgroundColor: active ? "#ea3b15" : "transparent",
+    backgroundColor: active ? "#e04c2c" : "transparent",
     color: active ? "#fff" : "#000",
     "&:hover": {
       backgroundColor: active ? "#d73a12" : "#f5f5f5",
@@ -51,7 +51,7 @@ const Tags = ({ tags, selectedTag, onTagClick }) => {
       <Typography
         variant="body1"
         sx={{
-          color: "#000",
+          color: "#FFF",
           fontWeight: 600,
           fontSize: { xs: "14px", sm: "16px" },
           mr: 1,

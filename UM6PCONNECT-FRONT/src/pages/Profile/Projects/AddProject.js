@@ -62,7 +62,7 @@ const AddProject = ({ open, onClose, fetchProjects }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} style={{ color: "black" }}>Cancel</Button>
-        <Button onClick={handleSave} style={{ backgroundColor: "#ea3b15", color: "#fff" }}>Save</Button>
+        <Button onClick={handleSave} style={{ backgroundColor: "#e04c2c", color: "#fff" }}>Save</Button>
       </DialogActions>
     </Dialog>
   );

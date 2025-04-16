@@ -19,7 +19,7 @@ const DeleteTag = ({ tag, onDelete }) => {
         onClick={() => onDelete(tag)} // Call the delete function
         style={{
           cursor: "pointer",
-          color: "#ea3b15",
+          color: "#e04c2c",
           fontSize: "16px",
         }}
       />

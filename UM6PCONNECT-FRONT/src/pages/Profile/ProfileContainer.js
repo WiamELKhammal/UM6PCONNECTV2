@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Tabs, Tab, Box } from "@mui/material";
 import ProfileIntro from "./ProfileIntro/ProfileIntro";
 import Experience from "./Experience/Experience";
-import DiscoverWork from "./Projects/DiscoverWork"; // 🔥 your research component
+import DiscoverWork from "./Projects/DiscoverWork";
 import Tags from "./Tags/Tags";
 import SavedList from "../Save/SavedList";
 import FollowPage from "../Follow/FollowPage";
@@ -21,13 +21,20 @@ const ProfileContainer = () => {
   return (
     <Box
       sx={{
-        width: "90%",
-        margin: "20px auto",
-        padding: "0 20px",
-        fontFamily: "'Segoe UI', Tahoma, Geneva, sans-serif",
+        width: "100%",
+        backgroundColor: "#181717",
+        minHeight: "100vh",
+        pb: 8,
+        fontFamily: "'Work Sans', sans-serif", // ✅ Apply globally
+        color: "#fff",
       }}
     >
-      <div className="container">
+      <Box
+        sx={{
+          width: "90%",
+          margin: "0px auto",
+        }}
+      >
         <ProfileIntro />
 
         {/* Tab Navigation */}
@@ -40,25 +47,23 @@ const ProfileContainer = () => {
             textColor="inherit"
             TabIndicatorProps={{
               style: {
-                backgroundColor: "#000",
+                backgroundColor: "#fff",
                 height: "3px",
-                borderRadius: 0,
               },
             }}
             sx={{
-              borderBottom: "1px solid #e0e0e0",
+              borderBottom: "1px solid #444",
               "& .MuiTab-root": {
                 textTransform: "none",
                 fontSize: "18px",
-                color: "#888",
+                color: "#ccc",
                 px: 2.5,
                 py: 1,
                 minHeight: "unset",
                 fontWeight: 400,
               },
               "& .Mui-selected": {
-                color: "#000 !important",
-                fontWeight: 400, // No bold
+                color: "#fff !important",
               },
               "& .MuiTabs-scrollButtons": {
                 display: "none",
@@ -66,12 +71,7 @@ const ProfileContainer = () => {
             }}
           >
             {tabs.map((tab) => (
-              <Tab
-                disableRipple
-                key={tab.id}
-                label={tab.label}
-                value={tab.id}
-              />
+              <Tab disableRipple key={tab.id} label={tab.label} value={tab.id} />
             ))}
           </Tabs>
         </Box>
@@ -79,12 +79,12 @@ const ProfileContainer = () => {
         {/* Tab Content */}
         <Box sx={{ mt: 4 }}>
           {activeTab === "profile" && <Experience />}
-          {activeTab === "discover" && <DiscoverWork />} {/* ✅ Your research section */}
+          {activeTab === "discover" && <DiscoverWork />}
           {activeTab === "following" && <FollowPage />}
           {activeTab === "saved" && <SavedList />}
           {activeTab === "tags" && <Tags />}
         </Box>
-      </div>
+      </Box>
     </Box>
   );
 };

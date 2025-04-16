@@ -261,7 +261,7 @@ const EditExperience = ({ open, onClose, experienceData, fetchExperience }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} sx={{ color: "#000" }}>Cancel</Button>
-        <Button onClick={handleUpdate} sx={{ backgroundColor: "#ea3b15", color: "#fff" }}>Save</Button>
+        <Button onClick={handleUpdate} sx={{ backgroundColor: "#e04c2c", color: "#fff" }}>Save</Button>
       </DialogActions>
     </Dialog>
   );

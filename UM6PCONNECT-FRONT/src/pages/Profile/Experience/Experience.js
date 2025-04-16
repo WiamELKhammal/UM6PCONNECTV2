@@ -78,8 +78,8 @@ const Experience = () => {
           onClick={() => handleOpen(null)}
           style={{
             cursor: "pointer",
-            color: "#ea3b15",
-            border: "1px solid #ea3b15",
+            color: "#e04c2c",
+            border: "1px solid #e04c2c",
             borderRadius: "8px",
             padding: "5px",
             fontSize: "30px",
@@ -156,11 +156,11 @@ const Experience = () => {
             <div style={{ display: "flex", gap: "12px" }}>
               <EditIcon
                 onClick={() => handleOpen(exp)}
-                style={{ cursor: "pointer", color: "#ea3b15", fontSize: "24px" }}
+                style={{ cursor: "pointer", color: "#e04c2c", fontSize: "24px" }}
               />
               <DeleteIcon
                 onClick={() => setDeleteExperienceId(exp._id)}
-                style={{ cursor: "pointer", color: "#ea3b15", fontSize: "24px" }}
+                style={{ cursor: "pointer", color: "#e04c2c", fontSize: "24px" }}
               />
             </div>
           </div>

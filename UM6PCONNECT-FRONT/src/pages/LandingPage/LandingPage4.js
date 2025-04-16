@@ -1,97 +1,82 @@
 import React from "react";
-import { Box, Grid, Typography, Avatar } from "@mui/material";
-import { BoxIcon, RouteIcon, TrophyIcon, SignpostBigIcon } from "lucide-react";
-const iconProps = {
-  stroke: "#fff",
-  strokeWidth: 1.5,
-};
+import { Box, Typography } from "@mui/material";
+import "@fontsource/work-sans/300.css";
 
-const features = [
-  {
-    icon: <RouteIcon {...iconProps} />,
-    title: "Lorem Ipsum is simply dummy text",
-    description:
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-},
-  {
-    icon: <TrophyIcon {...iconProps} />,
-    title: "Lorem Ipsum is simply dummy text",
-    description:
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-},
-  {
-    icon: <SignpostBigIcon {...iconProps} />,
-    title: "Lorem Ipsum is simply dummy text",
-    description:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-  },
-];
-
-export default function UseCases() {
+const ManifestoQuote = () => {
   return (
-    <Box px={{ xs: 2, md: 10 }} py={4}>
-      <Box display="flex" alignItems="center" mb={2}>
-        <BoxIcon
-          style={{ color: "#ea3b15", marginRight: "8px" }}
-          strokeWidth={2}
-        />
-        <Typography
-          variant="subtitle2"
-          fontWeight="bold"
-          color="#000"
-          sx={{
-            letterSpacing: 1,
-            fontSize: "14px",
-            textTransform: "uppercase",
-          }}
-        >
-          UM6P CONNECT
-        </Typography>
-      </Box>
-
+    <Box
+      sx={{
+        backgroundColor: "#111",
+        color: "#f6f6f6",
+        py: 10,
+        px: { xs: 3, md: 10 },
+        fontFamily: "'Work Sans', sans-serif",
+        borderBottom: "1px solid #fff",
+      }}
+    >
       <Box
         sx={{
-          height: "1px",
-          width: 180,
-          backgroundColor: "#ea3b15",
-          mt: -1,
-          mb: 2,
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: "flex-start",
+          gap: { xs: 4, md: 8 },
         }}
-      />
+      >
+        {/* Left: Text Content */}
+        <Box sx={{ flex: 1 }}>
+          <Typography
+            sx={{
+              fontSize: { xs: "28px", md: "36px" },
+              fontWeight: 600,
+              mb: 4,
+              fontFamily: "'Work Sans', sans-serif",
+              borderLeft: "5px solid #ea3b15",
+              pl: 2,
+            }}
+          >
+            Empowering Minds for a Sustainable Africa
+          </Typography>
 
-      <Box display="flex" justifyContent="space-between" flexWrap="wrap" mb={4}>
-        <Box maxWidth={{ xs: "100%", md: "50%" }}>
-          <Typography variant="h4" fontWeight="bold" lineHeight={1.3} color="#000">
-            Explore the Minds Powering UM6P Innovation.
+          <Typography
+            sx={{
+              fontSize: "22px",
+              fontWeight: 300,
+              fontStyle: "italic",
+              lineHeight: 1.7,
+              textAlign: "justify",
+              maxWidth: "900px",
+              fontFamily: "'Work Sans', sans-serif",
+            }}
+          >
+            “At Mohammed VI Polytechnic University (UM6P), we believe that the
+            key to Africa's sustainable development lies in empowering its
+            brightest minds. Our mission is to bridge the gap between
+            theoretical knowledge and practical application, fostering an
+            environment where innovation thrives. Through cutting-edge research,
+            dynamic education programs, and entrepreneurial initiatives, we
+            address the continent's most pressing challenges.
+            <br />
+            <br />
+            UM6P CONNECT serves as your gateway to this vibrant ecosystem —
+            inviting researchers, students, policymakers, and entrepreneurs to
+            collaborate and drive meaningful change across Africa.”
           </Typography>
         </Box>
-      </Box>
 
-      <Grid container spacing={4}>
-        {features.map((feature, index) => (
-          <Grid item xs={12} md={4} key={index}>
-            <Box display="flex" flexDirection="column" alignItems="flex-start">
-              <Avatar
-                sx={{
-                  bgcolor: "#ea3b15",
-                  color: "#fff",
-                  mb: 2,
-                  width: 40,
-                  height: 40,
-                }}
-              >
-                {feature.icon}
-              </Avatar>
-              <Typography variant="h6" fontWeight={500} color="#000" gutterBottom>
-                {feature.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {feature.description}
-              </Typography>
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
+        {/* Right: UM6P Square Image */}
+        <Box
+          component="img"
+          src="/assets/images/herosection/UM6P.png" // ← replace with your actual path
+          alt="UM6P Square Vertical"
+          sx={{
+            height: { xs: 200, md: 555 },
+            width: "auto",
+            alignSelf: "center",
+          }}
+        />
+      </Box>
     </Box>
   );
-}
+};
+
+export default ManifestoQuote;

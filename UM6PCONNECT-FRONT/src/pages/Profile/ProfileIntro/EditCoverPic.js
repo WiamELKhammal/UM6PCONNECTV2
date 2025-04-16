@@ -143,7 +143,7 @@ const EditCoverPic = ({ onClose }) => {
           startIcon={<UploadFile />}
           onClick={triggerFileInput}
           sx={{
-            backgroundColor: "#ea3b15",
+            backgroundColor: "#e04c2c",
             color: "white",
             "&:hover": { backgroundColor: "#b53c24" },
             mt: 2,
@@ -157,7 +157,7 @@ const EditCoverPic = ({ onClose }) => {
 
         {/* Cancel & Save Buttons */}
         <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
-          <Button sx={{ color: "#ea3b15", "&:hover": { backgroundColor: "#fbe4e0" } }} onClick={onClose}>
+          <Button sx={{ color: "#e04c2c", "&:hover": { backgroundColor: "#fbe4e0" } }} onClick={onClose}>
             Cancel
           </Button>
 
@@ -166,7 +166,7 @@ const EditCoverPic = ({ onClose }) => {
               variant="contained"
               onClick={saveImage}
               sx={{
-                backgroundColor: "#ea3b15",
+                backgroundColor: "#e04c2c",
                 color: "white",
                 "&:hover": { backgroundColor: "#b53c24" },
               }}

@@ -1,176 +1,127 @@
-import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Grid,
-  Card,
-  CardContent,
-  Stack,
-  IconButton,
-} from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import BiotechIcon from '@mui/icons-material/Biotech';
-const LandingPage3 = () => {
-  const [users, setUsers] = useState([]);
-  const [currentSlide, setCurrentSlide] = useState(0);
+import React, { useState } from "react";
+import { Box, IconButton } from "@mui/material";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import CloseIcon from "@mui/icons-material/Close";
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/users?limit=12");
-        const data = await res.json();
-        setUsers(data);
-      } catch (error) {
-        console.error("Failed to fetch users", error);
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
-  const usersPerPage = 4;
-  const totalSlides = Math.ceil(users.length / usersPerPage);
-
-  const visibleUsers = users.slice(
-    currentSlide * usersPerPage,
-    currentSlide * usersPerPage + usersPerPage
-  );
-
-  const handleNext = () => {
-    if (currentSlide < totalSlides - 1) {
-      setCurrentSlide(currentSlide + 1);
-    }
-  };
-
-  const handleBack = () => {
-    if (currentSlide > 0) {
-      setCurrentSlide(currentSlide - 1);
-    }
-  };
+const TheWhyVideo = () => {
+  const [open, setOpen] = useState(false);
 
   return (
-    <Box px={{ xs: 2, md: 10 }} py={6}>
-      {/* UM6P CONNECT Title */}
-      <Box display="flex" alignItems="center" mb={2}>
-        <BiotechIcon sx={{ color: "#ea3b15", mr: 1 }} />
-        <Typography
-          variant="subtitle2"
-          fontWeight="bold"
-          color="#000"
-          sx={{ letterSpacing: 1, fontSize: "14px", textTransform: "uppercase" }}
-        >
-          UM6P CONNECT
-        </Typography>
-      </Box>
+    <Box
+      sx={{
+        width: "100vw",
+        height: "100vh",
+        position: "relative",
+        overflow: "hidden",
+        backgroundColor: "#000",
+        borderBottom:"1px solid #fff"
 
+      }}
+    >
+      {/* Background Image */}
       <Box
+        component="img"
+        src="/assets/images/herosection/Placeholders/ourvision.png"
+        alt="Video Placeholder"
         sx={{
-          height: "1px",
-          width: 180,
-          backgroundColor: "#ea3b15",
-          mt: -1,
-          mb: 2,
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
         }}
       />
 
-
-      {/* Header Section */}
-      <Box display="flex" justifyContent="space-between" flexWrap="wrap" mb={4}>
-        <Box maxWidth={{ xs: "100%", md: "50%" }}>
-          <Typography variant="h4" fontWeight="bold" lineHeight={1.3} color="#000">
-            Explore the Minds Powering UM6P Innovation.
-          </Typography>
-        </Box>
-
-        <Box maxWidth={{ xs: "100%", md: "40%" }} mt={{ xs: 3, md: 0 }}>
-          <Typography fontSize={14} color="text.secondary" mb={2}>
-            UM6P Connect offers an extensive network of researchers, institutions, and academic programs.
-            Explore world-class expertise, innovative projects, and vibrant collaborations—empowering the future
-            of education, science, and sustainable development.
-          </Typography>
-
-          <Stack direction="row" alignItems="center" justifyContent="space-between">
-            <Button
-              onClick={() => (window.location.href = "/Our-Researchers")}
-              sx={{
-                color: "#ea3b15",
-                textTransform: "none",
-                fontWeight: 600,
-                fontSize: "14px",
-                padding: "6px 16px",
-                border: "1px solid #ea3b15",
-                borderRadius: "6px",
-                "&:hover": {
-                  backgroundColor: "transparent",
-                  border: "1px solid #ea3b15",
-                },
-              }}
-            >
-              View More
-            </Button>
-
-            <Stack direction="row" spacing={1}>
-              <IconButton onClick={handleBack} disabled={currentSlide === 0}>
-                <ArrowBackIcon />
-              </IconButton>
-              <IconButton onClick={handleNext} disabled={currentSlide >= totalSlides - 1}>
-                <ArrowForwardIcon />
-              </IconButton>
-            </Stack>
-          </Stack>
+      {/* Animated YouTube Button */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          zIndex: 2,
+        }}
+      >
+        <Box
+          sx={{
+            position: "relative",
+            width: 100,
+            height: 100,
+            backgroundColor: "#e04c2c",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            animation: "pulse 2s infinite",
+          }}
+          onClick={() => setOpen(true)}
+        >
+          <YouTubeIcon sx={{ fontSize: 48, color: "#fff" }} />
         </Box>
       </Box>
 
-      {/* User Carousel Section */}
-      <Grid container spacing={2} justifyContent="center">
-        {visibleUsers.map((user, index) => (
-          <Grid item xs={12} sm={6} md={3} key={index}>
-            <Card
-              elevation={0}
-              sx={{
-                borderRadius: 3,
-                backgroundColor: "#f9f9f9",
-                p: 2,
-                minHeight: 170,
-                height: "80%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-              }}
-            >
-              <CardContent sx={{ p: 0 }}>
-                <Stack direction="row" alignItems="center" justifyContent="space-between">
-                  <Typography fontWeight={500} fontSize={16}>
-                    {user.firstName || user.Prenom} {user.lastName || user.Nom}
-                  </Typography>
-                </Stack>
+      {/* Modal Fullscreen Video */}
+      {open && (
+        <Box
+          sx={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "rgba(0, 0, 0, 0.95)",
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+        >
+          <IconButton
+            onClick={() => setOpen(false)}
+            sx={{
+              position: "absolute",
+              top: 20,
+              right: 20,
+              color: "#fff",
+              zIndex: 99999,
+            }}
+          >
+            <CloseIcon sx={{ fontSize: 36 }} />
+          </IconButton>
 
-                <Typography fontSize={14} color="text.secondary" mb={2}>
-                  {user.department || user.Departement || "No department"}
-                </Typography>
+          <Box
+            component="iframe"
+            src="https://www.youtube.com/embed/FbBuLI_5CBE?autoplay=1&controls=1&rel=0&modestbranding=1"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            sx={{
+              width: { xs: "90vw", md: "80vw" },
+              height: { xs: "50vh", md: "70vh" },
+              border: "none",
+              borderRadius: "8px",
+              zIndex: 9999,
+            }}
+          />
+        </Box>
+      )}
 
-                <Button
-                  endIcon={<ArrowForwardIcon />}
-                  onClick={() => (window.location.href = "/Our-Researchers")}
-                  sx={{
-                    color: "#000",
-                    textTransform: "none",
-                    fontWeight: 500,
-                    fontSize: "14px",
-                    pl: 0,
-                  }}
-                >
-                  View More
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+      {/* Glow animation keyframes */}
+      <style>
+        {`
+          @keyframes pulse {
+            0% {
+              box-shadow: 0 0 0 0 rgba(234, 59, 21, 0.4);
+            }
+            70% {
+              box-shadow: 0 0 0 25px rgba(234, 59, 21, 0);
+            }
+            100% {
+              box-shadow: 0 0 0 0 rgba(234, 59, 21, 0);
+            }
+          }
+        `}
+      </style>
     </Box>
   );
 };
 
-export default LandingPage3;
+export default TheWhyVideo;

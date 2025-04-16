@@ -56,8 +56,8 @@ const Follow = ({ researcherId, user }) => {
         )
       }
       sx={{
-        border: "1px solid #ea3b15",
-        color: "#ea3b15",
+        border: "1px solid #e04c2c",
+        color: "#e04c2c",
         textTransform: "none",
         fontSize: "13px",
         flex: 1,

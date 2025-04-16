@@ -64,7 +64,7 @@ const AddTag = ({ open, onClose, onAddTags }) => {
               variant={selectedTags.includes(tag) ? "contained" : "outlined"}
               onClick={() => handleTagSelect(tag)}
               style={{
-                backgroundColor: selectedTags.includes(tag) ? "#ea3b15" : "transparent",
+                backgroundColor: selectedTags.includes(tag) ? "#e04c2c" : "transparent",
                 color: selectedTags.includes(tag) ? "#fff" : "#444",
                 textTransform: "none",
                 padding: "8px 16px",
@@ -87,7 +87,7 @@ const AddTag = ({ open, onClose, onAddTags }) => {
         <Button onClick={onClose} style={{ color: "black" }}>
           Cancel
         </Button>
-        <Button onClick={handleSave} style={{ backgroundColor: "#ea3b15", color: "#fff" }}>
+        <Button onClick={handleSave} style={{ backgroundColor: "#e04c2c", color: "#fff" }}>
           Save
         </Button>
       </DialogActions>

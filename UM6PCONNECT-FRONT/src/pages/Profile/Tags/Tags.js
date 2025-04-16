@@ -90,7 +90,7 @@ const Tags = () => {
           >
             Tags
           </Typography>
-          <Typography sx={{ fontSize: "12px", color: "#5a5a5a", mb: 2 }}>
+          <Typography sx={{ fontSize: "16px", color: "#5a5a5a", mb: 2 }}>
             Select relevant tags to show your interests.
           </Typography>
 
@@ -108,9 +108,9 @@ const Tags = () => {
                 label={tag}
                 onClick={() => handleToggle(tag)}
                 sx={{
-                  backgroundColor: selectedTags.includes(tag) ? "#ea3b15" : "#fff",
+                  backgroundColor: selectedTags.includes(tag) ? "#e04c2c" : "#fff",
                   color: selectedTags.includes(tag) ? "#fff" : "#000",
-                  border: selectedTags.includes(tag) ? "1px solid #ea3b15" : "1px solid #ddd",
+                  border: selectedTags.includes(tag) ? "1px solid #e04c2c" : "1px solid #ddd",
                   cursor: "pointer",
                   borderRadius: 20,
                 }}

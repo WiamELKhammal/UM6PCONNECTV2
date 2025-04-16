@@ -25,13 +25,13 @@ const FollowSidebar = ({ activeTab, setActiveTab }) => {
             fontWeight: 400,
             width: "250px",
             padding: "12px 0", // Vertical padding only, no horizontal padding
-            backgroundColor: activeTab === "followers" ? "#ea3b15" : "transparent",
+            backgroundColor: activeTab === "followers" ? "#e04c2c" : "transparent",
             color: activeTab === "followers" ? "white" : "black",
             cursor: "pointer",
             textAlign: "left",
             transition: "0.3s",
             "&:hover": {
-              backgroundColor: "#ea3b15", // Red background on hover
+              backgroundColor: "#e04c2c", // Red background on hover
               color: "white", // White text on hover
             },
           }}
@@ -46,13 +46,13 @@ const FollowSidebar = ({ activeTab, setActiveTab }) => {
             fontWeight: 400,
             width: "250px",
             padding: "12px 0", // Vertical padding only, no horizontal padding
-            backgroundColor: activeTab === "following" ? "#ea3b15" : "transparent",
+            backgroundColor: activeTab === "following" ? "#e04c2c" : "transparent",
             color: activeTab === "following" ? "white" : "black",
             cursor: "pointer",
             textAlign: "left",
             transition: "0.3s",
             "&:hover": {
-              backgroundColor: "#ea3b15", // Red background on hover
+              backgroundColor: "#e04c2c", // Red background on hover
               color: "white", // White text on hover
             },
           }}

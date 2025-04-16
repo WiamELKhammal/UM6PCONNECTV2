@@ -47,7 +47,7 @@ const Step4CoverPhoto = ({ data, setData }) => {
                     borderRadius: 2,
                     cursor: "pointer",
                     border: isSelected
-                      ? "3px solid #ea3b15"
+                      ? "3px solid #e04c2c"
                       : "2px solid transparent",
                     transition: "all 0.2s ease-in-out",
                   }}
@@ -60,7 +60,7 @@ const Step4CoverPhoto = ({ data, setData }) => {
         {data.coverPicture && (
           <Typography fontSize={14} mt={3} color="text.secondary">
             Selected banner:{" "}
-            <span style={{ color: "#ea3b15" }}>
+            <span style={{ color: "#e04c2c" }}>
               {data.coverPicture.split("/").pop()}
             </span>
           </Typography>

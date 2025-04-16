@@ -44,14 +44,14 @@ const DiscoverWork = () => {
           onClick={() => setOpenAdd(true)}
           sx={{
             color: "#fff",
-            borderColor: "#ea3b15",
-            backgroundColor: "#ea3b15",
+            borderColor: "#e04c2c",
+            backgroundColor: "#e04c2c",
             textTransform: "none",
             fontWeight: 500,
             "&:hover": {
               backgroundColor: "#fff",
-              borderColor: "#ea3b15",
-              color: "#ea3b15",
+              borderColor: "#e04c2c",
+              color: "#e04c2c",
             },
           }}
         >
@@ -63,8 +63,8 @@ const DiscoverWork = () => {
         <Box display="flex" alignItems="center" gap={2} mt={2}>
           <ArticleIcon sx={{ color: "#999", fontSize: 40 }} />
           <Box>
-            <Typography fontWeight={600}>Research Title</Typography>
-            <Typography fontSize={14}>Your contribution</Typography>
+            <Typography fontWeight={600} color="#000">Research Title</Typography>
+            <Typography fontSize={14} color="#000">Your contribution</Typography>
             <Typography fontSize={12} color="text.secondary">
               Link or Summary
             </Typography>

@@ -7,6 +7,7 @@ import {
   useMediaQuery,
   Alert,
   Collapse,
+  Snackbar,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import PersonIcon from "@mui/icons-material/Person";
@@ -20,6 +21,7 @@ import Step2Professional from "./steps/Step2Professional";
 import Step3Photos from "./steps/Step3Photos";
 import Step4CoverPhoto from "./steps/Step4CoverPhoto";
 import Step5Review from "./steps/Step5Review";
+import { useNavigate } from "react-router-dom";
 
 const steps = [
   {
@@ -55,6 +57,8 @@ const CompleteProfileStepper = () => {
 
   const [activeStep, setActiveStep] = useState(0);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState(() => {
     const stored = localStorage.getItem("completeProfileData");
@@ -78,7 +82,7 @@ const CompleteProfileStepper = () => {
       case 0:
         return formData.firstName.trim() && formData.lastName.trim() && formData.Departement.trim();
       case 1:
-        return formData.headline.trim() && formData.linkedIn.trim(); // researchGate optional
+        return formData.headline.trim() && formData.linkedIn.trim();
       case 2:
         return formData.profilePicture;
       case 3:
@@ -116,15 +120,13 @@ const CompleteProfileStepper = () => {
         setError("User ID is missing.");
         return;
       }
-
-      // 1. Update user data
+  
       await fetch(`http://localhost:5000/api/profile/${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
-      // 2. Upload profile picture
+  
       if (formData.profilePicture?.startsWith("data:image")) {
         await fetch(`http://localhost:5000/api/profilepicture/update-profile-picture/${userId}`, {
           method: "POST",
@@ -132,8 +134,7 @@ const CompleteProfileStepper = () => {
           body: JSON.stringify({ profilePicture: formData.profilePicture }),
         });
       }
-
-      // 3. Upload cover picture
+  
       if (formData.coverPicture?.startsWith("data:image") || formData.coverPicture?.includes("/assets/")) {
         await fetch(`http://localhost:5000/api/profilepicture/update-cover-picture/${userId}`, {
           method: "POST",
@@ -141,13 +142,17 @@ const CompleteProfileStepper = () => {
           body: JSON.stringify({ coverPicture: formData.coverPicture }),
         });
       }
-
-      alert("Profile submitted successfully!");
+  
+      setSuccess(true);
+      setTimeout(() => {
+        navigate("/Our-Researchers");
+      }, 2000); // wait for success snackbar
     } catch (err) {
       console.error("Submission error:", err);
       setError("Something went wrong while submitting. Please try again.");
     }
   };
+  
 
   const renderStepContent = () => {
     switch (activeStep) {
@@ -168,7 +173,7 @@ const CompleteProfileStepper = () => {
 
   return (
     <Box sx={{ minHeight: "100vh", backgroundColor: "#f9fafb" }}>
-      {/* Error banner */}
+      {/* Error Banner */}
       {error && (
         <Box sx={{ position: "fixed", top: 20, left: "50%", transform: "translateX(-50%)", zIndex: 9999, width: "90%", maxWidth: 500 }}>
           <Collapse in={!!error}>
@@ -178,6 +183,18 @@ const CompleteProfileStepper = () => {
           </Collapse>
         </Box>
       )}
+
+      {/* Success Snackbar */}
+      <Snackbar
+        open={success}
+        autoHideDuration={4000}
+        onClose={() => setSuccess(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert onClose={() => setSuccess(false)} severity="success" sx={{ width: "100%" }}>
+           Profile submitted successfully!
+        </Alert>
+      </Snackbar>
 
       <Grid container sx={{ height: "100vh" }}>
         {/* Sidebar */}
@@ -205,8 +222,8 @@ const CompleteProfileStepper = () => {
                   }} />
                   <Box sx={{
                     backgroundColor: "#fff",
-                    color: isActive ? "#ea3b15" : "#6b7280",
-                    border: `1px solid ${isActive ? '#ea3b15' : '#e5e7eb'}`,
+                    color: isActive ? "#e04c2c" : "#6b7280",
+                    border: `1px solid ${isActive ? '#e04c2c' : '#e5e7eb'}`,
                     borderRadius: 1, width: 36, height: 36,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     mr: 2, zIndex: 1,
@@ -228,17 +245,17 @@ const CompleteProfileStepper = () => {
 
           <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
             <Button variant="outlined" size="small" onClick={handleBack} disabled={activeStep === 0}
-              sx={{ color: "#ea3b15", borderColor: "#ea3b15", ":hover": { borderColor: "#c33111" } }}>
+              sx={{ color: "#e04c2c", borderColor: "#e04c2c", ":hover": { borderColor: "#c33111" } }}>
               Previous
             </Button>
             <Button variant="contained" size="small" onClick={handleNext}
-              sx={{ backgroundColor: "#ea3b15", ":hover": { backgroundColor: "#c33111" } }}>
+              sx={{ backgroundColor: "#e04c2c", ":hover": { backgroundColor: "#c33111" } }}>
               {activeStep === steps.length - 1 ? "Submit" : "Next"}
             </Button>
           </Box>
         </Grid>
 
-        {/* Step Content */}
+        {/* Content */}
         <Grid item xs={12} md={8} sx={{ p: { xs: 4, md: 3 }, backgroundColor: "#fff" }}>
           <Box maxWidth={700} mx="auto" display="flex" flexDirection="column" justifyContent="space-between" height="100%">
             <Box>
@@ -260,7 +277,7 @@ const CompleteProfileStepper = () => {
                   height={4}
                   borderRadius={2}
                   mx={0.5}
-                  bgcolor={i === activeStep ? "#ea3b15" : "#e5e7eb"}
+                  bgcolor={i === activeStep ? "#e04c2c" : "#e5e7eb"}
                 />
               ))}
             </Box>

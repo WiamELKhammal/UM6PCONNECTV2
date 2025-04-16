@@ -189,8 +189,8 @@ const ProfileIntro = () => {
                 variant="outlined"
                 onClick={() => setIsProfileSetupOpen(true)}
                 sx={{
-                  color: "#ea3b15",
-                  borderColor: "#ea3b15",
+                  color: "#e04c2c",
+                  borderColor: "#e04c2c",
                   fontSize: "14px",
                   fontWeight: "500",
                   textTransform: "none",

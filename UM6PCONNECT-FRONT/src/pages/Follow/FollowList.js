@@ -92,7 +92,8 @@ const FollowList = ({ activeTab }) => {
     };
 
     return (
-        <Box sx={{ flexGrow: 1, p: 3, overflowY: "auto" }}>
+        <Box sx={{ flexGrow: 1, p: 3, overflowY: "auto" ,                                        backgroundColor: "#FFF",
+        }}>
             {loading ? (
                 <Typography>Loading follow list...</Typography>
             ) : (
@@ -109,9 +110,11 @@ const FollowList = ({ activeTab }) => {
                                         justifyContent: "center",
                                         height: "300px",
                                         textAlign: "center",
+                                        backgroundColor: "#FFF",
+
                                     }}
                                 >
-                                    <PersonAddOutlinedIcon sx={{ fontSize: "48px", color: "#ea3b15", mb: 2 }} />
+                                    <PersonAddOutlinedIcon sx={{ fontSize: "48px", color: "#e04c2c", mb: 2 }} />
 
                                     <h4 style={{ fontWeight: "400", fontSize: "18px", color: "#000" }}>
                                         Your followers list is currently empty. When someone follows  you , it appears here.
@@ -132,6 +135,8 @@ const FollowList = ({ activeTab }) => {
                                                     border: "1px solid #CCC",
                                                     borderRadius: "10px",
                                                     cursor: "pointer",
+                                                    backgroundColor: "#FFF",
+
                                                     mb: 2,
                                                     "&:hover": { bgcolor: "#f5f5f5" },
                                                 }}
@@ -146,29 +151,19 @@ const FollowList = ({ activeTab }) => {
                                                     </ListItemAvatar>
                                                     <ListItemText
                                                         primary={
-                                                            <Typography fontWeight="bold" fontSize="14px">
+                                                            <Typography fontWeight="bold" fontSize="16px" color="black">
                                                                 {follower.follower.Prenom} {follower.follower.Nom}
                                                             </Typography>
                                                         }
                                                         secondary={
                                                             <>
-                                                                <Typography fontSize="12px" fontWeight="500" color="textPrimary">
+                                                                <Typography fontSize="16px" fontWeight="500" color="textPrimary">
                                                                     {follower.follower.headline || "No headline available"}
                                                                 </Typography>
-                                                                <Typography fontSize="12px" color="textSecondary">
+                                                                <Typography fontSize="16px" color="textSecondary">
                                                                     {follower.follower.Departement || "No department available"}
                                                                 </Typography>
-                                                                <Typography
-                                                                    fontSize="12px"
-                                                                    color="textSecondary"
-                                                                    sx={{
-                                                                        textAlign: "justify", // Justify bio text
-                                                                        textJustify: "inter-word",
-                                                                        wordBreak: "break-word",
-                                                                    }}
-                                                                >
-                                                                    {follower.follower.bio || "No bio available."}
-                                                                </Typography>
+                                                
                                                                 {/* Display tags inline */}
                                                                 {userTags[follower.follower._id] &&
                                                                     userTags[follower.follower._id].length > 0 ? (
@@ -185,7 +180,7 @@ const FollowList = ({ activeTab }) => {
                                                                                     minWidth: "auto",
                                                                                     px: 2,
                                                                                     mx: 0.3,
-                                                                                    backgroundColor: "#f7f7f7",
+                                                                                    backgroundColor: "#FFF",
                                                                                     "&:hover": {
                                                                                         backgroundColor: "#fafafa",
                                                                                         borderColor: "#ccc",
@@ -201,7 +196,7 @@ const FollowList = ({ activeTab }) => {
                                                                         ))}
                                                                     </Box>
                                                                 ) : (
-                                                                    <Typography fontSize="12px" color="textSecondary">
+                                                                    <Typography fontSize="16px" color="textSecondary">
                                                                         No tags available.
                                                                     </Typography>
                                                                 )}
@@ -210,7 +205,7 @@ const FollowList = ({ activeTab }) => {
                                                     />
                                                 </Box>
                                             </ListItem>
-                                            <Divider />
+            <Divider sx={{ height: "1px", bgcolor: "#fff", my: 1 }} />
                                         </React.Fragment>
                                     ))}
                                 </List>
@@ -232,7 +227,7 @@ const FollowList = ({ activeTab }) => {
                                         textAlign: "center",
                                     }}
                                 >
-                                    <PersonAddOutlinedIcon sx={{ fontSize: "48px", color: "#ea3b15", mb: 2 }} />
+                                    <PersonAddOutlinedIcon sx={{ fontSize: "48px", color: "#e04c2c", mb: 2 }} />
                          
                                     <h4 style={{ fontWeight: "400", fontSize: "18px", color: "#000" }}>
                                         Your following list is currently empty. When you follow  someone , it appears here.
@@ -267,29 +262,19 @@ const FollowList = ({ activeTab }) => {
                                                     </ListItemAvatar>
                                                     <ListItemText
                                                         primary={
-                                                            <Typography fontWeight="bold" fontSize="14px">
+                                                            <Typography fontWeight="bold" fontSize="16px" color="black">
                                                                 {followedUser.following.Prenom} {followedUser.following.Nom}
                                                             </Typography>
                                                         }
                                                         secondary={
                                                             <>
-                                                                <Typography fontSize="12px" fontWeight="500" color="textPrimary">
+                                                                <Typography fontSize="16px" fontWeight="500" color="textPrimary">
                                                                     {followedUser.following.headline || "No headline available"}
                                                                 </Typography>
-                                                                <Typography fontSize="12px" color="textSecondary">
+                                                                <Typography fontSize="16px" color="textSecondary">
                                                                     {followedUser.following.Departement || "No department available"}
                                                                 </Typography>
-                                                                <Typography
-                                                                    fontSize="12px"
-                                                                    color="textSecondary"
-                                                                    sx={{
-                                                                        textAlign: "justify", // Justify bio text
-                                                                        textJustify: "inter-word",
-                                                                        wordBreak: "break-word",
-                                                                    }}
-                                                                >
-                                                                    {followedUser.following.bio || "No bio available."}
-                                                                </Typography>
+                                                                
                                                                 {/* Display tags inline */}
                                                                 {userTags[followedUser.following._id] &&
                                                                     userTags[followedUser.following._id].length > 0 ? (
@@ -322,7 +307,7 @@ const FollowList = ({ activeTab }) => {
                                                                         ))}
                                                                     </Box>
                                                                 ) : (
-                                                                    <Typography fontSize="12px" color="textSecondary">
+                                                                    <Typography fontSize="16px" color="textSecondary">
                                                                         No tags available.
                                                                     </Typography>
                                                                 )}
@@ -333,13 +318,13 @@ const FollowList = ({ activeTab }) => {
 
                                                 {/* Unfollow Button */}
                                                 <IconButton
-                                                    sx={{ color: "#ea3b15" }}
+                                                    sx={{ color: "#e04c2c" }}
                                                     onClick={() => handleUnfollow(followedUser.following._id)}
                                                 >
                                                     <PersonRemoveOutlinedIcon fontSize="small" />
                                                 </IconButton>
                                             </ListItem>
-                                            <Divider />
+            <Divider sx={{ height: "1px", bgcolor: "#fff", my: 1 }} />
                                         </React.Fragment>
                                     ))}
                                 </List>

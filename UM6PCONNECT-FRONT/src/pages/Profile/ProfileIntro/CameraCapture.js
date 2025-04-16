@@ -103,8 +103,8 @@ const CameraCapture = ({ onClose, onCapture }) => {
         <Box sx={{ mt: 2, display: "flex", gap: 2, justifyContent: "center" }}>
           <Button
             sx={{
-              color: "#ea3b15",
-              border: "1px solid #ea3b15",
+              color: "#e04c2c",
+              border: "1px solid #e04c2c",
               "&:hover": { backgroundColor: "#fbe4e0" },
             }}
             onClick={onClose}
@@ -119,7 +119,7 @@ const CameraCapture = ({ onClose, onCapture }) => {
               onClick={capturePhoto}
               disabled={cameraError}
               sx={{
-                backgroundColor: cameraError ? "#ccc" : "#ea3b15",
+                backgroundColor: cameraError ? "#ccc" : "#e04c2c",
                 color: "white",
                 boxShadow:"none",
                 "&:hover": {boxShadow:"none", backgroundColor: cameraError ? "#ccc" : "#b53c24" },
@@ -132,7 +132,7 @@ const CameraCapture = ({ onClose, onCapture }) => {
               variant="contained"
               onClick={savePhoto}
               sx={{
-                backgroundColor: "#ea3b15",
+                backgroundColor: "#e04c2c",
                 color: "white",
                 "&:hover": { backgroundColor: "#b53c24",boxShadow:"none" },
               }}

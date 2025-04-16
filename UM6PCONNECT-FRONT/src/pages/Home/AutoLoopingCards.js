@@ -27,40 +27,45 @@ const UserAchievements = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!user?._id) return;
-
-      const [followRes, researchRes, profileRes] = await Promise.all([
-        fetch(`http://localhost:5000/api/follow/follow-count/${user._id}`).then((r) => r.json()),
-        fetch(`http://localhost:5000/api/research/user/${user._id}`).then((r) => r.json()),
-        fetch(`http://localhost:5000/api/profile/${user._id}`).then((r) => r.json()),
-      ]);
-
-      const completed = profileRes?.completionPercentage >= 100;
-
-      setStats({
-        following: followRes.followingCount,
-        followers: followRes.followersCount,
-        researchCount: researchRes.length,
-        completedProfile: completed,
-      });
-
-      if (
-        followRes.followersCount >= 10 &&
-        followRes.followingCount >= 10 &&
-        researchRes.length >= 10 &&
-        completed
-      ) {
-        // update badged to true
-        await fetch(`http://localhost:5000/api/users/${user._id}/badge`, {
-          method: "PUT",
+  
+      try {
+        // 1. Get follow stats
+        const followRes = await fetch(`http://localhost:5000/api/follow/follow-count/${user._id}`).then(res => res.json());
+  
+        // 2. Get research count
+        const researchRes = await fetch(`http://localhost:5000/api/research/user/${user._id}`).then(res => res.json());
+  
+        // 3. Get profile completion (your logic from backend)
+        const profileRes = await fetch(`http://localhost:5000/api/complete/profile/${user._id}`).then(res => res.json());
+        const completed = parseFloat(profileRes?.completionPercentage) >= 100;
+  
+        setStats({
+          following: followRes.followingCount,
+          followers: followRes.followersCount,
+          researchCount: researchRes.length,
+          completedProfile: completed,
         });
-
-        setUser({ ...user, badged: true });
+  
+        const shouldBadge =
+          followRes.followersCount >= 10 &&
+          followRes.followingCount >= 10 &&
+          researchRes.length >= 10 &&
+          completed;
+  
+        if (shouldBadge && !user.badged) {
+          await fetch(`http://localhost:5000/api/users/${user._id}/badge`, {
+            method: "PUT",
+          });
+          setUser({ ...user, badged: true });
+        }
+      } catch (err) {
+        console.error("Error fetching achievements data:", err);
       }
     };
-
+  
     fetchData();
   }, [user?._id]);
-
+  
   const achievements = [
     {
       title: "Follow 10 users",
@@ -135,7 +140,7 @@ const UserAchievements = () => {
                   }}
                 >
                   {a.unlocked ? (
-                    <CheckCircleIcon sx={{ color: "#ea3b15", fontSize: 24 }} />
+                    <CheckCircleIcon sx={{ color: "#e04c2c", fontSize: 24 }} />
                   ) : (
                     <LockClockIcon sx={{ color: "#bbb", fontSize: 24 }} />
                   )}
@@ -154,7 +159,7 @@ const UserAchievements = () => {
                     label={`+${a.points}`}
                     size="small"
                     sx={{
-                      backgroundColor: a.unlocked ? "#ea3b15" : "#eee",
+                      backgroundColor: a.unlocked ? "#e04c2c" : "#eee",
                       color: a.unlocked ? "#fff" : "#888",
                       fontWeight: 500,
                       fontSize: "12px",
@@ -173,12 +178,12 @@ const UserAchievements = () => {
                       mb: 1,
                       padding: "10px",
                       borderRadius: 2,
-                      border: "2px dotted #ea3b15",
+                      border: "2px dotted #e04c2c",
                       backgroundColor: "#fff3f1",
                     }}
                   >
-                    <CheckCircleIcon sx={{ color: "#ea3b15", fontSize: 24 }} />
-                    <Typography fontWeight={600} fontSize={14} color="#ea3b15">
+                    <CheckCircleIcon sx={{ color: "#e04c2c", fontSize: 24 }} />
+                    <Typography fontWeight={600} fontSize={14} color="#e04c2c">
                       You’re Verified — enjoy exclusive features!
                     </Typography>
                   </Box>
@@ -188,12 +193,9 @@ const UserAchievements = () => {
                   </Typography>
 
                   {[
-                    "Priority in search results",
-                    "Unlimited messaging",
-                    "Advanced profile analytics",
-                    "Pin top research or projects",
-                    "Custom tags and banners",
-                    "Early access to new features",
+  "Priority in search results",
+
+  "Become a guest in Times of UM6P.  ",
                   ].map((feature, i) => (
                     <Box
                       key={i}
@@ -208,7 +210,7 @@ const UserAchievements = () => {
                         backgroundColor: "#fdfdfd",
                       }}
                     >
-                      <EmojiEventsIcon sx={{ fontSize: 20, color: "#ea3b15" }} />
+                      <EmojiEventsIcon sx={{ fontSize: 20, color: "#e04c2c" }} />
                       <Typography fontSize={13}>{feature}</Typography>
                     </Box>
                   ))}
@@ -230,7 +232,7 @@ const UserAchievements = () => {
                           height: 6,
                           borderRadius: 3,
                           backgroundColor: "#eee",
-                          "& .MuiLinearProgress-bar": { backgroundColor: "#ea3b15" },
+                          "& .MuiLinearProgress-bar": { backgroundColor: "#e04c2c" },
                         }}
                       />
                     </Box>

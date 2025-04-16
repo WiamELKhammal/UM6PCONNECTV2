@@ -12,7 +12,6 @@ import {
   Button,
   Stack,
   Link as MuiLink,
-  Tooltip,
 } from "@mui/material";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
@@ -21,6 +20,48 @@ import SearchBar2 from "../../components/SearchBar2";
 import MessageModal from "../../components/Messages/MessageModal";
 import Save from "../Save/Save";
 import Follow from "../Follow/Follow";
+
+const extractUsername = (url) => {
+  if (!url) return null;
+  try {
+    const parsed = new URL(url);
+    const parts = parsed.pathname.split("/").filter(Boolean);
+    if (parsed.hostname.includes("linkedin.com")) {
+      const index = parts.indexOf("in");
+      return index !== -1 && parts.length > index + 1 ? parts[index + 1] : parsed.hostname;
+    }
+    if (parsed.hostname.includes("researchgate.net")) {
+      const index = parts.indexOf("profile");
+      return index !== -1 && parts.length > index + 1 ? parts[index + 1] : parsed.hostname;
+    }
+    return parts[parts.length - 1];
+  } catch {
+    return null;
+  }
+};
+
+const InfoLine = ({ value, icon }) => {
+  const username = extractUsername(value);
+  return (
+    <Box display="flex" alignItems="center" gap={1}>
+      {icon}
+      {value ? (
+        <MuiLink
+          href={value}
+          target="_blank"
+          rel="noopener"
+          fontSize={13}
+          color="#111827"
+          underline="hover"
+        >
+          {username}
+        </MuiLink>
+      ) : (
+        <Typography fontSize={13} color="#999">Not provided</Typography>
+      )}
+    </Box>
+  );
+};
 
 const RightSidebar = () => {
   const { user } = useContext(UserContext);
@@ -44,13 +85,11 @@ const RightSidebar = () => {
         );
         setResearchers(activeResearchers);
         setFilteredResearchers(activeResearchers);
-      })
-      .catch((err) => console.error("Failed to fetch users:", err));
+      });
 
     fetch("http://localhost:5000/api/tags")
       .then((res) => res.json())
-      .then((data) => setTags(data))
-      .catch((err) => console.error("Failed to fetch tags:", err));
+      .then((data) => setTags(data));
   }, [user]);
 
   useEffect(() => {
@@ -86,8 +125,7 @@ const RightSidebar = () => {
       .then((res) => res.json())
       .then((data) =>
         setFilteredResearchers(data.filter((r) => r._id !== user?._id && r.Status === "Active"))
-      )
-      .catch((err) => console.error("Failed to fetch users by tag:", err));
+      );
   };
 
   const handleShowAll = () => {
@@ -102,7 +140,7 @@ const RightSidebar = () => {
   };
 
   return (
-    <Box sx={{ flex: 1, bgcolor: "#fff", borderRadius: "10px", p: { xs: 2, sm: 3 } }}>
+    <Box sx={{ flex: 1, bgcolor: "#181717", borderRadius: "10px", p: { xs: 2, sm: 3 } }}>
       <SearchBar2
         onSearch={handleSearch}
         tags={tags}
@@ -111,7 +149,7 @@ const RightSidebar = () => {
       />
 
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 2 }}>
-        <Typography variant="body1" sx={{ color: "#000", fontWeight: 600 }}>
+        <Typography variant="body1" sx={{ color: "#FFF", fontWeight: 600 }}>
           Our Researchers:
         </Typography>
         <Button
@@ -158,7 +196,7 @@ const RightSidebar = () => {
                 </ListItemAvatar>
                 <ListItemText
                   primary={
-                    <Box display="flex" alignItems="center" gap={1} justifyContent="space-between" width="100%">
+                    <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">
                       <Typography fontWeight="bold" fontSize="16px">
                         {r.Prenom} {r.Nom}
                       </Typography>
@@ -192,35 +230,21 @@ const RightSidebar = () => {
                         {r.Departement}
                       </Typography>
 
-                      {/* Social Icons */}
-                      <Stack direction="row" spacing={1} mt={1}>
+                      <Stack spacing={1} mt={1}>
                         {r.linkedIn && (
-                          <Tooltip title="LinkedIn">
-                            <MuiLink href={r.linkedIn} target="_blank">
-                              <Box
-                                component="img"
-                                src="/assets/images/linkedin.svg"
-                                alt="LinkedIn"
-                                sx={{ width: 20, height: 20 }}
-                              />
-                            </MuiLink>
-                          </Tooltip>
+                          <InfoLine
+                            value={r.linkedIn}
+                            icon={<Box component="img" src="/assets/images/linkedin.svg" sx={{ width: 18, height: 18 }} />}
+                          />
                         )}
                         {r.researchGate && (
-                          <Tooltip title="ResearchGate">
-                            <MuiLink href={r.researchGate} target="_blank">
-                              <Box
-                                component="img"
-                                src="/assets/images/researchgate.svg"
-                                alt="ResearchGate"
-                                sx={{ width: 20, height: 20 }}
-                              />
-                            </MuiLink>
-                          </Tooltip>
+                          <InfoLine
+                            value={r.researchGate}
+                            icon={<Box component="img" src="/assets/images/researchgate.svg" sx={{ width: 18, height: 18 }} />}
+                          />
                         )}
                       </Stack>
 
-                      {/* Tags */}
                       {researcherTags[r._id]?.length > 0 && (
                         <Box sx={{ display: "flex", flexWrap: "wrap", mt: 1 }}>
                           {researcherTags[r._id].map((tag, i) => (
@@ -237,7 +261,7 @@ const RightSidebar = () => {
                                 m: 0.5,
                                 borderRadius: "20px",
                                 border: "1px solid #f0f0f0",
-                                backgroundColor: selectedTag === tag ? "#ea3b15" : "#f7f7f7",
+                                backgroundColor: selectedTag === tag ? "#e04c2c" : "#f7f7f7",
                                 color: selectedTag === tag ? "#fff" : "#6e6e6e",
                                 "&:hover": {
                                   backgroundColor: selectedTag === tag ? "#d73a12" : "#eee",
@@ -254,7 +278,6 @@ const RightSidebar = () => {
                 />
               </Box>
 
-              {/* Action Buttons */}
               <Box sx={{ display: "flex", width: "100%", justifyContent: "space-between", mt: 2, gap: 1 }}>
                 <Button
                   onClick={(e) => {
@@ -263,8 +286,8 @@ const RightSidebar = () => {
                   }}
                   startIcon={<ChatBubbleOutlineIcon />}
                   sx={{
-                    border: "1px solid #ea3b15",
-                    color: "#ea3b15",
+                    border: "1px solid #e04c2c",
+                    color: "#e04c2c",
                     textTransform: "none",
                     flex: 1,
                     "&:hover": { bgcolor: "transparent" },
@@ -272,8 +295,13 @@ const RightSidebar = () => {
                 >
                   Connect
                 </Button>
-                <Follow researcherId={r._id} user={user} />
-                <Save researcherId={r._id} user={user} />
+
+                {user && (
+                  <>
+                    <Follow researcherId={r._id} user={user} />
+                    <Save researcherId={r._id} user={user} />
+                  </>
+                )}
               </Box>
             </ListItem>
             <Divider sx={{ height: "1px", bgcolor: "#fff", my: 1 }} />

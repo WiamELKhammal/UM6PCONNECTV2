@@ -40,7 +40,7 @@ const Experience = ({ userId }) => {
       className="box"
       style={{
         width: "90%",
-        margin: "20px auto",
+        margin: "0px auto",
         padding: "20px",
         fontFamily: "'Segoe UI', Tahoma, Geneva, sans-serif",
         border: "1px solid #ddd",

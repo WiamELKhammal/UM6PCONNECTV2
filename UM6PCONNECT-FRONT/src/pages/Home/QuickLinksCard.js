@@ -50,7 +50,7 @@ const QuickLinksCard = () => {
                   },
                 }}
               >
-                <ListItemIcon sx={{ color: "#ea3b15", minWidth: 36 }}>{icon}</ListItemIcon>
+                <ListItemIcon sx={{ color: "#e04c2c", minWidth: 36 }}>{icon}</ListItemIcon>
                 <ListItemText
                   primary={label}
                   primaryTypographyProps={{ fontSize: "15px", color: "#222" }}

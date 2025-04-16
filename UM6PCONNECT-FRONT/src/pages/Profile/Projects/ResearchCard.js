@@ -36,41 +36,56 @@ const ResearchCard = ({ research, onEdit, onDelete }) => {
         p: 3,
         bgcolor: "#fff",
         boxShadow: "none",
+        position: "relative",
       }}
     >
-      {/* Title and Action Icons */}
-      <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-        <Typography color="black" variant="h6" fontWeight="bold">
-          {title}
-        </Typography>
-        <Box display="flex" gap={1}>
-          <IconButton size="small" onClick={onEdit}>
-            <EditIcon fontSize="small" sx={{ color: "#555" }} />
-          </IconButton>
-          <IconButton size="small" onClick={onDelete}>
-            <DeleteIcon fontSize="small" sx={{ color: "#ea3b15" }} />
-          </IconButton>
-        </Box>
+      {/* Icons fixed top-right */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 16,
+          right: 16,
+          display: "flex",
+          gap: 0.5,
+        }}
+      >
+        <IconButton size="small" onClick={onEdit}>
+          <EditIcon fontSize="small" sx={{ color: "#555" }} />
+        </IconButton>
+        <IconButton size="small" onClick={onDelete}>
+          <DeleteIcon fontSize="small" sx={{ color: "#e04c2c" }} />
+        </IconButton>
       </Box>
 
+      {/* Title */}
+      <Typography
+        color="black"
+        variant="h6"
+        fontWeight="bold"
+        gutterBottom
+        sx={{ pr: 7 }} // prevent text under icons
+      >
+        {title}
+      </Typography>
+
       {/* Context */}
-      <Typography fontSize={14} color="text.secondary" mb={2}>
+      <Typography fontSize={14} color="text.secondary" mb={2} >
         {context}
       </Typography>
 
       {/* Institution and Collaborators */}
       <Stack direction="row" spacing={2} mb={1}>
-        <Typography fontSize={14} fontStyle="italic">
+        <Typography fontSize={14} fontStyle="italic" color="#000">
           {institution || "—"}
         </Typography>
-        <Typography fontSize={14}>
+        <Typography fontSize={14} color="#000">
           {collaborators?.join(", ")}
         </Typography>
       </Stack>
 
       {/* Principal Investigator */}
       {role && (
-        <Typography fontSize={14} fontWeight={500} mb={1}>
+        <Typography fontSize={14}color="#000" fontWeight={500} mb={1}>
           Principal Investigator:
           <Chip
             label={role}
@@ -78,7 +93,7 @@ const ResearchCard = ({ research, onEdit, onDelete }) => {
             sx={{
               ml: 1,
               backgroundColor: "#fbeaea",
-              color: "#ea3b15",
+              color: "#e04c2c",
               fontWeight: 500,
             }}
           />
@@ -111,7 +126,7 @@ const ResearchCard = ({ research, onEdit, onDelete }) => {
             rel="noopener noreferrer"
             style={{ textDecoration: "none" }}
           >
-            <Button startIcon={<PictureAsPdfIcon />} sx={{ color: "#ea3b15" }}>
+            <Button startIcon={<PictureAsPdfIcon />} sx={{ color: "#e04c2c" }}>
               Download PDF
             </Button>
           </a>
@@ -123,7 +138,7 @@ const ResearchCard = ({ research, onEdit, onDelete }) => {
             rel="noopener noreferrer"
             style={{ textDecoration: "none" }}
           >
-            <Button sx={{ color: "#ea3b15" }}>
+            <Button sx={{ color: "#e04c2c" }}>
               View Publication
             </Button>
           </a>

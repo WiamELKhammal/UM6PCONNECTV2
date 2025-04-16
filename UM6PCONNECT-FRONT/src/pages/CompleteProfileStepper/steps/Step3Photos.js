@@ -84,7 +84,7 @@ const CameraCapture = ({ open, onClose, onCapture }) => {
                 <canvas ref={canvasRef} style={{ display: "none" }} />
 
                 <Box mt={2} display="flex" justifyContent="space-between">
-                    <Button onClick={handleCapture} variant="contained" sx={{ backgroundColor: "#ea3b15" }}>
+                    <Button onClick={handleCapture} variant="contained" sx={{ backgroundColor: "#e04c2c" }}>
                         Capture
                     </Button>
                     <Button onClick={onClose} variant="outlined" color="error">
@@ -162,8 +162,8 @@ const Step3Photos = ({ data, setData }) => {
                         backgroundColor: "#fff",
                         "&:hover": {
                             backgroundColor: "#fef2f2",
-                            borderColor: "#ea3b15",
-                            color: "#ea3b15",
+                            borderColor: "#e04c2c",
+                            color: "#e04c2c",
                         },
                         textTransform: "none",
                         borderRadius: "50px",
@@ -190,8 +190,8 @@ const Step3Photos = ({ data, setData }) => {
                         backgroundColor: "#fff",
                         "&:hover": {
                             backgroundColor: "#fef2f2",
-                            borderColor: "#ea3b15",
-                            color: "#ea3b15",
+                            borderColor: "#e04c2c",
+                            color: "#e04c2c",
                         },
                         textTransform: "none",
                         borderRadius: "50px",

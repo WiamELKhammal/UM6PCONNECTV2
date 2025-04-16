@@ -199,7 +199,7 @@ const EditProfileForm = ({ open, onClose, onSave }) => {
           <Button
             variant="contained"
             onClick={handleSave}
-            style={{ backgroundColor: "#ea3b15", color: "#fff", width: "100%" }}
+            style={{ backgroundColor: "#e04c2c", color: "#fff", width: "100%" }}
             disabled={loading}
           >
             {loading ? <CircularProgress size={24} color="inherit" /> : "Save"}

@@ -232,11 +232,11 @@ const SmartAddResearch = ({ open, onClose, onAdd }) => {
             onClick={handleFetch}
             disabled={loading || !link}
             sx={{
-              borderColor: "#ea3b15",
-              color: "#ea3b15",
+              borderColor: "#e04c2c",
+              color: "#e04c2c",
               textTransform: "none",
               "&:hover": {
-                backgroundColor: "#ea3b15",
+                backgroundColor: "#e04c2c",
                 color: "#fff",
               },
             }}
@@ -285,7 +285,7 @@ const SmartAddResearch = ({ open, onClose, onAdd }) => {
           />
 
           <FormControl fullWidth>
-            <InputLabel>Keywords</InputLabel>
+            <InputLabel >Keywords</InputLabel>
             <Select
               multiple
               value={form.keywords}
@@ -334,7 +334,7 @@ const SmartAddResearch = ({ open, onClose, onAdd }) => {
         <Button
           onClick={handleSubmit}
           variant="contained"
-          sx={{ backgroundColor: "#ea3b15", textTransform: "none" }}
+          sx={{ backgroundColor: "#e04c2c", textTransform: "none" }}
         >
           Add to My Work
         </Button>
