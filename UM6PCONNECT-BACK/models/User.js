@@ -12,21 +12,20 @@ const UserSchema = new mongoose.Schema({
   hashedTemporaryPass: { type: String, required: false },
   profilePicture: { type: String, default: "" },
   coverPicture: { type: String, default: "" },
-badged: { type: Boolean, default: false },
+  badged: { type: Boolean, default: false },
+
+  // 🔐 RESET PASSWORD FIELDS (ADD THESE)
+  resetToken: { type: String, default: null },
+  resetTokenExpiration: { type: Date, default: null },
 
   // Additional profile fields
   bio: { type: String, default: "" },
   Departement: { type: String, default: "" },
-
   headline: { type: String, default: "" },
-  location: { type: String, default: "" },
-  address: { type: String, default: "" },
-  birthDate: { type: Date, default: null },
-  url: { type: String, default: "" },
   linkedIn: { type: String, default: "" },
   researchGate: { type: String, default: "" },
 
-  // Referencing other collections
+  // References
   educations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Education' }],
   experiences: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Experience' }],
   languages: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Language' }],
@@ -39,6 +38,8 @@ badged: { type: Boolean, default: false },
   followingCount: { type: Number, default: 0 },
 
   lastSeen: { type: Date, default: null },
+  verified: { type: Boolean, default: false }, //  
+
 });
 
 const User = mongoose.models.User || mongoose.model("User", UserSchema);

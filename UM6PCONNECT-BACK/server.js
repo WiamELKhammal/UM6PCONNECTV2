@@ -22,6 +22,11 @@ const { sendPasswordsToUnsentUsers } = require("./controllers/authController");
 const userRoutes = require('./routes/userRoutes'); 
 const changePasswordRoutes = require('./routes/changePassword');
 const signinRoutes = require('./routes/signinRoutes');
+const signupRoutes = require('./routes/signupRoutes');
+const resendOtpRoute = require("./routes/resendOtp");
+
+const verifyotp = require("./routes/verifyotp");
+
 const educationRoutes = require("./routes/educationRoutes");
 const languageRoutes = require("./routes/languageRoutes");
 const experienceRoutes = require("./routes/experienceRoutes");
@@ -37,6 +42,10 @@ const notificationRoutes = require("./routes/notificationRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const Complete = require('./routes/Complete');
 const profilepictureRoutes = require('./routes/profilepictureRoutes');
+const forgotPasswordRoutes = require("./routes/forgotPasswordRoutes");
+const resetPasswordRoutes = require("./routes/resetPasswordRoutes");
+const statusLastSeenRoutes = require("./routes/statusLastSeenRoutes");
+
 
 // Connect MongoDB
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/um6pconnect';
@@ -73,7 +82,14 @@ const connectDB = async () => {
 app.use("/api/users", userRoutes);
 app.use("/api/change-password", changePasswordRoutes);
 app.use("/api/signin", signinRoutes);
+app.use("/api/signup", signupRoutes);
+app.use("/api/lastSeen", statusLastSeenRoutes);
+
+
 app.use("/api/education", educationRoutes);
+app.use("/api/verify-otp", verifyotp);
+app.use("/api/resend-otp", resendOtpRoute);
+
 app.use("/api/languages", languageRoutes);
 app.use("/api/experience", experienceRoutes);
 app.use("/api/licenses", licenseRoutes);
@@ -88,6 +104,9 @@ app.use('/api/follow', followRoutes);
 app.use('/api/notification', notificationRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/profilepicture', profilepictureRoutes);
+app.use("/api/forgot-password", forgotPasswordRoutes);
+
+app.use("/api/reset-password", resetPasswordRoutes);
 
 // Initialize WebSockets
 initializeSocket(server); // Call WebSocket function with the HTTP server

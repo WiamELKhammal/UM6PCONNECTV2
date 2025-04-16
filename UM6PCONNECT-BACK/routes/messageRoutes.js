@@ -295,6 +295,45 @@ router.get("/user-status/:id", async (req, res) => {
   const status = await getUserStatus(userId);
   res.json(status);
 });
+// Mark all messages from a specific contact as read
+router.post("/mark-read", async (req, res) => {
+  const { userId, contactId } = req.body;
+
+  if (!userId || !contactId) {
+    return res.status(400).json({ error: "userId and contactId are required" });
+  }
+
+  try {
+    const result = await Message.updateMany(
+      { senderId: contactId, receiverId: userId, isRead: false },
+      { $set: { isRead: true } }
+    );
+
+    res.status(200).json({ updated: result.modifiedCount });
+  } catch (error) {
+    console.error("Error marking messages as read:", error);
+    res.status(500).json({ error: "Failed to update read status" });
+  }
+});
+router.get("/files-between/:userId/:contactId", async (req, res) => {
+  const { userId, contactId } = req.params;
+  try {
+    const messages = await Message.find({
+      $or: [
+        { senderId: userId, receiverId: contactId },
+        { senderId: contactId, receiverId: userId }
+      ],
+      files: { $exists: true, $ne: [] }
+    })
+    .sort({ createdAt: 1 })
+    .lean();
+
+    res.status(200).json(messages);
+  } catch (error) {
+    console.error("Error fetching shared files:", error);
+    res.status(500).json({ error: "Failed to fetch shared files." });
+  }
+});
 
 
 module.exports = router;

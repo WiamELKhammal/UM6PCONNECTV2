@@ -68,5 +68,22 @@ router.post('/:id/send-welcome-email', async (req, res) => {
     res.status(500).json({ error: 'Failed to send welcome email' });
   }
 });
+// Update user badge status to true
+router.put('/:id/badge', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+
+    if (!user.badged) {
+      user.badged = true;
+      await user.save();
+    }
+
+    res.status(200).json({ message: 'Badge status updated', badged: user.badged });
+  } catch (error) {
+    console.error('Error updating badge status:', error);
+    res.status(500).json({ error: 'Failed to update badge status' });
+  }
+});
 
 module.exports = router;

@@ -1,11 +1,17 @@
-const redis = require("redis");
+// utils/redisClient.js
+const { createClient } = require('redis');
 
-const redisClient = redis.createClient();
+const client = createClient(); // Connexion à localhost:6379 par défaut
 
-redisClient.on("error", (err) => console.error("Redis Client Error", err));
+client.on('error', (err) => console.error('Redis Client Error', err));
 
 (async () => {
-  await redisClient.connect();
+  try {
+    await client.connect(); // Obligatoire avec Redis v4+
+    console.log(" Redis client connected");
+  } catch (err) {
+    console.error(" Redis connection failed:", err);
+  }
 })();
 
-module.exports = redisClient;
+module.exports = client;

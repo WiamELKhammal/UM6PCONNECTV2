@@ -44,6 +44,8 @@ router.post('/', async (req, res) => {
         user.hashedTemporaryPass = null;
         user.emailsent = true;
         user.Status = "Active"; 
+        user.verified = true;
+
 
         await user.save();
         console.log("Password changed successfully and account activated");

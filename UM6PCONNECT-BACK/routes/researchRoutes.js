@@ -63,4 +63,23 @@ router.get("/user/:userId", async (req, res) => {
   }
 });
 
+// UPDATE
+router.put("/:id", async (req, res) => {
+  try {
+    const updated = await Research.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// DELETE
+router.delete("/:id", async (req, res) => {
+  try {
+    await Research.findByIdAndDelete(req.params.id);
+    res.json({ message: "Research deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 module.exports = router;
