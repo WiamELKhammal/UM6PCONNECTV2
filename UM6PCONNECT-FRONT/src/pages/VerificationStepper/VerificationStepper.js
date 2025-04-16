@@ -91,7 +91,7 @@ const VerificationStepper = ({ onClose }) => {
             disabled={currentStep === 0}
             sx={{
               visibility: currentStep === 0 ? "hidden" : "visible",
-              color: "#ea3b15",
+              color: "#e04c2c",
             }}
           >
             <ArrowBackIcon />
@@ -106,7 +106,7 @@ const VerificationStepper = ({ onClose }) => {
                   width: 10,
                   height: 10,
                   borderRadius: "50%",
-                  backgroundColor: index === currentStep ? "#ea3b15" : "#ccc",
+                  backgroundColor: index === currentStep ? "#e04c2c" : "#ccc",
                 }}
               />
             ))}
@@ -118,7 +118,7 @@ const VerificationStepper = ({ onClose }) => {
             sx={{
               visibility:
                 currentStep === steps.length - 1 ? "hidden" : "visible",
-              color: "#ea3b15",
+              color: "#e04c2c",
             }}
           >
             <ArrowForwardIcon />

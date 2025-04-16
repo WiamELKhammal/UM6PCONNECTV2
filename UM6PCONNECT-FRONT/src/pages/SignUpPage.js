@@ -1,67 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import 'bulma/css/bulma.min.css';
-import { EyeOutlined, EyeInvisibleOutlined, } from '@ant-design/icons';
-import { auth } from '../firebase'; // Import auth from firebase.js
-import {onAuthStateChanged } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';  // Correct import of useNavigate
-import { useContext } from 'react';
-import { UserContext } from '../context/UserContext'; // Ajuste le chemin si nécessaire
+import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 
 const SignUpPage = () => {
+  const [prenom, setPrenom] = useState('');
+  const [nom, setNom] = useState('');
   const [email, setEmail] = useState('');
-  const [fullname, setfullname] = useState('');
-
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [keepSignedIn, setKeepSignedIn] = useState(false);
 
-  const navigate = useNavigate();  // Initialize useNavigate
+  const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser); // Set logged-in user
-        navigate('/LandingPage2');  // Redirect to dashboard if logged in
-
-      } else {
-        setUser(null);  // Set to null if no user is logged in
-      }
-    });
-
-    // Clean up the listener on component unmount
-    return () => unsubscribe();
-  }, [navigate]);
-
-  const handleEmailChange = (e) => setEmail(e.target.value);
-  const handlefullnameChange = (e) => setfullname(e.target.value);
-
-
-  const handlePasswordChange = (e) => setPassword(e.target.value);
-  const handleRememberMeChange = () => setRememberMe(!rememberMe);
-  const togglePasswordVisibility = () => setShowPassword(!showPassword);
-  const toggleKeepSignedIn = () => setKeepSignedIn(!keepSignedIn);
-
-  const validatePassword = (password) => {
-    return password.length >= 6; // Minimum 6 characters
-  };
-
-
-
-  const handleError = (error) => {
-    let errorMessage = '';
-    if (error.code === 'auth/email-already-in-use') {
-      errorMessage = 'This email is already in use.';
-    } else if (error.code === 'auth/weak-password') {
-      errorMessage = 'Password is too weak. Please use at least 6 characters.';
-    } else {
-      errorMessage = error.message;
-    }
-    return errorMessage;
-  };
+  const validatePassword = (password) => password.length >= 6;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -74,40 +30,40 @@ const SignUpPage = () => {
       return;
     }
 
-
-
     try {
-      // Create user in Firebase and MongoDB (backend already handles Firebase creation)
       const response = await fetch('http://localhost:5000/api/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ fullname, email, password })
+        body: JSON.stringify({
+          Prenom: prenom,
+          Nom: nom,
+          Email: email,
+          password
+        }),
       });
 
       const data = await response.json();
-      if (data.error) {
-        setError(data.error);
+
+      if (!response.ok) {
+        setError(data.error || 'Signup failed. Try again.');
         setLoading(false);
         return;
       }
 
-      // Do not create the user in Firebase again, as it's already handled by backend
+      // Store pending info to verify
+      localStorage.setItem("pendingEmail", email);
+      localStorage.setItem("pendingToken", data.otpToken); // used for verifying
 
-
-      console.log('User signed up and data saved:', data);
-      setUser(data.user); // Met à jour le contexte avec les infos de l'utilisateur
-      navigate('/dashboard');  // Redirige vers le dashboard
-
+      navigate('/verify-email');
     } catch (err) {
-      setError('Error: ' + err.message);
+      setError('An error occurred. Please try again.');
     }
 
     setLoading(false);
   };
 
-
   return (
-    <section className="section" style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, sans-serif", paddingLeft: '40px', paddingRight: '40px' }}>
+    <section className="section" style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, sans-serif", padding: '0 40px' }}>
       <div className="container">
         <div className="columns is-vcentered">
           <div className="column is-8" style={{ textAlign: 'center', margin: '0 auto' }}>
@@ -115,54 +71,71 @@ const SignUpPage = () => {
               Sign up for an account
             </h1>
 
-            {/* White Box - Form Container */}
-            <div style={{ backgroundColor: 'white', padding: '20px', borderRadius: '10px', border: "1px solid #ccc", textAlign: 'left', width: '100%', maxWidth: '400px', margin: '0 auto' }}>
-              {/* Sign Up Title Inside Box */}
+            <div style={{
+              backgroundColor: 'white',
+              padding: '20px',
+              borderRadius: '10px',
+              border: "1px solid #ccc",
+              maxWidth: '400px',
+              margin: '0 auto',
+              textAlign: 'left'
+            }}>
               <h2 style={{ fontSize: '22px', fontWeight: '600', color: 'black', marginBottom: '5px' }}>Sign Up</h2>
-              <p style={{ fontSize: '14px', color: '#6a6a6a', marginBottom: '20px' }}>Fill in your credentials to sign up.</p>
+              <p style={{ fontSize: '14px', color: '#6a6a6a', marginBottom: '20px' }}>
+                Fill in your credentials to sign up.
+              </p>
 
-              {/* Email Field */}
+              {error && <p style={{ color: 'red', fontSize: '14px', textAlign: 'center' }}>{error}</p>}
+
               <div className="field">
-                <label className="label" style={{ fontWeight: '500', fontSize: '14px' }}>Full Name</label>
+                <label className="label">First Name</label>
                 <div className="control">
                   <input
                     className="input"
-                    type="fullname"
-                    placeholder="Enter your full name"
-                    value={fullname}
-                    onChange={handlefullnameChange}
-                    style={{ fontSize: '14px', padding: '8px' }}
+                    type="text"
+                    placeholder="Enter your first name"
+                    value={prenom}
+                    onChange={(e) => setPrenom(e.target.value)}
                   />
                 </div>
               </div>
+
               <div className="field">
-                <label className="label" style={{ fontWeight: '500', fontSize: '14px' }}>Email</label>
+                <label className="label">Last Name</label>
+                <div className="control">
+                  <input
+                    className="input"
+                    type="text"
+                    placeholder="Enter your last name"
+                    value={nom}
+                    onChange={(e) => setNom(e.target.value)}
+                  />
+                </div>
+              </div>
+
+              <div className="field">
+                <label className="label">Email</label>
                 <div className="control">
                   <input
                     className="input"
                     type="email"
                     placeholder="Enter your email"
                     value={email}
-                    onChange={handleEmailChange}
-                    style={{ fontSize: '14px', padding: '8px' }}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               </div>
 
-              {/* Telephone Field */}
-
-
-              {/* Password Field with Show/Hide Toggle */}
               <div className="field">
-                <label className="label" style={{ fontWeight: '500', fontSize: '14px' }}>Password</label>
+                <label className="label">Password</label>
                 <div className="control" style={{ position: 'relative' }}>
                   <input
                     className="input"
                     type={showPassword ? 'text' : 'password'}
                     placeholder="Enter your password"
                     value={password}
-                    onChange={handlePasswordChange}
-                    style={{ fontSize: '14px', padding: '8px', paddingRight: '40px' }}
+                    onChange={(e) => setPassword(e.target.value)}
+                    style={{ paddingRight: '40px' }}
                   />
                   <span
                     style={{
@@ -173,63 +146,46 @@ const SignUpPage = () => {
                       cursor: 'pointer',
                       color: '#6a6a6a',
                     }}
-                    onClick={togglePasswordVisibility}
+                    onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
                   </span>
                 </div>
               </div>
 
-              {/* Keep me signed in */}
-              <div className="field" style={{ marginBottom: "20px" }}>
-                <div className="control">
-                  <label className="checkbox" style={{ fontSize: "14px", color: "#6a6a6a" }}>
-                    <input
-                      type="checkbox"
-                      checked={keepSignedIn}
-                      onChange={toggleKeepSignedIn}
-                      style={{ marginRight: "10px" }}
-                    />
-                    Keep me signed in
-                  </label>
-                </div>
+              <div className="field" style={{ marginBottom: '15px' }}>
+                <label className="checkbox" style={{ fontSize: "14px", color: "#6a6a6a" }}>
+                  <input
+                    type="checkbox"
+                    checked={keepSignedIn}
+                    onChange={() => setKeepSignedIn(!keepSignedIn)}
+                    style={{ marginRight: "10px" }}
+                  />
+                  Keep me signed in
+                </label>
               </div>
 
-              {/* Error Message */}
-              {error && <p style={{ color: 'red', fontSize: '14px', textAlign: 'center' }}>{error}</p>}
-              <p style={{ color: "#6a6a6a", fontSize: "12px", marginBottom: "15px", textAlign: "center" }}>
-                By clicking accept, you agree to our{" "}
-                <span style={{ color: "#ea3b15" }}>Terms of Use</span>,{" "}
-                <span style={{ color: "#ea3b15" }}>Privacy Policy</span>, and{" "}
-                <span style={{ color: "#ea3b15" }}>Cookie Policy</span>.
-              </p>
-              {/* Sign Up Button */}
               <button
                 className="button"
                 style={{
-                  backgroundColor: '#ea3b15',
+                  backgroundColor: '#e04c2c',
                   color: 'white',
                   width: '100%',
-                  borderRadius: '30px',
                   padding: '10px',
                   fontSize: '14px',
                   transition: 'background-color 0.3s ease',
                 }}
                 onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#c83b15'; }}
-                onMouseOut={(e) => { e.currentTarget.style.backgroundColor = '#ea3b15'; }}
+                onMouseOut={(e) => { e.currentTarget.style.backgroundColor = '#e04c2c'; }}
                 onClick={handleSubmit}
                 disabled={loading}
               >
                 {loading ? 'Signing Up...' : 'Accept and Sign Up'}
               </button>
 
-
-
-
-
               <p style={{ fontSize: "14px", color: "black", textAlign: "center", marginTop: "10px" }}>
                 Already have an account?{" "}
-                <a href="/signin" style={{ color: "#ea3b15", fontWeight: "600" }}>
+                <a href="/signin" style={{ color: "#e04c2c", fontWeight: "600" }}>
                   Sign in
                 </a>
               </p>
@@ -237,7 +193,6 @@ const SignUpPage = () => {
           </div>
         </div>
       </div>
-
     </section>
   );
 };

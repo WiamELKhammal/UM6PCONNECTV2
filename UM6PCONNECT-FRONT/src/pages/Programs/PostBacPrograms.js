@@ -92,7 +92,7 @@ const PostBacPrograms = ({ filters, searchQuery }) => {
           <Box sx={{ flexShrink: 0 }}>
             <Button
               sx={{
-                backgroundColor: "#ea3b15",
+                backgroundColor: "#e04c2c",
                 color: "#fff",
                 fontWeight: "bold",
                 borderRadius: "8px",
@@ -120,11 +120,11 @@ const PostBacPrograms = ({ filters, searchQuery }) => {
             shape="rounded"
             sx={{
               "& .MuiPaginationItem-root": {
-                color: "#ea3b15",
-                borderColor: "#ea3b15",
+                color: "#e04c2c",
+                borderColor: "#e04c2c",
               },
               "& .MuiPaginationItem-root.Mui-selected": {
-                backgroundColor: "#ea3b15",
+                backgroundColor: "#e04c2c",
                 color: "#fff",
               },
               "& .MuiPaginationItem-root:hover": {

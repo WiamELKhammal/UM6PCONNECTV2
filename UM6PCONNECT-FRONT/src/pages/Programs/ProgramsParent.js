@@ -92,7 +92,7 @@ const ProgramsParent = () => {
               key={category.value}
               onClick={() => setSelectedCategory(category.value)}
               sx={{
-                backgroundColor: selectedCategory === category.value ? "#ea3b15" : "#fff",
+                backgroundColor: selectedCategory === category.value ? "#e04c2c" : "#fff",
                 color: selectedCategory === category.value ? "#fff" : "#000",
                 fontWeight: 600,
                 border: "1px solid #ddd",
@@ -184,7 +184,7 @@ const ProgramsParent = () => {
           position: "fixed",
           bottom: "20px",
           right: "20px",
-          backgroundColor: "#ea3b15",
+          backgroundColor: "#e04c2c",
           color: "#fff",
           "&:hover": { backgroundColor: "#d73a12" },
           zIndex: 1300,

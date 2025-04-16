@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "bulma/css/bulma.min.css";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
-import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 
 const SignInPage = () => {
@@ -9,13 +8,8 @@ const SignInPage = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [keepSignedIn, setKeepSignedIn] = useState(false);
-  const [error, setError] = useState(""); // State to manage error messages
+  const [error, setError] = useState("");
   const { setUser } = useContext(UserContext);
-  const handleEmailChange = (e) => setEmail(e.target.value);
-  const handlePasswordChange = (e) => setPassword(e.target.value);
-  const togglePasswordVisibility = () => setShowPassword(!showPassword);
-  const toggleKeepSignedIn = () => setKeepSignedIn(!keepSignedIn);
-
 
   const handleSignIn = async () => {
     try {
@@ -24,16 +18,15 @@ const SignInPage = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-  
+
       const data = await response.json();
-      console.log("API Response:", data); // Vérifier ce que l'API retourne
-  
+
       if (response.ok && data.user) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
+        const storage = keepSignedIn ? localStorage : sessionStorage;
+        storage.setItem("token", data.token);
+        storage.setItem("user", JSON.stringify(data.user));
         setUser(data.user);
-        console.log("User stored in localStorage:", data.user); // Vérifier si l'utilisateur est bien stocké
-        window.location.href = "/dashboard";
+        window.location.href = "/Our-Researchers";
       } else {
         setError(data.error || "Sign In failed. Please try again.");
       }
@@ -41,18 +34,9 @@ const SignInPage = () => {
       setError("An error occurred while signing in. Please try again.");
     }
   };
-  
-  
 
   return (
-    <section
-      className="section"
-      style={{
-        fontFamily: "'Segoe UI', Tahoma, Geneva, sans-serif",
-        paddingLeft: "40px",
-        paddingRight: "40px",
-      }}
-    >
+    <section className="section" style={{ padding: "0 40px" }}>
       <div className="container">
         <div className="columns is-vcentered">
           <div className="column is-8" style={{ textAlign: "center", margin: "0 auto" }}>
@@ -60,21 +44,17 @@ const SignInPage = () => {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </h1>
 
-            {/* White Box - Form Container */}
             <div
               style={{
                 backgroundColor: "white",
                 padding: "20px",
-                borderRadius: "10px",
+                borderRadius: "12px",
                 textAlign: "left",
                 border: "1px solid #ccc",
-
-                width: "100%",
                 maxWidth: "400px",
                 margin: "0 auto",
               }}
             >
-              {/* Sign In Title Inside Box */}
               <h2 style={{ fontSize: "22px", fontWeight: "600", color: "black", marginBottom: "5px" }}>
                 Sign In
               </h2>
@@ -82,14 +62,8 @@ const SignInPage = () => {
                 Enter your credentials to sign in.
               </p>
 
-              {/* Error Message */}
-              {error && (
-                <p style={{ color: "red", fontSize: "14px", marginBottom: "10px" }}>
-                  {error}
-                </p>
-              )}
+              {error && <p style={{ color: "red", fontSize: "14px" }}>{error}</p>}
 
-              {/* Email Field */}
               <div className="field">
                 <label className="label" style={{ fontWeight: "500", fontSize: "14px" }}>Email</label>
                 <div className="control">
@@ -98,13 +72,11 @@ const SignInPage = () => {
                     type="email"
                     placeholder="Enter your email"
                     value={email}
-                    onChange={handleEmailChange}
-                    style={{ fontSize: "14px", padding: "8px" }}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               </div>
 
-              {/* Password Field with Show/Hide Toggle */}
               <div className="field">
                 <label className="label" style={{ fontWeight: "500", fontSize: "14px" }}>Password</label>
                 <div className="control" style={{ position: "relative" }}>
@@ -113,8 +85,8 @@ const SignInPage = () => {
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
                     value={password}
-                    onChange={handlePasswordChange}
-                    style={{ fontSize: "14px", padding: "8px", paddingRight: "40px" }}
+                    onChange={(e) => setPassword(e.target.value)}
+                    style={{ paddingRight: "40px" }}
                   />
                   <span
                     style={{
@@ -125,74 +97,47 @@ const SignInPage = () => {
                       cursor: "pointer",
                       color: "#6a6a6a",
                     }}
-                    onClick={togglePasswordVisibility}
+                    onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
                   </span>
                 </div>
               </div>
-              {/* Forgot Password Link in Red */}
-              <p
-                style={{
-                  fontSize: "14px",
-                  color: "#ea3b15",
-                  marginBottom: "7px",
-                }}
-              >
-                <a href="#" style={{ color: "#ea3b15", fontWeight: "600" }}>
+
+              <p style={{ fontSize: "14px", marginTop: "5px" }}>
+                <a href="/forgot-password" style={{ color: "#e04c2c", fontWeight: "600" }}>
                   Forgot Password?
                 </a>
               </p>
-              {/* Keep me signed in Checkbox */}
-              <div className="field" style={{ marginBottom: "20px" }}>
-                <div className="control">
-                  <label className="checkbox" style={{ fontSize: "14px", color: "#6a6a6a" }}>
-                    <input
-                      type="checkbox"
-                      checked={keepSignedIn}
-                      onChange={toggleKeepSignedIn}
-                      style={{ marginRight: "10px" }}
-                    />
-                    Keep me signed in
-                  </label>
-                </div>
-              </div>
-              {/* Accept & Sign In Button */}
+
+
               <button
                 className="button"
                 style={{
-                  backgroundColor: "#ea3b15",
+                  backgroundColor: "#e04c2c",
                   color: "white",
                   width: "100%",
-                  borderRadius: "30px",
+                  borderRadius: "12px",
                   padding: "10px",
                   fontSize: "14px",
-                  transition: "background-color 0.3s ease",
                 }}
-                onMouseOver={(e) => { e.currentTarget.style.backgroundColor = "#c83b15"; }}
-                onMouseOut={(e) => { e.currentTarget.style.backgroundColor = "#ea3b15"; }}
+                onMouseOver={(e) => e.currentTarget.style.backgroundColor = "#c83b15"}
+                onMouseOut={(e) => e.currentTarget.style.backgroundColor = "#e04c2c"}
                 onClick={handleSignIn}
               >
                 Sign In
               </button>
 
-
-
-
-              {/* Terms and Conditions */}
-              <p style={{ color: "#6a6a6a", fontSize: "12px", marginBottom: "15px", textAlign: "center" }}>
-              <br></br>
-
+              <p style={{ fontSize: "12px", marginTop: "15px", textAlign: "center" }}>
                 By clicking accept, you agree to our{" "}
-                <span style={{ color: "#ea3b15" }}>Terms of Use</span>,{" "}
-                <span style={{ color: "#ea3b15" }}>Privacy Policy</span>, and{" "}
-                <span style={{ color: "#ea3b15" }}>Cookie Policy</span>.
+                <span style={{ color: "#e04c2c" }}>Terms of Use</span>,{" "}
+                <span style={{ color: "#e04c2c" }}>Privacy Policy</span>, and{" "}
+                <span style={{ color: "#e04c2c" }}>Cookie Policy</span>.
               </p>
 
-              {/* Don't have an account? */}
-              <p style={{ fontSize: "14px", color: "black", textAlign: "center", marginTop: "10px" }}>
+              <p style={{ fontSize: "14px", textAlign: "center", marginTop: "10px" }}>
                 Don't have an account?{" "}
-                <a href="/signup" style={{ color: "#ea3b15", fontWeight: "600" }}>
+                <a href="/signup" style={{ color: "#e04c2c", fontWeight: "600" }}>
                   Sign up
                 </a>
               </p>
@@ -203,4 +148,5 @@ const SignInPage = () => {
     </section>
   );
 };
+
 export default SignInPage;

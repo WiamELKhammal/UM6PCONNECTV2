@@ -86,6 +86,8 @@ const SavedList = () => {
             fontFamily: "'Segoe UI', Tahoma, Geneva, sans-serif",
             position: "relative",
             border: "1px solid #ddd",
+            backgroundColor: "#FFF",
+
             borderRadius: "12px",
             backgroundClip: "padding-box",
             boxShadow: "none",
@@ -112,7 +114,7 @@ const SavedList = () => {
                     <BookmarkBorderIcon
                         sx={{
                             fontSize: "48px",
-                            color: "#ea3b15", // Match your app's theme color
+                            color: "#e04c2c", // Match your app's theme color
                             mb: 2,
                         }}
                     />
@@ -152,21 +154,19 @@ const SavedList = () => {
                                     </ListItemAvatar>
                                     <ListItemText
                                         primary={
-                                            <Typography fontWeight="bold" fontSize="14px">
+                                            <Typography fontWeight="bold" fontSize="16px" color="black">
                                                 {researcher.Prenom} {researcher.Nom}
                                             </Typography>
                                         }
                                         secondary={
                                             <>
-                                                <Typography fontSize="12px" fontWeight="500" color="textPrimary">
+                                                <Typography fontSize="16px" fontWeight="500" color="textPrimary">
                                                     {researcher.headline}
                                                 </Typography>
-                                                <Typography fontSize="12px" color="textSecondary">
+                                                <Typography fontSize="16px" color="textSecondary">
                                                     {researcher.Departement}
                                                 </Typography>
-                                                <Typography fontSize="12px" color="textSecondary">
-                                                    {researcher.bio}
-                                                </Typography>
+                                  
 
                                                 {/* Display tags inline */}
                                                 {researcherTags[researcher._id] &&
@@ -200,7 +200,7 @@ const SavedList = () => {
                                                         ))}
                                                     </Box>
                                                 ) : (
-                                                    <Typography fontSize="12px" color="textSecondary">
+                                                    <Typography fontSize="16px" color="textSecondary">
                                                         No tags available.
                                                     </Typography>
                                                 )}
@@ -211,13 +211,13 @@ const SavedList = () => {
 
                                 {/* Unsave Button */}
                                 <IconButton
-                                    sx={{ color: "#ea3b15" }}
+                                    sx={{ color: "#e04c2c" }}
                                     onClick={() => handleUnsaveResearcher(researcher._id)}
                                 >
-                                    <BookmarkIcon fontSize="small" sx={{ color: "#ea3b15" }} />
+                                    <BookmarkIcon fontSize="small" sx={{ color: "#e04c2c" }} />
                                 </IconButton>
                             </ListItem>
-                            <Divider />
+            <Divider sx={{ height: "1px", bgcolor: "#fff", my: 1 }} />
                         </React.Fragment>
                     ))}
                 </List>
