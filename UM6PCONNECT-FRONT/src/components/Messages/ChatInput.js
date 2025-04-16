@@ -181,12 +181,12 @@ const ChatInput = ({ recipientId, setMessages }) => {
 
         {/* ✅ Add File Button */}
         <input type="file" ref={fileInputRef} hidden onChange={handleFileSelect} />
-        <IconButton onClick={() => fileInputRef.current.click()} sx={{ color: "#ea3b15" }}>
+        <IconButton onClick={() => fileInputRef.current.click()} sx={{ color: "#e04c2c" }}>
           <AddIcon />
         </IconButton>
 
         {/* ✅ Emoji Button */}
-        <IconButton onClick={() => setOpenEmojiPicker(!openEmojiPicker)} sx={{ color: "#ea3b15" }}>
+        <IconButton onClick={() => setOpenEmojiPicker(!openEmojiPicker)} sx={{ color: "#e04c2c" }}>
           <InsertEmoticonIcon />
         </IconButton>
 
@@ -208,12 +208,12 @@ const ChatInput = ({ recipientId, setMessages }) => {
         />
 
         {/* ✅ Mic Button (Toggle Recording) */}
-        <IconButton onClick={isRecording ? stopRecording : startRecording} sx={{ color: "#ea3b15" }}>
+        <IconButton onClick={isRecording ? stopRecording : startRecording} sx={{ color: "#e04c2c" }}>
           {isRecording ? <StopIcon /> : <MicIcon />}
         </IconButton>
 
         {/* ✅ Send Button */}
-        <IconButton onClick={handleSendMessage} sx={{ backgroundColor: "#ea3b15", color: "#FFFFFF" }}>
+        <IconButton onClick={handleSendMessage} sx={{ backgroundColor: "#e04c2c", color: "#FFFFFF" }}>
           <SendIcon />
         </IconButton>
       </Box>

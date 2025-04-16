@@ -1,3 +1,6 @@
+// ===========================
+// ChatHeader.jsx (FRONTEND)
+// ===========================
 import React, { useState, useEffect, useContext } from "react";
 import {
   Box,
@@ -8,31 +11,34 @@ import {
   MenuItem,
   MenuList,
 } from "@mui/material";
-import { PhoneCall, Video, MoreVertical, Search, LayoutGrid } from "lucide-react";
+import { PhoneCall, Video, MoreVertical, LayoutGrid } from "lucide-react";
 import ArchiveChat from "./Actions/ArchiveChat";
 import DeleteChat from "./Actions/DeleteChat";
 import { UserContext } from "../../context/UserContext";
 import moment from "moment";
-import socket from "./socket"; // Import your Socket.IO instance
+import socket from "./socket";
 
 const ChatHeader = ({ recipient, onToggleSidebar }) => {
   const { user } = useContext(UserContext);
   const userId = user?._id;
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [archiveOpen, setArchiveOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [isRecipientOnline, setIsRecipientOnline] = useState(false);
+  const [lastSeenTime, setLastSeenTime] = useState(null);
 
   const handleOpen = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
-  // Fetch initial online status when component mounts
   useEffect(() => {
     const fetchUserStatus = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/messages/user-status/${recipient?.userId}`);
+        const response = await fetch(`http://localhost:5000/api/lastSeen/user-status/${recipient?.userId}`);
         const data = await response.json();
+        console.log("[User Status API] Status fetched:", data);
         setIsRecipientOnline(data.isOnline);
+        setLastSeenTime(data.lastSeen);
       } catch (error) {
         console.error("Error fetching user status:", error);
       }
@@ -40,35 +46,48 @@ const ChatHeader = ({ recipient, onToggleSidebar }) => {
 
     fetchUserStatus();
 
-    // Listen for real-time status updates
-    socket.on("updateUserStatus", ({ userId, status }) => {
-      if (userId === recipient?.userId) {
+    socket.on("updateUserStatus", ({ userId: updatedUserId, status }) => {
+      if (updatedUserId === recipient?.userId) {
+        console.log(`[Socket] updateUserStatus received for ${updatedUserId}: ${status}`);
         setIsRecipientOnline(status === "online");
+        if (status === "offline") {
+          setLastSeenTime(Date.now());
+        }
       }
     });
 
-    // Emit user connection event when component mounts
-    if (user?._id) {
-      socket.emit("userConnected", user._id);
-    }
-
-    // Cleanup listener and disconnect socket
     return () => {
       socket.off("updateUserStatus");
-      socket.disconnect();
+      console.log("[Socket] disconnected");
     };
-  }, [user?._id, recipient?.userId]);
+  }, [recipient?.userId]);
 
-  // Smart lastSeen formatting
+  useEffect(() => {
+    if (user?._id) {
+      console.log("[Socket] join emitted:", user._id);
+      socket.emit("join", user._id);
+
+      const heartbeat = setInterval(() => {
+        console.log("[Socket] heartbeat emitted:", user._id);
+        socket.emit("heartbeat", user._id);
+      }, 30000);
+
+      return () => {
+        clearInterval(heartbeat);
+        socket.disconnect();
+      };
+    }
+  }, [user?._id]);
+
   const getLastSeenText = () => {
     if (isRecipientOnline) return "Online";
+    if (!lastSeenTime) return "Offline";
 
-    const lastSeen = moment(recipient?.lastSeen);
+    const lastSeen = moment(Number(lastSeenTime));
     const now = moment();
     const diffInMinutes = now.diff(lastSeen, "minutes");
     const diffInHours = now.diff(lastSeen, "hours");
 
-    if (!recipient?.lastSeen) return "Offline";
     if (diffInMinutes < 1) return "Last seen just now";
     if (diffInMinutes < 60) return `Online ${diffInMinutes} min ago`;
     if (diffInHours < 24) return `Online at ${lastSeen.format("HH:mm")}`;
@@ -88,14 +107,12 @@ const ChatHeader = ({ recipient, onToggleSidebar }) => {
           height: "85px",
         }}
       >
-        {/* Left Side - User Info */}
         <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
           <Box sx={{ position: "relative" }}>
             <Avatar
               src={recipient?.profilePicture || "/assets/images/default-profile.png"}
               sx={{ width: 55, height: 55, marginRight: "16px" }}
             />
-            {/* Online Indicator */}
             {isRecipientOnline && (
               <Box
                 sx={{
@@ -122,33 +139,18 @@ const ChatHeader = ({ recipient, onToggleSidebar }) => {
           </Box>
         </Box>
 
-        {/* Right Side - Action Icons */}
         <Box sx={{ display: "flex", alignItems: "center", gap: "20px", justifyContent: "flex-end" }}>
-          <IconButton sx={{ color: "#ea3b15" }}>
-            <Search size={22} />
-          </IconButton>
-
-          <IconButton sx={{ color: "#ea3b15" }}>
-            <Video size={22} />
-          </IconButton>
-
-          <IconButton sx={{ color: "#ea3b15" }}>
-            <PhoneCall size={22} />
-          </IconButton>
-
-          <IconButton sx={{ color: "#ea3b15" }} onClick={onToggleSidebar}>
-            <LayoutGrid size={22} />
-          </IconButton>
-
+          <IconButton sx={{ color: "#e04c2c" }}><Video size={22} /></IconButton>
+          <IconButton sx={{ color: "#e04c2c" }}><PhoneCall size={22} /></IconButton>
+          <IconButton sx={{ color: "#e04c2c" }} onClick={onToggleSidebar}><LayoutGrid size={22} /></IconButton>
           <IconButton
-            sx={{ color: "#ea3b15", width: "38px", height: "38px", borderRadius: "50%" }}
+            sx={{ color: "#e04c2c", width: "38px", height: "38px", borderRadius: "50%" }}
             onClick={handleOpen}
           >
             <MoreVertical size={22} />
           </IconButton>
         </Box>
 
-        {/* Popover */}
         <Popover
           open={Boolean(anchorEl)}
           anchorEl={anchorEl}
@@ -158,30 +160,14 @@ const ChatHeader = ({ recipient, onToggleSidebar }) => {
           sx={{ mt: 1 }}
         >
           <MenuList sx={{ boxShadow: "none" }}>
-            <MenuItem onClick={() => { setArchiveOpen(true); handleClose(); }}>
-              Archive Chat
-            </MenuItem>
-            <MenuItem onClick={() => { setDeleteOpen(true); handleClose(); }}>
-              Delete Chat
-            </MenuItem>
-            <MenuItem onClick={handleClose}>View Profile</MenuItem>
+            <MenuItem onClick={() => { setArchiveOpen(true); handleClose(); }}>Archive Chat</MenuItem>
+            <MenuItem onClick={() => { setDeleteOpen(true); handleClose(); }}>Delete Chat</MenuItem>
           </MenuList>
         </Popover>
       </Box>
 
-      {/* Modals */}
-      <ArchiveChat
-        open={archiveOpen}
-        onClose={() => setArchiveOpen(false)}
-        userId={userId}
-        contactId={recipient?.userId}
-      />
-      <DeleteChat
-        open={deleteOpen}
-        onClose={() => setDeleteOpen(false)}
-        userId={userId}
-        contactId={recipient?.userId}
-      />
+      <ArchiveChat open={archiveOpen} onClose={() => setArchiveOpen(false)} userId={userId} contactId={recipient?.userId} />
+      <DeleteChat open={deleteOpen} onClose={() => setDeleteOpen(false)} userId={userId} contactId={recipient?.userId} />
     </>
   );
 };

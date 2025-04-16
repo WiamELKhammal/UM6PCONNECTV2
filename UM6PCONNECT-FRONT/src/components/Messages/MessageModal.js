@@ -1,61 +1,77 @@
-import React, { useState, useContext } from 'react';
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Button, Typography, Box, IconButton } from '@mui/material';
+import React, { useState, useContext, useEffect } from 'react';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Button,
+  Typography,
+  Box,
+  IconButton,
+} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useDropzone } from 'react-dropzone';
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client';
 import { UserContext } from '../../context/UserContext';
 
-// Initialize socket connection
 const socket = io(process.env.REACT_APP_SOCKET_URL || "http://localhost:5000");
 
 const MessageModal = ({ open, onClose, recipientId, recipientName }) => {
-  const { user } = useContext(UserContext); // Get the current user
-  const [message, setMessage] = useState("");
+  const { user } = useContext(UserContext);
+  const [message, setMessage] = useState('');
   const [files, setFiles] = useState([]);
+  const [recipientEmail, setRecipientEmail] = useState('');
 
-  const handleMessageChange = (event) => {
-    setMessage(event.target.value);
-  };
+  const handleMessageChange = (event) => setMessage(event.target.value);
 
-  const handleSendMessage = () => {
-    if (message.trim() || files.length > 0) {
-      const fileDataPromises = files.map((file) => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve({ name: file.name, data: reader.result });
-          reader.onerror = reject;
-          reader.readAsDataURL(file); // Convert to base64
-        });
+  const handleSendMessage = async () => {
+    if (!user) {
+      // Guest: send via email
+      if (recipientEmail) {
+        const subject = encodeURIComponent('Message from UM6P Connect Guest');
+        const body = encodeURIComponent(message);
+        window.location.href = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+        onClose();
+      }
+      return;
+    }
+  
+    // Connected user
+    if (!message.trim() && files.length === 0) return;
+  
+    const formData = new FormData();
+    formData.append("senderId", user._id);
+    formData.append("receiverId", recipientId);
+    formData.append("text", message.trim());
+  
+    files.forEach((file) => {
+      formData.append("file", file);
+    });
+  
+    try {
+      const response = await fetch("http://localhost:5000/api/messages/send", {
+        method: "POST",
+        body: formData,
       });
-
-      Promise.all(fileDataPromises)
-        .then((convertedFiles) => {
-          const messageData = {
-            senderId: user._id,
-            receiverId: recipientId,
-            text: message,
-            files: convertedFiles,
-          };
-
-          // Emit the message via WebSocket
-          socket.emit("sendMessage", messageData);
-
-          console.log(`Message sent to ${recipientName}: ${message}`);
-          console.log('Files:', convertedFiles);
-
-          // Reset state
-          setMessage("");
-          setFiles([]);
-          onClose();
-        })
-        .catch((error) => {
-          console.error('Error converting files to base64:', error);
-        });
+  
+      const data = await response.json();
+      if (response.ok) {
+        socket.emit("sendMessage", data.data); // Emit via socket
+        setMessage('');
+        setFiles([]);
+        onClose();
+      } else {
+        console.error("Message send failed:", data);
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
     }
   };
+  
 
   const onDrop = (acceptedFiles) => {
-    setFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
+    setFiles((prev) => [...prev, ...acceptedFiles]);
   };
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -63,6 +79,21 @@ const MessageModal = ({ open, onClose, recipientId, recipientName }) => {
     multiple: true,
     accept: '.jpg, .jpeg, .png, .gif, .pdf, .docx, .txt',
   });
+
+  useEffect(() => {
+    const fetchRecipientEmail = async () => {
+      if (!user && recipientId) {
+        try {
+          const res = await fetch(`http://localhost:5000/api/profile/${recipientId}`);
+          const data = await res.json();
+          setRecipientEmail(data?.Email || '');
+        } catch (err) {
+          console.error('Error fetching recipient email:', err);
+        }
+      }
+    };
+    fetchRecipientEmail();
+  }, [recipientId, user]);
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
@@ -72,7 +103,6 @@ const MessageModal = ({ open, onClose, recipientId, recipientName }) => {
           edge="end"
           color="inherit"
           onClick={onClose}
-          aria-label="close"
           sx={{ position: 'absolute', top: 8, right: 8 }}
         >
           <CloseIcon />
@@ -92,60 +122,59 @@ const MessageModal = ({ open, onClose, recipientId, recipientName }) => {
           sx={{
             marginBottom: '1rem',
             '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#ea3b15',
+              borderColor: '#e04c2c',
             },
           }}
         />
 
-        <Typography variant="subtitle1" gutterBottom>Attachments</Typography>
-        <Typography variant="body2" color="textSecondary" sx={{ marginBottom: '1rem' }}>
-          By uploading and sharing this content, you confirm you have any necessary rights to do so.
-        </Typography>
-        <Box
-          sx={{
-            border: '2px dashed #ccc',
-            borderRadius: '10px',
-            padding: '1rem',
-            marginBottom: '1rem',
-            textAlign: 'center',
-            backgroundColor: '#f9f9f9',
-            cursor: 'pointer',
-          }}
-          {...getRootProps()}
-        >
-          <input {...getInputProps()} />
-          <Typography variant="body2" color="textSecondary">
-            Drag and drop your files here or click to select files
-          </Typography>
-          <Typography variant="body2" color="textSecondary">
-            Supported formats: .jpg, .jpeg, .png, .gif, .pdf, .docx, .txt
-          </Typography>
-        </Box>
+        {user && (
+          <>
+            <Typography variant="subtitle1" gutterBottom>Attachments</Typography>
+            <Typography variant="body2" color="textSecondary" sx={{ mb: 1 }}>
+              By uploading and sharing content, you confirm you have the rights to do so.
+            </Typography>
 
-        <Box sx={{ marginBottom: "1rem" }}>
-          {files.length > 0 && (
-            <Typography variant="body2" color="textSecondary" gutterBottom>
-              Files to be sent:
-            </Typography>
-          )}
-          {files.map((file, index) => (
-            <Typography key={index} variant="body2">
-              {file.name} ({(file.size / 1024).toFixed(2)} KB)
-            </Typography>
-          ))}
-        </Box>
+            <Box
+              sx={{
+                border: '2px dashed #ccc',
+                borderRadius: '10px',
+                padding: '1rem',
+                mb: '1rem',
+                textAlign: 'center',
+                backgroundColor: '#f9f9f9',
+                cursor: 'pointer',
+              }}
+              {...getRootProps()}
+            >
+              <input {...getInputProps()} />
+              <Typography variant="body2">Drag or click to add files</Typography>
+            </Box>
+
+            {files.length > 0 && (
+              <Box>
+                <Typography variant="body2" gutterBottom>
+                  Files:
+                </Typography>
+                {files.map((file, index) => (
+                  <Typography key={index} variant="body2">
+                    {file.name} ({(file.size / 1024).toFixed(2)} KB)
+                  </Typography>
+                ))}
+              </Box>
+            )}
+          </>
+        )}
       </DialogContent>
 
       <DialogActions>
         <Button
           onClick={onClose}
-          color="secondary"
           sx={{
-            borderColor: '#ea3b15',
-            color: '#ea3b15',
+            borderColor: '#e04c2c',
+            color: '#e04c2c',
             '&:hover': {
               backgroundColor: '#fff',
-              color: '#ea3b15',
+              color: '#e04c2c',
             },
           }}
         >
@@ -153,18 +182,17 @@ const MessageModal = ({ open, onClose, recipientId, recipientName }) => {
         </Button>
         <Button
           onClick={handleSendMessage}
-          color="primary"
           sx={{
             backgroundColor: '#fff',
-            color: '#ea3b15',
+            color: '#e04c2c',
             '&:hover': {
-              backgroundColor: '#ea3b15',
-              color: 'white',
+              backgroundColor: '#e04c2c',
+              color: '#fff',
             },
           }}
-          disabled={!message.trim() && files.length === 0}
+          disabled={!message.trim()}
         >
-          Send Message
+          {user ? 'Send Message' : 'Send via Email'}
         </Button>
       </DialogActions>
     </Dialog>

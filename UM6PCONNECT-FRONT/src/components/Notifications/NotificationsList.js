@@ -84,7 +84,7 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
           <Typography
             variant="body2"
             sx={{
-              color: "#ea3b15",
+              color: "#e04c2c",
               fontWeight: 500,
               cursor: "pointer",
               "&:hover": { textDecoration: "underline" },

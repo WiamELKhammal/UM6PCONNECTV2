@@ -92,7 +92,7 @@ const FilterPage = ({ onFilterChange }) => {
               key={option.value}
               value={option.value}
               control={
-                <Radio sx={{ color: "#000", "&.Mui-checked": { color: "#ea3b15" } }} />
+                <Radio sx={{ color: "#000", "&.Mui-checked": { color: "#e04c2c" } }} />
               }
               label={
                 <Typography sx={{ fontSize: "14px", color: "#000" }}>
@@ -122,7 +122,7 @@ const FilterPage = ({ onFilterChange }) => {
               key={option.value}
               value={option.value}
               control={
-                <Radio sx={{ color: "#000", "&.Mui-checked": { color: "#ea3b15" } }} />
+                <Radio sx={{ color: "#000", "&.Mui-checked": { color: "#e04c2c" } }} />
               }
               label={
                 <Typography sx={{ fontSize: "14px", color: "#000" }}>
@@ -141,12 +141,12 @@ const FilterPage = ({ onFilterChange }) => {
           onClick={() => onFilterChange(filters)}
           sx={{
             backgroundColor: "#fff",
-            color: "#ea3b15",
+            color: "#e04c2c",
             border: "1px solid #ccc",
 
             fontWeight: 600,
             borderRadius: "8px",
-            "&:hover": { backgroundColor: "#ea3b15", color: "#fff" },
+            "&:hover": { backgroundColor: "#e04c2c", color: "#fff" },
           }}
         >
           Apply Filters

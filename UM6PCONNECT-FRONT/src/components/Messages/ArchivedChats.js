@@ -154,7 +154,7 @@ const ArchivedChats = ({ onSelectConversation }) => {
                             handleUnarchive(contact._id);
                           }}
                           sx={{
-                            color: "#ea3b15",
+                            color: "#e04c2c",
                             padding: "4px",
                           }}
                         >

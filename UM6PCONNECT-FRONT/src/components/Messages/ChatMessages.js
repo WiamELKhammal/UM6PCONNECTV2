@@ -1,29 +1,47 @@
-import React, { useContext, useState } from "react";
-import { Box, Typography, Avatar, Grid, IconButton, Alert } from "@mui/material";
+import React, { useContext, useState, useEffect } from "react";
+import {
+  Box,
+  Typography,
+  Avatar,
+  Grid,
+  IconButton,
+  Alert,
+  Button,
+} from "@mui/material";
 import { UserContext } from "../../context/UserContext";
 import moment from "moment";
 import CloseIcon from "@mui/icons-material/Close";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
-
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB limit
+import DoneIcon from "@mui/icons-material/Done";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
+import socket from "./socket"; // ✅ Make sure you have this path set correctly
 
 const ChatMessages = ({ messages, recipient }) => {
   const { user } = useContext(UserContext);
   const [previewFile, setPreviewFile] = useState(null);
-  const [fileError, setFileError] = useState(""); // ✅ Error state for large files
+  const [fileError, setFileError] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
 
-  // 📌 Handle File Selection
-  const handleFileSelect = (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
+  const isSender = (senderId) => String(senderId) === String(user._id);
 
-    if (file.size > MAX_FILE_SIZE) {
-      setFileError("File size exceeds 10MB. Please upload a smaller file.");
-      return;
-    }
+  useEffect(() => {
+    socket.on("typing", ({ userId, to }) => {
+      if (userId === recipient?.userId && to === user._id) {
+        setIsTyping(true);
+        setTimeout(() => setIsTyping(false), 2500);
+      }
+    });
 
-    setFileError(""); // ✅ Clear error if file is valid
-    setPreviewFile(file);
+    return () => {
+      socket.off("typing");
+    };
+  }, [recipient?.userId, user._id]);
+
+  const handleDownload = (file) => {
+    const link = document.createElement("a");
+    link.href = file.data;
+    link.download = file.name || "download";
+    link.click();
   };
 
   return (
@@ -35,19 +53,15 @@ const ChatMessages = ({ messages, recipient }) => {
         display: "flex",
         flexDirection: "column",
         backgroundColor: "#FFF",
-        scrollbarWidth: "none",
-        "-ms-overflow-style": "none",
         "&::-webkit-scrollbar": { display: "none" },
       }}
     >
-      {/* ✅ Show File Size Error */}
       {fileError && (
         <Alert severity="error" sx={{ mb: 2, fontSize: "14px" }}>
           {fileError}
         </Alert>
       )}
 
-      {/* ✅ Fullscreen File Preview */}
       {previewFile && (
         <Box
           sx={{
@@ -56,7 +70,7 @@ const ChatMessages = ({ messages, recipient }) => {
             left: 0,
             width: "100%",
             height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            backgroundColor: "rgba(0,0,0,0.8)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -65,174 +79,197 @@ const ChatMessages = ({ messages, recipient }) => {
         >
           <IconButton
             onClick={() => setPreviewFile(null)}
-            sx={{
-              position: "absolute",
-              top: 10,
-              right: 20,
-              color: "white",
-              fontSize: "30px",
-            }}
+            sx={{ position: "absolute", top: 10, right: 20, color: "white" }}
           >
             <CloseIcon />
           </IconButton>
         </Box>
       )}
 
-      {/* ✅ Messages List */}
       {messages.length === 0 ? (
-        <Typography variant="body2" color="textSecondary" sx={{ textAlign: "center", marginTop: "20px" }}>
+        <Typography textAlign="center" mt={2} color="textSecondary">
           No messages yet.
         </Typography>
       ) : (
         messages.map((msg, index) => {
-          const isSender = String(msg.senderId) === String(user._id);
-          const formattedTime = moment(msg.createdAt).format("hh:mm A");
+          const sender = isSender(msg.senderId);
+          const time = moment(msg.createdAt).format("hh:mm A");
 
           return (
-            <Box key={index}>
-              {/* ✅ Message Bubble */}
+            <Box key={index} display="flex" justifyContent={sender ? "flex-end" : "flex-start"}>
               <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column",
-                  alignItems: isSender ? "flex-end" : "flex-start",
-                  marginBottom: "12px",
+                  alignItems: sender ? "flex-end" : "flex-start",
+                  maxWidth: "75%",
+                  mb: 2,
                 }}
               >
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "flex-end",
-                    justifyContent: isSender ? "flex-end" : "flex-start",
-                  }}
-                >
-                  {!isSender && (
+                <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                  {!sender && (
                     <Avatar
                       src={recipient?.profilePicture || "/assets/images/default-profile.png"}
-                      sx={{ width: 40, height: 40, marginRight: "8px" }}
+                      sx={{ width: 40, height: 40, mr: 1 }}
                     />
                   )}
 
-                  {/* ✅ Message Bubble */}
                   <Box
                     sx={{
-                      backgroundColor: isSender ? "#ea3b15" : "#f0f0f0",
-                      color: isSender ? "#fff" : "#000",
+                      backgroundColor: sender ? "#e04c2c" : "#f0f0f0",
+                      color: sender ? "#fff" : "#000",
                       padding: "10px 14px",
-                      maxWidth: "70%",
-                      wordWrap: "break-word",
-                      overflowWrap: "break-word",
-                      textAlign: "left",
+                      borderRadius: 3,
+                      wordBreak: "break-word",
                       borderTopLeftRadius: "15px",
                       borderTopRightRadius: "15px",
-                      borderBottomRightRadius: isSender ? "0px" : "15px",
-                      borderBottomLeftRadius: isSender ? "15px" : "0px",
+                      borderBottomRightRadius: sender ? "0px" : "15px",
+                      borderBottomLeftRadius: sender ? "15px" : "0px",
                     }}
                   >
-                    {msg.text && <Typography variant="body2">{msg.text}</Typography>}
+                    {msg.text && (
+                      <Typography variant="body2" sx={{ mb: msg.files?.length ? 1 : 0 }}>
+                        {msg.text}
+                      </Typography>
+                    )}
 
-                    {/* ✅ File Handling */}
-                    {msg.files && msg.files.length > 0 && (
-                      <Grid container spacing={1} sx={{ marginTop: "5px" }}>
+                    {msg.files?.length > 0 && (
+                      <Grid container spacing={1}>
                         {msg.files.map((file, idx) => {
-                          if (!file || !file.data) return null;
+                          if (!file?.data) return null;
+                          const type = file.type || "";
+                          const name = file.name || "";
 
-                          const fileType = file.type || "";
-
-                          if (fileType.startsWith("image/")) {
-                            return (
-                              <Grid item xs={msg.files.length > 1 ? 6 : 12} key={idx}>
-                                <img
-                                  src={file.data}
-                                  alt="Sent File"
-                                  style={{
-                                    width: "100%",
-                                    borderRadius: "8px",
-                                    cursor: "pointer",
-                                  }}
-                                  onClick={() => setPreviewFile(file)}
-                                />
-                              </Grid>
-                            );
-                          } else if (fileType.startsWith("video/")) {
+                          if (type.startsWith("image/")) {
                             return (
                               <Grid item xs={12} key={idx}>
-                                <video
-                                  controls
-                                  style={{
-                                    width: "100%",
-                                    borderRadius: "8px",
-                                    cursor: "pointer",
-                                  }}
-                                  onClick={() => setPreviewFile(file)}
+                                <img src={file.data} alt={name} style={{ width: "100%", borderRadius: 8 }} />
+                                <Button
+                                  size="small"
+                                  onClick={() => handleDownload(file)}
+                                  sx={{ mt: 1, color: sender ? "#fff" : "#000", display: "block", mx: "auto" }}
                                 >
-                                  <source src={file.data} type={fileType} />
-                                </video>
-                              </Grid>
-                            );
-                          } else {
-                            return (
-                              <Grid
-                                item
-                                xs={12}
-                                key={idx}
-                                sx={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  marginBottom: "10px", // ✅ Add space below PDFs
-                                }}
-                              >
-                                <InsertDriveFileIcon sx={{ color: isSender ? "#FFF" : "#000", marginRight: "5px" }} />
-
-                                {/* ✅ Keep filename on one line and truncate if needed */}
-                                <Box
-                                  sx={{
-                                    maxWidth: "calc(100% - 40px)",
-                                    whiteSpace: "nowrap",
-                                    overflow: "hidden",
-                                    cursor: "pointer",
-                                    color: isSender ? "#FFF" : "#000",
-                                    fontWeight: "bold",
-                                    textDecoration: "none",
-                                  }}
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    setPreviewFile(file);
-                                  }}
-                                >
-                                  {file.name}
-                                </Box>
+                                  Download
+                                </Button>
                               </Grid>
                             );
                           }
+
+                          if (type.startsWith("video/")) {
+                            return (
+                              <Grid item xs={12} key={idx}>
+                                <video controls style={{ width: "100%", borderRadius: 8 }}>
+                                  <source src={file.data} type={type} />
+                                </video>
+                                <Button
+                                  size="small"
+                                  onClick={() => handleDownload(file)}
+                                  sx={{ mt: 1, color: sender ? "#fff" : "#000", display: "block", mx: "auto" }}
+                                >
+                                  Download
+                                </Button>
+                              </Grid>
+                            );
+                          }
+
+                          if (type.startsWith("audio/")) {
+                            return (
+                              <Grid item xs={12} key={idx}>
+                                <audio controls style={{ width: "100%" }}>
+                                  <source src={file.data} type={type} />
+                                </audio>
+                              </Grid>
+                            );
+                          }
+
+                          if (type === "application/pdf") {
+                            return (
+                              <Grid item xs={12} key={idx}>
+                                <iframe
+                                  src={file.data}
+                                  title={name}
+                                  style={{ width: "100%", height: 300, borderRadius: 8 }}
+                                />
+                                <Button
+                                  size="small"
+                                  onClick={() => handleDownload(file)}
+                                  sx={{ mt: 1, color: sender ? "#fff" : "#000", display: "block", mx: "auto" }}
+                                >
+                                  Download PDF
+                                </Button>
+                              </Grid>
+                            );
+                          }
+
+                          return (
+                            <Grid item xs={12} key={idx} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                              <InsertDriveFileIcon sx={{ color: sender ? "#fff" : "#000" }} />
+                              <Typography
+                                sx={{
+                                  color: sender ? "#fff" : "#000",
+                                  textDecoration: "underline",
+                                  cursor: "pointer",
+                                }}
+                                onClick={() => handleDownload(file)}
+                              >
+                                {name}
+                              </Typography>
+                            </Grid>
+                          );
                         })}
                       </Grid>
                     )}
                   </Box>
 
-                  {isSender && (
+                  {sender && (
                     <Avatar
                       src={user?.profilePicture || "/assets/images/default-profile.png"}
-                      sx={{ width: 40, height: 40, marginLeft: "8px" }}
+                      sx={{ width: 40, height: 40, ml: 1 }}
                     />
                   )}
                 </Box>
 
-                {/* ✅ Timestamp */}
-                <Typography
+                <Box
                   sx={{
-                    fontSize: "10px",
-                    color: "#999",
-                    marginTop: "5px",
-                    textAlign: isSender ? "right" : "left",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: sender ? "flex-end" : "flex-start",
+                    mt: 0.5,
+                    gap: 0.5,
                   }}
                 >
-                  {formattedTime}
-                </Typography>
+                  <Typography sx={{ fontSize: "10px", color: "#999" }}>{time}</Typography>
+
+                  {sender && (
+                    <>
+                      {msg.isRead ? (
+                        <DoneAllIcon sx={{ fontSize: 14, color: "#0ABF53" }} />
+                      ) : (
+                        <DoneIcon sx={{ fontSize: 14, color: "#999" }} />
+                      )}
+                    </>
+                  )}
+                </Box>
               </Box>
             </Box>
           );
         })
+      )}
+
+      {/* ✅ Typing Indicator */}
+      {isTyping && (
+        <Typography
+          sx={{
+            fontSize: "13px",
+            color: "#555",
+            fontStyle: "italic",
+            textAlign: "left",
+            mt: 2,
+            ml: 1,
+          }}
+        >
+          {recipient?.Prenom || "User"} is typing...
+        </Typography>
       )}
     </Box>
   );

@@ -4,39 +4,54 @@ import axios from "axios";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
+  const [user, setUserState] = useState(() => {
     const storedUser = localStorage.getItem("user");
     return storedUser ? JSON.parse(storedUser) : null;
   });
 
-  //  Fetch User Profile When User ID Changes
+  // Fetch fresh user profile
   useEffect(() => {
     const fetchUserProfile = async () => {
+      if (!user || !user._id) return;
       try {
-        if (!user || !user._id) return;
-
-        const response = await axios.get(`http://localhost:5000/api/profile/${user._id}`);
-        setUser(response.data); //  Update state with fresh data
-        localStorage.setItem("user", JSON.stringify(response.data)); //  Update local storage
-      } catch (error) {
-        console.error("Error fetching user profile:", error);
+        const res = await axios.get(`http://localhost:5000/api/profile/${user._id}`);
+        setUserState(res.data);
+        localStorage.setItem("user", JSON.stringify(res.data));
+      } catch (err) {
+        console.error("Failed to fetch profile:", err);
       }
     };
 
     fetchUserProfile();
-  }, [user?._id]); //  Runs only when user ID changes
+  }, [user?._id]);
 
-  //  Function to Update User Instantly
+  // Update user with new data
   const updateUser = (updatedUserData) => {
-    setUser((prevUser) => {
-      const newUser = { ...prevUser, ...updatedUserData };
-      localStorage.setItem("user", JSON.stringify(newUser)); //  Store updated user instantly
-      return newUser;
-    });
+    const newUser = { ...user, ...updatedUserData };
+    setUserState(newUser);
+    localStorage.setItem("user", JSON.stringify(newUser));
   };
 
+  // Logout logic (used in Navbar)
+  const logoutUser = () => {
+    setUserState(null);
+    localStorage.removeItem("user");
+  };
+
+  // Sync logout across browser tabs
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      if (e.key === "user" && !e.newValue) {
+        setUserState(null);
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
   return (
-    <UserContext.Provider value={{ user, setUser: updateUser }}>
+    <UserContext.Provider value={{ user, setUser: updateUser, logoutUser }}>
       {children}
     </UserContext.Provider>
   );

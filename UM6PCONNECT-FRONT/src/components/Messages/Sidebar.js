@@ -28,13 +28,13 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
             {/* Top Icons */}
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2 }}>
                 {/* Chat Icon - Active by Default */}
-                <IconButton sx={{ color: "#ea3b15" }}>
+                <IconButton sx={{ color: "#e04c2c" }}>
                     <TextsmsIcon fontSize="large" />
                 </IconButton>
 
 
                 <IconButton
-                    sx={{ color: activeTab === "chats" ? "#ea3b15" : "#000" }}
+                    sx={{ color: activeTab === "chats" ? "#e04c2c" : "#000" }}
                     onClick={() => setActiveTab("chats")}
                 >
                     <ChatBubbleOutlineIcon />
@@ -42,7 +42,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
 
                 {/* Profile Icon */}
                 <IconButton
-                    sx={{ color: activeTab === "friends" ? "#ea3b15" : "#000" }}
+                    sx={{ color: activeTab === "friends" ? "#e04c2c" : "#000" }}
                     onClick={() => setActiveTab("friends")} //  Set active tab to "friends"
                 >
                     <PersonOutlineIcon />
@@ -56,7 +56,7 @@ const Sidebar = ({ activeTab, setActiveTab }) => {
 
                 {/* Archive Icon (Switch to Archived Chats) */}
                 <IconButton
-                    sx={{ color: activeTab === "archived" ? "#ea3b15" : "#000" }}
+                    sx={{ color: activeTab === "archived" ? "#e04c2c" : "#000" }}
                     onClick={() => setActiveTab("archived")}
                 >
                     <ArchiveOutlinedIcon />

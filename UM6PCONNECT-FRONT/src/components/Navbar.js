@@ -241,7 +241,7 @@ const Navbar = () => {
             </Button>
             <Button
               href="/signin"
-              sx={{ color: "#ea3b15", textTransform: "none" }}
+              sx={{ color: "#e04c2c", textTransform: "none" }}
             >
               Sign In
             </Button>
@@ -282,8 +282,8 @@ const Navbar = () => {
             href="/profile"
             variant="outlined"
             sx={{
-              color: "#ea3b15",
-              borderColor: "#ea3b15",
+              color: "#e04c2c",
+              borderColor: "#e04c2c",
               fontSize: "14px",
               fontWeight: "500",
               textTransform: "none",
@@ -369,7 +369,7 @@ const Navbar = () => {
           <Divider sx={{ my: 1 }} />
           <MenuItem
             onClick={handleLogout}
-            sx={{ color: "#ea3b15", fontWeight: 500 }}
+            sx={{ color: "#e04c2c", fontWeight: 500 }}
           >
             Sign Out
           </MenuItem>

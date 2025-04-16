@@ -44,7 +44,7 @@ const ArchiveChat = ({ open, onClose, userId, contactId }) => {
         </Button>
         <Button
           onClick={handleArchive}
-          style={{ color: "#ea3b15" }}
+          style={{ color: "#e04c2c" }}
           disabled={loading}
         >
           {loading ? "Archiving..." : "Archive"}
