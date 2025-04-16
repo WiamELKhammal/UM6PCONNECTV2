@@ -22,22 +22,39 @@ import axios from "axios";
 
 const categorizeFilesByDate = (messages, type) => {
   const grouped = {};
+
   messages.forEach((msg) => {
-    if (!msg.files || !msg.files.length) return;
     const date = moment(msg.createdAt).format("DD/MM/YYYY");
-    msg.files.forEach((file) => {
-      if (
-        (type === "media" && (file.type.startsWith("image/") || file.type.startsWith("video/"))) ||
-        (type === "docs" && (file.type.includes("pdf") || file.type.includes("word") || file.type.includes("text"))) ||
-        (type === "link" && (file.type === "link" || file.data?.startsWith("http")))
-      ) {
+
+    // Add links
+    if (type === "link" && Array.isArray(msg.links)) {
+      msg.links.forEach((link) => {
         if (!grouped[date]) grouped[date] = [];
-        grouped[date].push(file);
-      }
-    });
+        grouped[date].push({
+          type: "link",
+          name: "Shared Link",
+          data: link,
+        });
+      });
+    }
+
+    // Add files
+    if (Array.isArray(msg.files)) {
+      msg.files.forEach((file) => {
+        if (
+          (type === "media" && (file.type.startsWith("image/") || file.type.startsWith("video/"))) ||
+          (type === "docs" && (file.type.includes("pdf") || file.type.includes("word") || file.type.includes("text")))
+        ) {
+          if (!grouped[date]) grouped[date] = [];
+          grouped[date].push(file);
+        }
+      });
+    }
   });
+
   return grouped;
 };
+
 
 const RightSidebar = ({ recipient, onClose }) => {
   const { user } = useContext(UserContext);

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
   Typography,
@@ -14,28 +14,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import DoneIcon from "@mui/icons-material/Done";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
-import socket from "./socket"; // ✅ Make sure you have this path set correctly
 
 const ChatMessages = ({ messages, recipient }) => {
   const { user } = useContext(UserContext);
   const [previewFile, setPreviewFile] = useState(null);
   const [fileError, setFileError] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
 
   const isSender = (senderId) => String(senderId) === String(user._id);
-
-  useEffect(() => {
-    socket.on("typing", ({ userId, to }) => {
-      if (userId === recipient?.userId && to === user._id) {
-        setIsTyping(true);
-        setTimeout(() => setIsTyping(false), 2500);
-      }
-    });
-
-    return () => {
-      socket.off("typing");
-    };
-  }, [recipient?.userId, user._id]);
 
   const handleDownload = (file) => {
     const link = document.createElement("a");
@@ -143,7 +128,11 @@ const ChatMessages = ({ messages, recipient }) => {
                           if (type.startsWith("image/")) {
                             return (
                               <Grid item xs={12} key={idx}>
-                                <img src={file.data} alt={name} style={{ width: "100%", borderRadius: 8 }} />
+                                <img
+                                  src={file.data}
+                                  alt={name}
+                                  style={{ width: "100%", borderRadius: 8 }}
+                                />
                                 <Button
                                   size="small"
                                   onClick={() => handleDownload(file)}
@@ -175,7 +164,7 @@ const ChatMessages = ({ messages, recipient }) => {
                           if (type.startsWith("audio/")) {
                             return (
                               <Grid item xs={12} key={idx}>
-                                <audio controls style={{ width: "100%" }}>
+                                <audio controls style={{ width: "400px", margin: "0 auto", backgroundColor: "transparent" }}>
                                   <source src={file.data} type={type} />
                                 </audio>
                               </Grid>
@@ -202,7 +191,12 @@ const ChatMessages = ({ messages, recipient }) => {
                           }
 
                           return (
-                            <Grid item xs={12} key={idx} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                            <Grid
+                              item
+                              xs={12}
+                              key={idx}
+                              sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                            >
                               <InsertDriveFileIcon sx={{ color: sender ? "#fff" : "#000" }} />
                               <Typography
                                 sx={{
@@ -234,11 +228,19 @@ const ChatMessages = ({ messages, recipient }) => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: sender ? "flex-end" : "flex-start",
-                    mt: 0.5,
                     gap: 0.5,
+                    mt: "5px",
                   }}
                 >
-                  <Typography sx={{ fontSize: "10px", color: "#999" }}>{time}</Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "10px",
+                      color: "#999",
+                      textAlign: sender ? "right" : "left",
+                    }}
+                  >
+                    {time}
+                  </Typography>
 
                   {sender && (
                     <>
@@ -254,22 +256,6 @@ const ChatMessages = ({ messages, recipient }) => {
             </Box>
           );
         })
-      )}
-
-      {/* ✅ Typing Indicator */}
-      {isTyping && (
-        <Typography
-          sx={{
-            fontSize: "13px",
-            color: "#555",
-            fontStyle: "italic",
-            textAlign: "left",
-            mt: 2,
-            ml: 1,
-          }}
-        >
-          {recipient?.Prenom || "User"} is typing...
-        </Typography>
       )}
     </Box>
   );
