@@ -18,20 +18,17 @@ const LandingPage4 = () => {
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          alignItems: "flex-start",
-          gap: { xs: 4, md: 8 },
+          alignItems: "stretch", // ensures balanced vertical alignment
         }}
       >
         {/* Left: Text Content */}
-        <Box sx={{ flex: 1 }}>
-          {/* Title with white square */}
+        <Box sx={{ flex: 1, minHeight: { md: 480 } }}>
           <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
- 
             <Typography
               sx={{
                 fontSize: "30px",
                 fontWeight: 600,
-                color:"#FFF",
+                color: "#FFF",
                 fontFamily: "'Work Sans', sans-serif",
               }}
             >
@@ -45,7 +42,6 @@ const LandingPage4 = () => {
               fontWeight: 300,
               lineHeight: 1.7,
               textAlign: "justify",
-              maxWidth: "900px",
               fontFamily: "'Work Sans', sans-serif",
             }}
           >
@@ -76,9 +72,13 @@ const LandingPage4 = () => {
           src="/assets/images/herosection/UM6P.png"
           alt="UM6P Connect"
           sx={{
-            height: { xs: 200, md: 555 },
+            height: "auto",
+            maxHeight: 480,
             width: "auto",
-            alignSelf: "center",
+            maxWidth: 350,
+            alignSelf: { xs: "center", md: "flex-start" },
+            mt: { xs: 3, md: 0 },
+            flexShrink: 0,
           }}
         />
       </Box>

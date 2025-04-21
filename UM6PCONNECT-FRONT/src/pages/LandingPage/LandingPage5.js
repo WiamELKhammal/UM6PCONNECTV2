@@ -18,28 +18,31 @@ const ManifestoQuote = () => {
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          alignItems: "flex-start",
-          gap: { xs: 4, md: 8 },
+          alignItems: "stretch", // ensures both sides align top to bottom
         }}
       >
         {/* Left: Text Content */}
-        <Box sx={{ flex: 1 }}>
+        <Box sx={{ flex: 1, minHeight: { md: 555 } }}>
           <Typography
             sx={{
               fontSize: "22px",
               fontWeight: 300,
               lineHeight: 1.7,
               textAlign: "justify",
-              maxWidth: "900px",
               fontFamily: "'Work Sans', sans-serif",
             }}
           >
-            “UM6P: Where Africa shapes the future. At the University Mohammed VI
-            Polytechnic, we believe Africa holds the solutions to the world’s
-            greatest challenges. UM6P is not just a university—it’s a movement.
-            A home to 7,229 students, including nearly 1,000 PhD candidates, and
-            a vibrant academic community from over 40 nationalities, united by
-            one purpose: to transform potential into progress.
+            <Box component="span" sx={{ fontWeight: 600, color: "#fff" }}>
+              UM6P : Where Africa shapes the future.
+            </Box>
+            <br />
+            <br />
+            At the University Mohammed VI Polytechnic, we believe Africa holds
+            the solutions to the world’s greatest challenges. UM6P is not just a
+            university—it’s a movement. A home to 7,229 students, including
+            nearly 1,000 PhD candidates, and a vibrant academic community from
+            over 40 nationalities, united by one purpose: to transform potential
+            into progress.
             <br />
             <br />
             Here, research drives innovation. Education fuels entrepreneurship.
@@ -51,7 +54,7 @@ const ManifestoQuote = () => {
             <br />
             <br />
             Dare to dream. Dare to build. Join us—let’s shape Africa’s future,
-            and inspire the world.”
+            and inspire the world.
           </Typography>
 
           <Typography
@@ -61,22 +64,25 @@ const ManifestoQuote = () => {
               fontSize: "20px",
               textAlign: "right",
               color: "#FFF",
-
             }}
           >
             — Hicham El Habti, President of UM6P
           </Typography>
         </Box>
 
-        {/* Right: UM6P Square Image */}
+        {/* Right: Clean, Sized Image */}
         <Box
           component="img"
           src="/assets/images/herosection/Photo_Officielle_Président.jpg"
           alt="UM6P President"
           sx={{
-            height: { xs: 200, md: 555 },
+            height: "auto",
+            maxHeight: 555,
             width: "auto",
-            alignSelf: "center",
+            maxWidth: 350,
+            alignSelf: "flex-start",
+            mt: { xs: 3, md: 0 },
+            ml: { xs: 0, md: 2 },
           }}
         />
       </Box>

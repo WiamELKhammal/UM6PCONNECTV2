@@ -81,7 +81,7 @@ const ProgressHero = () => {
               lineHeight: 1,
             }}
           >
-            Empowering Change Through   
+            BUILT TO CONNECT, 
           </Typography>
 
           <Typography
@@ -93,7 +93,7 @@ const ProgressHero = () => {
               lineHeight: 1,
             }}
           >
-            Knowledge and Connection.
+            DESIGNED TO EMPOWER
           </Typography>
         </Box>
       </Box>
