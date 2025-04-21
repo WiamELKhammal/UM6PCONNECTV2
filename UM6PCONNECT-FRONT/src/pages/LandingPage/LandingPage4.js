@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import "@fontsource/work-sans/300.css";
 
-const ManifestoQuote = () => {
+const LandingPage4 = () => {
   return (
     <Box
       sx={{
@@ -24,50 +24,57 @@ const ManifestoQuote = () => {
       >
         {/* Left: Text Content */}
         <Box sx={{ flex: 1 }}>
-          <Typography
-            sx={{
-              fontSize: { xs: "28px", md: "36px" },
-              fontWeight: 600,
-              mb: 4,
-              fontFamily: "'Work Sans', sans-serif",
-              borderLeft: "5px solid #ea3b15",
-              pl: 2,
-            }}
-          >
-            Empowering Minds for a Sustainable Africa
-          </Typography>
+          {/* Title with white square */}
+          <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+ 
+            <Typography
+              sx={{
+                fontSize: "30px",
+                fontWeight: 600,
+                color:"#FFF",
+                fontFamily: "'Work Sans', sans-serif",
+              }}
+            >
+              Step into the movement
+            </Typography>
+          </Box>
 
           <Typography
             sx={{
               fontSize: "22px",
               fontWeight: 300,
-              fontStyle: "italic",
               lineHeight: 1.7,
               textAlign: "justify",
               maxWidth: "900px",
               fontFamily: "'Work Sans', sans-serif",
             }}
           >
-            “At Mohammed VI Polytechnic University (UM6P), we believe that the
-            key to Africa's sustainable development lies in empowering its
-            brightest minds. Our mission is to bridge the gap between
-            theoretical knowledge and practical application, fostering an
-            environment where innovation thrives. Through cutting-edge research,
-            dynamic education programs, and entrepreneurial initiatives, we
-            address the continent's most pressing challenges.
+            At UM6P, we believe that meaningful progress begins with meaningful
+            connection—between disciplines, people, and purpose. As a university
+            rooted in research and driven by innovation, we are shaping a new
+            generation of leaders equipped to turn knowledge into real-world
+            impact.
             <br />
             <br />
-            UM6P CONNECT serves as your gateway to this vibrant ecosystem —
-            inviting researchers, students, policymakers, and entrepreneurs to
-            collaborate and drive meaningful change across Africa.”
+            <Box component="span" sx={{ fontWeight: 600, color: "#fff" }}>
+              UM6P Connect
+            </Box>{" "}
+            is the digital expression of that mission. More than a platform,
+            it’s a living space where education, research, and entrepreneurship
+            intersect. A space where students chart their futures, researchers
+            expand their reach, and collaboration becomes a catalyst for change.
+            <br />
+            <br />
+            This is where Africa’s most promising minds come together—to
+            connect, to grow, and to lead.
           </Typography>
         </Box>
 
-        {/* Right: UM6P Square Image */}
+        {/* Right: Image */}
         <Box
           component="img"
-          src="/assets/images/herosection/UM6P.png" // ← replace with your actual path
-          alt="UM6P Square Vertical"
+          src="/assets/images/herosection/UM6P.png"
+          alt="UM6P Connect"
           sx={{
             height: { xs: 200, md: 555 },
             width: "auto",
@@ -79,4 +86,4 @@ const ManifestoQuote = () => {
   );
 };
 
-export default ManifestoQuote;
+export default LandingPage4;
