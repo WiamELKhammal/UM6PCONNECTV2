@@ -1,0 +1,67 @@
+/* HoverButtonsSection.css */
+
+.hover-buttons-wrapper {
+  height: 100vh;
+  background-color: #fcfcfc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  direction: rtl;
+  font-family: yekan, 'Inter', sans-serif;
+  text-align: right;
+  padding: 0 16px;
+}
+
+.icon-button-card {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  border-radius: 30px;
+  overflow: hidden;
+  background-color: #fcfcfc;
+  font-weight: 600;
+  font-size: 18px;
+  text-align: right;
+  padding-right: 50px;
+  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s;
+  margin: 12px 0;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.icon-button-card:hover {
+  color: #fff;
+}
+
+.icon-box {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 92px;
+  height: 100%;
+  border-radius: 30px 30px 30px 0;
+  transition: all 0.3s;
+  z-index: 0;
+}
+
+.icon-button-card:hover .icon-box {
+  width: 100%;
+  border-radius: 30px;
+}
+
+.icon-inner {
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #fff;
+  z-index: 1;
+}
+
+.label-text {
+  position: relative;
+  z-index: 1;
+}
