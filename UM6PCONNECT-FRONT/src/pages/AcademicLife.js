@@ -41,23 +41,8 @@ const AcademicLife = () => {
           mb: 6,
         }}
       >
-        UM6P’s academic model is built on experiential learning and scientific
-        immersion. Students don’t just attend lectures — they work in research
-        labs, design policy models, and prototype hardware. The university
-        attracted{" "}
-        <Box component="span" sx={{ color: "#FFF", fontWeight: 600 }}>
-          129,874
-        </Box>{" "}
-        applications in 2025, a{" "}
-        <Box component="span" sx={{ color: "#FFF", fontWeight: 600 }}>
-          273%
-        </Box>{" "}
-        increase vs. the previous year. More than{" "}
-        <Box component="span" sx={{ color: "#FFF", fontWeight: 600 }}>
-          4,124 international applicants
-        </Box>{" "}
-        from over 40 countries joined the ecosystem, reflecting UM6P’s African
-        and global footprint.
+At UM6P, learning is immersive, hands-on, and purpose-driven. Students don’t just attend classes—they build, experiment, and solve real-world problems from day one. This model is drawing unprecedented attention: as of March 2025, over 163,000 applications have been recorded—a 26% growth in just one month. With applicants from 20+ countries, from Casablanca to Cotonou and Rabat to Rwanda, UM6P is fast becoming a magnet for top talent across Africa and beyond. Demand is soaring for programs in Computer Science, Medicine, Architecture, and Hospitality Management, particularly in English. Behind the numbers is a growing, global, and gender-diverse community—ready to lead where it matters most.
+
       </Typography>
 
       {/* Section Title */}

@@ -2,6 +2,8 @@ import ProgressHero from './ProgressHero';
 import ResidencesInfrastructure from './ResidencesInfrastructure';
 import TitleSection from './TitleSection';
 import AcademicLife from './AcademicLife';
+import AcademicLife2 from './AcademicLife2';
+
 import AcademicGraphPage from './AcademicGraphPage';
 import AcademicVideoPage from './AcademicVideoPage';
 import Dinningandlifestyle from './Dinningandlifestyle';
@@ -21,6 +23,10 @@ const ProgressReport2021 = () => (
         <Box sx={{ borderBottom: "1px solid #fff" }}>
             <AcademicLife />
         </Box>
+        <Box sx={{ borderBottom: "1px solid #fff" }}>
+            <AcademicLife2 />
+        </Box>
+
 
         {/* ✅ AcademicGraphPage with bottom border */}
         <Box sx={{ borderBottom: "1px solid #fff" }}>

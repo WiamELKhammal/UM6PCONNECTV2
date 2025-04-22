@@ -16,26 +16,25 @@ const AcademicGraphPage = () => {
     >
       <Typography
         sx={{
-          fontSize: { xs: "28px", md: "36px" },
+          fontSize: { xs: "28px", md: "40px" },
           fontWeight: 400,
           mb: 6,
-          textAlign: "center", // ✅ CENTER TITLE
+          textAlign: "center",
         }}
       >
-         Top 6 Academic Programs by Application Volume 
+        Top 6 Academic Programs by Application Volume
       </Typography>
 
       <Box
         component="img"
-        src="/assets/images/herosection/hero.png"
+        src="/assets/images/herosection/visual_selection_1.png"
         alt="Academic Graph Placeholder"
         sx={{
-          width: "100%",
-          maxWidth: "1000px",
+          width: { xs: "100%", md: "120%" }, // make it larger on desktop
+          maxWidth: "1400px",               // optional: set upper limit
           height: "auto",
           display: "block",
           mx: "auto",
-          border: "1px solid #444",
           borderRadius: "8px",
         }}
       />
