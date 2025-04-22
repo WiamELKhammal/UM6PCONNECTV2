@@ -19,12 +19,11 @@ const AcademicLife = () => {
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          alignItems: "flex-start",
-          justifyContent: "space-between",
+          alignItems: { xs: "flex-start", md: "center" }, // ✅ center image vertically
           gap: { xs: 4, md: 6 },
         }}
       >
-        {/* Text on the Left */}
+        {/* Text Left */}
         <Box sx={{ flex: 1 }}>
           <Typography
             sx={{
@@ -49,15 +48,16 @@ const AcademicLife = () => {
           </Typography>
         </Box>
 
-        {/* Bigger Image on the Right */}
+        {/* Image Right, Centered Vertically */}
         <Box
           component="img"
           src="/assets/images/herosection/visual_selection_2.png"
           alt="Academic Visual"
           sx={{
-            width: { xs: "100%", md: "650px" }, // bigger size
-            height: "auto",
+            width: { xs: "100%", md: "750px" },
+            height: "400px",
             borderRadius: "8px",
+            alignSelf: { xs: "center", md: "center" }, // ✅ for safe centering
             flexShrink: 0,
           }}
         />
