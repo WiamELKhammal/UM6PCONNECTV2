@@ -10,9 +10,9 @@ const AcademicLife = () => {
       sx={{
         px: { xs: 3, md: 8 },
         py: { xs: 6, md: 10 },
-        borderLeft: "1px solid #FFF",
+        borderLeft: "1px solid #CCC",
 
-        backgroundColor: "#000",
+        backgroundColor: "#FFF",
         color: "#000",
         fontFamily: "'Work Sans', sans-serif",
       }}
@@ -32,7 +32,7 @@ const AcademicLife = () => {
               fontWeight: 400,
               fontSize: "30px",
               lineHeight: "36px",
-              color: "#FFF",
+              color: "#000",
               textAlign: "justify",
               fontFamily: "'Work Sans', sans-serif",
             }}
