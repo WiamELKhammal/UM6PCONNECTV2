@@ -10,9 +10,9 @@ const AcademicLife = () => {
       sx={{
         px: { xs: 3, md: 8 },
         py: { xs: 6, md: 10 },
-        borderLeft: "1px solid #CCC",
+        borderLeft: "1px solid #FFF",
 
-        backgroundColor: "#FFF",
+        backgroundColor: "#000",
         color: "#000",
         fontFamily: "'Work Sans', sans-serif",
       }}
@@ -32,7 +32,7 @@ const AcademicLife = () => {
               fontWeight: 400,
               fontSize: "30px",
               lineHeight: "36px",
-              color: "#000",
+              color: "#FFF",
               textAlign: "justify",
               fontFamily: "'Work Sans', sans-serif",
             }}
@@ -53,7 +53,7 @@ const AcademicLife = () => {
         {/* Image Right, Centered Vertically */}
         <Box
           component="img"
-          src="/assets/images/herosection/visual_selection_2.png"
+          src="/assets/images/herosection/IMG_3438[1].png"
           alt="Academic Visual"
           sx={{
             width: { xs: "100%", md: "600px" },
