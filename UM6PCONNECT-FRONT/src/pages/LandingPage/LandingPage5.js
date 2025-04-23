@@ -1,16 +1,15 @@
 import React from "react";
-import { Box, Typography, Button, Grid } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import "@fontsource/work-sans/300.css";
 
 const ManifestoQuote = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#ffff",
+        backgroundColor: "#fff",
         color: "#000",
         fontFamily: "'Work Sans', sans-serif",
         borderLeft: "1px solid #CCC",
-
       }}
     >
       <Grid container>
@@ -25,42 +24,56 @@ const ManifestoQuote = () => {
             justifyContent: "flex-start",
           }}
         >
-          {/* Top: Name + Title Row with internal vertical border */}
+          {/* Top Bar: Name + Title */}
           <Box
             sx={{
               display: "flex",
+              flexDirection: { xs: "column", md: "row" },
               borderBottom: "1px solid #CCC",
-              height: "10%",
             }}
           >
             <Box
               sx={{
                 flex: 1,
-                borderRight: "1px solid #CCC",
-                px: 2,
-                py: 1,
+                borderRight: { md: "1px solid #CCC" },
+                borderBottom: { xs: "1px solid #CCC", md: "none" },
+                px: { xs: 2, md: 2 },
+                py: 2,
               }}
             >
               <Typography
-                sx={{ fontSize: "30px", fontWeight: 300, textTransform: "uppercase" }}
+                sx={{
+                  fontSize: { xs: "20px", sm: "26px", md: "30px" },
+                  fontWeight: 300,
+                  textTransform: "uppercase",
+                }}
               >
                 HICHAM EL HABTI
               </Typography>
             </Box>
-            <Box sx={{ flex: 1, px: 2, py: 1 }}>
-              <Typography sx={{ fontSize: "30px", fontWeight: 300 }}>
+            <Box
+              sx={{
+                flex: 1,
+                px: { xs: 2, md: 2 },
+                py: 2,
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: { xs: "20px", sm: "26px", md: "30px" },
+                  fontWeight: 300,
+                }}
+              >
                 PRESIDENT OF UM6P
               </Typography>
             </Box>
           </Box>
 
-          {/* Content Block */}
-          <Box sx={{ px: 4, py: 4 }}>
-
-
+          {/* Content */}
+          <Box sx={{ px: { xs: 3, md: 3 }, py: { xs: 4, md: 6 } }}>
             <Typography
               sx={{
-                fontSize: "25px",
+                fontSize: { xs: "16px", sm: "20px", md: "25px" },
                 fontWeight: 300,
                 lineHeight: 1.8,
                 textAlign: "justify",
@@ -96,7 +109,7 @@ const ManifestoQuote = () => {
               sx={{
                 mt: 4,
                 fontWeight: 600,
-                fontSize: "20px",
+                fontSize: { xs: "16px", sm: "18px", md: "20px" },
                 textAlign: "right",
                 color: "#000",
               }}
@@ -106,7 +119,7 @@ const ManifestoQuote = () => {
           </Box>
         </Grid>
 
-        {/* Right Section: Image (Top-Aligned) */}
+        {/* Right Section: Image */}
         <Grid
           item
           xs={12}
@@ -121,10 +134,10 @@ const ManifestoQuote = () => {
             src="/assets/images/herosection/Photo_Officielle_Président.jpg"
             alt="UM6P President"
             sx={{
-              width: "100%",
+              width: "900px",
+              height: "100%",
               objectFit: "cover",
-              borderLeft: "1px solid #fff",
-              display: "block",
+              borderLeft: { md: "1px solid #fff" },
             }}
           />
         </Grid>

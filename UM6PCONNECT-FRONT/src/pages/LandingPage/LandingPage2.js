@@ -6,17 +6,13 @@ const ProgressHero = () => {
   return (
     <Box
       sx={{
-        width: "100dvw",
-        height: "100dvh",
+        width: "100vw",
+        height: "100vh",
         position: "relative",
-        top: 0,
-        left: 0,
         background: "#000",
         zIndex: 999,
-        borderBottom:"1px solid #CCC",
+        borderBottom: "1px solid #CCC",
         borderLeft: "1px solid #CCC",
-
-
       }}
     >
       <Box
@@ -31,7 +27,7 @@ const ProgressHero = () => {
           position: "relative",
         }}
       >
-        {/* Dark overlay for contrast */}
+        {/* Overlay */}
         <Box
           sx={{
             position: "absolute",
@@ -45,8 +41,8 @@ const ProgressHero = () => {
         <Box
           sx={{
             position: "absolute",
-            top: 55,
-            left: { xs: 24, md: 72 },
+            top: { xs: 30, md: 55 },
+            left: { xs: 16, sm: 24, md: 72 },
             zIndex: 2,
           }}
         >
@@ -54,7 +50,7 @@ const ProgressHero = () => {
             sx={{
               color: "#fff",
               fontFamily: "'Work Sans', sans-serif",
-              fontSize: { xs: "32px", md: "45px" },
+              fontSize: { xs: "24px", sm: "30px", md: "45px" },
               fontWeight: 300,
             }}
           >
@@ -66,8 +62,8 @@ const ProgressHero = () => {
         <Box
           sx={{
             position: "absolute",
-            left: { xs: 24, md: 72 },
-            bottom: { xs: 80, md: 120 },
+            left: { xs: 16, sm: 24, md: 72 },
+            bottom: { xs: 50, sm: 70, md: 120 },
             zIndex: 2,
             display: "flex",
             flexDirection: "column",
@@ -76,23 +72,23 @@ const ProgressHero = () => {
         >
           <Typography
             sx={{
-              fontSize: { xs: "38px", md: "64px" },
+              fontSize: { xs: "26px", sm: "32px", md: "64px" },
               fontWeight: 300,
               color: "#fff",
               fontFamily: "'Work Sans', sans-serif",
-              lineHeight: 1,
+              lineHeight: 1.1,
             }}
           >
-            BUILT TO CONNECT, 
+            BUILT TO CONNECT,
           </Typography>
 
           <Typography
             sx={{
-              fontSize: { xs: "38px", md: "64px" },
+              fontSize: { xs: "26px", sm: "32px", md: "64px" },
               fontWeight: 300,
               color: "#fff",
               fontFamily: "'Work Sans', sans-serif",
-              lineHeight: 1,
+              lineHeight: 1.1,
             }}
           >
             DESIGNED TO EMPOWER

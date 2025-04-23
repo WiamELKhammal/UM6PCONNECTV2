@@ -8,7 +8,7 @@ const LandingPage4 = () => {
       sx={{
         backgroundColor: "#FFF",
         color: "#000",
-        py: 10,
+        py: { xs: 6, md: 10 },
         px: { xs: 3, md: 10 },
         fontFamily: "'Work Sans', sans-serif",
         borderLeft: "1px solid #CCC",
@@ -19,14 +19,14 @@ const LandingPage4 = () => {
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
           alignItems: "stretch",
-          gap: { xs: 4, md: 8 }, // <- Added spacing between text and image
+          gap: { xs: 4, md: 8 },
         }}
       >
         {/* Left: Text Content */}
         <Box sx={{ flex: 1, minHeight: { md: 480 } }}>
           <Typography
             sx={{
-              fontSize: "25px",
+              fontSize: { xs: "18px", sm: "20px", md: "25px" },
               fontWeight: 300,
               lineHeight: 1.7,
               textAlign: "justify",
@@ -55,7 +55,7 @@ const LandingPage4 = () => {
           </Typography>
         </Box>
 
-        {/* Right: Image */}
+        {/* Right: Image (unchanged) */}
         <Box
           component="img"
           src="/assets/images/herosection/_DPH1262-web.jpg"

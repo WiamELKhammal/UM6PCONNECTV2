@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { Box, Typography, Grid, IconButton } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, Typography, Grid, IconButton, useMediaQuery } from "@mui/material";
 import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { useTheme } from "@mui/material/styles";
 
 const cardData = [
   {
@@ -11,7 +12,7 @@ const cardData = [
     image: "/assets/images/herosection/life.png",
     description: (
       <>
-        Modern, secure, and designed for focus. <br />
+        <b>Modern, secure, and designed for focus.</b><br />
         Students live in fully equipped apartments with private rooms, shared kitchens, high-speed internet, and dedicated study space. Common lounges, game rooms, and laundry services support everyday life—while warm, minimalist architecture creates a welcoming, inspiring atmosphere.
       </>
     ),
@@ -23,7 +24,7 @@ const cardData = [
     image: "/assets/images/herosection/food.png",
     description: (
       <>
-        Food that fuels connection. <br />
+        <b>Food that fuels connection.</b><br />
         Enjoy balanced meals daily in the university restaurant, with diverse, healthy menus including vegetarian options. Grab coffee or a quick bite at the café, or unwind outdoors at the food truck garden—where social life and spontaneity meet.
       </>
     ),
@@ -35,7 +36,7 @@ const cardData = [
     image: "/assets/images/herosection/Sport.jpg",
     description: (
       <>
-        Built for balance. <br />
+        <b>Built for balance.</b><br />
         UM6P promotes holistic growth through access to sports, fitness, and wellness spaces. Whether you’re training, relaxing, or recharging, you’ll find the support to maintain a healthy mind and body—so you can lead with clarity and confidence.
       </>
     ),
@@ -47,19 +48,32 @@ const cardData = [
     image: "/assets/images/herosection/staff.png",
     description: (
       <>
-        A thriving community for all. <br />
+        <b>A thriving community for all.</b><br />
         UM6P is more than a university—it’s a living campus that supports its faculty, staff, and their families. With access to on-site services, family-friendly amenities, childcare support, and integrated wellness programs, we ensure that those who make UM6P’s mission possible can live and work in harmony.
       </>
     ),
     link: "https://www.youtube.com/watch?v=y6120QOlsfU",
   },
 ];
+
 const DiscoverMore = () => {
+  const theme = useTheme();
+  const isXs = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSm = useMediaQuery(theme.breakpoints.between("sm", "md"));
+  const visibleCount = isXs ? 1 : isSm ? 2 : 3;
+
   const [startIndex, setStartIndex] = useState(0);
-  const visibleCards = cardData.slice(startIndex, startIndex + 3);
+
+  useEffect(() => {
+    if (startIndex + visibleCount > cardData.length) {
+      setStartIndex(Math.max(0, cardData.length - visibleCount));
+    }
+  }, [visibleCount, startIndex]);
+
+  const visibleCards = cardData.slice(startIndex, startIndex + visibleCount);
 
   const handleNext = () => {
-    if (startIndex + 3 < cardData.length) {
+    if (startIndex + visibleCount < cardData.length) {
       setStartIndex(startIndex + 1);
     }
   };
@@ -82,10 +96,17 @@ const DiscoverMore = () => {
         position: "relative",
       }}
     >
-      <Typography fontSize="30px" fontWeight={300} color="#000" mb={6}>
-      At UM6P, education extends beyond the classroom. You live, learn, and grow in a purpose-built environment designed to inspire. Every space—from your residence to the research lab—is part of an ecosystem that supports your academic journey and personal development. This is not just where you study. It’s where you belong.
+<Typography
+  sx={{
+    fontSize: { xs: "18px", sm: "20px", md: "24px", lg: "30px" },
+    fontWeight: 300,
+    color: "#000",
+    mb: 6,
+  }}
+>
+  At UM6P, education extends beyond the classroom. You live, learn, and grow in a purpose-built environment designed to inspire. Every space—from your residence to the research lab—is part of an ecosystem that supports your academic journey and personal development. This is not just where you study. It’s where you belong.
+</Typography>
 
-      </Typography>
 
       {/* Cards */}
       <Grid container spacing={3} wrap="nowrap" sx={{ overflow: "hidden" }}>
@@ -145,7 +166,7 @@ const DiscoverMore = () => {
                   flexGrow: 1,
                 }}
               >
-                <Typography fontSize="25px" color="#FFF">
+                <Typography fontSize="18px" color="#FFF">
                   {item.description}
                 </Typography>
               </Box>
@@ -154,7 +175,7 @@ const DiscoverMore = () => {
         ))}
       </Grid>
 
-      {/* Bottom center arrow controls */}
+      {/* Arrows */}
       <Box
         sx={{
           display: "flex",
@@ -177,7 +198,7 @@ const DiscoverMore = () => {
 
         <IconButton
           onClick={handleNext}
-          disabled={startIndex + 3 >= cardData.length}
+          disabled={startIndex + visibleCount >= cardData.length}
           sx={{
             backgroundColor: "#ea3b15",
             color: "#fff",

@@ -20,46 +20,46 @@ const AcademicLife = () => {
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          alignItems: { xs: "flex-start", md: "center" },
+          alignItems: "center",
           gap: { xs: 4, md: 6 },
         }}
       >
-        {/* Text Left */}
+        {/* Text Block */}
         <Box sx={{ flex: 1 }}>
           <Typography
             sx={{
-              fontWeight: 400,
-              fontSize: "30px",
-              lineHeight: "36px",
+              fontWeight: 300,
+              fontSize: { xs: "16px", sm: "18px", md: "20px" },
+              lineHeight: { xs: "28px", sm: "30px", md: "34px" },
               color: "#000",
               textAlign: "justify",
-              fontFamily: "'Work Sans', sans-serif",
             }}
           >
-            At UM6P, learning is immersive, hands-on, and purpose-driven. Students
-            don’t just attend classes—they build, experiment, and solve real-world
-            problems from day one. This model is drawing unprecedented attention: as
-            of March 2025, over 163,000 applications have been recorded—a 26% growth
-            in just one month. With applicants from 20+ countries, from Casablanca
-            to Cotonou and Rabat to Rwanda, UM6P is fast becoming a magnet for top
-            talent across Africa and beyond. Demand is soaring for programs in
-            Computer Science, Medicine, Architecture, and Hospitality Management,
-            particularly in English. Behind the numbers is a growing, global, and
-            gender-diverse community—ready to lead where it matters most.
+            At UM6P, learning is immersive, hands-on, and purpose-driven.
+            Students don’t just attend classes—they build, experiment, and solve
+            real-world problems from day one. This model is drawing unprecedented
+            attention: as of March 2025, over 163,000 applications have been
+            recorded—a 26% growth in just one month. With applicants from 20+
+            countries, from Casablanca to Cotonou and Rabat to Rwanda, UM6P is
+            fast becoming a magnet for top talent across Africa and beyond.
+            Demand is soaring for programs in Computer Science, Medicine,
+            Architecture, and Hospitality Management, particularly in English.
+            Behind the numbers is a growing, global, and gender-diverse
+            community—ready to lead where it matters most.
           </Typography>
         </Box>
 
-        {/* Bigger Image Right */}
+        {/* Image */}
         <Box
           component="img"
           src="/assets/images/herosection/IMG_3438[1].png"
           alt="Academic Visual"
           sx={{
-            width: { xs: "100%", md: "750px" }, // Increased from 600px to 750px
+            width: { xs: "100%", sm: "100%", md: "700px", lg: "750px" },
             height: "auto",
             borderRadius: "8px",
-            alignSelf: { xs: "center", md: "center" },
             flexShrink: 0,
+            alignSelf: "center",
           }}
         />
       </Box>

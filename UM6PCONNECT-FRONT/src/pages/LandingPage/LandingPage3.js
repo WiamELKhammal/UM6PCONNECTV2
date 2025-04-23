@@ -14,10 +14,8 @@ const TheWhyVideo = () => {
         position: "relative",
         overflow: "hidden",
         backgroundColor: "#000",
-        borderBottom:"1px solid #fff",
+        borderBottom: "1px solid #fff",
         borderLeft: "1px solid #CCC",
-
-
       }}
     >
       {/* Background Image */}
@@ -45,18 +43,19 @@ const TheWhyVideo = () => {
         <Box
           sx={{
             position: "relative",
-            width: 100,
-            height: 100,
+            width: { xs: 64, sm: 80, md: 100 },
+            height: { xs: 64, sm: 80, md: 100 },
             backgroundColor: "#e04c2c",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             cursor: "pointer",
             animation: "pulse 2s infinite",
+            borderRadius: "50%",
           }}
           onClick={() => setOpen(true)}
         >
-          <YouTubeIcon sx={{ fontSize: 48, color: "#fff" }} />
+          <YouTubeIcon sx={{ fontSize: { xs: 36, sm: 42, md: 48 }, color: "#fff" }} />
         </Box>
       </Box>
 
@@ -75,19 +74,20 @@ const TheWhyVideo = () => {
             alignItems: "center",
             justifyContent: "center",
             flexDirection: "column",
+            px: 2,
           }}
         >
           <IconButton
             onClick={() => setOpen(false)}
             sx={{
               position: "absolute",
-              top: 20,
-              right: 20,
+              top: { xs: 16, md: 24 },
+              right: { xs: 16, md: 24 },
               color: "#fff",
               zIndex: 99999,
             }}
           >
-            <CloseIcon sx={{ fontSize: 36 }} />
+            <CloseIcon sx={{ fontSize: { xs: 28, md: 36 } }} />
           </IconButton>
 
           <Box
@@ -96,8 +96,8 @@ const TheWhyVideo = () => {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             sx={{
-              width: { xs: "90vw", md: "80vw" },
-              height: { xs: "50vh", md: "70vh" },
+              width: { xs: "90vw", sm: "85vw", md: "80vw" },
+              height: { xs: "50vh", sm: "60vh", md: "70vh" },
               border: "none",
               borderRadius: "8px",
               zIndex: 9999,
