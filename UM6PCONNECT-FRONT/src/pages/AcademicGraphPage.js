@@ -6,7 +6,7 @@ const AcademicGraphPage = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#FAFAFA",
+        backgroundColor: "#FFF",
         borderLeft: "1px solid #CCC",
 
         color: "#000",

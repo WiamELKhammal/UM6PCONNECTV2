@@ -8,12 +8,14 @@ const TheWhy = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#1d1b1c",
+        backgroundColor: "#FFF",
         color: "#FFF",
         py: 10,
         fontFamily: "'Work Sans', sans-serif",
         display: "flex",
         justifyContent: "center",
+        borderLeft: "1px solid #CCC",
+        borderButtom: "1px solid #CCC",
       }}
     >
       <Box
@@ -30,6 +32,8 @@ const TheWhy = () => {
             lineHeight: "36px",
             textAlign: "justify",
             fontFamily: "'Work Sans', sans-serif",
+            color: "#000",
+
 
           }}
         >

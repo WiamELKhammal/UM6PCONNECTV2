@@ -11,14 +11,16 @@ const TitleSection = ({ title, id, number, borderTop = false }) => {
     top: "64px", //  push down under navbar
     zIndex: 10,
     width: "100%",
-    backgroundColor: "#1d1b1c",
+    backgroundColor: "#FFF",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     px: { xs: 3, md: 8 },
     py: 4,
-    borderBottom: "1px solid #fff",
-    ...(borderTop && { borderTop: "1px solid #fff" }),
+    borderBottom: "1px solid #CCC",
+    borderLeft: "1px solid #CCC",
+
+    ...(borderTop && { borderTop: "1px solid #CCC" }),
   }}
 >
 
@@ -26,9 +28,9 @@ const TitleSection = ({ title, id, number, borderTop = false }) => {
         sx={{
           fontFamily: "'Work Sans', sans-serif",
           fontWeight: 300,
-          fontSize: { xs: "30px", md: "70px" },
+          fontSize: { xs: "30px", md: "50px" },
           lineHeight: { xs: "44px", md: "59px" },
-          color: "#f6f6f6",
+          color: "#000",
         }}
       >
         {title}

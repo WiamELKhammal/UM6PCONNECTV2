@@ -16,22 +16,22 @@ import { Box } from '@mui/material'; //
 const ProgressReport2021 = () => (
     <div className="bg-black text-white w-full overflow-x-hidden">
 
-        <Box sx={{ borderBottom: "1px solid #CCC" }}>
+        <Box sx={{ borderBottom: "1px solid #FFF" }}>
         <ProgressHero />
         </Box>
         <TitleSection title="Academic Life & Attractiveness" id="academic"  />
-        <Box sx={{ borderBottom: "1px solid #CCC" }}>
+        <Box sx={{ borderBottom: "1px solid #FFF" }}>
             <AcademicLife2 />
         </Box>
         {/* ✅ AcademicLife with bottom border */}
-        <Box sx={{ borderBottom: "1px solid #CCC" }}>
+        <Box sx={{ borderBottom: "1px solid #FFFF" }}>
             <AcademicLife />
         </Box>
 
                {/* ✅ AcademicGraphPage with bottom border */}
             <AcademicGraphPage />
         
-        <TitleSection title="BLABLA" id="dining"  borderTop
+        <TitleSection title="More Than a Campus—It’s a Way of Life" id="dining"  borderTop
         />
             <AcademicLife3 />
 

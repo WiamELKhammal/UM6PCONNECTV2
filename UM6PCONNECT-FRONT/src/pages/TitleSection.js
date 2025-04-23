@@ -28,7 +28,7 @@ const TitleSection = ({ title, id, number, borderTop = false }) => {
         sx={{
           fontFamily: "'Work Sans', sans-serif",
           fontWeight: 300,
-          fontSize: { xs: "30px", md: "70px" },
+          fontSize: { xs: "30px", md: "50px" },
           lineHeight: { xs: "44px", md: "59px" },
           color: "#000",
         }}

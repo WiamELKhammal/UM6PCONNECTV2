@@ -30,7 +30,7 @@ const ManifestoQuote = () => {
             sx={{
               display: "flex",
               borderBottom: "1px solid #CCC",
-              height: "100%",
+              height: "10%",
             }}
           >
             <Box

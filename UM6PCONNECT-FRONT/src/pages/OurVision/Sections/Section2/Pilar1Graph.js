@@ -6,28 +6,20 @@ const AcademicGraphPage = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#1d1b1c",
-        color: "#f6f6f6",
+        backgroundColor: "#FFF",
+        color: "#000",
         minHeight: "100vh",
         px: { xs: 3, md: 8 },
         py: 10,
         fontFamily: "'Work Sans', sans-serif",
+        borderLeft: "1px solid #CCC",
       }}
     >
-      <Typography
-        sx={{
-          fontSize: { xs: "28px", md: "36px" },
-          fontWeight: 400,
-          mb: 6,
-          textAlign: "center", // ✅ CENTER TITLE
-        }}
-      >
-         Top 6 Academic Programs by Application Volume 
-      </Typography>
+
 
       <Box
         component="img"
-        src="/assets/images/herosection/hero.png"
+        src="/assets/images/herosection/BATIMENT ADMINISTRATIF3.jpg"
         alt="Academic Graph Placeholder"
         sx={{
           width: "100%",
@@ -35,8 +27,7 @@ const AcademicGraphPage = () => {
           height: "auto",
           display: "block",
           mx: "auto",
-          border: "1px solid #444",
-          borderRadius: "8px",
+
         }}
       />
     </Box>

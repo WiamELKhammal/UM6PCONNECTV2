@@ -6,14 +6,14 @@ const TheWhy = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#1d1b1c",
-        color: "#FFF",
+        backgroundColor: "#FFF",
+        color: "#000",
         py: 10,
         fontFamily: "'Work Sans', sans-serif",
         position: "relative",
         overflow: "hidden",
-        borderBottom: "1px solid #fff",
-      }}
+        borderLeft: "1px solid #CCC",
+        borderButtom: "1px solid #CCC",      }}
     >
       {/* 🔴 Floating Cubes */}
       <Box
@@ -71,32 +71,33 @@ const TheWhy = () => {
             lineHeight: "36px",
             textAlign: "justify",
             fontFamily: "'Work Sans', sans-serif",
+            color: "#000"
 
           }}
         >
           UM6P embeds innovation and venture creation within its academic and
           research model. Through StartGate, the university has supported{" "}
-          <Box component="span" sx={{ fontWeight: 600, color: "#fff" }}>
+          <Box component="span" sx={{ fontWeight: 600, color: "#000" }}>
             530+
           </Box>{" "}
           project holders and startups since 2020. The top{" "}
-          <Box component="span" sx={{ fontWeight: 600, color: "#fff" }}>
+          <Box component="span" sx={{ fontWeight: 600, color: "#000" }}>
             25
           </Box>{" "}
           startups have raised over{" "}
-          <Box component="span" sx={{ fontWeight: 600, color: "#fff" }}>
+          <Box component="span" sx={{ fontWeight: 600, color: "#000" }}>
             $20.6M
           </Box>
           , with a collective valuation surpassing{" "}
-          <Box component="span" sx={{ fontWeight: 600, color: "#fff" }}>
+          <Box component="span" sx={{ fontWeight: 600, color: "#000" }}>
             $200M
           </Box>
           . Students represent{" "}
-          <Box component="span" sx={{ fontWeight: 600, color: "#fff" }}>
+          <Box component="span" sx={{ fontWeight: 600, color: "#000" }}>
             50%
           </Box>{" "}
           of founders, and{" "}
-          <Box component="span" sx={{ fontWeight: 600, color: "#fff" }}>
+          <Box component="span" sx={{ fontWeight: 600, color: "#000" }}>
             14%
           </Box>{" "}
           are faculty-led ventures.

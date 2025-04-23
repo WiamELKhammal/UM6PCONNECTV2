@@ -8,8 +8,11 @@ const TheWhy = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#1d1b1c",
-        color: "#FFF",
+        backgroundColor: "#FFFF",
+        borderLeft: "1px solid #CCC",
+        borderButtom: "1px solid #CCC",
+
+        color: "#000",
         py: 10,
         fontFamily: "'Work Sans', sans-serif",
         display: "flex",

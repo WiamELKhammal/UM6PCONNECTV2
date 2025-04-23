@@ -26,38 +26,31 @@ const ProgressReport2021 = () => (
     <OurVisionHero />
 
     {/* The Why Section */}
-    <TitleSection title="The Why Behind Vision 2030" id="why" number="01" />
+    <TitleSection title="The Why Behind Vision 2030" id="why"  />
     <Box sx={{ borderBottom: "1px solid #fff" }}>
       <TheWhy />
     </Box>
     <TheWhyVideo />
 
     {/* Pillar 1: Research */}
-    <TitleSection title="Pillar 1: Research" id="pillar1" number="02" borderTop />
+    <TitleSection title="Pillar 1: Research" id="pillar1"  borderTop />
     <Pilar1 />
     <Pilar1Graph />
 
     {/* Pillar 2: Education */}
-    <TitleSection title="Pillar 2: Education" id="pillar2" number="03" borderTop />
+    <TitleSection title="Pillar 2: Education" id="pillar2"  borderTop />
     <Pilar2 />
-    <Pilar2Graph />
-    <Pilar2Video />
+
 
     {/* Pillar 3: Entrepreneurship */}
-    <TitleSection title="Pillar 3: Entrepreneurship" id="pillar3" number="04" borderTop />
+    <TitleSection title="Pillar 3: Entrepreneurship" id="pillar3"  borderTop />
     <Pilar3 />
-    <Pilar3Graph />
-    <Pilar3Video />
+
 
     {/* Pillar 4: Social Impact */}
-    <TitleSection title="Pillar 4: Social Impact" id="pillar4" number="05" borderTop />
+    <TitleSection title="Pillar 4: Social Impact" id="pillar4"  borderTop />
     <Pilar4 />
-    <Pilar4Graph />
-
-    <Box sx={{ borderBottom: "1px solid #fff" }}>
-    <Pilar4Video />
-            
-        </Box>
+  
   </div>
 );
 

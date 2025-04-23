@@ -9,36 +9,51 @@ const cardData = [
     title: "Housing & Facilities",
     color: "#e04c2c",
     image: "/assets/images/herosection/life.png",
-    description:
-      "UM6P offers a modern living and learning experience, with student housing that balances privacy, community, and comfort. From shared lounges to study zones and eco-conscious infrastructure, every facility is optimized to support student success and well-being.",
+    description: (
+      <>
+        Modern, secure, and designed for focus. <br />
+        Students live in fully equipped apartments with private rooms, shared kitchens, high-speed internet, and dedicated study space. Common lounges, game rooms, and laundry services support everyday life—while warm, minimalist architecture creates a welcoming, inspiring atmosphere.
+      </>
+    ),
     link: "https://www.youtube.com/watch?v=U9cGdRNMdQQ",
   },
   {
     title: "Dining & Lifestyle",
     color: "#e04c2c",
     image: "/assets/images/herosection/food.png",
-    description:
-      "Dining at UM6P is about choice, community, and quality. With diverse cuisine options, welcoming cafés, and campus-wide events, students enjoy not just meals—but memorable social moments that define life beyond the classroom.",
+    description: (
+      <>
+        Food that fuels connection. <br />
+        Enjoy balanced meals daily in the university restaurant, with diverse, healthy menus including vegetarian options. Grab coffee or a quick bite at the café, or unwind outdoors at the food truck garden—where social life and spontaneity meet.
+      </>
+    ),
     link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   },
   {
     title: "Wellness & Sports",
     color: "#e04c2c",
     image: "/assets/images/herosection/Sport.jpg",
-    description:
-      "Our campus is built for well-being. Students have access to gyms, group training, wellness workshops, and mindfulness spaces—all promoting a healthy balance between academic rigor and personal health.",
+    description: (
+      <>
+        Built for balance. <br />
+        UM6P promotes holistic growth through access to sports, fitness, and wellness spaces. Whether you’re training, relaxing, or recharging, you’ll find the support to maintain a healthy mind and body—so you can lead with clarity and confidence.
+      </>
+    ),
     link: "https://www.youtube.com/watch?v=O91DT1pR1ew",
   },
   {
     title: "Staff & Family Services",
     color: "#e04c2c",
     image: "/assets/images/herosection/staff.png",
-    description:
-      "UM6P supports its wider community with housing, medical care, education options for children, and inclusive services that empower both staff and their families to thrive within the university ecosystem.",
+    description: (
+      <>
+        A thriving community for all. <br />
+        UM6P is more than a university—it’s a living campus that supports its faculty, staff, and their families. With access to on-site services, family-friendly amenities, childcare support, and integrated wellness programs, we ensure that those who make UM6P’s mission possible can live and work in harmony.
+      </>
+    ),
     link: "https://www.youtube.com/watch?v=y6120QOlsfU",
   },
 ];
-
 const DiscoverMore = () => {
   const [startIndex, setStartIndex] = useState(0);
   const visibleCards = cardData.slice(startIndex, startIndex + 3);
@@ -67,14 +82,9 @@ const DiscoverMore = () => {
         position: "relative",
       }}
     >
-      <Typography fontSize="36px" fontWeight={600} mb={2}>
-        Discover more
-      </Typography>
-
       <Typography fontSize="30px" fontWeight={300} color="#000" mb={6}>
-        Dive deeper into our ecosystem. From student life to family support,
-        every part of the UM6P campus experience is designed to enrich learning,
-        foster balance, and build a strong, inclusive community.
+      At UM6P, education extends beyond the classroom. You live, learn, and grow in a purpose-built environment designed to inspire. Every space—from your residence to the research lab—is part of an ecosystem that supports your academic journey and personal development. This is not just where you study. It’s where you belong.
+
       </Typography>
 
       {/* Cards */}

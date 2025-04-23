@@ -6,8 +6,8 @@ const AcademicGraphPage = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#1d1b1c",
-        color: "#f6f6f6",
+        backgroundColor: "#FFF",
+        color: "#000",
         minHeight: "100vh",
         px: { xs: 3, md: 8 },
         py: 10,

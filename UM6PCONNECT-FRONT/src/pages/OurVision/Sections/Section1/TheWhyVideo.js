@@ -13,7 +13,7 @@ const TheWhyVideo = () => {
         height: "100vh",
         position: "relative",
         overflow: "hidden",
-        backgroundColor: "#000",
+        backgroundColor: "#FFF",
       }}
     >
       {/* Background Image */}

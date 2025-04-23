@@ -20,7 +20,7 @@ const ProgressHero = () => {
           width: "100%",
           height: "100%",
           boxSizing: "border-box",
-          backgroundImage: "url('/assets/images/herosection/ourvision.png')",
+          backgroundImage: "url('/assets/images/herosection/Signature OSUI8.JPG')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
