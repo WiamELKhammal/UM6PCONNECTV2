@@ -31,8 +31,8 @@ const TopNavBar = () => {
           top: 0,
           zIndex: 1200,
           width: "100%",
-          backgroundColor: "#181717",
-          borderBottom: "1px solid #fff",
+          backgroundColor: "#FFF",
+          borderBottom: "1px solid #CCC",
           px: { xs: 2, md: 8 },
           py: 1.5,
           display: "flex",
@@ -42,7 +42,7 @@ const TopNavBar = () => {
         }}
       >
         {/* Logo */}
-        <Box component="img" src="image.png" alt="Logo" sx={{ height: 60 }} />
+        <Box component="img" src="logo.png" alt="Logo" sx={{ height: 40 }} />
 
         {/* Centered Desktop Nav */}
         <Box
@@ -80,7 +80,7 @@ const TopNavBar = () => {
                   sx={{
                     width: 12,
                     height: 12,
-                    backgroundColor: isActive ? "#e04c2c" : "#fff",
+                    backgroundColor: isActive ? "#ea3b15" : "#000",
                     flexShrink: 0,
                   }}
                 />
@@ -88,9 +88,9 @@ const TopNavBar = () => {
                   to={item.to}
                   style={{
                     textDecoration: "none",
-                    fontSize: "16px",
+                    fontSize: "20px",
                     fontWeight: 300,
-                    color: isActive ? "#e04c2c" : "#f6f6f6",
+                    color: isActive ? "#ea3b15" : "#000",
                   }}
                 >
                   {item.label}
@@ -102,7 +102,7 @@ const TopNavBar = () => {
 
         {/* Mobile Hamburger */}
         <Box sx={{ display: { xs: "block", md: "none" } }}>
-          <IconButton onClick={() => setDrawerOpen(true)} sx={{ color: "#fff" }}>
+          <IconButton onClick={() => setDrawerOpen(true)} sx={{ color: "#CCC" }}>
             <MenuIcon />
           </IconButton>
         </Box>
@@ -110,8 +110,8 @@ const TopNavBar = () => {
 
       {/* Drawer for Mobile */}
       <Drawer anchor="right" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-        <Box sx={{ width: 250, backgroundColor: "#181717", height: "100%", color: "#fff" }}>
-          <IconButton onClick={() => setDrawerOpen(false)} sx={{ color: "#fff", mt: 1, ml: 1 }}>
+        <Box sx={{ width: 250, backgroundColor: "#FFF", height: "100%", color: "#CCC" }}>
+          <IconButton onClick={() => setDrawerOpen(false)} sx={{ color: "#CCC", mt: 1, ml: 1 }}>
             <CloseIcon />
           </IconButton>
           <List>
@@ -134,7 +134,7 @@ const TopNavBar = () => {
                   <ListItemText
                     primary={item.label}
                     primaryTypographyProps={{
-                      color: isActive ? "#e04c2c" : "#f6f6f6",
+                      color: isActive ? "#ea3b15" : "#CCC",
                       fontSize: "16px",
                       fontWeight: 300,
                       whiteSpace: "normal",

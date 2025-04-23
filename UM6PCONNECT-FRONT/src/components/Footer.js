@@ -6,12 +6,14 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#181717",
-        color: "#f6f6f6",
+        backgroundColor: "#FFF",
+        color: "#000",
+        borderLeft: "1px solid #CCC",
+
         px: { xs: 3, md: 10 },
         py: 6,
         fontFamily: "'Work Sans', sans-serif",
-        borderTop:"1px solid #fff"
+        borderTop:"1px solid #CCC"
       }}
     >
       <Grid container spacing={4}>
@@ -28,11 +30,11 @@ const Footer = () => {
             STUDY AND LIVE AT UM6P
           </Typography>
           <Stack spacing={1}>
-            <Link href="#" underline="none" color="#ccc">Academic Life & Attractiveness</Link>
-            <Link href="#" underline="none" color="#ccc">Residences & Infrastructure</Link>
-            <Link href="#" underline="none" color="#ccc">Dining & Lifestyle</Link>
-            <Link href="#" underline="none" color="#ccc">Wellness & Sports</Link>
-            <Link href="#" underline="none" color="#ccc">Staff & Family Services</Link>
+            <Link href="#" underline="none" color="#000">Academic Life & Attractiveness</Link>
+            <Link href="#" underline="none" color="#000">Residences & Infrastructure</Link>
+            <Link href="#" underline="none" color="#000">Dining & Lifestyle</Link>
+            <Link href="#" underline="none" color="#000">Wellness & Sports</Link>
+            <Link href="#" underline="none" color="#000">Staff & Family Services</Link>
           </Stack>
         </Grid>
 
@@ -42,12 +44,12 @@ const Footer = () => {
             OUR VISION 2030
           </Typography>
           <Stack spacing={1} whiteSpace= "nowrap">
-            <Link href="#" underline="none" color="#ccc">The Why Behind Vision 2030</Link>
-            <Link href="#" underline="none" color="#ccc">Research</Link>
-            <Link href="#" underline="none" color="#ccc">Education</Link>
+            <Link href="#" underline="none" color="#000">The Why Behind Vision 2030</Link>
+            <Link href="#" underline="none" color="#000">Research</Link>
+            <Link href="#" underline="none" color="#000">Education</Link>
 
-            <Link href="#" underline="none" color="#ccc">Entrepreneurship</Link>
-            <Link href="#" underline="none" color="#ccc">Social Impact</Link>
+            <Link href="#" underline="none" color="#000">Entrepreneurship</Link>
+            <Link href="#" underline="none" color="#000">Social Impact</Link>
 
           </Stack>
         </Grid>
@@ -62,12 +64,13 @@ const Footer = () => {
               whiteSpace: "nowrap",
               overflow: "hidden",
               textOverflow: "ellipsis",
+              color:"#000",
             }}
           >
             MEET AND ENGAGE WITH OUR RESEARCHERS
           </Typography>
           <Stack spacing={1}>
-            <Link href="#" underline="none" color="#ccc"> Our Researchers
+            <Link href="#" underline="none" color="#000"> Our Researchers
             </Link>
 
           </Stack>
@@ -77,7 +80,7 @@ const Footer = () => {
       {/* Bottom bar */}
       <Box
         sx={{
-          borderTop: "1px solid #FFF",
+          borderTop: "1px solid #CCC",
           mt: 5,
           pt: 3,
           display: "flex",
@@ -86,15 +89,15 @@ const Footer = () => {
           gap: 2,
         }}
       >
-        <Typography sx={{ fontSize: "14px", color: "#ccc" }}>
+        <Typography sx={{ fontSize: "14px", color: "#000" }}>
           © 2025 UM6P CONNECT. All rights reserved.
         </Typography>
 
         <Stack direction="row" spacing={3} alignItems="center">
-          <Link href="#" underline="none" color="#ccc">Terms</Link>
-          <Link href="#" underline="none" color="#ccc">Privacy</Link>
-          <Link href="#" underline="none" color="#ccc">Copyright</Link>
-          <Link href="#" underline="none" color="#ccc">Imprint</Link>
+          <Link href="#" underline="none" color="#000">Terms</Link>
+          <Link href="#" underline="none" color="#000">Privacy</Link>
+          <Link href="#" underline="none" color="#000">Copyright</Link>
+          <Link href="#" underline="none" color="#000">Imprint</Link>
         </Stack>
       </Box>
     </Box>
