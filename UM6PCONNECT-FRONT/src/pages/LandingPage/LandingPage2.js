@@ -13,7 +13,9 @@ const ProgressHero = () => {
         left: 0,
         background: "#000",
         zIndex: 999,
-        borderBottom:"1px solid #fff"
+        borderBottom:"1px solid #CCC",
+        borderLeft: "1px solid #CCC",
+
 
       }}
     >
@@ -22,7 +24,7 @@ const ProgressHero = () => {
           width: "100%",
           height: "100%",
           boxSizing: "border-box",
-          backgroundImage: "url('/assets/images/herosection/home.png')",
+          backgroundImage: "url('/assets/images/herosection/_E1A6457.JPG')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

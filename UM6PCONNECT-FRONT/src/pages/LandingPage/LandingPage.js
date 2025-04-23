@@ -10,11 +10,11 @@ const ProgressReport2021 = () => (
     <LandingPage2 />
 
     {/* The Why Section */}
-    <TitleSection title="Step into the movement" id="why" number="01" />
+    <TitleSection title="Step into the movement" id="why"  />
       <LandingPage4 />
     
 
-    <TitleSection title="A voice for knowledge, a vision for Africa" id="pillar1" number="02" borderTop />
+    <TitleSection title="A voice for knowledge, a vision for Africa" id="pillar1"  borderTop />
     <LandingPage5 />
 
 

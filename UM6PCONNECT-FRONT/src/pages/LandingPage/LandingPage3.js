@@ -14,7 +14,9 @@ const TheWhyVideo = () => {
         position: "relative",
         overflow: "hidden",
         backgroundColor: "#000",
-        borderBottom:"1px solid #fff"
+        borderBottom:"1px solid #fff",
+        borderLeft: "1px solid #CCC",
+
 
       }}
     >

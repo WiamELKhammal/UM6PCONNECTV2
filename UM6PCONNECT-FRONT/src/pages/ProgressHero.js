@@ -20,12 +20,13 @@ const ProgressHero = () => {
           width: "100%",
           height: "100%",
           boxSizing: "border-box",
-          backgroundImage: "url('/assets/images/herosection/hero.png')",
+          backgroundImage: "url('/assets/images/herosection/HERO.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           position: "relative",
-          borderBottom:"1px solid #fff"
+          borderLeft: "1px solid #CCC",
+          borderRight: "1px solid #CCC", 
         }}
       >
         {/* Dark overlay for contrast */}
@@ -80,7 +81,7 @@ const ProgressHero = () => {
               lineHeight: 1,
             }}
           >
-            A CAMPUS BUILD FOR LEARNING, 
+            A CAMPUS BUILT FOR LEARNING,
           </Typography>
 
           <Typography

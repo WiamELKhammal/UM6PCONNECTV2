@@ -6,8 +6,10 @@ const AcademicGraphPage = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#1d1b1c",
-        color: "#f6f6f6",
+        backgroundColor: "#FAFAFA",
+        borderLeft: "1px solid #CCC",
+
+        color: "#000",
         minHeight: "100vh",
         px: { xs: 3, md: 8 },
         py: 10,
@@ -20,6 +22,8 @@ const AcademicGraphPage = () => {
           fontWeight: 400,
           mb: 6,
           textAlign: "center",
+                  color: "#000",
+
         }}
       >
         Top 6 Academic Programs by Application Volume

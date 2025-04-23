@@ -10,8 +10,10 @@ const AcademicLife = () => {
       sx={{
         px: { xs: 3, md: 8 },
         py: { xs: 6, md: 10 },
-        backgroundColor: "#1d1b1c",
-        color: "#f6f6f6",
+        borderLeft: "1px solid #CCC",
+
+        backgroundColor: "#FFF",
+        color: "#000",
         fontFamily: "'Work Sans', sans-serif",
       }}
     >
@@ -30,7 +32,7 @@ const AcademicLife = () => {
               fontWeight: 400,
               fontSize: "30px",
               lineHeight: "36px",
-              color: "#FFF",
+              color: "#000",
               textAlign: "justify",
               fontFamily: "'Work Sans', sans-serif",
             }}
@@ -54,8 +56,8 @@ const AcademicLife = () => {
           src="/assets/images/herosection/visual_selection_2.png"
           alt="Academic Visual"
           sx={{
-            width: { xs: "100%", md: "750px" },
-            height: "400px",
+            width: { xs: "100%", md: "600px" },
+            height: "auto",
             borderRadius: "8px",
             alignSelf: { xs: "center", md: "center" }, // ✅ for safe centering
             flexShrink: 0,

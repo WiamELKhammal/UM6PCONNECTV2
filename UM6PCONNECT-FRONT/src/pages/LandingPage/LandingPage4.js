@@ -6,43 +6,32 @@ const LandingPage4 = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#111",
-        color: "#f6f6f6",
+        backgroundColor: "#FFF",
+        color: "#000",
         py: 10,
         px: { xs: 3, md: 10 },
         fontFamily: "'Work Sans', sans-serif",
-        borderBottom: "1px solid #fff",
+        borderLeft: "1px solid #CCC",
       }}
     >
       <Box
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          alignItems: "stretch", // ensures balanced vertical alignment
+          alignItems: "stretch",
+          gap: { xs: 4, md: 8 }, // <- Added spacing between text and image
         }}
       >
         {/* Left: Text Content */}
         <Box sx={{ flex: 1, minHeight: { md: 480 } }}>
-          <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
-            <Typography
-              sx={{
-                fontSize: "30px",
-                fontWeight: 600,
-                color: "#FFF",
-                fontFamily: "'Work Sans', sans-serif",
-              }}
-            >
-              Step into the movement
-            </Typography>
-          </Box>
-
           <Typography
             sx={{
-              fontSize: "22px",
+              fontSize: "25px",
               fontWeight: 300,
               lineHeight: 1.7,
               textAlign: "justify",
               fontFamily: "'Work Sans', sans-serif",
+              color: "#000",
             }}
           >
             At UM6P, we believe that meaningful progress begins with meaningful
@@ -52,7 +41,7 @@ const LandingPage4 = () => {
             impact.
             <br />
             <br />
-            <Box component="span" sx={{ fontWeight: 600, color: "#fff" }}>
+            <Box component="span" sx={{ fontWeight: 600, color: "#000" }}>
               UM6P Connect
             </Box>{" "}
             is the digital expression of that mission. More than a platform,
@@ -69,7 +58,7 @@ const LandingPage4 = () => {
         {/* Right: Image */}
         <Box
           component="img"
-          src="/assets/images/herosection/UM6P.png"
+          src="/assets/images/herosection/_DPH1262-web.jpg"
           alt="UM6P Connect"
           sx={{
             height: "auto",
