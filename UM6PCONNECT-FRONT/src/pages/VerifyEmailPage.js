@@ -142,7 +142,7 @@ const VerifyEmailPage = () => {
                                 onClick={handleVerify}
                                 disabled={loading}
                                 style={{
-                                    backgroundColor: "#e04c2c",
+                                    backgroundColor: "#ea3b15",
                                     color: "white",
                                     width: "100%",
                                     marginTop: "15px",
@@ -152,7 +152,7 @@ const VerifyEmailPage = () => {
                                     cursor: loading ? "not-allowed" : "pointer",
                                 }}
                                 onMouseOver={(e) => !loading && (e.currentTarget.style.backgroundColor = "#c83b15")}
-                                onMouseOut={(e) => !loading && (e.currentTarget.style.backgroundColor = "#e04c2c")}
+                                onMouseOut={(e) => !loading && (e.currentTarget.style.backgroundColor = "#ea3b15")}
                             >
                                 {loading ? "Verifying..." : "Verify Email"}
                             </button>
@@ -162,7 +162,7 @@ const VerifyEmailPage = () => {
                                 <span
                                     onClick={!resendDisabled ? handleResendOtp : null}
                                     style={{
-                                        color: resendDisabled ? "#aaa" : "#e04c2c",
+                                        color: resendDisabled ? "#aaa" : "#ea3b15",
                                         fontWeight: 600,
                                         cursor: resendDisabled ? "not-allowed" : "pointer",
                                         textDecoration: "underline",

@@ -43,7 +43,7 @@ const TitleSection = ({ title, id, number, borderTop = false }) => {
           fontWeight: 300,
           fontSize: { xs: "34px", sm: "50px", md: "90px" },
           lineHeight: { xs: "44px", md: "60px" },
-          color: "#e04c2c",
+          color: "#ea3b15",
         }}
       >
         {number}

@@ -8,7 +8,7 @@ import { useTheme } from "@mui/material/styles";
 const cardData = [
   {
     title: "Housing & Facilities",
-    color: "#e04c2c",
+    color: "#ea3b15",
     image: "/assets/images/herosection/life.png",
     description: (
       <>
@@ -20,7 +20,7 @@ const cardData = [
   },
   {
     title: "Dining & Lifestyle",
-    color: "#e04c2c",
+    color: "#ea3b15",
     image: "/assets/images/herosection/food.png",
     description: (
       <>
@@ -32,7 +32,7 @@ const cardData = [
   },
   {
     title: "Wellness & Sports",
-    color: "#e04c2c",
+    color: "#ea3b15",
     image: "/assets/images/herosection/Sport.jpg",
     description: (
       <>
@@ -44,7 +44,7 @@ const cardData = [
   },
   {
     title: "Staff & Family Services",
-    color: "#e04c2c",
+    color: "#ea3b15",
     image: "/assets/images/herosection/staff.png",
     description: (
       <>

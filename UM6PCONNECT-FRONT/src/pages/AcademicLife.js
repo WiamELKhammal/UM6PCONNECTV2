@@ -89,7 +89,7 @@ const ProgramCardsGrid = () => {
                         ? "#a0301a"
                         : "#e4d1c9"
                       : isImageLeft
-                      ? "#e04c2c"
+                      ? "#ea3b15"
                       : "#fef2ec",
                     color: isHovered
                       ? isImageLeft
@@ -97,7 +97,7 @@ const ProgramCardsGrid = () => {
                         : "#a0301a"
                       : isImageLeft
                       ? "#fff"
-                      : "#e04c2c",
+                      : "#ea3b15",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",

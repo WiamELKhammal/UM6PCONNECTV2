@@ -153,22 +153,12 @@ const SignUpPage = () => {
                 </div>
               </div>
 
-              <div className="field" style={{ marginBottom: '15px' }}>
-                <label className="checkbox" style={{ fontSize: "14px", color: "#6a6a6a" }}>
-                  <input
-                    type="checkbox"
-                    checked={keepSignedIn}
-                    onChange={() => setKeepSignedIn(!keepSignedIn)}
-                    style={{ marginRight: "10px" }}
-                  />
-                  Keep me signed in
-                </label>
-              </div>
+
 
               <button
                 className="button"
                 style={{
-                  backgroundColor: '#e04c2c',
+                  backgroundColor: '#ea3b15',
                   color: 'white',
                   width: '100%',
                   padding: '10px',
@@ -176,7 +166,7 @@ const SignUpPage = () => {
                   transition: 'background-color 0.3s ease',
                 }}
                 onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#c83b15'; }}
-                onMouseOut={(e) => { e.currentTarget.style.backgroundColor = '#e04c2c'; }}
+                onMouseOut={(e) => { e.currentTarget.style.backgroundColor = '#ea3b15'; }}
                 onClick={handleSubmit}
                 disabled={loading}
               >
@@ -185,7 +175,7 @@ const SignUpPage = () => {
 
               <p style={{ fontSize: "14px", color: "black", textAlign: "center", marginTop: "10px" }}>
                 Already have an account?{" "}
-                <a href="/signin" style={{ color: "#e04c2c", fontWeight: "600" }}>
+                <a href="/signin" style={{ color: "#ea3b15", fontWeight: "600" }}>
                   Sign in
                 </a>
               </p>

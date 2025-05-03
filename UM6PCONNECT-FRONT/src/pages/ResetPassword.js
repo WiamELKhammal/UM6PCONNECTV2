@@ -83,7 +83,7 @@ const ResetPassword = () => {
       <button
         onClick={handleSubmit}
         style={{
-          backgroundColor: "#e04c2c",
+          backgroundColor: "#ea3b15",
           color: "#fff",
           border: "none",
           padding: "10px",

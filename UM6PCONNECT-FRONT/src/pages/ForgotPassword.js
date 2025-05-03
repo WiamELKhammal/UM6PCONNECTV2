@@ -79,7 +79,7 @@ const ForgotPassword = () => {
           variant="contained"
           onClick={handleSubmit}
           sx={{
-            backgroundColor: "#e04c2c",
+            backgroundColor: "#ea3b15",
             textTransform: "none",
             "&:hover": {
               backgroundColor: "#c83812",

@@ -21,7 +21,7 @@ const LandingPage2 = () => {
       <div style={{ maxWidth: "50%", minWidth: "300px", marginBottom: "20px" }}>
         <h3
           style={{
-            color: "#e04c2c",
+            color: "#ea3b15",
             fontWeight: "700",
             marginBottom: "10px",
             marginTop: "-100px",
@@ -37,7 +37,7 @@ const LandingPage2 = () => {
             style={{
               width: "20px",
               height: "3px",
-              backgroundColor: "#e04c2c",
+              backgroundColor: "#ea3b15",
               display: "inline-block",
             }}
           ></span>
@@ -82,11 +82,11 @@ const LandingPage2 = () => {
               fontWeight: "600",
               textTransform: "none",
               transition: "color 0.3s ease, box-shadow 0.3s ease", // Changed hover effect
-              borderColor: "#e04c2c",
-              backgroundColor: "#e04c2c",
+              borderColor: "#ea3b15",
+              backgroundColor: "#ea3b15",
               boxShadow: "0 4px 10px rgba(216, 75, 43, 0.2)",
               "&:hover": {
-                color: "#e04c2c", // Text color change on hover
+                color: "#ea3b15", // Text color change on hover
                 boxShadow: "0 6px 14px rgba(216, 75, 43, 0.3)",
                 textDecoration: "underline", // Underline effect on hover
               },
@@ -106,11 +106,11 @@ const LandingPage2 = () => {
               textTransform: "none",
               transition: "color 0.3s ease, border-color 0.3s ease", // Changed hover effect
               backgroundColor: "white",
-              borderColor: "#e04c2c",
-              color: "#e04c2c",
+              borderColor: "#ea3b15",
+              color: "#ea3b15",
               "&:hover": {
-                color: "#e04c2c", // Text color change on hover
-                borderColor: "#e04c2c",
+                color: "#ea3b15", // Text color change on hover
+                borderColor: "#ea3b15",
                 backgroundColor: "#fff5f3", // Light background on hover
               },
             }}
