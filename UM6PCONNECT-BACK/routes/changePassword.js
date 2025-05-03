@@ -1,60 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
-const bcrypt = require('bcrypt');
+const { body } = require('express-validator');
+const { handleChangePassword } = require('../controllers/changePasswordController');
 
-router.post('/', async (req, res) => {
-    try {
-        console.log("Change Password API called");
-        console.log("Received Request Body:", req.body);
-
-        const { email, tempPassword, newPassword, confirmPassword } = req.body;
-
-        if (!email || !tempPassword || !newPassword || !confirmPassword) {
-            console.log("Missing fields in request");
-            return res.status(400).json({ message: 'All fields are required.' });
-        }
-
-        if (newPassword !== confirmPassword) {
-            console.log("New passwords do not match");
-            return res.status(400).json({ message: 'Passwords do not match.' });
-        }
-
-        const user = await User.findOne({ Email: email });
-        console.log("User found:", user);
-
-        if (!user) {
-            console.log("User not found");
-            return res.status(404).json({ message: 'User not found.' });
-        }
-
-        console.log("Stored hashed temp password:", user.hashedTemporaryPass);
-        console.log("Entered temp password:", tempPassword);
-
-        const isTempPasswordValid = await bcrypt.compare(tempPassword, user.hashedTemporaryPass);
-
-        if (!isTempPasswordValid) {
-            console.log("Invalid temporary password");
-            return res.status(401).json({ message: 'Invalid temporary password.' });
-        }
-
-        // Hachage du nouveau mot de passe
-        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
-        user.password = hashedNewPassword;
-        user.hashedTemporaryPass = null;
-        user.emailsent = true;
-        user.Status = "Active"; 
-        user.verified = true;
-
-
-        await user.save();
-        console.log("Password changed successfully and account activated");
-
-        res.status(200).json({ message: 'Password changed successfully. Account activated.' });
-    } catch (error) {
-        console.error("Server error:", error);
-        res.status(500).json({ message: 'Server error.' });
-    }
-});
+router.post(
+  '/',
+  [
+    body('email').isEmail().withMessage('Email is invalid'),
+    body('tempPassword').notEmpty().withMessage('Temporary password is required'),
+    body('newPassword').isLength({ min: 6 }).withMessage('Password too short'),
+    body('confirmPassword').custom((value, { req }) => {
+      if (value !== req.body.newPassword) throw new Error('Passwords do not match');
+      return true;
+    })
+  ],
+  handleChangePassword
+);
 
 module.exports = router;

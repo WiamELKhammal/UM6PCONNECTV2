@@ -1,10 +1,12 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const verifyToken = require("../middleware/verifyToken"); // ✅ Import middleware
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET;
 
+// ✅ Protected OTP verification route
 router.post("/", async (req, res) => {
   const { otpToken, otpInput } = req.body;
 
