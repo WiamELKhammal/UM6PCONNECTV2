@@ -38,7 +38,7 @@ const DeletePublication = ({ open, onClose, publicationId, fetchPublications }) 
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} disabled={loading} style={{ color: "#666" }}>Cancel</Button>
-        <Button onClick={handleDelete} disabled={loading} style={{ color: "#e04c2c" }}>
+        <Button onClick={handleDelete} disabled={loading} style={{ color: "#ea3b15" }}>
           {loading ? <CircularProgress size={24} /> : "Delete"}
         </Button>
       </DialogActions>

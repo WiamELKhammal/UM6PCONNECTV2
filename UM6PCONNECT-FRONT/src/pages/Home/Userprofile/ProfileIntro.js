@@ -83,7 +83,7 @@ const PublicProfileIntro = ({ userId }) => {
           width: "90%",
           margin: "0px auto",
           borderRadius: 3,
-          border: "1px solid #e0e0e0",
+          border: "1px solid #CCC",
           backgroundColor: "#fff",
           overflow: "hidden",
         }}
@@ -183,9 +183,9 @@ const PublicProfileIntro = ({ userId }) => {
                     variant="outlined"
                     startIcon={<ChatBubbleOutlineIcon fontSize="small" />}
                     sx={{
-                      border: "1px solid #e04c2c",
+                      border: "1px solid #ea3b15",
                       color: "#fff",
-                      backgroundColor: "#e04c2c",
+                      backgroundColor: "#ea3b15",
                       fontSize: "13px",
                       textTransform: "none",
                     }}
@@ -200,9 +200,9 @@ const PublicProfileIntro = ({ userId }) => {
                       variant="outlined"
                       startIcon={<ChatBubbleOutlineIcon fontSize="small" />}
                       sx={{
-                        border: "1px solid #e04c2c",
+                        border: "1px solid #ea3b15",
                         color: "#fff",
-                        backgroundColor: "#e04c2c",
+                        backgroundColor: "#ea3b15",
                         fontSize: "13px",
                         textTransform: "none",
                       }}

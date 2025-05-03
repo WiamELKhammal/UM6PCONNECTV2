@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -17,6 +17,7 @@ import {
   Box,
   Typography,
 } from "@mui/material";
+import { UserContext } from "../../../context/UserContext";
 
 const tagList = [
   "Web Development",
@@ -29,6 +30,8 @@ const tagList = [
 ];
 
 const EditResearch = ({ research, onClose, onUpdate }) => {
+  const { user } = useContext(UserContext);
+
   const [formData, setFormData] = useState({
     ...research,
     collaborators: research.collaborators?.join(", ") || "",
@@ -98,7 +101,10 @@ const EditResearch = ({ research, onClose, onUpdate }) => {
         `http://localhost:5000/api/research/${formData._id}`,
         {
           method: "PUT",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user?.token}`, // ✅ Attach token
+          },
           body: JSON.stringify(updatedData),
         }
       );
@@ -193,24 +199,51 @@ const EditResearch = ({ research, onClose, onUpdate }) => {
             fullWidth
           />
 
-          <Box
-            sx={{
-              border: "2px dotted #aaa",
-              padding: 2,
-              borderRadius: 2,
-              textAlign: "center",
-            }}
-          >
-            <Typography variant="body2" mb={1}>
-              Upload supporting file (optional)
-            </Typography>
-            <input type="file" onChange={handleFileChange} />
-            {formData.file && (
-              <Typography variant="body2" mt={1}>
-                Selected: {formData.file.name}
-              </Typography>
-            )}
-          </Box>
+<Box
+  sx={{
+    border: "2px dotted #aaa",
+    padding: 2,
+    borderRadius: 2,
+    textAlign: "center",
+  }}
+>
+  <Typography variant="body2" mb={1}>
+    Upload supporting file (optional)
+  </Typography>
+
+  <Button
+    component="label"
+    variant="outlined"
+    sx={{ mt: 1, textTransform: "none" }}
+  >
+    Choose File
+    <input type="file" hidden onChange={handleFileChange} />
+  </Button>
+
+  {formData.file ? (
+    <Typography
+      variant="body2"
+      mt={1}
+      sx={{
+        maxWidth: "100%",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+      }}
+    >
+      Selected: {formData.file.name}
+    </Typography>
+  ) : (
+    <Typography
+      variant="body2"
+      mt={1}
+      sx={{ color: "#888" }}
+    >
+      No file selected
+    </Typography>
+  )}
+</Box>
+
         </Stack>
       </DialogContent>
 
@@ -220,7 +253,7 @@ const EditResearch = ({ research, onClose, onUpdate }) => {
         </Button>
         <Button
           onClick={handleSubmit}
-          sx={{ bgcolor: "#e04c2c", color: "#fff", textTransform: "none" }}
+          sx={{ bgcolor: "#ea3b15", color: "#fff", textTransform: "none" }}
         >
           Save Changes
         </Button>

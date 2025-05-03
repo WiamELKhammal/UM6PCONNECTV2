@@ -8,18 +8,28 @@ const Save = ({ researcherId, user }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user?._id) {
-      fetch(`http://localhost:5000/api/save/saved/${user._id}`)
-        .then((res) => res.json())
-        .then((data) => {
+    const fetchSavedResearchers = async () => {
+      if (user?._id && user?.token) {
+        try {
+          const res = await fetch(`http://localhost:5000/api/save/saved`, {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          });
+          const data = await res.json();
           const savedIds = data.map((saved) => saved.researcher._id);
           setIsSaved(savedIds.includes(researcherId));
-        })
-        .catch((err) => console.error("Failed to fetch saved researchers:", err));
-    }
+        } catch (err) {
+          console.error("Failed to fetch saved researchers:", err);
+        }
+      }
+    };
+
+    fetchSavedResearchers();
   }, [researcherId, user]);
 
   const handleToggleSave = async () => {
+    if (!user?.token) return;
     setLoading(true);
     const url = isSaved
       ? "http://localhost:5000/api/save/unsave"
@@ -28,8 +38,11 @@ const Save = ({ researcherId, user }) => {
     try {
       await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user._id, researcherId }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({ researcherId }),
       });
       setIsSaved(!isSaved);
     } catch (error) {
@@ -53,8 +66,8 @@ const Save = ({ researcherId, user }) => {
         )
       }
       sx={{
-        border: "1px solid #e04c2c",
-        color: "#e04c2c",
+        border: "1px solid #ea3b15",
+        color: "#ea3b15",
         textTransform: "none",
         fontSize: "13px",
         flex: 1,

@@ -54,7 +54,7 @@ const DeleteLanguage = ({ open, onClose, languageId, fetchLanguages }) => {
         </Button>
         <Button
           onClick={handleDelete}
-          style={{ color: "#e04c2c" }}
+          style={{ color: "#ea3b15" }}
           disabled={loading}
         >
           {loading ? "Deleting..." : "Delete"}

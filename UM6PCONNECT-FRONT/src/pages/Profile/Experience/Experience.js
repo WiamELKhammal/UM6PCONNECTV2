@@ -8,6 +8,7 @@ import EditExperience from "./EditExperience";
 import DeleteExperience from "./DeleteExperience";
 import { UserContext } from "../../../context/UserContext";
 import ApartmentIcon from '@mui/icons-material/Apartment';
+
 const Experience = () => {
   const { user } = useContext(UserContext);
   const [experienceList, setExperienceList] = useState([]);
@@ -17,8 +18,12 @@ const Experience = () => {
 
   const fetchExperience = async () => {
     try {
-      if (!user?._id) return;
-      const response = await fetch(`http://localhost:5000/api/experience/${user._id}`);
+      if (!user?._id || !user?.token) return;
+      const response = await fetch(`http://localhost:5000/api/experience/${user._id}`, {
+        headers: {
+          "Authorization": `Bearer ${user.token}`,
+        },
+      });
       const data = await response.json();
       setExperienceList(data);
     } catch (error) {
@@ -55,6 +60,8 @@ const Experience = () => {
     return `${years ? `${years} yr${years > 1 ? 's' : ''}` : ""}${years && remainingMonths ? " " : ""}${remainingMonths ? `${remainingMonths} mo${remainingMonths > 1 ? 's' : ''}` : ""}`;
   };
 
+  const isMobile = window.innerWidth < 600;
+
   return (
     <div
       className="box"
@@ -69,30 +76,37 @@ const Experience = () => {
         boxShadow: "none",
       }}
     >
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "15px" }}>
+      <div style={{
+        display: "flex", justifyContent: "space-between", alignItems: "center",
+        marginBottom: "15px", flexWrap: "nowrap"
+      }}>
         <div>
-          <h4 style={{ fontWeight: "600", fontSize: "18px", color: "#000" }}>Work Experience</h4>
-          <p style={{ fontSize: "16px", color: "#5a5a5a" }}>Add your work experience to complete your profile.</p>
+          <h4 style={{ fontWeight: "600", fontSize: isMobile ? "18px" : "20px", color: "#000" }}>Work Experience</h4>
+          <p style={{ fontSize: isMobile ? "14px" : "16px", color: "#5a5a5a" }}>Add your work experience to complete your profile.</p>
         </div>
         <AddIcon
           onClick={() => handleOpen(null)}
           style={{
             cursor: "pointer",
-            color: "#e04c2c",
-            border: "1px solid #e04c2c",
+            color: "#ea3b15",
+            border: "1px solid #ea3b15",
             borderRadius: "8px",
             padding: "5px",
-            fontSize: "30px",
+            fontSize: isMobile ? "30px" : "36px",
+            marginTop: isMobile ? "5px" : "10px"
           }}
         />
       </div>
 
       {experienceList.length === 0 && (
-        <div style={{ display: "flex", alignItems: "center", gap: "15px", marginTop: "15px" }}>
+        <div style={{
+          display: "flex", alignItems: "center", gap: "15px", marginTop: "15px",
+          flexWrap: "nowrap"
+        }}>
           <div
             style={{
-              width: 48,
-              height: 48,
+              width: isMobile ? 48 : 64,
+              height: isMobile ? 48 : 64,
               borderRadius: "50%",
               backgroundColor: "#FFF",
               display: "flex",
@@ -100,24 +114,27 @@ const Experience = () => {
               justifyContent: "center",
             }}
           >
-            <ApartmentIcon style={{ color: "#5a5a5a", fontSize: "40px" }} />
+            <ApartmentIcon style={{ color: "#5a5a5a", fontSize: isMobile ? "40px" : "48px" }} />
           </div>
           <div>
-            <p style={{ fontWeight: "600", fontSize: "16px" }}>Company Name</p>
-            <p style={{ fontSize: "14px" }}>Job Title</p>
-            <p style={{ fontSize: "12px", color: "#5a5a5a" }}>Start Date - End Date</p>
+            <p style={{ fontWeight: "600", fontSize: isMobile ? "16px" : "18px" }}>Company Name</p>
+            <p style={{ fontSize: isMobile ? "14px" : "16px" }}>Job Title</p>
+            <p style={{ fontSize: "14px", color: "#5a5a5a" }}>Start Date - End Date</p>
           </div>
         </div>
       )}
 
       {experienceList.map((exp, index) => (
         <div key={exp._id || index} style={{ marginTop: index === 0 ? "0" : "20px" }}>
-          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "15px" }}>
-            <div style={{ display: "flex", gap: "15px" }}>
+          <div style={{
+            display: "flex", alignItems: "flex-start", justifyContent: "space-between",
+            flexWrap: "nowrap", gap: "15px", width: "100%"
+          }}>
+            <div style={{ display: "flex", gap: "15px", flexWrap: "nowrap" }}>
               <div
                 style={{
-                  width: 48,
-                  height: 48,
+                  width: isMobile ? 48 : 64,
+                  height: isMobile ? 48 : 64,
                   borderRadius: "50%",
                   backgroundColor: "#FFF",
                   overflow: "hidden",
@@ -133,20 +150,23 @@ const Experience = () => {
                     style={{ width: "100%", height: "100%", objectFit: "contain" }}
                   />
                 ) : (
-                  <ApartmentIcon style={{ color: "#5a5a5a", fontSize: "40px" }} />
+                  <ApartmentIcon style={{ color: "#5a5a5a", fontSize: isMobile ? "40px" : "48px" }} />
                 )}
               </div>
               <div style={{ maxWidth: "800px" }}>
-                <p style={{ fontSize: "16px", fontWeight: 600, marginBottom: 4 }}>{exp.jobTitle}</p>
-                <p style={{ fontSize: "14px", color: "#555", marginBottom: 2 }}>{exp.companyName} · Full-time</p>
-                <p style={{ fontSize: "13px", color: "#777", marginBottom: 2 }}>
+                <p style={{ fontSize: isMobile ? "16px" : "18px", fontWeight: 600, marginBottom: 4 }}>{exp.jobTitle}</p>
+                <p style={{ fontSize: isMobile ? "14px" : "16px", color: "#555", marginBottom: 2 }}>{exp.companyName} · Full-time</p>
+                <p style={{ fontSize: "14px", color: "#777", marginBottom: 2 }}>
                   {formatDate(exp.startDate)} – {formatDate(exp.endDate)} · {formatDuration(exp.startDate, exp.endDate)}
                 </p>
                 {exp.location && (
-                  <p style={{ fontSize: "13px", color: "#777", marginBottom: 2 }}>{exp.location}</p>
+                  <p style={{ fontSize: "14px", color: "#777", marginBottom: 2 }}>{exp.location}</p>
                 )}
                 {exp.description && (
-                  <p style={{ fontSize: "14px", color: "#333", whiteSpace: "pre-wrap", wordBreak: "break-word", marginTop: 8 }}>
+                  <p style={{
+                    fontSize: "15px", color: "#333",
+                    whiteSpace: "pre-wrap", wordBreak: "break-word", marginTop: 8
+                  }}>
                     {exp.description}
                   </p>
                 )}
@@ -156,11 +176,11 @@ const Experience = () => {
             <div style={{ display: "flex", gap: "12px" }}>
               <EditIcon
                 onClick={() => handleOpen(exp)}
-                style={{ cursor: "pointer", color: "#e04c2c", fontSize: "24px" }}
+                style={{ cursor: "pointer", color: "#ea3b15", fontSize: isMobile ? "24px" : "28px" }}
               />
               <DeleteIcon
                 onClick={() => setDeleteExperienceId(exp._id)}
-                style={{ cursor: "pointer", color: "#e04c2c", fontSize: "24px" }}
+                style={{ cursor: "pointer", color: "#ea3b15", fontSize: isMobile ? "24px" : "28px" }}
               />
             </div>
           </div>

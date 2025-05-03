@@ -26,17 +26,25 @@ const UserAchievements = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!user?._id) return;
+      if (!user?._id || !user.token) return;
   
       try {
+        const headers = {
+          Authorization: `Bearer ${user.token}`,
+        };
+  
         // 1. Get follow stats
-        const followRes = await fetch(`http://localhost:5000/api/follow/follow-count/${user._id}`).then(res => res.json());
+        const followRes = await fetch(`http://localhost:5000/api/follow/follow-count/${user._id}`, { headers })
+          .then(res => res.json());
   
         // 2. Get research count
-        const researchRes = await fetch(`http://localhost:5000/api/research/user/${user._id}`).then(res => res.json());
+        const researchRes = await fetch(`http://localhost:5000/api/research/user/${user._id}`, { headers })
+          .then(res => res.json());
   
-        // 3. Get profile completion (your logic from backend)
-        const profileRes = await fetch(`http://localhost:5000/api/complete/profile/${user._id}`).then(res => res.json());
+        // 3. Get profile completion
+        const profileRes = await fetch(`http://localhost:5000/api/complete/profile/${user._id}`, { headers })
+          .then(res => res.json());
+  
         const completed = parseFloat(profileRes?.completionPercentage) >= 100;
   
         setStats({
@@ -55,7 +63,9 @@ const UserAchievements = () => {
         if (shouldBadge && !user.badged) {
           await fetch(`http://localhost:5000/api/users/${user._id}/badge`, {
             method: "PUT",
+            headers,
           });
+  
           setUser({ ...user, badged: true });
         }
       } catch (err) {
@@ -65,6 +75,7 @@ const UserAchievements = () => {
   
     fetchData();
   }, [user?._id]);
+  
   
   const achievements = [
     {
@@ -140,7 +151,7 @@ const UserAchievements = () => {
                   }}
                 >
                   {a.unlocked ? (
-                    <CheckCircleIcon sx={{ color: "#e04c2c", fontSize: 24 }} />
+                    <CheckCircleIcon sx={{ color: "#ea3b15", fontSize: 24 }} />
                   ) : (
                     <LockClockIcon sx={{ color: "#bbb", fontSize: 24 }} />
                   )}
@@ -159,7 +170,7 @@ const UserAchievements = () => {
                     label={`+${a.points}`}
                     size="small"
                     sx={{
-                      backgroundColor: a.unlocked ? "#e04c2c" : "#eee",
+                      backgroundColor: a.unlocked ? "#ea3b15" : "#eee",
                       color: a.unlocked ? "#fff" : "#888",
                       fontWeight: 500,
                       fontSize: "12px",
@@ -178,12 +189,12 @@ const UserAchievements = () => {
                       mb: 1,
                       padding: "10px",
                       borderRadius: 2,
-                      border: "2px dotted #e04c2c",
+                      border: "2px dotted #ea3b15",
                       backgroundColor: "#fff3f1",
                     }}
                   >
-                    <CheckCircleIcon sx={{ color: "#e04c2c", fontSize: 24 }} />
-                    <Typography fontWeight={600} fontSize={14} color="#e04c2c">
+                    <CheckCircleIcon sx={{ color: "#ea3b15", fontSize: 24 }} />
+                    <Typography fontWeight={600} fontSize={14} color="#ea3b15">
                       You’re Verified — enjoy exclusive features!
                     </Typography>
                   </Box>
@@ -210,7 +221,7 @@ const UserAchievements = () => {
                         backgroundColor: "#fdfdfd",
                       }}
                     >
-                      <EmojiEventsIcon sx={{ fontSize: 20, color: "#e04c2c" }} />
+                      <EmojiEventsIcon sx={{ fontSize: 20, color: "#ea3b15" }} />
                       <Typography fontSize={13}>{feature}</Typography>
                     </Box>
                   ))}
@@ -232,7 +243,7 @@ const UserAchievements = () => {
                           height: 6,
                           borderRadius: 3,
                           backgroundColor: "#eee",
-                          "& .MuiLinearProgress-bar": { backgroundColor: "#e04c2c" },
+                          "& .MuiLinearProgress-bar": { backgroundColor: "#ea3b15" },
                         }}
                       />
                     </Box>

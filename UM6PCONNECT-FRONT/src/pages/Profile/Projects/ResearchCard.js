@@ -53,7 +53,7 @@ const ResearchCard = ({ research, onEdit, onDelete }) => {
           <EditIcon fontSize="small" sx={{ color: "#555" }} />
         </IconButton>
         <IconButton size="small" onClick={onDelete}>
-          <DeleteIcon fontSize="small" sx={{ color: "#e04c2c" }} />
+          <DeleteIcon fontSize="small" sx={{ color: "#ea3b15" }} />
         </IconButton>
       </Box>
 
@@ -93,7 +93,7 @@ const ResearchCard = ({ research, onEdit, onDelete }) => {
             sx={{
               ml: 1,
               backgroundColor: "#fbeaea",
-              color: "#e04c2c",
+              color: "#ea3b15",
               fontWeight: 500,
             }}
           />
@@ -126,7 +126,7 @@ const ResearchCard = ({ research, onEdit, onDelete }) => {
             rel="noopener noreferrer"
             style={{ textDecoration: "none" }}
           >
-            <Button startIcon={<PictureAsPdfIcon />} sx={{ color: "#e04c2c" }}>
+            <Button startIcon={<PictureAsPdfIcon />} sx={{ color: "#ea3b15" }}>
               Download PDF
             </Button>
           </a>
@@ -138,7 +138,7 @@ const ResearchCard = ({ research, onEdit, onDelete }) => {
             rel="noopener noreferrer"
             style={{ textDecoration: "none" }}
           >
-            <Button sx={{ color: "#e04c2c" }}>
+            <Button sx={{ color: "#ea3b15" }}>
               View Publication
             </Button>
           </a>

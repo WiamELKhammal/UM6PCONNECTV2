@@ -1,25 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Button } from "@mui/material";
 import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
 import PersonRemoveOutlinedIcon from "@mui/icons-material/PersonRemoveOutlined";
+import { UserContext } from "../../context/UserContext";
 
-const Follow = ({ researcherId, user }) => {
+const Follow = ({ researcherId }) => {
+  const { user } = useContext(UserContext);
   const [isFollowing, setIsFollowing] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (user?._id) {
-      fetch(`http://localhost:5000/api/follow/following/${user._id}`)
-        .then((res) => res.json())
-        .then((data) => {
+    const fetchFollowing = async () => {
+      if (user?._id && user?.token) {
+        try {
+          const res = await fetch(`http://localhost:5000/api/follow/following/${user._id}`, {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          });
+          const data = await res.json();
           const followingIds = data.map((follow) => follow.following._id);
           setIsFollowing(followingIds.includes(researcherId));
-        })
-        .catch((err) => console.error("Failed to fetch followed users:", err));
-    }
+        } catch (err) {
+          console.error("Failed to fetch followed users:", err);
+        }
+      }
+    };
+
+    fetchFollowing();
   }, [researcherId, user]);
 
   const handleToggleFollow = async () => {
+    if (!user?.token) return;
+
     setLoading(true);
     const url = isFollowing
       ? "http://localhost:5000/api/follow/unfollow"
@@ -28,10 +41,12 @@ const Follow = ({ researcherId, user }) => {
     try {
       await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
         body: JSON.stringify({
-          followerId: user._id,
-          followingId: researcherId,
+          followingId: researcherId, // ✅ ONLY followingId
         }),
       });
       setIsFollowing(!isFollowing);
@@ -56,8 +71,8 @@ const Follow = ({ researcherId, user }) => {
         )
       }
       sx={{
-        border: "1px solid #e04c2c",
-        color: "#e04c2c",
+        border: "1px solid #ea3b15",
+        color: "#ea3b15",
         textTransform: "none",
         fontSize: "13px",
         flex: 1,

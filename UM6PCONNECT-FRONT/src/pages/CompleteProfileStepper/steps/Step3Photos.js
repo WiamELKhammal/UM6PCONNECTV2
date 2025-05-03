@@ -84,7 +84,7 @@ const CameraCapture = ({ open, onClose, onCapture }) => {
                 <canvas ref={canvasRef} style={{ display: "none" }} />
 
                 <Box mt={2} display="flex" justifyContent="space-between">
-                    <Button onClick={handleCapture} variant="contained" sx={{ backgroundColor: "#e04c2c" }}>
+                    <Button onClick={handleCapture} variant="contained" sx={{ backgroundColor: "#ea3b15" }}>
                         Capture
                     </Button>
                     <Button onClick={onClose} variant="outlined" color="error">
@@ -101,13 +101,19 @@ const Step3Photos = ({ data, setData }) => {
 
     const handleFileChange = (e, field) => {
         const file = e.target.files[0];
-        if (file) {
-            const imageUrl = URL.createObjectURL(file);
-            const updated = { ...data, [field]: imageUrl };
-            setData(updated);
-            localStorage.setItem("completeProfileData", JSON.stringify(updated));
-        }
-    };
+        if (!file) return;
+      
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64Data = reader.result; //  base64 string here
+          const updated = { ...data, [field]: base64Data };
+          setData(updated);
+          localStorage.setItem("completeProfileData", JSON.stringify(updated));
+        };
+        reader.readAsDataURL(file); //  Convert file to base64
+      };
+      
+    
 
     const handleCameraCapture = (dataUrl) => {
         const updated = { ...data, profilePicture: dataUrl };
@@ -162,8 +168,8 @@ const Step3Photos = ({ data, setData }) => {
                         backgroundColor: "#fff",
                         "&:hover": {
                             backgroundColor: "#fef2f2",
-                            borderColor: "#e04c2c",
-                            color: "#e04c2c",
+                            borderColor: "#ea3b15",
+                            color: "#ea3b15",
                         },
                         textTransform: "none",
                         borderRadius: "50px",
@@ -190,8 +196,8 @@ const Step3Photos = ({ data, setData }) => {
                         backgroundColor: "#fff",
                         "&:hover": {
                             backgroundColor: "#fef2f2",
-                            borderColor: "#e04c2c",
-                            color: "#e04c2c",
+                            borderColor: "#ea3b15",
+                            color: "#ea3b15",
                         },
                         textTransform: "none",
                         borderRadius: "50px",

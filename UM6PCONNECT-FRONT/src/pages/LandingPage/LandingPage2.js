@@ -1,99 +1,113 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
-import "@fontsource/work-sans/300.css";
 
 const ProgressHero = () => {
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <Box
       sx={{
-        width: "100vw",
-        height: "100vh",
+        width: `${dimensions.width}px`,
+        height: `${dimensions.height}px`,
         position: "relative",
-        background: "#000",
-        zIndex: 999,
+        overflow: "hidden",
         borderBottom: "1px solid #CCC",
         borderLeft: "1px solid #CCC",
+        fontFamily: "'Work Sans', sans-serif",
       }}
     >
+      {/* Dynamically Sized Image */}
+      <Box
+        component="img"
+        src="/assets/images/herosection/_E1A6457.JPG"
+        alt="UM6P Hero"
+        sx={{
+          width: `${dimensions.width}px`,
+          height: `${dimensions.height}px`,
+          objectFit: "cover",
+          objectPosition: "center",
+          position: "absolute",
+          top: 0,
+          left: 0,
+        }}
+      />
+
+      {/* Overlay */}
       <Box
         sx={{
-          width: "100%",
-          height: "100%",
-          boxSizing: "border-box",
-          backgroundImage: "url('/assets/images/herosection/_E1A6457.JPG')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          position: "relative",
+          position: "absolute",
+          inset: 0,
+          backgroundColor: "rgba(0,0,0,0.4)",
+          zIndex: 1,
+        }}
+      />
+
+      {/* Top-left Title */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 55,
+          left: 24,
+          zIndex: 2,
         }}
       >
-        {/* Overlay */}
-        <Box
+        <Typography
           sx={{
-            position: "absolute",
-            inset: 0,
-            background: "rgba(0, 0, 0, 0.4)",
-            zIndex: 1,
-          }}
-        />
-
-        {/* Top-left Heading */}
-        <Box
-          sx={{
-            position: "absolute",
-            top: { xs: 30, md: 55 },
-            left: { xs: 16, sm: 24, md: 72 },
-            zIndex: 2,
+            color: "#fff",
+            fontSize: "28px",
+            fontWeight: 300,
           }}
         >
-          <Typography
-            sx={{
-              color: "#fff",
-              fontFamily: "'Work Sans', sans-serif",
-              fontSize: { xs: "24px", sm: "30px", md: "45px" },
-              fontWeight: 300,
-            }}
-          >
-            UM6P CONNECT
-          </Typography>
-        </Box>
+          UM6P CONNECT
+        </Typography>
+      </Box>
 
-        {/* Main Hero Text */}
-        <Box
+      {/* Slogan */}
+      <Box
+        sx={{
+          position: "absolute",
+          left: 24,
+          bottom: 60,
+          zIndex: 2,
+        }}
+      >
+        <Typography
           sx={{
-            position: "absolute",
-            left: { xs: 16, sm: 24, md: 72 },
-            bottom: { xs: 50, sm: 70, md: 120 },
-            zIndex: 2,
-            display: "flex",
-            flexDirection: "column",
-            gap: 1,
+            fontSize: "30px",
+            fontWeight: 300,
+            color: "#fff",
+            lineHeight: 1.1,
           }}
         >
-          <Typography
-            sx={{
-              fontSize: { xs: "26px", sm: "32px", md: "64px" },
-              fontWeight: 300,
-              color: "#fff",
-              fontFamily: "'Work Sans', sans-serif",
-              lineHeight: 1.1,
-            }}
-          >
-            BUILT TO CONNECT,
-          </Typography>
-
-          <Typography
-            sx={{
-              fontSize: { xs: "26px", sm: "32px", md: "64px" },
-              fontWeight: 300,
-              color: "#fff",
-              fontFamily: "'Work Sans', sans-serif",
-              lineHeight: 1.1,
-            }}
-          >
-            DESIGNED TO EMPOWER
-          </Typography>
-        </Box>
+          BUILT TO CONNECT,
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: "30px",
+            fontWeight: 300,
+            color: "#fff",
+            lineHeight: 1.1,
+          }}
+        >
+          DESIGNED TO EMPOWER
+        </Typography>
       </Box>
     </Box>
   );

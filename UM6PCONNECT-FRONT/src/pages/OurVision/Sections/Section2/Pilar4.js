@@ -8,7 +8,7 @@ import SchoolIcon from "@mui/icons-material/School";
 
 const data = [
   {
-    icon: <FingerprintIcon sx={{ fontSize: 30, color: "#e04c2c" }} />,
+    icon: <FingerprintIcon sx={{ fontSize: 30, color: "#ea3b15" }} />,
     label: "Executives Trained",
     description: (
       <>
@@ -21,7 +21,7 @@ const data = [
     stat: "20,500+ ",
   },
   {
-    icon: <SchoolIcon sx={{ fontSize: 30, color: "#e04c2c" }} />,
+    icon: <SchoolIcon sx={{ fontSize: 30, color: "#ea3b15" }} />,
     label: "University Partnerships",
     description: (
       <>
@@ -33,7 +33,7 @@ const data = [
     stat: "50+",
   },
   {
-    icon: <AcUnitIcon sx={{ fontSize: 30, color: "#e04c2c" }} />,
+    icon: <AcUnitIcon sx={{ fontSize: 30, color: "#ea3b15" }} />,
     label: "Campuses",
     description: (
       <>
@@ -84,7 +84,7 @@ UM6P’s work extends beyond academia into real communities. Through training, p
               }}
             >
               {item.icon}
-              <Typography sx={{ fontSize: "20px",color: "#e04c2c", fontWeight: 500 }}>
+              <Typography sx={{ fontSize: "20px",color: "#ea3b15", fontWeight: 500 }}>
                 {item.label}
               </Typography>
               <Typography
@@ -93,7 +93,7 @@ UM6P’s work extends beyond academia into real communities. Through training, p
                 {item.description}
               </Typography>
               <Typography
-                sx={{ fontSize: "24px", fontWeight: 600, color: "#e04c2c" }}
+                sx={{ fontSize: "24px", fontWeight: 600, color: "#ea3b15" }}
               >
                 {item.stat}
               </Typography>

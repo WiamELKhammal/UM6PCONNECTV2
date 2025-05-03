@@ -28,12 +28,17 @@ const Tags = () => {
 
   useEffect(() => {
     const fetchTags = async () => {
-      if (user?._id) {
+      if (user?._id && user?.token) {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/tags/user/${user._id}`
+            `http://localhost:5000/api/tags/user/${user._id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${user.token}`, // ✅ Attach token
+              },
+            }
           );
-          const tags = response.data.tags; // ✅ Correctly accessing tags array
+          const tags = response.data.tags;
           setSelectedTags(tags);
         } catch (error) {
           console.error("Error fetching tags:", error.response?.data || error.message);
@@ -50,13 +55,21 @@ const Tags = () => {
     if (user?._id) {
       try {
         if (selectedTags.includes(tag)) {
-          await axios.delete(`http://localhost:5000/api/tags/${user._id}/${tag}`);
+          await axios.delete(`http://localhost:5000/api/tags/${user._id}/${tag}`, {
+            headers: {
+              Authorization: `Bearer ${user.token}`, // ✅ attach token
+            },
+          });
           setSelectedTags(selectedTags.filter((t) => t !== tag));
         } else {
-          await axios.post("http://localhost:5000/api/tags", {
-            userId: user._id,
-            name: tag,
-          });
+          await axios.post("http://localhost:5000/api/tags", 
+            { name: tag },
+            {
+              headers: {
+                Authorization: `Bearer ${user.token}`, // ✅ attach token
+              },
+            }
+          );
           setSelectedTags([...selectedTags, tag]);
         }
       } catch (error) {
@@ -66,14 +79,15 @@ const Tags = () => {
       }
     }
   };
+  
 
   return (
-    <div
+    <Box
       className="box"
-      style={{
-        width: "90%",
+      sx={{
+        width: { xs: "95%", sm: "90%" },
         margin: "20px auto",
-        padding: "0px",
+        padding: 0,
         fontFamily: "'Segoe UI', Tahoma, Geneva, sans-serif",
         border: "1px solid #ddd",
         borderRadius: "12px",
@@ -82,8 +96,8 @@ const Tags = () => {
         overflow: "hidden",
       }}
     >
-      <Box sx={{ padding: "16px", borderRadius: "12px", overflow: "hidden" }}>
-        <CardContent sx={{ padding: "0px" }}>
+      <Box sx={{ padding: "16px" }}>
+        <CardContent sx={{ padding: 0 }}>
           <Typography
             variant="h6"
             sx={{ fontWeight: "600", fontSize: "18px", color: "#000" }}
@@ -94,12 +108,13 @@ const Tags = () => {
             Select relevant tags to show your interests.
           </Typography>
 
-          <div
-            style={{
+          <Box
+            sx={{
               display: "flex",
               flexWrap: "wrap",
               gap: "8px",
               marginBottom: "16px",
+              justifyContent: { xs: "center", sm: "flex-start" }, // 📱 center chips on mobile
             }}
           >
             {tagList.map((tag) => (
@@ -108,15 +123,17 @@ const Tags = () => {
                 label={tag}
                 onClick={() => handleToggle(tag)}
                 sx={{
-                  backgroundColor: selectedTags.includes(tag) ? "#e04c2c" : "#fff",
+                  backgroundColor: selectedTags.includes(tag) ? "#ea3b15" : "#fff",
                   color: selectedTags.includes(tag) ? "#fff" : "#000",
-                  border: selectedTags.includes(tag) ? "1px solid #e04c2c" : "1px solid #ddd",
+                  border: selectedTags.includes(tag) ? "1px solid #ea3b15" : "1px solid #ddd",
                   cursor: "pointer",
-                  borderRadius: 20,
+                  borderRadius: "20px",
+                  fontSize: { xs: "12px", sm: "14px" }, // 📱 smaller font on phone
+                  padding: "4px 10px",
                 }}
               />
             ))}
-          </div>
+          </Box>
 
           <Snackbar
             open={openSnackbar}
@@ -133,7 +150,7 @@ const Tags = () => {
           </Snackbar>
         </CardContent>
       </Box>
-    </div>
+    </Box>
   );
 };
 

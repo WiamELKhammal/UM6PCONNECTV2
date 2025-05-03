@@ -1,340 +1,229 @@
-// components/FollowList.js
 import React, { useEffect, useState, useContext } from "react";
 import {
-    Box,
-    Typography,
-    List,
-    ListItem,
-    ListItemAvatar,
-    Avatar,
-    ListItemText,
-    IconButton,
-    Divider,
-    Button,
+  Box,
+  Typography,
+  Avatar,
+  Button,
 } from "@mui/material";
 import { UserContext } from "../../context/UserContext";
 import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
 import PersonRemoveOutlinedIcon from "@mui/icons-material/PersonRemoveOutlined";
 
 const FollowList = ({ activeTab }) => {
-    const { user } = useContext(UserContext); // Get the logged-in user from context
-    const [followers, setFollowers] = useState([]); // Store followers
-    const [following, setFollowing] = useState([]); // Store following
-    const [loading, setLoading] = useState(true); // Loading state for API calls
-    const [userTags, setUserTags] = useState({}); // Store tags by user ID
+  const { user } = useContext(UserContext);
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [userTags, setUserTags] = useState({});
 
-    // Fetch followers and following for the logged-in user on mount
-    useEffect(() => {
-        if (user?._id) {
-            // Fetch followers
-            fetch(`http://localhost:5000/api/follow/followers/${user._id}`)
-                .then((res) => res.json())
-                .then((data) => {
-                    setFollowers(data);
-                })
-                .catch((err) => console.error("Failed to fetch followers:", err));
-
-            // Fetch following
-            fetch(`http://localhost:5000/api/follow/following/${user._id}`)
-                .then((res) => res.json())
-                .then((data) => {
-                    setFollowing(data);
-                    setLoading(false); // Set loading to false after both requests complete
-                })
-                .catch((err) => console.error("Failed to fetch following:", err));
-        }
-    }, [user]);
-
-    // Fetch tags for each user after followers and following are loaded
-    useEffect(() => {
-        const fetchTags = async (users) => {
-            users.forEach((userItem) => {
-                const userId = userItem.follower?._id || userItem.following?._id; // Get the user ID
-                fetch(`http://localhost:5000/api/tags/user/${userId}`)
-                    .then((res) => res.json())
-                    .then((data) => {
-                        setUserTags((prevTags) => ({
-                            ...prevTags,
-                            [userId]: data, // Store tags in state by user ID
-                        }));
-                    })
-                    .catch((err) => console.error("Failed to fetch tags for user:", err));
-            });
-        };
-
-        fetchTags(followers); // Fetch tags for followers
-        fetchTags(following); // Fetch tags for following
-    }, [followers, following]);
-
-    // Handle unfollow action
-    const handleUnfollow = async (userId) => {
+  useEffect(() => {
+    const fetchFollowersAndFollowing = async () => {
+      if (user?.token) {
         try {
-            const requestBody = { followerId: user._id, followingId: userId };
-            console.log("Unfollow Request Body:", requestBody); // Log the request body for debugging
-
-            const response = await fetch("http://localhost:5000/api/follow/unfollow", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(requestBody),
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.error("Unfollow Error:", errorData);
-                throw new Error(errorData.message || "Failed to unfollow user");
-            }
-
-            // Remove the unfollowed user from the local state
-            setFollowing((prev) => prev.filter((u) => u.following._id !== userId));
-        } catch (error) {
-            console.error("Error unfollowing user:", error);
+          const [followersRes, followingRes] = await Promise.all([
+            fetch(`http://localhost:5000/api/follow/followers/${user._id}`, {
+              headers: { Authorization: `Bearer ${user.token}` },
+            }),
+            fetch(`http://localhost:5000/api/follow/following/${user._id}`, {
+              headers: { Authorization: `Bearer ${user.token}` },
+            }),
+          ]);
+          const followersData = await followersRes.json();
+          const followingData = await followingRes.json();
+          setFollowers(followersData);
+          setFollowing(followingData);
+        } catch (err) {
+          console.error("Failed to fetch followers/following:", err);
+        } finally {
+          setLoading(false);
         }
+      }
     };
 
+    fetchFollowersAndFollowing();
+  }, [user]);
+
+  useEffect(() => {
+    const fetchTagsForUsers = async (users) => {
+      if (!user?.token) return;
+
+      const tagFetches = users.map((u) => {
+        const id = u.follower?._id || u.following?._id;
+        return fetch(`http://localhost:5000/api/tags/user/${id}`)
+          .then((res) => res.json())
+          .then((data) => ({ id, tags: data.tags || [] }))
+          .catch(() => ({ id, tags: [] }));
+      });
+
+      const results = await Promise.all(tagFetches);
+      const tagsMap = {};
+      results.forEach(({ id, tags }) => {
+        tagsMap[id] = tags;
+      });
+      setUserTags(tagsMap);
+    };
+
+    if (followers.length || following.length) {
+      fetchTagsForUsers([...followers, ...following]);
+    }
+  }, [followers, following, user]);
+
+  const handleUnfollow = async (researcherId) => {
+    try {
+      await fetch("http://localhost:5000/api/follow/unfollow", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.token}`,
+        },
+        body: JSON.stringify({ followingId: researcherId }),
+      });
+      setFollowing((prev) => prev.filter((f) => f.following._id !== researcherId));
+    } catch (error) {
+      console.error("Error unfollowing:", error);
+    }
+  };
+
+  const renderUser = (u, isFollower) => {
+    const userData = isFollower ? u.follower : u.following;
+    if (!userData) return null;
+
     return (
-        <Box sx={{ flexGrow: 1, p: 3, overflowY: "auto" ,                                        backgroundColor: "#FFF",
-        }}>
-            {loading ? (
-                <Typography>Loading follow list...</Typography>
+      <Box
+        key={userData._id}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          border: "1px solid #ccc",
+          borderRadius: "10px",
+          p: 2,
+          backgroundColor: "#fff",
+          mb: 2,
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            alignItems: { xs: "center", sm: "flex-start" },
+            gap: 2,
+            textAlign: { xs: "center", sm: "left" },
+          }}
+        >
+          <Avatar
+            src={userData.profilePicture || "/assets/images/default-profile.png"}
+            sx={{ width: 70, height: 70, border: "2px solid #ddd" }}
+          />
+          <Box flex={1}>
+            <Typography fontWeight="bold" fontSize="18px" color="black">
+              {userData.Prenom} {userData.Nom}
+            </Typography>
+            <Typography fontSize="14px" color="text.secondary" mt={0.5}>
+              {userData.headline || "No headline"}
+            </Typography>
+            <Typography fontSize="14px" color="text.secondary">
+              {userData.Departement || "No department"}
+            </Typography>
+
+            {/* Render tags */}
+            {userTags[userData._id]?.length > 0 ? (
+              <Box mt={1} display="flex" flexWrap="wrap">
+                {userTags[userData._id].map((tag, idx) => (
+                  <Button
+                    key={idx}
+                    variant="outlined"
+                    size="small"
+                    sx={{
+                      borderRadius: 20,
+                      fontSize: "12px",
+                      px: 2,
+                      m: 0.5,
+                      borderColor: "#ccc",
+                      color: "#333",
+                      backgroundColor: "#f9f9f9",
+                      "&:hover": { backgroundColor: "#f0f0f0" },
+                    }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {tag}
+                  </Button>
+                ))}
+              </Box>
             ) : (
-                <>
-                    {/* Followers Tab */}
-                    {activeTab === "followers" && (
-                        <Box>
-                            {followers.length === 0 ? (
-                                <Box
-                                    sx={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        height: "300px",
-                                        textAlign: "center",
-                                        backgroundColor: "#FFF",
-
-                                    }}
-                                >
-                                    <PersonAddOutlinedIcon sx={{ fontSize: "48px", color: "#e04c2c", mb: 2 }} />
-
-                                    <h4 style={{ fontWeight: "400", fontSize: "18px", color: "#000" }}>
-                                        Your followers list is currently empty. When someone follows  you , it appears here.
-
-                                    </h4>
-                                </Box>
-                            ) : (
-                                <List sx={{ display: "flex", flexDirection: "column", gap: 2, pb: 1 }}>
-                                    {followers.map((follower) => (
-                                        <React.Fragment key={follower.follower._id}>
-                                            <ListItem
-                                                sx={{
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                    justifyContent: "space-between",
-                                                    p: 2,
-                                                    bgcolor: "#FFF",
-                                                    border: "1px solid #CCC",
-                                                    borderRadius: "10px",
-                                                    cursor: "pointer",
-                                                    backgroundColor: "#FFF",
-
-                                                    mb: 2,
-                                                    "&:hover": { bgcolor: "#f5f5f5" },
-                                                }}
-                                            >
-                                                {/* Follower Details */}
-                                                <Box sx={{ display: "flex", alignItems: "center", gap: 2, flex: 1, overflow: "hidden" }}>
-                                                    <ListItemAvatar>
-                                                        <Avatar
-                                                            src={follower.follower.profilePicture || "/assets/images/default-profile.png"}
-                                                            sx={{ width: 50, height: 50, border: "2px solid #ddd" }}
-                                                        />
-                                                    </ListItemAvatar>
-                                                    <ListItemText
-                                                        primary={
-                                                            <Typography fontWeight="bold" fontSize="16px" color="black">
-                                                                {follower.follower.Prenom} {follower.follower.Nom}
-                                                            </Typography>
-                                                        }
-                                                        secondary={
-                                                            <>
-                                                                <Typography fontSize="16px" fontWeight="500" color="textPrimary">
-                                                                    {follower.follower.headline || "No headline available"}
-                                                                </Typography>
-                                                                <Typography fontSize="16px" color="textSecondary">
-                                                                    {follower.follower.Departement || "No department available"}
-                                                                </Typography>
-                                                
-                                                                {/* Display tags inline */}
-                                                                {userTags[follower.follower._id] &&
-                                                                    userTags[follower.follower._id].length > 0 ? (
-                                                                    <Box sx={{ mt: 1, display: "flex", flexWrap: "wrap" }}>
-                                                                        {userTags[follower.follower._id].map((tag) => (
-                                                                            <Button
-                                                                                key={tag._id}
-                                                                                variant="outlined"
-                                                                                size="small"
-                                                                                sx={{
-                                                                                    borderRadius: 20,
-                                                                                    borderColor: "#ccc",
-                                                                                    color: "#3b444b ",
-                                                                                    minWidth: "auto",
-                                                                                    px: 2,
-                                                                                    mx: 0.3,
-                                                                                    backgroundColor: "#FFF",
-                                                                                    "&:hover": {
-                                                                                        backgroundColor: "#fafafa",
-                                                                                        borderColor: "#ccc",
-                                                                                    },
-                                                                                }}
-                                                                                onClick={(e) => {
-                                                                                    e.stopPropagation(); // Prevent parent click
-                                                                                    console.log("Tag clicked:", tag.name);
-                                                                                }}
-                                                                            >
-                                                                                {tag.name}
-                                                                            </Button>
-                                                                        ))}
-                                                                    </Box>
-                                                                ) : (
-                                                                    <Typography fontSize="16px" color="textSecondary">
-                                                                        No tags available.
-                                                                    </Typography>
-                                                                )}
-                                                            </>
-                                                        }
-                                                    />
-                                                </Box>
-                                            </ListItem>
-            <Divider sx={{ height: "1px", bgcolor: "#fff", my: 1 }} />
-                                        </React.Fragment>
-                                    ))}
-                                </List>
-                            )}
-                        </Box>
-                    )}
-
-                    {/* Following Tab */}
-                    {activeTab === "following" && (
-                        <Box>
-                            {following.length === 0 ? (
-                                <Box
-                                    sx={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        height: "300px",
-                                        textAlign: "center",
-                                    }}
-                                >
-                                    <PersonAddOutlinedIcon sx={{ fontSize: "48px", color: "#e04c2c", mb: 2 }} />
-                         
-                                    <h4 style={{ fontWeight: "400", fontSize: "18px", color: "#000" }}>
-                                        Your following list is currently empty. When you follow  someone , it appears here.
-
-                                    </h4>
-                                </Box>
-                            ) : (
-                                <List sx={{ display: "flex", flexDirection: "column", gap: 2, pb: 1 }}>
-                                    {following.map((followedUser) => (
-                                        <React.Fragment key={followedUser.following._id}>
-                                            <ListItem
-                                                sx={{
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                    justifyContent: "space-between",
-                                                    p: 2,
-                                                    bgcolor: "#FFF",
-                                                    border: "1px solid #CCC",
-                                                    borderRadius: "10px",
-                                                    cursor: "pointer",
-                                                    mb: 2,
-                                                    "&:hover": { bgcolor: "#f5f5f5" },
-                                                }}
-                                            >
-                                                {/* Following Details */}
-                                                <Box sx={{ display: "flex", alignItems: "center", gap: 2, flex: 1, overflow: "hidden" }}>
-                                                    <ListItemAvatar>
-                                                        <Avatar
-                                                            src={followedUser.following.profilePicture || "/assets/images/default-profile.png"}
-                                                            sx={{ width: 50, height: 50, border: "2px solid #ddd" }}
-                                                        />
-                                                    </ListItemAvatar>
-                                                    <ListItemText
-                                                        primary={
-                                                            <Typography fontWeight="bold" fontSize="16px" color="black">
-                                                                {followedUser.following.Prenom} {followedUser.following.Nom}
-                                                            </Typography>
-                                                        }
-                                                        secondary={
-                                                            <>
-                                                                <Typography fontSize="16px" fontWeight="500" color="textPrimary">
-                                                                    {followedUser.following.headline || "No headline available"}
-                                                                </Typography>
-                                                                <Typography fontSize="16px" color="textSecondary">
-                                                                    {followedUser.following.Departement || "No department available"}
-                                                                </Typography>
-                                                                
-                                                                {/* Display tags inline */}
-                                                                {userTags[followedUser.following._id] &&
-                                                                    userTags[followedUser.following._id].length > 0 ? (
-                                                                    <Box sx={{ mt: 1, display: "flex", flexWrap: "wrap" }}>
-                                                                        {userTags[followedUser.following._id].map((tag) => (
-                                                                            <Button
-                                                                                key={tag._id}
-                                                                                variant="outlined"
-                                                                                size="small"
-                                                                                sx={{
-                                                                                    borderRadius: 20,
-                                                                                    borderColor: "#ccc",
-                                                                                    color: "#3b444b ",
-                                                                                    minWidth: "auto",
-                                                                                    px: 2,
-                                                                                    mx: 0.3,
-                                                                                    backgroundColor: "#f7f7f7",
-                                                                                    "&:hover": {
-                                                                                        backgroundColor: "#fafafa",
-                                                                                        borderColor: "#ccc",
-                                                                                    },
-                                                                                }}
-                                                                                onClick={(e) => {
-                                                                                    e.stopPropagation(); // Prevent parent click
-                                                                                    console.log("Tag clicked:", tag.name);
-                                                                                }}
-                                                                            >
-                                                                                {tag.name}
-                                                                            </Button>
-                                                                        ))}
-                                                                    </Box>
-                                                                ) : (
-                                                                    <Typography fontSize="16px" color="textSecondary">
-                                                                        No tags available.
-                                                                    </Typography>
-                                                                )}
-                                                            </>
-                                                        }
-                                                    />
-                                                </Box>
-
-                                                {/* Unfollow Button */}
-                                                <IconButton
-                                                    sx={{ color: "#e04c2c" }}
-                                                    onClick={() => handleUnfollow(followedUser.following._id)}
-                                                >
-                                                    <PersonRemoveOutlinedIcon fontSize="small" />
-                                                </IconButton>
-                                            </ListItem>
-            <Divider sx={{ height: "1px", bgcolor: "#fff", my: 1 }} />
-                                        </React.Fragment>
-                                    ))}
-                                </List>
-                            )}
-                        </Box>
-                    )}
-                </>
+              <Typography fontSize="13px" color="text.secondary" mt={1}>
+                No tags available
+              </Typography>
             )}
+          </Box>
         </Box>
+
+        {!isFollower && (
+          <Button
+            variant="outlined"
+            onClick={() => handleUnfollow(userData._id)}
+            sx={{
+              mt: 2,
+              color: "#ea3b15",
+              borderColor: "#ea3b15",
+              width: "100%",
+              textTransform: "none",
+              "&:hover": { backgroundColor: "#fbe4e0" },
+            }}
+            startIcon={<PersonRemoveOutlinedIcon />}
+          >
+            Unfollow
+          </Button>
+        )}
+      </Box>
     );
+  };
+
+  const EmptyState = ({ text }) => (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "300px",
+        textAlign: "center",
+      }}
+    >
+      <PersonAddOutlinedIcon sx={{ fontSize: "48px", color: "#ea3b15", mb: 2 }} />
+      <Typography fontSize="18px" fontWeight="400" color="black">
+        {text}
+      </Typography>
+    </Box>
+  );
+
+  return (
+    <Box sx={{ flexGrow: 1, p: 3, overflowY: "auto", backgroundColor: "#FFF" }}>
+      {loading ? (
+        <Typography>Loading...</Typography>
+      ) : (
+        <>
+          {activeTab === "followers" && (
+            <Box>
+              {followers.length === 0 ? (
+                <EmptyState text="No followers yet." />
+              ) : (
+                followers.map((f) => renderUser(f, true))
+              )}
+            </Box>
+          )}
+          {activeTab === "following" && (
+            <Box>
+              {following.length === 0 ? (
+                <EmptyState text="You're not following anyone yet." />
+              ) : (
+                following.map((f) => renderUser(f, false))
+              )}
+            </Box>
+          )}
+        </>
+      )}
+    </Box>
+  );
 };
 
 export default FollowList;

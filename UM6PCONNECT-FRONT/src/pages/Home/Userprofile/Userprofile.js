@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Box, Tabs, Tab } from "@mui/material";
+import { Box, Tabs, Tab, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import ProfileIntro from "./ProfileIntro";
 import Experience from "./Experience";
 import DiscoverWorkUser from "./DiscoverWorkUser";
@@ -8,6 +9,8 @@ import DiscoverWorkUser from "./DiscoverWorkUser";
 const UserProfile = () => {
   const { userId } = useParams();
   const [activeTab, setActiveTab] = useState("profile");
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const tabs = [
     { id: "profile", label: "Profile" },
@@ -19,22 +22,23 @@ const UserProfile = () => {
       sx={{
         width: "100%",
         minHeight: "100vh",
-        bgcolor: "#181717", // 🔥 entire page background
+        bgcolor: "#FFF",
         color: "#fff",
       }}
     >
       <Box
         sx={{
-          width: "90%",
-          margin: "0px auto",
-          padding: "0 20px",
+          width: "100%",
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: isMobile ? "0 10px" : "0 20px",
         }}
       >
         <div className="container">
           <ProfileIntro userId={userId} />
 
           {/* Tab Navigation */}
-          <Box sx={{ mt: 4, ml: 7.25, width: "90%", bgcolor: "#181717" }}>
+          <Box sx={{ mt: 4, px: isMobile ? 2 : 7, width: "100%", bgcolor: "#FFF" }}>
             <Tabs
               value={activeTab}
               onChange={(e, newValue) => setActiveTab(newValue)}
@@ -43,7 +47,7 @@ const UserProfile = () => {
               textColor="inherit"
               TabIndicatorProps={{
                 style: {
-                  backgroundColor: "#fff", // visible on dark bg
+                  backgroundColor: "#fff",
                   height: "3px",
                   borderRadius: 0,
                 },
@@ -52,15 +56,15 @@ const UserProfile = () => {
                 borderBottom: "1px solid #444",
                 "& .MuiTab-root": {
                   textTransform: "none",
-                  fontSize: "18px",
-                  color: "#ccc",
-                  px: 2.5,
+                  fontSize: isMobile ? "16px" : "18px",
+                  color: "#CCC",
+                  px: 2,
                   py: 1,
                   minHeight: "unset",
                   fontWeight: 400,
                 },
                 "& .Mui-selected": {
-                  color: "#fff !important",
+                  color: "#000 !important",
                 },
                 "& .MuiTabs-scrollButtons": {
                   display: "none",
@@ -74,8 +78,8 @@ const UserProfile = () => {
           </Box>
 
           {/* Tab Content */}
-          <Box sx={{ mt: 4, bgcolor: "#181717", pb: 8 }}>
-          {activeTab === "profile" && <Experience userId={userId} />}
+          <Box sx={{ mt: 4, bgcolor: "#FFF", pb: 8 }}>
+            {activeTab === "profile" && <Experience userId={userId} />}
             {activeTab === "discover" && <DiscoverWorkUser userId={userId} />}
           </Box>
         </div>

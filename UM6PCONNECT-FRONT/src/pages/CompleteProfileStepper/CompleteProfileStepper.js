@@ -115,43 +115,62 @@ const CompleteProfileStepper = () => {
 
   const submitProfile = async () => {
     try {
-      const userId = JSON.parse(localStorage.getItem("user"))?._id;
-      if (!userId) {
-        setError("User ID is missing.");
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+      const userId = storedUser?._id;
+      const token = storedUser?.token;
+  
+      if (!userId || !token) {
+        setError("User ID or token is missing.");
         return;
       }
   
-      await fetch(`http://localhost:5000/api/profile/${userId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
+
   
-      if (formData.profilePicture?.startsWith("data:image")) {
-        await fetch(`http://localhost:5000/api/profilepicture/update-profile-picture/${userId}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ profilePicture: formData.profilePicture }),
-        });
-      }
-  
-      if (formData.coverPicture?.startsWith("data:image") || formData.coverPicture?.includes("/assets/")) {
-        await fetch(`http://localhost:5000/api/profilepicture/update-cover-picture/${userId}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ coverPicture: formData.coverPicture }),
-        });
-      }
+ // Update profile info
+await fetch(`http://localhost:5000/api/profile/update`, {
+  method: "PUT",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  },
+  body: JSON.stringify(formData),
+});
+
+// Update profile picture
+if (formData.profilePicture?.startsWith("data:image")) {
+  await fetch(`http://localhost:5000/api/profilepicture/update-profile-picture`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ profilePicture: formData.profilePicture }),
+  });
+}
+
+// Update cover picture
+if (formData.coverPicture?.startsWith("data:image") || formData.coverPicture?.includes("/assets/")) {
+  await fetch(`http://localhost:5000/api/profilepicture/update-cover-picture`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ coverPicture: formData.coverPicture }),
+  });
+}
+
   
       setSuccess(true);
       setTimeout(() => {
-        navigate("/Our-Researchers");
-      }, 2000); // wait for success snackbar
+        navigate("/signin"); // ✅ go back to login, then fresh user loaded after login
+      }, 2000);
     } catch (err) {
       console.error("Submission error:", err);
       setError("Something went wrong while submitting. Please try again.");
     }
   };
+  
   
 
   const renderStepContent = () => {
@@ -222,8 +241,8 @@ const CompleteProfileStepper = () => {
                   }} />
                   <Box sx={{
                     backgroundColor: "#fff",
-                    color: isActive ? "#e04c2c" : "#6b7280",
-                    border: `1px solid ${isActive ? '#e04c2c' : '#e5e7eb'}`,
+                    color: isActive ? "#ea3b15" : "#6b7280",
+                    border: `1px solid ${isActive ? '#ea3b15' : '#e5e7eb'}`,
                     borderRadius: 1, width: 36, height: 36,
                     display: "flex", alignItems: "center", justifyContent: "center",
                     mr: 2, zIndex: 1,
@@ -245,11 +264,11 @@ const CompleteProfileStepper = () => {
 
           <Box display="flex" justifyContent="space-between" alignItems="center" mt={2}>
             <Button variant="outlined" size="small" onClick={handleBack} disabled={activeStep === 0}
-              sx={{ color: "#e04c2c", borderColor: "#e04c2c", ":hover": { borderColor: "#c33111" } }}>
+              sx={{ color: "#ea3b15", borderColor: "#ea3b15", ":hover": { borderColor: "#c33111" } }}>
               Previous
             </Button>
             <Button variant="contained" size="small" onClick={handleNext}
-              sx={{ backgroundColor: "#e04c2c", ":hover": { backgroundColor: "#c33111" } }}>
+              sx={{ backgroundColor: "#ea3b15", ":hover": { backgroundColor: "#c33111" } }}>
               {activeStep === steps.length - 1 ? "Submit" : "Next"}
             </Button>
           </Box>
@@ -277,7 +296,7 @@ const CompleteProfileStepper = () => {
                   height={4}
                   borderRadius={2}
                   mx={0.5}
-                  bgcolor={i === activeStep ? "#e04c2c" : "#e5e7eb"}
+                  bgcolor={i === activeStep ? "#ea3b15" : "#e5e7eb"}
                 />
               ))}
             </Box>

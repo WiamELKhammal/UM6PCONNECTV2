@@ -5,6 +5,7 @@ import {
   CircularProgress, List, ListItem, ListItemAvatar,
   Avatar, ListItemText, MenuItem, Grid
 } from "@mui/material";
+import { Alert } from "@mui/material";
 import debounce from "lodash.debounce";
 import { UserContext } from "../../../context/UserContext";
 
@@ -122,7 +123,7 @@ const AddExperience = ({ open, onClose, fetchExperience }) => {
     setExperience(prev => ({
       ...prev,
       companyName: company.name,
-      companyLogo: isUM6P ? "assets/images/logo/um6plogo.png" : company.logo || "",
+      companyLogo: isUM6P ? "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/UM6P_wordmark_%282024%29.svg/1200px-UM6P_wordmark_%282024%29.svg.png" : company.logo || "",
       website: company.domain ? `https://${company.domain}` : ""
     }));
     setQuery(company.name);
@@ -139,7 +140,9 @@ const AddExperience = ({ open, onClose, fetchExperience }) => {
 
   const handleSave = async () => {
     setError("");
-    if (!user?._id) return setError("User not found.");
+    if (!user?._id) {
+      return setError("User not found.");
+    }
 
     const requiredFields = ["companyName", "jobTitle", "startDate"];
     if (requiredFields.some(field => !experience[field]) || (!isPresent && !experience.endDate)) {
@@ -147,11 +150,19 @@ const AddExperience = ({ open, onClose, fetchExperience }) => {
     }
 
     try {
+      if (!user?.token) {
+        return setError("Authentication token not found.");
+      }
+
       const res = await fetch("http://localhost:5000/api/experience", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${user.token}`, // ADDED token here
+        },
         body: JSON.stringify({ ...experience, userId: user._id }),
       });
+      
 
       if (!res.ok) {
         const err = await res.json();
@@ -161,7 +172,8 @@ const AddExperience = ({ open, onClose, fetchExperience }) => {
       fetchExperience();
       onClose();
     } catch (err) {
-      setError(err.message);
+      console.error("Error saving experience:", err);
+      setError(err.message || "Failed to save experience.");
     }
   };
 
@@ -184,7 +196,7 @@ const AddExperience = ({ open, onClose, fetchExperience }) => {
               <List>
                 {searchResults.map((result, index) => {
                   const isUM6P = isUM6PName(result.name);
-                  const logo = isUM6P ? "assets/images/logo/um6plogo.png" : result.logo;
+                  const logo = isUM6P ? "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/UM6P_wordmark_%282024%29.svg/1200px-UM6P_wordmark_%282024%29.svg.png" : result.logo;
 
                   return (
                     <ListItem key={index} button onClick={() => handleSelectCompany(result)}>
@@ -297,14 +309,16 @@ const AddExperience = ({ open, onClose, fetchExperience }) => {
 
           {error && (
             <Grid item xs={12}>
-              <p style={{ color: "red", fontSize: "14px" }}>{error}</p>
+              <Alert severity="error" sx={{ fontSize: "14px" }}>
+                {error}
+              </Alert>
             </Grid>
           )}
         </Grid>
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} sx={{ color: "#000" }}>Cancel</Button>
-        <Button onClick={handleSave} sx={{ backgroundColor: "#e04c2c", color: "#fff" }}>Save</Button>
+        <Button onClick={handleSave} sx={{ backgroundColor: "#ea3b15", color: "#fff" }}>Save</Button>
       </DialogActions>
     </Dialog>
   );

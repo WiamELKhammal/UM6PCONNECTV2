@@ -89,7 +89,7 @@ const Projects = ({ userId }) => {
                     backgroundColor: "#f4e9e7",
                   }}
                 >
-                  <BuildIcon style={{ color: "#e04c2c", fontSize: "26px" }} />
+                  <BuildIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
                 </div>
                 <div>
                   <p style={{ fontWeight: "600", fontSize: "16px" }}>{project.name || "Project Name"}</p>
@@ -131,7 +131,7 @@ const Projects = ({ userId }) => {
               backgroundColor: "#f4e9e7",
             }}
           >
-            <BuildIcon style={{ color: "#e04c2c", fontSize: "26px" }} />
+            <BuildIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
           </div>
           <div>
             <p style={{ fontWeight: "600", fontSize: "16px" }}>Project Name</p>

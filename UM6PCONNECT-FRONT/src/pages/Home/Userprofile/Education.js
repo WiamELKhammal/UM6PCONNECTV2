@@ -88,7 +88,7 @@ const Education = ({ userId }) => {
                                         backgroundColor: "#f4e9e7",
                                     }}
                                 >
-                                    <SchoolIcon style={{ color: "#e04c2c", fontSize: "26px" }} />
+                                    <SchoolIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
                                 </div>
                                 <div>
                                     <p style={{ fontWeight: "600", fontSize: "16px" }}>{edu.schoolName || "School Name"}</p>
@@ -127,7 +127,7 @@ const Education = ({ userId }) => {
                             backgroundColor: "#f4e9e7",
                         }}
                     >
-                        <SchoolIcon style={{ color: "#e04c2c", fontSize: "26px" }} />
+                        <SchoolIcon style={{ color: "#ea3b15", fontSize: "26px" }} />
                     </div>
                     <div>
                         <p style={{ fontWeight: "600", fontSize: "16px" }}>School Name</p>

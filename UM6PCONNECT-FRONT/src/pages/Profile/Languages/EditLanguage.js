@@ -143,7 +143,7 @@ const EditLanguage = ({ open, onClose, languageData, fetchLanguages }) => {
         <Button onClick={onClose} style={{ color: "black" }}>
           Cancel
         </Button>
-        <Button onClick={handleUpdate} style={{ backgroundColor: "#e04c2c", color: "#fff" }}>
+        <Button onClick={handleUpdate} style={{ backgroundColor: "#ea3b15", color: "#fff" }}>
           Save
         </Button>
       </DialogActions>

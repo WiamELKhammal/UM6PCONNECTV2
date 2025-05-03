@@ -13,7 +13,6 @@ import {
 import { Edit } from "@mui/icons-material";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
-
 import { UserContext } from "../../../context/UserContext";
 import ProfileSetup from "./ProfileSetup";
 import EditProfilePic from "./EditProfilePic";
@@ -40,14 +39,15 @@ const InfoLine = ({ value, icon }) => {
           href={value}
           target="_blank"
           rel="noopener"
-          fontSize={18}
+          fontSize={16}
           color="#111827"
           underline="hover"
+          sx={{ wordBreak: "break-all" }} // ✅ prevent overflow
         >
           {username}
         </MuiLink>
       ) : (
-        <Typography fontSize={18} color="#999">
+        <Typography fontSize={16} color="#999">
           Not provided
         </Typography>
       )}
@@ -76,9 +76,10 @@ const ProfileIntro = () => {
         elevation={0}
         sx={{
           width: "90%",
-          margin: "20px auto",
+          maxWidth: "1200px",
+          mx: "auto",
           borderRadius: 3,
-          border: "1px solid #e0e0e0",
+          border: "1px solid #CCC",
           backgroundColor: "#fff",
           overflow: "hidden",
         }}
@@ -91,7 +92,7 @@ const ProfileIntro = () => {
             alt="Cover"
             sx={{
               width: "100%",
-              height: 200,
+              height: { xs: 150, sm: 200 },
               objectFit: "cover",
               display: "block",
             }}
@@ -111,8 +112,8 @@ const ProfileIntro = () => {
         </Box>
 
         {/* Profile Picture + Info */}
-        <Box mt={-6} px={4} pb={4}>
-          <Stack alignItems="flex-start" spacing={1}>
+        <Box mt={-6} px={3} pb={4}>
+          <Stack spacing={2} alignItems="flex-start">
             {/* Avatar + Edit */}
             <Box position="relative">
               <Avatar
@@ -139,18 +140,19 @@ const ProfileIntro = () => {
               </IconButton>
             </Box>
 
-            {/* Name + Badge + Edit Profile */}
+            {/* Name + Badge + Edit */}
             <Box
               sx={{
                 display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                alignItems: { xs: "flex-start", sm: "center" },
                 justifyContent: "space-between",
-                alignItems: "center",
                 width: "100%",
-                mt: 1,
+                gap: 2,
               }}
             >
               <Box display="flex" alignItems="center" gap={1} flexWrap="wrap">
-                <Typography fontSize={26} fontWeight="600" color="#000">
+                <Typography fontSize={22} fontWeight="600" color="#000">
                   {fullName}
                 </Typography>
                 <Box
@@ -189,12 +191,13 @@ const ProfileIntro = () => {
                 variant="outlined"
                 onClick={() => setIsProfileSetupOpen(true)}
                 sx={{
-                  color: "#e04c2c",
-                  borderColor: "#e04c2c",
+                  color: "#ea3b15",
+                  borderColor: "#ea3b15",
                   fontSize: "14px",
                   fontWeight: "500",
                   textTransform: "none",
-                  "&:hover": { backgroundColor: "#fff" },
+                  minWidth: { xs: "100%", sm: "auto" }, // 📱 Full width on mobile
+                  whiteSpace: "nowrap",
                 }}
               >
                 Edit Profile
@@ -203,7 +206,7 @@ const ProfileIntro = () => {
 
             {/* Headline */}
             {headline && (
-              <Typography fontSize={18} color="text.secondary">
+              <Typography fontSize={16} color="text.secondary">
                 {headline}
               </Typography>
             )}
@@ -211,16 +214,16 @@ const ProfileIntro = () => {
             {/* Department */}
             {departement && (
               <Box display="flex" alignItems="center" gap={1}>
-                <ApartmentIcon fontSize="medium" />
-                <Typography fontSize={18} color="#000">
+                <ApartmentIcon fontSize="small" />
+                <Typography fontSize={16} color="#000">
                   {departement}
                 </Typography>
               </Box>
             )}
 
             {/* Social Links */}
-            <Box mt={2}>
-              <Stack spacing={1}>
+            <Box mt={2} width="100%">
+              <Stack spacing={1} direction="column">
                 <InfoLine
                   value={linkedIn}
                   icon={
@@ -260,15 +263,17 @@ const ProfileIntro = () => {
         )}
       </Paper>
 
-      {/* Verification Stepper Modal */}
+      {/* Verification Modal */}
       <Modal open={isVerificationOpen} onClose={() => setIsVerificationOpen(false)}>
         <Box
           sx={{
-            width: "100%",
+            width: "90%",
             maxWidth: 500,
-            margin: "100px auto",
+            mx: "auto",
+            mt: "100px",
             borderRadius: 3,
             p: 3,
+            bgcolor: "#fff",
             outline: "none",
           }}
         >

@@ -18,6 +18,9 @@ import {
   Box,
   Alert,
 } from "@mui/material";
+import { useContext } from "react";
+import { UserContext } from "../../../context/UserContext";
+
 
 const tagList = [
   "Web Development",
@@ -34,6 +37,7 @@ const SmartAddResearch = ({ open, onClose, onAdd }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [file, setFile] = useState(null);
+  const { user } = useContext(UserContext);
 
   const [form, setForm] = useState({
     title: "",
@@ -184,7 +188,10 @@ const SmartAddResearch = ({ open, onClose, onAdd }) => {
     try {
       const res = await fetch("http://localhost:5000/api/research", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.token}`, // ✅ include token
+        },
         body: JSON.stringify(finalData),
       });
 
@@ -232,11 +239,11 @@ const SmartAddResearch = ({ open, onClose, onAdd }) => {
             onClick={handleFetch}
             disabled={loading || !link}
             sx={{
-              borderColor: "#e04c2c",
-              color: "#e04c2c",
+              borderColor: "#ea3b15",
+              color: "#ea3b15",
               textTransform: "none",
               "&:hover": {
-                backgroundColor: "#e04c2c",
+                backgroundColor: "#ea3b15",
                 color: "#fff",
               },
             }}
@@ -309,23 +316,50 @@ const SmartAddResearch = ({ open, onClose, onAdd }) => {
 
           {/* File Upload */}
           <Box
-            sx={{
-              border: "2px dotted #aaa",
-              padding: 2,
-              borderRadius: 2,
-              textAlign: "center",
-            }}
-          >
-            <Typography variant="body2" mb={1}>
-              Upload supporting file (optional)
-            </Typography>
-            <input type="file" onChange={handleFileChange} />
-            {file && (
-              <Typography variant="body2" mt={1}>
-                Selected: {file.name}
-              </Typography>
-            )}
-          </Box>
+  sx={{
+    border: "2px dotted #aaa",
+    padding: 2,
+    borderRadius: 2,
+    textAlign: "center",
+  }}
+>
+  <Typography variant="body2" mb={1}>
+    Upload supporting file (optional)
+  </Typography>
+
+  <Button
+    component="label"
+    variant="outlined"
+    sx={{ mt: 1, textTransform: "none" }}
+  >
+    Choose File
+    <input type="file" hidden onChange={handleFileChange} />
+  </Button>
+
+  {file ? (
+    <Typography
+      variant="body2"
+      mt={1}
+      sx={{
+        maxWidth: "100%",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+      }}
+    >
+      Selected: {file.name}
+    </Typography>
+  ) : (
+    <Typography
+      variant="body2"
+      mt={1}
+      sx={{ color: "#888" }}
+    >
+      No file selected
+    </Typography>
+  )}
+</Box>
+
         </Stack>
       </DialogContent>
 
@@ -334,7 +368,7 @@ const SmartAddResearch = ({ open, onClose, onAdd }) => {
         <Button
           onClick={handleSubmit}
           variant="contained"
-          sx={{ backgroundColor: "#e04c2c", textTransform: "none" }}
+          sx={{ backgroundColor: "#ea3b15", textTransform: "none" }}
         >
           Add to My Work
         </Button>

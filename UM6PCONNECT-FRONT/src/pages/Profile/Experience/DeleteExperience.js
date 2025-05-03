@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { UserContext } from "../../../context/UserContext";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -9,6 +10,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 const DeleteExperience = ({ open, onClose, experienceId, fetchExperience }) => {
   const [loading, setLoading] = useState(false);
+  const { user } = useContext(UserContext); // correctly using your user
 
   useEffect(() => {
     if (!open) setLoading(false);
@@ -19,9 +21,18 @@ const DeleteExperience = ({ open, onClose, experienceId, fetchExperience }) => {
     setLoading(true);
 
     try {
+      if (!user?.token) {
+        alert("Authentication token not found.");
+        setLoading(false);
+        return;
+      }
+
       const response = await fetch(`http://localhost:5000/api/experience/${experienceId}`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${user.token}`, // use user.token
+        },
       });
 
       if (!response.ok) {
@@ -42,10 +53,14 @@ const DeleteExperience = ({ open, onClose, experienceId, fetchExperience }) => {
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Confirm Deletion</DialogTitle>
       <DialogContent>
-        <DialogContentText>Are you sure you want to delete this experience entry? This action cannot be undone.</DialogContentText>
+        <DialogContentText>
+          Are you sure you want to delete this experience entry? This action cannot be undone.
+        </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} disabled={loading} style={{ color: "#666" }}>Cancel</Button>
+        <Button onClick={onClose} disabled={loading} style={{ color: "#666" }}>
+          Cancel
+        </Button>
         <Button onClick={handleDelete} disabled={loading} style={{ color: "#e04c2c" }}>
           {loading ? <CircularProgress size={24} /> : "Delete"}
         </Button>

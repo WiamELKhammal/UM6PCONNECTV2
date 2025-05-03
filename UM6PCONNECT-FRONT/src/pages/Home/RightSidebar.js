@@ -50,14 +50,14 @@ const InfoLine = ({ value, icon }) => {
           href={value}
           target="_blank"
           rel="noopener"
-          fontSize={13}
+          fontSize={16}
           color="#111827"
           underline="hover"
         >
           {username}
         </MuiLink>
       ) : (
-        <Typography fontSize={13} color="#999">Not provided</Typography>
+        <Typography fontSize={16} color="#999">Not provided</Typography>
       )}
     </Box>
   );
@@ -77,21 +77,30 @@ const RightSidebar = () => {
   const [selectedResearcherName, setSelectedResearcherName] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/users")
-      .then((res) => res.json())
-      .then((data) => {
-        const activeResearchers = data.filter(
+    const fetchData = async () => {
+      try {
+        // Fetch users without token
+        const resUsers = await fetch("http://localhost:5000/api/users");
+        const usersData = await resUsers.json();
+  
+        const activeResearchers = usersData.filter(
           (u) => u.Status === "Active" && u._id !== user?._id
         );
         setResearchers(activeResearchers);
         setFilteredResearchers(activeResearchers);
-      });
-
-    fetch("http://localhost:5000/api/tags")
-      .then((res) => res.json())
-      .then((data) => setTags(data));
-  }, [user]);
-
+  
+        // Fetch tags without token
+        const resTags = await fetch("http://localhost:5000/api/tags");
+        const tagsData = await resTags.json();
+        setTags(tagsData);
+      } catch (err) {
+        console.error("Error fetching users or tags:", err);
+      }
+    };
+  
+    fetchData();
+  }, []); 
+  
   useEffect(() => {
     const fetchTags = async () => {
       let tagsMap = {};
@@ -106,10 +115,11 @@ const RightSidebar = () => {
       }
       setResearcherTags(tagsMap);
     };
-
-    if (researchers.length > 0) fetchTags();
+  
+    if (researchers.length > 0) fetchTags(); //  no more user?.token check
   }, [researchers]);
-
+  
+  
   const handleSearch = (query) => {
     const result = researchers.filter(
       (r) =>
@@ -120,14 +130,17 @@ const RightSidebar = () => {
   };
 
   const handleTagClick = (tag) => {
-    setSelectedTag(tag);
-    fetch(`http://localhost:5000/api/tags/tag/${tag}`)
+    const clickedTag = typeof tag === "string" ? tag : tag.name; // normalize
+  
+    setSelectedTag(clickedTag); // update selection
+  
+    fetch(`http://localhost:5000/api/tags/tag/${clickedTag}`)
       .then((res) => res.json())
       .then((data) =>
         setFilteredResearchers(data.filter((r) => r._id !== user?._id && r.Status === "Active"))
-      );
-  };
-
+      )
+      .catch((err) => console.error("Failed to fetch filtered researchers:", err));
+  }
   const handleShowAll = () => {
     setSelectedTag(null);
     setFilteredResearchers(researchers.filter((r) => r._id !== user?._id));
@@ -140,7 +153,7 @@ const RightSidebar = () => {
   };
 
   return (
-    <Box sx={{ flex: 1, bgcolor: "#181717", borderRadius: "10px", p: { xs: 2, sm: 3 } }}>
+    <Box sx={{ flex: 1, bgcolor: "#fff", borderRadius: "10px", p: { xs: 2, sm: 3 } }}>
       <SearchBar2
         onSearch={handleSearch}
         tags={tags}
@@ -149,7 +162,7 @@ const RightSidebar = () => {
       />
 
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 2 }}>
-        <Typography variant="body1" sx={{ color: "#FFF", fontWeight: 600 }}>
+        <Typography variant="body1" sx={{ color: "#000", fontWeight: 600, fontSize: "20px" }}>
           Our Researchers:
         </Typography>
         <Button
@@ -162,8 +175,8 @@ const RightSidebar = () => {
             border: "1px solid #CCC",
             borderRadius: "10px",
             boxShadow: "none",
+            fontSize: { xs: "14px", sm: "16px" },
             "&:hover": { boxShadow: "none" },
-            fontSize: { xs: "12px", sm: "14px" },
           }}
         >
           All Researchers
@@ -197,7 +210,7 @@ const RightSidebar = () => {
                 <ListItemText
                   primary={
                     <Box display="flex" alignItems="center" justifyContent="space-between" width="100%">
-                      <Typography fontWeight="bold" fontSize="16px">
+                      <Typography fontWeight="bold" fontSize="18px">
                         {r.Prenom} {r.Nom}
                       </Typography>
                       {r.badged && (
@@ -214,7 +227,7 @@ const RightSidebar = () => {
                           }}
                         >
                           <WorkspacePremiumIcon sx={{ color: "#ffbf00", fontSize: 20 }} />
-                          <Typography fontSize={13} color="#ffbf00">
+                          <Typography fontSize={14} color="#ffbf00">
                             Elite Member
                           </Typography>
                         </Box>
@@ -222,11 +235,11 @@ const RightSidebar = () => {
                     </Box>
                   }
                   secondary={
-                    <>
-                      <Typography fontSize="14px" fontWeight={500} color="text.primary">
+                    <Box>
+                      <Typography fontSize={16} fontWeight={500} color="text.primary">
                         {r.headline || "No headline available"}
                       </Typography>
-                      <Typography fontSize="14px" color="text.secondary">
+                      <Typography fontSize={16} color="text.secondary">
                         {r.Departement}
                       </Typography>
 
@@ -246,7 +259,7 @@ const RightSidebar = () => {
                       </Stack>
 
                       {researcherTags[r._id]?.length > 0 && (
-                        <Box sx={{ display: "flex", flexWrap: "wrap", mt: 1 }}>
+                        <Box sx={{ display: "flex", flexWrap: "wrap", mt: 2 }}>
                           {researcherTags[r._id].map((tag, i) => (
                             <Button
                               key={i}
@@ -255,16 +268,18 @@ const RightSidebar = () => {
                                 handleTagClick(tag);
                               }}
                               sx={{
-                                fontSize: "13px",
+                                fontSize: "14px",
                                 py: 0.8,
                                 px: 2,
                                 m: 0.5,
-                                borderRadius: "20px",
-                                border: "1px solid #f0f0f0",
-                                backgroundColor: selectedTag === tag ? "#e04c2c" : "#f7f7f7",
-                                color: selectedTag === tag ? "#fff" : "#6e6e6e",
+                                borderRadius: "0px",
+                                border: "1px solid #ea3b15",
+                                backgroundColor: selectedTag === tag ? "#ea3b15" : "#fff",
+                                color: selectedTag === tag ? "#fff" : "#ea3b15",
+                                fontWeight: 600,
+                                textTransform: "uppercase",
                                 "&:hover": {
-                                  backgroundColor: selectedTag === tag ? "#d73a12" : "#eee",
+                                  backgroundColor: selectedTag === tag ? "#d73a12" : "#fef6f5",
                                 },
                               }}
                             >
@@ -273,7 +288,7 @@ const RightSidebar = () => {
                           ))}
                         </Box>
                       )}
-                    </>
+                    </Box>
                   }
                 />
               </Box>
@@ -286,9 +301,10 @@ const RightSidebar = () => {
                   }}
                   startIcon={<ChatBubbleOutlineIcon />}
                   sx={{
-                    border: "1px solid #e04c2c",
-                    color: "#e04c2c",
+                    border: "1px solid #ea3b15",
+                    color: "#ea3b15",
                     textTransform: "none",
+                    fontSize: "14px",
                     flex: 1,
                     "&:hover": { bgcolor: "transparent" },
                   }}

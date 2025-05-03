@@ -55,7 +55,7 @@ const Step4Review = ({ data }) => {
         p: 0,
         overflow: "hidden",
         borderRadius: 3,
-        border: "1px solid #e0e0e0",
+        border: "1px solid #CCC",
         backgroundColor: "#fff",
       }}
     >

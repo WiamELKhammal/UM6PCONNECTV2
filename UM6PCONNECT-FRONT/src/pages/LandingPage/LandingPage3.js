@@ -45,7 +45,7 @@ const TheWhyVideo = () => {
             position: "relative",
             width: { xs: 64, sm: 80, md: 100 },
             height: { xs: 64, sm: 80, md: 100 },
-            backgroundColor: "#e04c2c",
+            backgroundColor: "#ea3b15",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",

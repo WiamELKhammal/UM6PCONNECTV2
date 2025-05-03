@@ -1,102 +1,60 @@
-import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  Menu,
-  MenuItem,
-  Typography
-} from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import React from "react";
+import { Box, Button, Typography } from "@mui/material";
 
 const Tags = ({ tags, selectedTag, onTagClick }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleMoreClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMoreClose = () => {
-    setAnchorEl(null);
-  };
-
-  const uniqueTags = [...new Set(tags.map(tag => tag.name))];
-
-  const getButtonStyles = (active) => ({
-    backgroundColor: active ? "#e04c2c" : "#fff",
-    color: active ? "#fff" : "#000",
-    fontWeight: 600,
-    border: "1px solid #ddd",
-    borderRadius: "12px",
-    px: 2.5,
-    py: 1.3,
-    textTransform: "none",
-    boxShadow: "none",
-    "&:hover": {
-      backgroundColor: active ? "#d73a12" : "#f9f9f9",
-    },
-    fontSize: { xs: "12px", sm: "13px" },
-  });
-
-  const getMenuItemStyles = (active) => ({
-    fontWeight: active ? 700 : 400,
-    backgroundColor: active ? "#e04c2c" : "transparent",
-    color: active ? "#fff" : "#000",
-    "&:hover": {
-      backgroundColor: active ? "#d73a12" : "#f5f5f5",
-    }
-  });
+  const uniqueTags = [...new Set(tags.map((tag) => tag.name))];
 
   return (
-    <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 1, mt: 1 }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 2,
+        my: 2,
+      }}
+    >
       <Typography
-        variant="body1"
         sx={{
-          color: "#FFF",
           fontWeight: 600,
-          fontSize: { xs: "14px", sm: "16px" },
-          mr: 1,
+          fontSize: "18px",
+          color: "#000",
         }}
       >
         Field Of Work:
       </Typography>
 
-      {/* First 4 Tags */}
-      {uniqueTags.slice(0, 4).map((tag) => (
-        <Button
-          key={tag}
-          onClick={() => onTagClick(tag)}
-          sx={getButtonStyles(selectedTag === tag)}
-        >
-          {tag}
-        </Button>
-      ))}
-
-      {/* More Dropdown */}
-      {uniqueTags.length > 4 && (
-        <>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 1.5,
+        }}
+      >
+        {uniqueTags.map((tag) => (
           <Button
-            endIcon={<ExpandMoreIcon />}
-            onClick={handleMoreClick}
-            sx={getButtonStyles(false)}
+            key={tag}
+            onClick={() => onTagClick(tag)}
+            variant={selectedTag === tag ? "contained" : "outlined"}
+            sx={{
+              borderRadius: "4px",
+              px: 2,
+              py: 1,
+              fontWeight: 600,
+              fontSize: "14px",
+              textTransform: "none",
+              borderColor: "#ea3b15",
+              backgroundColor: selectedTag === tag ? "#ea3b15" : "transparent",
+              color: selectedTag === tag ? "#fff" : "#ea3b15",
+              "&:hover": {
+                backgroundColor: selectedTag === tag ? "#d73a12" : "#fef6f5",
+                borderColor: "#ea3b15",
+              },
+            }}
           >
-            More
+            {tag.toUpperCase()}
           </Button>
-          <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMoreClose}>
-            {uniqueTags.slice(4).map((tag) => (
-              <MenuItem
-                key={tag}
-                onClick={() => {
-                  onTagClick(tag);
-                  handleMoreClose();
-                }}
-                sx={getMenuItemStyles(selectedTag === tag)}
-              >
-                {tag}
-              </MenuItem>
-            ))}
-          </Menu>
-        </>
-      )}
+        ))}
+      </Box>
     </Box>
   );
 };

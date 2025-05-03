@@ -34,17 +34,19 @@ const TitleSection = ({ title, id, number, borderTop = false }) => {
         {title}
       </Typography>
 
-      <Typography
-        sx={{
-          fontFamily: "'Work Sans', sans-serif",
-          fontWeight: 300,
-          fontSize: { xs: "32px", sm: "48px", md: "90px" },
-          lineHeight: { xs: "40px", sm: "50px", md: "60px" },
-          color: "#ea3b15",
-        }}
-      >
-        {number}
-      </Typography>
+      {number !== undefined && (
+        <Typography
+          sx={{
+            fontFamily: "'Work Sans', sans-serif",
+            fontWeight: 300,
+            fontSize: { xs: "32px", sm: "48px", md: "90px" },
+            lineHeight: { xs: "40px", sm: "50px", md: "60px" },
+            color: "#ea3b15",
+          }}
+        >
+          {number}
+        </Typography>
+      )}
     </Box>
   );
 };

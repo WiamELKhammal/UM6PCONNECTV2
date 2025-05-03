@@ -17,14 +17,14 @@ const HomePage = () => {
   // Show only RightSidebar if user is a guest
   if (!user) {
     return (
-      <Box sx={{ bgcolor: "#181717", px: 2 }}>
+      <Box sx={{ bgcolor: "#FFF", px: 2 }}>
         <RightSidebar />
       </Box>
     );
   }
 
   return (
-    <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", bgcolor: "#181717" }}>
+    <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", bgcolor: "#FFF" }}>
       {/* Main Content */}
       <Box sx={{ flex: 2, width: "100%", paddingX: 2 }}>
         <RightSidebar />

@@ -30,8 +30,9 @@ const DiscoverWorkUser = ({ userId }) => {
     <Box
       sx={{
         width: "90%",
-        margin: "0px auto",
-        p: 3,
+        margin: "0 auto",
+        px: { xs: 1.5, md: 3 },
+        py: 3,
         border: "1px solid #ddd",
         borderRadius: "12px",
         backgroundColor: "#fff",
@@ -66,7 +67,7 @@ const DiscoverWorkUser = ({ userId }) => {
               sx={{
                 border: "1px solid #eee",
                 borderRadius: "16px",
-                p: 3,
+                p: { xs: 2, md: 3 },
                 bgcolor: "#fff",
                 mb: 3,
               }}
@@ -88,13 +89,20 @@ const DiscoverWorkUser = ({ userId }) => {
               </Typography>
 
               {/* Institution and Collaborators */}
-              <Stack direction="row" spacing={2} mb={1}>
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                spacing={1}
+                mb={1}
+                flexWrap="wrap"
+              >
                 <Typography fontSize={14} fontStyle="italic" color="#000">
                   {institution || "—"}
                 </Typography>
-                <Typography fontSize={14} color="#000">
-                  {collaborators?.join(", ")}
-                </Typography>
+                {collaborators?.length > 0 && (
+                  <Typography fontSize={14} color="#000">
+                    {collaborators.join(", ")}
+                  </Typography>
+                )}
               </Stack>
 
               {/* Principal Investigator */}
@@ -107,7 +115,7 @@ const DiscoverWorkUser = ({ userId }) => {
                     sx={{
                       ml: 1,
                       backgroundColor: "#fbeaea",
-                      color: "#e04c2c",
+                      color: "#ea3b15",
                       fontWeight: 500,
                     }}
                   />
@@ -116,14 +124,13 @@ const DiscoverWorkUser = ({ userId }) => {
 
               {/* Keywords */}
               {keywords?.length > 0 && (
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  spacing={1}
-                  mb={2}
-                  flexWrap="wrap"
-                >
-                  <Typography fontSize={14} color="#000" fontWeight={500}>
+                <Box mb={2}>
+                  <Typography
+                    fontSize={14}
+                    color="#000"
+                    fontWeight={500}
+                    sx={{ mb: 1 }}
+                  >
                     Keywords:
                   </Typography>
                   <Stack direction="row" spacing={1} flexWrap="wrap">
@@ -131,13 +138,18 @@ const DiscoverWorkUser = ({ userId }) => {
                       <Chip key={i} label={kw} size="small" />
                     ))}
                   </Stack>
-                </Stack>
+                </Box>
               )}
 
-              <Divider sx={{ height: "1px", bgcolor: "#fff", my: 1 }} />
+              <Divider sx={{ height: "1px", bgcolor: "#fff", my: 2 }} />
 
               {/* File and Link Buttons */}
-              <Box display="flex" justifyContent="space-between" alignItems="center">
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                spacing={2}
+                alignItems={{ xs: "flex-start", sm: "center" }}
+                justifyContent="space-between"
+              >
                 {fileUrl && (
                   <a
                     href={fileUrl}
@@ -146,7 +158,7 @@ const DiscoverWorkUser = ({ userId }) => {
                     rel="noopener noreferrer"
                     style={{ textDecoration: "none" }}
                   >
-                    <Button startIcon={<PictureAsPdfIcon />} sx={{ color: "#e04c2c" }}>
+                    <Button startIcon={<PictureAsPdfIcon />} sx={{ color: "#ea3b15" }}>
                       Download PDF
                     </Button>
                   </a>
@@ -158,12 +170,12 @@ const DiscoverWorkUser = ({ userId }) => {
                     rel="noopener noreferrer"
                     style={{ textDecoration: "none" }}
                   >
-                    <Button sx={{ color: "#e04c2c" }}>
+                    <Button sx={{ color: "#ea3b15" }}>
                       View Publication
                     </Button>
                   </a>
                 )}
-              </Box>
+              </Stack>
             </Box>
           );
         })

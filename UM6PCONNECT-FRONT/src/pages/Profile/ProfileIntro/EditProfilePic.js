@@ -4,10 +4,10 @@ import { Close, UploadFile, CameraAlt, Delete } from "@mui/icons-material";
 import { UserContext } from "../../../context/UserContext";
 import Cropper from "react-easy-crop";
 import axios from "axios";
-import CameraCapture from "./CameraCapture"; 
+import CameraCapture from "./CameraCapture";
 
 const EditProfilePic = ({ onClose }) => {
-  const { user, setUser } = useContext(UserContext); // ✅ Get setUser to update state instantly
+  const { user, setUser } = useContext(UserContext);
   const fileInputRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(user?.profilePicture || "/default-profile.jpg");
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -16,12 +16,10 @@ const EditProfilePic = ({ onClose }) => {
   const [isCropping, setIsCropping] = useState(false);
   const [showCamera, setShowCamera] = useState(false);
 
-  // 📌 Open File Selection
   const triggerFileInput = () => {
     fileInputRef.current.click();
   };
 
-  // 📌 Handle File Upload
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -34,59 +32,58 @@ const EditProfilePic = ({ onClose }) => {
     }
   };
 
-  // 📌 Capture from Camera
   const handleCapture = (photo) => {
     setImageSrc(photo);
     setIsCropping(true);
     setShowCamera(false);
   };
 
-  // 📌 Delete Image
   const handleDeleteImage = () => {
     setImageSrc("/default-profile.jpg");
     setIsCropping(false);
   };
 
-  // 📌 Handle Cropping
   const onCropComplete = useCallback((_, croppedPixels) => {
     setCroppedAreaPixels(croppedPixels);
   }, []);
 
-  // 📌 Crop & Save Image (Send to API & Update Context)
   const saveImage = async () => {
     if (!croppedAreaPixels) return;
-
+  
     const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels);
     setImageSrc(croppedImage);
     setIsCropping(false);
-
+  
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/profilepicture/update-profile-picture/${user._id}`,
-        { profilePicture: croppedImage }
+        `http://localhost:5000/api/profilepicture/update-profile-picture`,
+        { profilePicture: croppedImage },
+        {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
       );
-
+  
       if (response.status === 200) {
         console.log("Profile picture updated successfully.");
-
-        // ✅ Update UserContext to refresh the profile picture instantly
         setUser((prevUser) => ({
           ...prevUser,
           profilePicture: croppedImage,
         }));
-
-        onClose(); // 🔥 CLOSE THE MODAL AFTER SUCCESS 🔥
+        onClose();
       }
     } catch (error) {
       console.error("Error saving profile picture:", error);
     }
   };
+  
 
   return (
     <Modal open onClose={onClose}>
       <Box
         sx={{
-          width: 650,
+          width: { xs: "90vw", sm: 650 }, // 📱 90vw mobile, 650px desktop
           bgcolor: "white",
           p: 3,
           borderRadius: 2,
@@ -101,26 +98,27 @@ const EditProfilePic = ({ onClose }) => {
         <IconButton onClick={onClose} sx={{ position: "absolute", top: 8, right: 8 }}>
           <Close />
         </IconButton>
-        <h2 style={{ color: "#333", marginBottom: "10px", fontSize: "24px" }}>
+
+        <h2 style={{ color: "#333", marginBottom: "10px", fontSize: "22px" }}>
           Change profile photo
         </h2>
 
-        {/* Show Camera Screen Instead of Edit UI */}
         {showCamera ? (
           <CameraCapture onCapture={handleCapture} onClose={() => setShowCamera(false)} />
         ) : (
           <>
-            {/* Image Preview Area */}
+            {/* Image Preview */}
             <Box
               sx={{
                 width: "100%",
-                height: 200,
+                height: { xs: "30vh", sm: 200 }, // 📱 Responsive height
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 backgroundColor: "black",
                 position: "relative",
                 borderRadius: "8px",
+                overflow: "hidden",
               }}
             >
               {isCropping ? (
@@ -142,28 +140,45 @@ const EditProfilePic = ({ onClose }) => {
               )}
 
               {imageSrc !== "/default-profile.jpg" && (
-                <IconButton onClick={handleDeleteImage} sx={{ position: "absolute", top: 10, right: 10 }}>
-                  <Delete />
+                <IconButton onClick={handleDeleteImage} sx={{ position: "absolute", top: 10, right: 10, backgroundColor: "white" }}>
+                  <Delete sx={{ color: "#ea3b15" }} />
                 </IconButton>
               )}
             </Box>
 
             {/* Zoom Slider */}
             {isCropping && (
-              <Slider value={zoom} min={1} max={3} step={0.1} onChange={(e, newValue) => setZoom(newValue)} sx={{ mt: 2, mx: 3 }} />
+              <Slider
+                value={zoom}
+                min={1}
+                max={3}
+                step={0.1}
+                onChange={(e, newValue) => setZoom(newValue)}
+                sx={{ mt: 2, mx: 3 }}
+              />
             )}
 
             {/* Upload & Camera Buttons */}
-            <Box sx={{ display: "flex", gap: 2, justifyContent: "center", mt: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                justifyContent: "center",
+                alignItems: "center",
+                gap: 2,
+                mt: 2,
+              }}
+            >
               <Button
                 variant="contained"
                 startIcon={<UploadFile />}
                 sx={{
                   backgroundColor: "#fff",
-                  color: "#e04c2c",
+                  color: "#ea3b15",
                   boxShadow: "none",
-                  border: "1px solid #e04c2c",
-                  "&:hover": { backgroundColor: "#b53c24", boxShadow: "none", color: "#fff" },
+                  border: "1px solid #ea3b15",
+                  width: { xs: "100%", sm: "auto" },
+                  "&:hover": { backgroundColor: "#b53c24", color: "#fff", boxShadow: "none" },
                 }}
                 onClick={triggerFileInput}
               >
@@ -175,9 +190,10 @@ const EditProfilePic = ({ onClose }) => {
                 startIcon={<CameraAlt />}
                 sx={{
                   backgroundColor: "#fff",
-                  color: "#e04c2c",
+                  color: "#ea3b15",
                   boxShadow: "none",
-                  border: "1px solid #e04c2c",
+                  border: "1px solid #ea3b15",
+                  width: { xs: "100%", sm: "auto" },
                   "&:hover": { backgroundColor: "#b53c24", color: "#fff", boxShadow: "none" },
                 }}
                 onClick={() => setShowCamera(true)}
@@ -190,10 +206,20 @@ const EditProfilePic = ({ onClose }) => {
             <input type="file" accept="image/*" ref={fileInputRef} hidden onChange={handleFileUpload} />
 
             {/* Cancel & Save Buttons */}
-            <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", sm: "row" },
+                justifyContent: "space-between",
+                alignItems: "center",
+                mt: 3,
+                gap: 2,
+              }}
+            >
               <Button
                 sx={{
-                  color: "#e04c2c",
+                  color: "#ea3b15",
+                  width: { xs: "100%", sm: "auto" },
                   "&:hover": { backgroundColor: "#fbe4e0" },
                 }}
                 onClick={onClose}
@@ -206,8 +232,9 @@ const EditProfilePic = ({ onClose }) => {
                   variant="contained"
                   onClick={saveImage}
                   sx={{
-                    backgroundColor: "#e04c2c",
+                    backgroundColor: "#ea3b15",
                     color: "white",
+                    width: { xs: "100%", sm: "auto" },
                     "&:hover": { backgroundColor: "#b53c24" },
                   }}
                 >

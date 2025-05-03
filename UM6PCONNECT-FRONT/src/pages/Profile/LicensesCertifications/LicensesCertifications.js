@@ -78,8 +78,8 @@ const LicensesCertifications = () => {
           onClick={() => handleOpen(null)}
           style={{
             cursor: "pointer",
-            color: "#e04c2c",
-            border: "1px solid #e04c2c",
+            color: "#ea3b15",
+            border: "1px solid #ea3b15",
             borderRadius: "8px",
             padding: "5px",
             fontSize: "30px",
@@ -123,7 +123,7 @@ const LicensesCertifications = () => {
                     backgroundColor: "#f4e9e7",
                   }}
                 >
-                  <VerifiedIcon style={{ color: "#e04c2c", fontSize: "30px" }} />
+                  <VerifiedIcon style={{ color: "#ea3b15", fontSize: "30px" }} />
                 </div>
                 <div>
                   <p style={{ fontWeight: "600", fontSize: "16px" }}>
@@ -143,7 +143,7 @@ const LicensesCertifications = () => {
                   onClick={() => handleOpen(license)}
                   style={{
                     cursor: "pointer",
-                    color: "#e04c2c",
+                    color: "#ea3b15",
                     fontSize: "24px",
                     transition: "all 0.3s ease",
                   }}
@@ -154,7 +154,7 @@ const LicensesCertifications = () => {
                   onClick={() => setDeleteLicenseId(license._id)}
                   style={{
                     cursor: "pointer",
-                    color: "#e04c2c",
+                    color: "#ea3b15",
                     fontSize: "24px",
                     transition: "all 0.3s ease",
                   }}
@@ -191,7 +191,7 @@ const LicensesCertifications = () => {
               backgroundColor: "#f4e9e7",
             }}
           >
-            <VerifiedIcon style={{ color: "#e04c2c", fontSize: "30px" }} />
+            <VerifiedIcon style={{ color: "#ea3b15", fontSize: "30px" }} />
           </div>
           <div>
             <p style={{ fontWeight: "600", fontSize: "16px" }}>Certification Name</p>

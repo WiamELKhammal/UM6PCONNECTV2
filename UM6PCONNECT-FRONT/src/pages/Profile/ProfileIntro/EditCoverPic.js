@@ -6,7 +6,7 @@ import Cropper from "react-easy-crop";
 import axios from "axios";
 
 const EditCoverPic = ({ onClose }) => {
-  const { user, setUser } = useContext(UserContext); // ✅ Get setUser to update state instantly
+  const { user, setUser } = useContext(UserContext);
   const fileInputRef = useRef(null);
   const [imageSrc, setImageSrc] = useState(user?.coverPicture || "/assets/images/default-cover.png");
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -14,12 +14,10 @@ const EditCoverPic = ({ onClose }) => {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [isCropping, setIsCropping] = useState(false);
 
-  // 📌 Open File Selection
   const triggerFileInput = () => {
     fileInputRef.current.click();
   };
 
-  // 📌 Handle File Upload
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -32,52 +30,51 @@ const EditCoverPic = ({ onClose }) => {
     }
   };
 
-  // 📌 Delete Cover Image
   const handleDeleteImage = () => {
     setImageSrc("/assets/images/default-cover.png");
     setIsCropping(false);
   };
 
-  // 📌 Handle Cropping
   const onCropComplete = useCallback((_, croppedPixels) => {
     setCroppedAreaPixels(croppedPixels);
   }, []);
 
-  // 📌 Crop & Save Image (Send to API & Update Context)
   const saveImage = async () => {
     if (!croppedAreaPixels) return;
-
+  
     const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels);
     setImageSrc(croppedImage);
     setIsCropping(false);
-
+  
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/profilepicture/update-cover-picture/${user._id}`,
-        { coverPicture: croppedImage }
+        `http://localhost:5000/api/profilepicture/update-cover-picture`, // ✅ REMOVE ${user._id}
+        { coverPicture: croppedImage },
+        {
+          headers: {
+            Authorization: `Bearer ${user?.token}`, // ✅ Bearer Token attached
+          },
+        }
       );
-
+  
       if (response.status === 200) {
         console.log("Cover picture updated successfully.");
-
-        // ✅ Update UserContext to refresh the cover picture instantly
         setUser((prevUser) => ({
           ...prevUser,
           coverPicture: croppedImage,
         }));
-
-        onClose(); // 🔥 CLOSE THE MODAL AFTER SUCCESS 🔥
+        onClose();
       }
     } catch (error) {
       console.error("Error saving cover picture:", error);
     }
   };
-
+  
   return (
     <Modal open onClose={onClose}>
       <Box
         sx={{
-          width: 600,
+          width: { xs: "90vw", sm: 600 }, // 📱 Responsive width
           bgcolor: "white",
           p: 3,
           borderRadius: 2,
@@ -92,19 +89,23 @@ const EditCoverPic = ({ onClose }) => {
         <IconButton onClick={onClose} sx={{ position: "absolute", top: 8, right: 8 }}>
           <Close />
         </IconButton>
-        <h2 style={{ color: "#333", marginBottom: "10px", fontSize: "24px" }}>Change Cover Photo</h2>
 
-        {/* Image Preview Area */}
+        <h2 style={{ color: "#333", marginBottom: "10px", fontSize: "22px" }}>
+          Change Cover Photo
+        </h2>
+
+        {/* Image Preview */}
         <Box
           sx={{
             width: "100%",
-            height: 250,
+            height: { xs: "30vh", sm: 250 },
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             backgroundColor: "black",
             position: "relative",
             borderRadius: "8px",
+            overflow: "hidden",
           }}
         >
           {isCropping ? (
@@ -112,7 +113,7 @@ const EditCoverPic = ({ onClose }) => {
               image={imageSrc}
               crop={crop}
               zoom={zoom}
-              aspect={3} // 📌 Aspect ratio for cover photo
+              aspect={3}
               onCropChange={setCrop}
               onZoomChange={setZoom}
               onCropComplete={onCropComplete}
@@ -126,15 +127,22 @@ const EditCoverPic = ({ onClose }) => {
           )}
 
           {imageSrc !== "/assets/images/default-cover.png" && (
-            <IconButton onClick={handleDeleteImage} sx={{ position: "absolute", top: 10, right: 10 }}>
-              <Delete />
+            <IconButton onClick={handleDeleteImage} sx={{ position: "absolute", top: 10, right: 10, backgroundColor: "white" }}>
+              <Delete sx={{ color: "#ea3b15" }} />
             </IconButton>
           )}
         </Box>
 
         {/* Zoom Slider */}
         {isCropping && (
-          <Slider value={zoom} min={1} max={3} step={0.1} onChange={(e, newValue) => setZoom(newValue)} sx={{ mt: 2, mx: 3 }} />
+          <Slider
+            value={zoom}
+            min={1}
+            max={3}
+            step={0.1}
+            onChange={(e, newValue) => setZoom(newValue)}
+            sx={{ mt: 2, mx: 3 }}
+          />
         )}
 
         {/* Upload Button */}
@@ -143,7 +151,7 @@ const EditCoverPic = ({ onClose }) => {
           startIcon={<UploadFile />}
           onClick={triggerFileInput}
           sx={{
-            backgroundColor: "#e04c2c",
+            backgroundColor: "#ea3b15",
             color: "white",
             "&:hover": { backgroundColor: "#b53c24" },
             mt: 2,
@@ -156,8 +164,24 @@ const EditCoverPic = ({ onClose }) => {
         <input type="file" accept="image/*" ref={fileInputRef} hidden onChange={handleFileUpload} />
 
         {/* Cancel & Save Buttons */}
-        <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
-          <Button sx={{ color: "#e04c2c", "&:hover": { backgroundColor: "#fbe4e0" } }} onClick={onClose}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            justifyContent: "space-between",
+            alignItems: "center",
+            mt: 3,
+            gap: 2,
+          }}
+        >
+          <Button
+            sx={{
+              color: "#ea3b15",
+              width: { xs: "100%", sm: "auto" },
+              "&:hover": { backgroundColor: "#fbe4e0" }
+            }}
+            onClick={onClose}
+          >
             Cancel
           </Button>
 
@@ -166,9 +190,10 @@ const EditCoverPic = ({ onClose }) => {
               variant="contained"
               onClick={saveImage}
               sx={{
-                backgroundColor: "#e04c2c",
+                backgroundColor: "#ea3b15",
                 color: "white",
-                "&:hover": { backgroundColor: "#b53c24" },
+                width: { xs: "100%", sm: "auto" },
+                "&:hover": { backgroundColor: "#b53c24" }
               }}
             >
               Save

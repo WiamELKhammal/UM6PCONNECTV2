@@ -25,19 +25,25 @@ const UserProfile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user && user._id) {
+    if (user && user._id && user.token) {
       const fetchProfile = async () => {
         try {
           const response = await fetch(
-            `http://localhost:5000/api/complete/profile/${user._id}`
+            `http://localhost:5000/api/complete/profile/${user._id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${user.token}`, //  Ajout du token
+              },
+            }
           );
+  
           if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
-
+  
           const data = await response.json();
           if (data) {
             setCompletionPercentage(parseFloat(data.completionPercentage) || 0);
             setMissingFields(data.missingFields || []);
-
+  
             const allFields = [
               "First Name", "Last Name", "Headline", "Profile Picture",
               "Cover Picture", "Departement", "LinkedIn", "ResearchGate", "Experience"
@@ -53,13 +59,14 @@ const UserProfile = () => {
           setLoading(false);
         }
       };
-
+  
       fetchProfile();
     } else {
       setLoading(false);
       setError("User not logged in.");
     }
   }, [user]);
+  
 
   if (loading) return <CircularProgress />;
   if (error) return <Typography color="error">{error}</Typography>;
@@ -124,7 +131,7 @@ const UserProfile = () => {
                     height: 8,
                     borderRadius: 4,
                     backgroundColor: "#efeef1",
-                    "& .MuiLinearProgress-bar": { backgroundColor: "#e04c2c" },
+                    "& .MuiLinearProgress-bar": { backgroundColor: "#ea3b15" },
                   }}
                 />
               </Box>
@@ -150,7 +157,7 @@ const UserProfile = () => {
                   >
                     {fieldSentences[field] || `Complete your ${field}`}
                   </Typography>
-                  <ArrowCircleRightOutlinedIcon sx={{ color: "#e04c2c", fontSize: 24 }} />
+                  <ArrowCircleRightOutlinedIcon sx={{ color: "#ea3b15", fontSize: 24 }} />
                 </Box>
               ))}
 
@@ -168,7 +175,7 @@ const UserProfile = () => {
                     backgroundColor: "#fff",
                   }}
                 >
-                  <TaskAltIcon sx={{ color: "#e04c2c", fontSize: 24 }} />
+                  <TaskAltIcon sx={{ color: "#ea3b15", fontSize: 24 }} />
                   <Typography
                     variant="body2"
                     sx={{
@@ -187,7 +194,7 @@ const UserProfile = () => {
               <Box sx={{ textAlign: "left", mt: 2 }}>
                 <Typography
                   variant="body2"
-                  sx={{ fontWeight: "bold", color: "#e04c2c", cursor: "pointer" }}
+                  sx={{ fontWeight: "bold", color: "#ea3b15", cursor: "pointer" }}
                   onClick={() => navigate("/profile")}
                 >
                   View More

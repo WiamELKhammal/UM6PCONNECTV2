@@ -69,7 +69,7 @@ const TheWhy = () => {
                   sx={{
                     width: 100,
                     height: 100,
-                    backgroundColor: "#e04c2c",
+                    backgroundColor: "#ea3b15",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",

@@ -96,7 +96,7 @@ const Experience = ({ userId }) => {
                 >
                   {exp.companyLogo ? (
                     <img
-                      src={exp.companyLogo}
+                      src={exp.companyLogo.startsWith("http") ? exp.companyLogo : `http://localhost:5000/${exp.companyLogo}`}
                       alt={exp.companyName}
                       style={{ width: "100%", height: "100%", objectFit: "contain" }}
                     />
@@ -104,6 +104,7 @@ const Experience = ({ userId }) => {
                     <ApartmentIcon style={{ color: "#5a5a5a", fontSize: "40px" }} />
                   )}
                 </div>
+
                 <div style={{ maxWidth: "800px" }}>
                   <p style={{ fontSize: "16px", fontWeight: 600, marginBottom: 4 }}>{exp.jobTitle}</p>
                   <p style={{ fontSize: "14px", color: "#555", marginBottom: 2 }}>{exp.companyName} · Full-time</p>

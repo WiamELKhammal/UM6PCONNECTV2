@@ -5,17 +5,16 @@ import {
   TextField,
   CircularProgress,
   IconButton,
+  useMediaQuery,
+  Box,
+  Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { UserContext } from "../../../context/UserContext";
-import ProfileSetup from "./ProfileSetup";
-import EditProfilePic from "./EditProfilePic";
-import EditCoverPic from "./EditCoverPic";
+import { useTheme } from "@mui/material/styles";
 
 const EditProfileForm = ({ open, onClose, onSave }) => {
   const { user, setUser } = useContext(UserContext);
-
-  // Only these fields will be available for editing.
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -24,6 +23,11 @@ const EditProfileForm = ({ open, onClose, onSave }) => {
     linkedIn: "",
     researchGate: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     if (user) {
@@ -38,9 +42,6 @@ const EditProfileForm = ({ open, onClose, onSave }) => {
     }
   }, [user]);
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
@@ -50,162 +51,127 @@ const EditProfileForm = ({ open, onClose, onSave }) => {
   const handleSave = async () => {
     setLoading(true);
     setError("");
-  
-    if (!user?._id) {
-      setError("User ID is missing.");
+
+    if (!user?.token) {
+      setError("No token available.");
       setLoading(false);
       return;
     }
-  
+
     try {
       const payload = {
         Prenom: formData.firstName,
         Nom: formData.lastName,
         headline: formData.headline,
-        Departement: formData.department,  // <== Remap here
+        Departement: formData.department,
         linkedIn: formData.linkedIn,
         researchGate: formData.researchGate,
       };
-  
-      const response = await fetch(
-        `http://localhost:5000/api/profile/${String(user._id)}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
-  
+
+      const response = await fetch("http://localhost:5000/api/profile/update", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
       if (!response.ok) throw new Error("Failed to update profile.");
-  
-      const updatedUser = await response.json();
-  
-      setUser(updatedUser.user);
-      localStorage.setItem("user", JSON.stringify(updatedUser.user));
-  
-      onSave();
+
+      const { user: updatedUser } = await response.json(); // ✅ Correctly extract "user"
+      setUser(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser)); // ✅ Store updated user
+
+      onSave(); // Close modal
     } catch (error) {
       console.error("Update error:", error);
-      setError(error.message);
+      setError(error.message || "Failed to update profile. Please try again.");
     } finally {
       setLoading(false);
     }
   };
-  
 
   return (
     <Modal open={open} onClose={onClose}>
-      <div
-        style={{
+      <Box
+        sx={{
           backgroundColor: "white",
-          padding: "30px",
+          p: isMobile ? 2 : 4,
           borderRadius: "10px",
-          width: "90%",
-          maxWidth: "800px",
-          height: "95vh",
+          width: isMobile ? "95%" : "600px",
+          height: isMobile ? "95vh" : "auto",
           margin: "2.5vh auto",
           textAlign: "center",
           position: "relative",
           overflowY: "auto",
         }}
       >
+        {/* Close button */}
         <IconButton
           onClick={onClose}
-          style={{
+          sx={{
             position: "absolute",
-            top: "10px",
-            left: "10px",
+            top: 10,
+            left: 10,
             color: "#000",
           }}
         >
           <CloseIcon />
         </IconButton>
 
-        <h2 style={{ color: "#333", marginBottom: "10px", fontSize: "30px" }}>
+        <Typography variant="h4" sx={{ color: "#333", mb: 2, fontSize: isMobile ? 24 : 30 }}>
           Edit Profile
-        </h2>
-        <p
-          style={{
+        </Typography>
+
+        <Typography
+          sx={{
             color: "#777",
-            fontSize: "16px",
-            marginBottom: "24px",
+            fontSize: isMobile ? 14 : 16,
+            mb: 3,
             textAlign: "left",
           }}
         >
           Update your personal information below.
-        </p>
+        </Typography>
 
-        <TextField
-          label="First Name"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: "20px" }}
-        />
+        <TextField label="First Name" name="firstName" value={formData.firstName} onChange={handleChange} fullWidth variant="outlined" sx={{ mb: 2 }} />
+        <TextField label="Last Name" name="lastName" value={formData.lastName} onChange={handleChange} fullWidth variant="outlined" sx={{ mb: 2 }} />
+        <TextField label="Headline" name="headline" value={formData.headline} onChange={handleChange} fullWidth variant="outlined" sx={{ mb: 2 }} />
+        <TextField label="Department" name="department" value={formData.department} onChange={handleChange} fullWidth variant="outlined" sx={{ mb: 2 }} />
+        <TextField label="LinkedIn" name="linkedIn" value={formData.linkedIn} onChange={handleChange} fullWidth variant="outlined" sx={{ mb: 2 }} />
+        <TextField label="ResearchGate" name="researchGate" value={formData.researchGate} onChange={handleChange} fullWidth variant="outlined" sx={{ mb: 2 }} />
 
-        <TextField
-          label="Last Name"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: "20px" }}
-        />
-
-        <TextField
-          label="Headline"
-          name="headline"
-          value={formData.headline}
-          onChange={handleChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: "20px" }}
-        />
-
-        <TextField
-          label="Department"
-          name="department"
-          value={formData.department}
-          onChange={handleChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: "20px" }}
-        />
-
-        <TextField
-          label="LinkedIn"
-          name="linkedIn"
-          value={formData.linkedIn}
-          onChange={handleChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: "20px" }}
-        />
-
-        <TextField
-          label="ResearchGate"
-          name="researchGate"
-          value={formData.researchGate}
-          onChange={handleChange}
-          fullWidth
-          variant="outlined"
-          sx={{ marginBottom: "20px" }}
-        />
-
-        <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
           <Button
             variant="contained"
             onClick={handleSave}
-            style={{ backgroundColor: "#e04c2c", color: "#fff", width: "100%" }}
+            sx={{
+              backgroundColor: "#ea3b15",
+              color: "#fff",
+              width: { xs: "100%", sm: "auto" },
+              px: 5,
+              "&:hover": { backgroundColor: "#c53612" },
+            }}
             disabled={loading}
           >
             {loading ? <CircularProgress size={24} color="inherit" /> : "Save"}
           </Button>
-        </div>
-      </div>
+        </Box>
+
+        {error && (
+          <Typography
+            sx={{
+              color: "red",
+              mt: 2,
+              fontSize: "14px",
+              wordWrap: "break-word",
+            }}
+          >
+            {error}
+          </Typography>
+        )}
+      </Box>
     </Modal>
   );
 };

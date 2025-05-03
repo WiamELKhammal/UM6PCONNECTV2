@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -18,6 +18,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import debounce from "lodash.debounce";
+import { UserContext } from "../../../context/UserContext";
 
 const CLEARBIT_URL = "https://autocomplete.clearbit.com/v1/companies/suggest?query=";
 const employmentTypes = ["Full-time", "Part-time", "Freelance", "Contract", "Internship", "Apprenticeship", "Seasonal"];
@@ -49,6 +50,7 @@ const EditExperience = ({ open, onClose, experienceData, fetchExperience }) => {
       domain: item.domain
     }));
   };
+  const { user } = useContext(UserContext); // correctly using your user
 
   const handleSearch = debounce(async (text) => {
     if (!text || text.length < 2) return;
@@ -113,19 +115,27 @@ const EditExperience = ({ open, onClose, experienceData, fetchExperience }) => {
 
   const handleUpdate = async () => {
     if (!experienceData?._id) return;
-
+  
     const updatedData = {
       ...form,
       endDate: form.isCurrent ? "Present" : form.endDate || null,
     };
-
+  
     try {
+      if (!user?.token) {
+        console.error("Authentication token not found.");
+        return;
+      }
+  
       const response = await fetch(`http://localhost:5000/api/experience/${experienceData._id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${user.token}`, // ✅ ADDED TOKEN
+        },
         body: JSON.stringify(updatedData),
       });
-
+  
       if (response.ok) {
         fetchExperience();
         onClose();
@@ -136,6 +146,7 @@ const EditExperience = ({ open, onClose, experienceData, fetchExperience }) => {
       console.error("Error updating experience:", error);
     }
   };
+  
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="md">
@@ -261,7 +272,7 @@ const EditExperience = ({ open, onClose, experienceData, fetchExperience }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} sx={{ color: "#000" }}>Cancel</Button>
-        <Button onClick={handleUpdate} sx={{ backgroundColor: "#e04c2c", color: "#fff" }}>Save</Button>
+        <Button onClick={handleUpdate} sx={{ backgroundColor: "#ea3b15", color: "#fff" }}>Save</Button>
       </DialogActions>
     </Dialog>
   );

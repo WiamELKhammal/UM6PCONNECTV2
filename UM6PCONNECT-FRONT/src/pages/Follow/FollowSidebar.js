@@ -5,59 +5,68 @@ const FollowSidebar = ({ activeTab, setActiveTab }) => {
   return (
     <Box
       sx={{
-        width: "250px", // Fixed width for the sidebar
+        width: { xs: "120px", sm: "220px" }, // 📱 Small width on phone
         bgcolor: "#f7f7f7",
-        padding: "20px 0", // Vertical padding only, no horizontal padding
+        padding: "20px 0",
         borderRight: "1px solid #ddd",
       }}
     >
       {/* Title */}
-      <Typography variant="h6" sx={{ mb: 3,fontWeight: "600", fontSize: "18px", color: "#000", px: 3 }}>
+      <Typography
+        variant="h6"
+        sx={{
+          mb: 3,
+          fontWeight: "600",
+          fontSize: { xs: "14px", sm: "18px" }, // 📱 Smaller title on phone
+          color: "#000",
+          px: 2,
+        }}
+      >
         Follow List
       </Typography>
-        
-      {/* Tabs Container */}
+
+      {/* Tabs */}
       <Box sx={{ display: "flex", flexDirection: "column" }}>
-        {/* Followers Tab */}
         <Box
           onClick={() => setActiveTab("followers")}
           sx={{
             fontWeight: 400,
-            width: "250px",
-            padding: "12px 0", // Vertical padding only, no horizontal padding
-            backgroundColor: activeTab === "followers" ? "#e04c2c" : "transparent",
+            width: "100%",
+            padding: "12px 0",
+            backgroundColor: activeTab === "followers" ? "#ea3b15" : "transparent",
             color: activeTab === "followers" ? "white" : "black",
             cursor: "pointer",
-            textAlign: "left",
+            textAlign: "center",
             transition: "0.3s",
+            fontSize: { xs: "13px", sm: "16px" }, // 📱 Smaller text on phone
             "&:hover": {
-              backgroundColor: "#e04c2c", // Red background on hover
-              color: "white", // White text on hover
+              backgroundColor: "#ea3b15",
+              color: "white",
             },
           }}
         >
-          <Box sx={{ px: 3 }}>Followers</Box> {/* Add padding inside the box */}
+          Followers
         </Box>
 
-        {/* Following Tab */}
         <Box
           onClick={() => setActiveTab("following")}
           sx={{
             fontWeight: 400,
-            width: "250px",
-            padding: "12px 0", // Vertical padding only, no horizontal padding
-            backgroundColor: activeTab === "following" ? "#e04c2c" : "transparent",
+            width: "100%",
+            padding: "12px 0",
+            backgroundColor: activeTab === "following" ? "#ea3b15" : "transparent",
             color: activeTab === "following" ? "white" : "black",
             cursor: "pointer",
-            textAlign: "left",
+            textAlign: "center",
             transition: "0.3s",
+            fontSize: { xs: "13px", sm: "16px" },
             "&:hover": {
-              backgroundColor: "#e04c2c", // Red background on hover
-              color: "white", // White text on hover
+              backgroundColor: "#ea3b15",
+              color: "white",
             },
           }}
         >
-          <Box sx={{ px: 3 }}>Following</Box> {/* Add padding inside the box */}
+          Following
         </Box>
       </Box>
     </Box>

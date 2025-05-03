@@ -22,23 +22,29 @@ const ProfileContainer = () => {
     <Box
       sx={{
         width: "100%",
-        backgroundColor: "#181717",
+        backgroundColor: "#FFF",
         minHeight: "100vh",
         pb: 8,
-        fontFamily: "'Work Sans', sans-serif", // ✅ Apply globally
+        fontFamily: "'Work Sans', sans-serif",
         color: "#fff",
       }}
     >
       <Box
         sx={{
-          width: "90%",
-          margin: "0px auto",
+          width: { xs: "95%", md: "90%" },
+          margin: "0 auto",
         }}
       >
         <ProfileIntro />
 
         {/* Tab Navigation */}
-        <Box sx={{ mt: 4, ml: 7.25, width: "90%" }}>
+        <Box
+          sx={{
+            mt: { xs: 3, md: 4 },
+            ml: { xs: 0, md: 7.25 },
+            width: { xs: "100%", md: "90%" },
+          }}
+        >
           <Tabs
             value={activeTab}
             onChange={(e, newValue) => setActiveTab(newValue)}
@@ -55,18 +61,18 @@ const ProfileContainer = () => {
               borderBottom: "1px solid #444",
               "& .MuiTab-root": {
                 textTransform: "none",
-                fontSize: "18px",
-                color: "#ccc",
-                px: 2.5,
-                py: 1,
+                fontSize: { xs: "14px", md: "18px" },
+                color: "#CCC",
+                px: { xs: 1.5, md: 2.5 },
+                py: { xs: 1, md: 1.5 },
                 minHeight: "unset",
                 fontWeight: 400,
               },
               "& .Mui-selected": {
-                color: "#fff !important",
+                color: "#000 !important",
               },
               "& .MuiTabs-scrollButtons": {
-                display: "none",
+                display: { xs: "flex", md: "none" },
               },
             }}
           >
@@ -77,7 +83,7 @@ const ProfileContainer = () => {
         </Box>
 
         {/* Tab Content */}
-        <Box sx={{ mt: 4 }}>
+        <Box sx={{ mt: { xs: 2, md: 4 } }}>
           {activeTab === "profile" && <Experience />}
           {activeTab === "discover" && <DiscoverWork />}
           {activeTab === "following" && <FollowPage />}
