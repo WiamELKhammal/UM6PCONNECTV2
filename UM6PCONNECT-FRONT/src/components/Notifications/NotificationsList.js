@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   Menu,
   MenuItem,
@@ -9,15 +9,16 @@ import {
   Tooltip,
   useMediaQuery,
   Dialog,
-  DialogTitle,
-  IconButton,
 } from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import axios from "axios";
-import { formatDistanceToNow, format } from "date-fns";
 import { useTheme } from "@mui/material/styles";
+import { formatDistanceToNow, format } from "date-fns";
+import CloseIcon from "@mui/icons-material/Close";
+import IconButton from "@mui/material/IconButton";
+import axios from "axios";
+import { UserContext } from "../../context/UserContext";
 
 const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
+  const { user } = useContext(UserContext);
   const [notifications, setNotifications] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -28,7 +29,11 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
     const fetchNotifications = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get(`http://localhost:5000/api/notification/${userId}`);
+        const response = await axios.get("http://localhost:5000/api/notification", { //  NO userId in URL
+          headers: {
+            Authorization: `Bearer ${user?.token}`, // ✅ still needed
+          },
+        });
         setNotifications(response.data);
       } catch (error) {
         console.error("Error fetching notifications:", error);
@@ -36,24 +41,42 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
         setIsLoading(false);
       }
     };
-
-    if (userId) {
+  
+    if (user?.token) { //  no need to check userId anymore
       fetchNotifications();
     }
-  }, [userId]);
+  }, [user?.token]);
+  
 
   const markAllAsRead = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/notification/markAllAsRead/${userId}`);
+      await axios.put(
+        "http://localhost:5000/api/notification/markAllAsRead", //  fixed route
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${user?.token}`, //  still needed
+          },
+        }
+      );
       setNotifications((prev) => prev.map((notif) => ({ ...notif, isRead: true })));
     } catch (error) {
       console.error("Error marking notifications as read:", error);
     }
   };
+  
 
   const markAsRead = async (notificationId) => {
     try {
-      await axios.put(`http://localhost:5000/api/notification/mark-as-read/${notificationId}`);
+      await axios.put(
+        `http://localhost:5000/api/notification/mark-as-read/${notificationId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${user?.token}`,
+          },
+        }
+      );
       setNotifications((prev) =>
         prev.map((notif) =>
           notif._id === notificationId ? { ...notif, isRead: true } : notif
@@ -84,7 +107,7 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
           <Typography
             variant="body2"
             sx={{
-              color: "#e04c2c",
+              color: "#ea3b15",
               fontWeight: 500,
               cursor: "pointer",
               "&:hover": { textDecoration: "underline" },
@@ -172,7 +195,6 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
 
   return isMobile ? (
     <Dialog fullWidth open={Boolean(anchorEl)} onClose={handleMenuClose} scroll="paper">
-
       {content}
     </Dialog>
   ) : (

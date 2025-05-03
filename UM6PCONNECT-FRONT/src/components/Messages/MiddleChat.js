@@ -10,15 +10,20 @@ import axios from "axios";
 const MiddleChat = ({ selectedConversation }) => {
   const { user } = useContext(UserContext);
   const [messages, setMessages] = useState([]);
-  const [sidebarOpen, setSidebarOpen] = useState(false); // ✅ Controls Right Sidebar
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    if (!selectedConversation || !selectedConversation.userId) return;
+    if (!selectedConversation || !selectedConversation.userId || !user?.token) return;
 
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/messages/conversation/${user._id}/${selectedConversation.userId}`
+          `http://localhost:5000/api/messages/conversation/${user._id}/${selectedConversation.userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
         );
         setMessages(response.data);
       } catch (error) {
@@ -27,37 +32,46 @@ const MiddleChat = ({ selectedConversation }) => {
     };
 
     fetchMessages();
-  }, [selectedConversation, user?._id]);
+  }, [selectedConversation, user?._id, user?.token]);
 
   return (
     <Box sx={{ height: "100vh", display: "flex", flexDirection: "row" }}>
-      {/* Main Chat Container (Dynamic Width) */}
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
-          width: sidebarOpen ? "calc(100% - 100px)" : "100%", // ✅ Chat Shrinks When Sidebar Opens
+          width: sidebarOpen ? "calc(100% - 100px)" : "100%",
           transition: "width 0.3s ease-in-out",
-          "&::-webkit-scrollbar": { display: "none" }, // Chrome, Safari
-    "-ms-overflow-style": "none", // IE, Edge
-    "scrollbar-width": "none", // Firefox
+          "&::-webkit-scrollbar": { display: "none" },
+          "-ms-overflow-style": "none",
+          "scrollbar-width": "none",
         }}
       >
-        {/* ✅ Pass onToggleSidebar to ChatHeader */}
-        <ChatHeader 
-          recipient={selectedConversation} 
-          onToggleSidebar={() => setSidebarOpen((prev) => !prev)} // ✅ Toggles Sidebar
+        <ChatHeader
+          recipient={selectedConversation}
+          onToggleSidebar={() => setSidebarOpen((prev) => !prev)}
         />
-        
+
         <Box sx={{ flex: 1, overflowY: "auto", padding: "1rem" }}>
-          <ChatMessages messages={messages} setMessages={setMessages} recipient={selectedConversation} />
+          <ChatMessages
+            messages={messages}
+            setMessages={setMessages}
+            recipient={selectedConversation}
+          />
         </Box>
-        
-        <ChatInput recipientId={selectedConversation.userId} setMessages={setMessages} />
+
+        <ChatInput
+          recipientId={selectedConversation.userId}
+          setMessages={setMessages}
+        />
       </Box>
 
-      {/* ✅ Right Sidebar (Only shown when open) */}
-      {sidebarOpen && <RightSidebar recipient={selectedConversation} onClose={() => setSidebarOpen(false)} />}
+      {sidebarOpen && (
+        <RightSidebar
+          recipient={selectedConversation}
+          onClose={() => setSidebarOpen(false)}
+        />
+      )}
     </Box>
   );
 };

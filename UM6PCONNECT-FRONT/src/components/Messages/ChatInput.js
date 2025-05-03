@@ -6,14 +6,12 @@ import axios from "axios";
 import Picker from "emoji-picker-react";
 import RecordRTC from "recordrtc";
 
-// ✅ Import Icons
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import SendIcon from "@mui/icons-material/Send";
 import AddIcon from "@mui/icons-material/Add";
 import MicIcon from "@mui/icons-material/Mic";
 import StopIcon from "@mui/icons-material/Stop";
 import CloseIcon from "@mui/icons-material/Close";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 const socket = io(process.env.REACT_APP_SOCKET_URL || "http://localhost:5000");
 
@@ -25,17 +23,14 @@ const ChatInput = ({ recipientId, setMessages }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
 
-  // ✅ Voice Recording States
   const [isRecording, setIsRecording] = useState(false);
   const [audioBlob, setAudioBlob] = useState(null);
   const [audioUrl, setAudioUrl] = useState(null);
   const recorderRef = useRef(null);
 
-  // 📌 Start Voice Recording
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-
       const recorder = new RecordRTC(stream, {
         type: "audio",
         mimeType: "audio/webm",
@@ -43,7 +38,6 @@ const ChatInput = ({ recipientId, setMessages }) => {
         numberOfAudioChannels: 1,
         timeSlice: 1000,
       });
-
       recorderRef.current = recorder;
       recorder.startRecording();
       setIsRecording(true);
@@ -52,7 +46,6 @@ const ChatInput = ({ recipientId, setMessages }) => {
     }
   };
 
-  // 📌 Stop Voice Recording
   const stopRecording = () => {
     if (recorderRef.current) {
       recorderRef.current.stopRecording(() => {
@@ -65,7 +58,6 @@ const ChatInput = ({ recipientId, setMessages }) => {
     }
   };
 
-  // 📌 Convert File to Base64 & Store for Preview
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -77,7 +69,6 @@ const ChatInput = ({ recipientId, setMessages }) => {
     }
   };
 
-  // 📌 Handle Sending Message (Text, File & Audio)
   const handleSendMessage = async () => {
     if (!newMessage.trim() && !selectedFile && !audioBlob) {
       setError("You cannot send an empty message!");
@@ -90,17 +81,15 @@ const ChatInput = ({ recipientId, setMessages }) => {
     formData.append("receiverId", recipientId);
     formData.append("text", newMessage.trim());
 
-    if (selectedFile) {
-      formData.append("file", selectedFile.rawFile);
-    }
-
-    if (audioBlob) {
-      formData.append("file", audioBlob, "voice_message.webm");
-    }
+    if (selectedFile) formData.append("file", selectedFile.rawFile);
+    if (audioBlob) formData.append("file", audioBlob, "voice_message.webm");
 
     try {
       const response = await axios.post("http://localhost:5000/api/messages/send", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${user.token}`,
+        },
       });
 
       setMessages((prevMessages) => [...prevMessages, response.data.data]);
@@ -115,57 +104,26 @@ const ChatInput = ({ recipientId, setMessages }) => {
     setAudioUrl(null);
   };
 
-  // 📌 Handle Emoji Selection
   const handleEmojiClick = (emojiObject) => {
     setNewMessage((prev) => prev + emojiObject.emoji);
     setOpenEmojiPicker(false);
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: "10px",
-        backgroundColor: "#FFF",
-        borderRadius: "30px",
-        margin: "10px",
-        border: "1px solid #ddd",
-        position: "relative",
-      }}
-    >
-      {/* ✅ Error Message */}
-      {error && (
-        <Alert severity="error" sx={{ width: "100%", fontSize: "12px", mb: "5px" }}>
-          {error}
-        </Alert>
-      )}
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", padding: 1, backgroundColor: "#FFF", borderRadius: "30px", m: 1, border: "1px solid #ddd", position: "relative" }}>
+      {error && <Alert severity="error" sx={{ width: "100%", fontSize: 12, mb: 1 }}>{error}</Alert>}
 
-      {/* ✅ File & Audio Preview (Before Sending) */}
       {(selectedFile || audioUrl) && (
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            gap: "10px",
-            backgroundColor: "#f8f8f8",
-            padding: "8px",
-            borderRadius: "8px",
-            width: "100%",
-            mb: "5px",
-          }}
-        >
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, backgroundColor: "#f8f8f8", p: 1, borderRadius: 2, width: "100%", mb: 1 }}>
           {selectedFile ? (
             selectedFile.type.startsWith("image/") ? (
-              <img src={selectedFile.data} alt="Preview" style={{ width: "50px", height: "50px", borderRadius: "5px" }} />
+              <img src={selectedFile.data} alt="Preview" style={{ width: 50, height: 50, borderRadius: 5 }} />
             ) : (
               <Typography variant="body2">{selectedFile.name}</Typography>
             )
           ) : (
             <audio src={audioUrl} controls />
           )}
-
           <IconButton onClick={() => (selectedFile ? setSelectedFile(null) : setAudioBlob(null))} sx={{ color: "red" }}>
             <CloseIcon />
           </IconButton>
@@ -173,47 +131,26 @@ const ChatInput = ({ recipientId, setMessages }) => {
       )}
 
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
-        {openEmojiPicker && (
-          <Box sx={{ position: "absolute", bottom: "60px", left: "20px", zIndex: 10 }}>
-            <Picker onEmojiClick={handleEmojiClick} />
-          </Box>
-        )}
+        {openEmojiPicker && <Box sx={{ position: "absolute", bottom: 60, left: 20, zIndex: 10 }}><Picker onEmojiClick={handleEmojiClick} /></Box>}
 
-        {/* ✅ Add File Button */}
         <input type="file" ref={fileInputRef} hidden onChange={handleFileSelect} />
-        <IconButton onClick={() => fileInputRef.current.click()} sx={{ color: "#e04c2c" }}>
-          <AddIcon />
-        </IconButton>
+        <IconButton onClick={() => fileInputRef.current.click()} sx={{ color: "#ea3b15" }}><AddIcon /></IconButton>
+        <IconButton onClick={() => setOpenEmojiPicker(!openEmojiPicker)} sx={{ color: "#ea3b15" }}><InsertEmoticonIcon /></IconButton>
 
-        {/* ✅ Emoji Button */}
-        <IconButton onClick={() => setOpenEmojiPicker(!openEmojiPicker)} sx={{ color: "#e04c2c" }}>
-          <InsertEmoticonIcon />
-        </IconButton>
-
-        {/* ✅ Message Input */}
         <TextField
           fullWidth
           variant="outlined"
           placeholder="Write your message..."
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
-          sx={{
-            backgroundColor: "#FFFFFF",
-            borderRadius: "30px",
-            border: "none",
-            padding: "0 10px",
-            "& fieldset": { border: "none" },
-            minHeight: "45px",
-          }}
+          sx={{ backgroundColor: "#FFF", borderRadius: "30px", padding: "0 10px", "& fieldset": { border: "none" }, minHeight: 45 }}
         />
 
-        {/* ✅ Mic Button (Toggle Recording) */}
-        <IconButton onClick={isRecording ? stopRecording : startRecording} sx={{ color: "#e04c2c" }}>
+        <IconButton onClick={isRecording ? stopRecording : startRecording} sx={{ color: "#ea3b15" }}>
           {isRecording ? <StopIcon /> : <MicIcon />}
         </IconButton>
 
-        {/* ✅ Send Button */}
-        <IconButton onClick={handleSendMessage} sx={{ backgroundColor: "#e04c2c", color: "#FFFFFF" }}>
+        <IconButton onClick={handleSendMessage} sx={{ backgroundColor: "#ea3b15", color: "#FFF" }}>
           <SendIcon />
         </IconButton>
       </Box>

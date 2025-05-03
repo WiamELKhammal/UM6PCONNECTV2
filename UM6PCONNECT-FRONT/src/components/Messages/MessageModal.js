@@ -52,8 +52,13 @@ const MessageModal = ({ open, onClose, recipientId, recipientName }) => {
     try {
       const response = await fetch("http://localhost:5000/api/messages/send", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${user?.token}`,
+        },
         body: formData,
       });
+      
+      
   
       const data = await response.json();
       if (response.ok) {
@@ -122,7 +127,7 @@ const MessageModal = ({ open, onClose, recipientId, recipientName }) => {
           sx={{
             marginBottom: '1rem',
             '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#e04c2c',
+              borderColor: '#ea3b15',
             },
           }}
         />
@@ -170,11 +175,11 @@ const MessageModal = ({ open, onClose, recipientId, recipientName }) => {
         <Button
           onClick={onClose}
           sx={{
-            borderColor: '#e04c2c',
-            color: '#e04c2c',
+            borderColor: '#ea3b15',
+            color: '#ea3b15',
             '&:hover': {
               backgroundColor: '#fff',
-              color: '#e04c2c',
+              color: '#ea3b15',
             },
           }}
         >
@@ -184,9 +189,9 @@ const MessageModal = ({ open, onClose, recipientId, recipientName }) => {
           onClick={handleSendMessage}
           sx={{
             backgroundColor: '#fff',
-            color: '#e04c2c',
+            color: '#ea3b15',
             '&:hover': {
-              backgroundColor: '#e04c2c',
+              backgroundColor: '#ea3b15',
               color: '#fff',
             },
           }}

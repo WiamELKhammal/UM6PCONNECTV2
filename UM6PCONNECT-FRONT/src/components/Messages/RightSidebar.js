@@ -26,7 +26,6 @@ const categorizeFilesByDate = (messages, type) => {
   messages.forEach((msg) => {
     const date = moment(msg.createdAt).format("DD/MM/YYYY");
 
-    // Add links
     if (type === "link" && Array.isArray(msg.links)) {
       msg.links.forEach((link) => {
         if (!grouped[date]) grouped[date] = [];
@@ -38,7 +37,6 @@ const categorizeFilesByDate = (messages, type) => {
       });
     }
 
-    // Add files
     if (Array.isArray(msg.files)) {
       msg.files.forEach((file) => {
         if (
@@ -55,7 +53,6 @@ const categorizeFilesByDate = (messages, type) => {
   return grouped;
 };
 
-
 const RightSidebar = ({ recipient, onClose }) => {
   const { user } = useContext(UserContext);
   const [activeTab, setActiveTab] = useState("media");
@@ -66,11 +63,12 @@ const RightSidebar = ({ recipient, onClose }) => {
     if (!user?._id || !recipient?.userId) return;
 
     axios
-      .get(`http://localhost:5000/api/messages/files-between/${user._id}/${recipient.userId}`)
-      .then((res) => {
-        console.log("Fetched messages with files:", res.data);
-        setMessages(res.data);
+      .get(`http://localhost:5000/api/messages/files-between/${user._id}/${recipient.userId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
       })
+      .then((res) => setMessages(res.data))
       .catch((err) => console.error("Failed to fetch shared files:", err));
   }, [user, recipient]);
 
@@ -109,9 +107,9 @@ const RightSidebar = ({ recipient, onClose }) => {
         sx={{
           px: 2,
           pt: 1,
-          "& .MuiTabs-indicator": { backgroundColor: "#e04c2c" },
-          "& .MuiTab-root": { color: "#e04c2c", fontWeight: 600 },
-          "& .Mui-selected": { color: "#e04c2c !important" }
+          "& .MuiTabs-indicator": { backgroundColor: "#ea3b15" },
+          "& .MuiTab-root": { color: "#ea3b15", fontWeight: 600 },
+          "& .Mui-selected": { color: "#ea3b15 !important" }
         }}
       >
         <Tab label="Media" value="media" />
@@ -138,7 +136,7 @@ const RightSidebar = ({ recipient, onClose }) => {
               <Grid container spacing={1} mb={2}>
                 {groupedFiles[date].map((file, idx) => (
                   <Grid item xs={12} key={idx}>
-                    {(file.type.includes("pdf") || file.type.includes("word") || file.type.includes("text")) ? (
+                    {(file.type?.includes("pdf") || file.type?.includes("word") || file.type?.includes("text")) ? (
                       <Box
                         sx={{
                           width: "100%",
@@ -157,9 +155,9 @@ const RightSidebar = ({ recipient, onClose }) => {
                         </Box>
                         <DownloadIcon fontSize="small" />
                       </Box>
-                    ) : file.type.startsWith("image/") ? (
+                    ) : file.type?.startsWith("image/") ? (
                       <Box component="img" src={file.data} alt={file.name} sx={{ width: "100%", height: 300, borderRadius: 1, objectFit: "cover" }} />
-                    ) : file.type.startsWith("video/") ? (
+                    ) : file.type?.startsWith("video/") ? (
                       <Box
                         sx={{
                           width: "100%",
@@ -173,7 +171,7 @@ const RightSidebar = ({ recipient, onClose }) => {
                       >
                         <SquarePlay size={22} />
                       </Box>
-                    ) : file.type.startsWith("audio/") ? (
+                    ) : file.type?.startsWith("audio/") ? (
                       <Box
                         sx={{
                           width: "100%",
@@ -211,7 +209,7 @@ const RightSidebar = ({ recipient, onClose }) => {
 
       <IconButton
         sx={{
-          bgcolor: "#e04c2c",
+          bgcolor: "#ea3b15",
           color: "#fff",
           position: "absolute",
           left: "-19.5px",

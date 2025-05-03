@@ -53,11 +53,16 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    if (user) {
+    if (user?.token) {
       const fetchUnreadCount = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/notification/unreadCount/${user._id}`
+            "http://localhost:5000/api/notification/unreadCount",
+            {
+              headers: {
+                Authorization: `Bearer ${user.token}`,
+              },
+            }
           );
           setUnreadCount(response.data.count);
         } catch (error) {
@@ -67,6 +72,7 @@ const Navbar = () => {
       fetchUnreadCount();
     }
   }, [user]);
+  
 
   const handleLogout = () => {
     setUser(null);
@@ -241,7 +247,7 @@ const Navbar = () => {
             </Button>
             <Button
               href="/signin"
-              sx={{ color: "#e04c2c", textTransform: "none" }}
+              sx={{ color: "#ea3b15", textTransform: "none" }}
             >
               Sign In
             </Button>
@@ -282,8 +288,8 @@ const Navbar = () => {
             href="/profile"
             variant="outlined"
             sx={{
-              color: "#e04c2c",
-              borderColor: "#e04c2c",
+              color: "#ea3b15",
+              borderColor: "#ea3b15",
               fontSize: "14px",
               fontWeight: "500",
               textTransform: "none",
@@ -369,7 +375,7 @@ const Navbar = () => {
           <Divider sx={{ my: 1 }} />
           <MenuItem
             onClick={handleLogout}
-            sx={{ color: "#e04c2c", fontWeight: 500 }}
+            sx={{ color: "#ea3b15", fontWeight: 500 }}
           >
             Sign Out
           </MenuItem>

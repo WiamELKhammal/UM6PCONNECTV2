@@ -9,8 +9,8 @@ import {
   Divider,
   Typography,
   Button,
-  useMediaQuery,
   Stack,
+  useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { KeyboardArrowDown } from "@mui/icons-material";
@@ -20,8 +20,8 @@ import { UserContext } from "../context/UserContext";
 import axios from "axios";
 
 const Navbar = () => {
-  const { user, setUser,logoutUser } = useContext(UserContext);
-  const [anchorEl, setAnchorEl] = useState(null);
+  const { user, logoutUser } = useContext(UserContext);
+  const [profileMenuAnchor, setProfileMenuAnchor] = useState(null);
   const [notificationAnchorEl, setNotificationAnchorEl] = useState(null);
   const [unreadCount, setUnreadCount] = useState(0);
 
@@ -29,20 +29,22 @@ const Navbar = () => {
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-
   useEffect(() => {
-    if (user) {
+    if (user?.token) {
       axios
-        .get(`http://localhost:5000/api/notification/unreadCount/${user._id}`)
+        .get("http://localhost:5000/api/notification/unreadCount", {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        })
         .then((res) => setUnreadCount(res.data.count))
         .catch((err) => console.error("Notification count error", err));
     }
   }, [user]);
-
+  
   const handleLogout = () => {
     logoutUser();
     navigate("/");
-    
   };
 
   const fullName = user ? `${user.Prenom} ${user.Nom}` : "Guest";
@@ -56,13 +58,30 @@ const Navbar = () => {
     { label: "MY PROFILE", link: "/profile" },
   ];
 
+
+  const handleNavClick = (link, event) => {
+    if (link === "#") {
+      setNotificationAnchorEl(event.currentTarget);
+    } else {
+      navigate(link);
+    }
+  };
+  
+  const isActive = (link) => {
+    if (link === "/Our-Researchers") {
+      return location.pathname.startsWith("/Our-Researchers") || location.pathname.startsWith("/Userprofile");
+    }
+    if (link === "#") return false;
+    return location.pathname === link;
+  };
+
   return (
     <AppBar
       position="sticky"
       sx={{
-        backgroundColor: "#181717",
-        borderBottom: "1px solid #fff",
-        color: "#f6f6f6",
+        backgroundColor: "#FFF",
+        borderBottom: "1px solid #CCC",
+        color: "#000",
         fontFamily: "'Work Sans', sans-serif",
         boxShadow: "none",
         zIndex: 1200,
@@ -70,141 +89,108 @@ const Navbar = () => {
     >
       <Toolbar
         sx={{
-          px: { xs: 3, md: 8 },
-          py: 1.2,
+          px: { xs: 2, md: 8 },
+          py: { xs: 0.5, md: 1.2 },
+          minHeight: { xs: "56px", md: "auto" },
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: { xs: "center", md: "space-between" },
           alignItems: "center",
         }}
       >
-        {/* Left Spacer */}
-        <Box sx={{ width: 220 }} />
+        {/* Left Empty Space or Logo */}
+        <Box sx={{ width: { xs: "auto", md: 220 } }} />
 
-        {/* Center Nav (only if logged in) */}
-        {!isMobile && user && (
-          <Stack direction="row" spacing={8} sx={{ fontFamily: "'Work Sans', sans-serif" }}>
-            {navItems.map(({ label, link }) => {
-              const isResearchersTab =
-                link === "/Our-Researchers" &&
-                (
-                  location.pathname.startsWith("/Our-Researchers") ||
-                  location.pathname.startsWith("/Userprofile")
-                );
-
-              const isActive = location.pathname === link || isResearchersTab;
-
-              return (
+        {/* Middle Section */}
+        {user ? (
+          !isMobile && (
+            <Stack direction="row" spacing={8} alignItems="center">
+              {navItems.map(({ label, link }, index) => (
                 <Typography
-                  key={label}
-                  onClick={() => link !== "#" && navigate(link)}
+                  key={index}
+                  onClick={(e) => handleNavClick(link, e)}
                   sx={{
-                    fontSize: "18px",
+                    fontSize: 18,
                     fontWeight: 300,
-                    color: isActive ? "#e04c2c" : "#f6f6f6",
+                    color: isActive(link) ? "#ea3b15" : "#000",
                     cursor: "pointer",
-                    pb: 0,
-                    mb: "-2px",
                     transition: "all 0.2s ease",
                   }}
                 >
-                  {label}
+                  {label === "NOTIFICATIONS" && unreadCount > 0
+                    ? `NOTIFICATIONS (${unreadCount})`
+                    : label}
                 </Typography>
-              );
-            })}
-          </Stack>
+              ))}
+            </Stack>
+          )
+        ) : (
+          !isMobile && (
+            <Stack direction="row" spacing={3} alignItems="center">
+              <Typography
+                sx={{
+                  fontSize: 16,
+                  fontWeight: 400,
+                  color: "#000",
+                }}
+              >
+                Are you a UM6P researcher?
+              </Typography>
+              <Button
+                href="/signup"
+                variant="outlined"
+                sx={{
+                  textTransform: "none",
+                  borderColor: "#ccc",
+                  color: "#000",
+                  fontSize: 14,
+                  px: 2,
+                  py: 0.5,
+                }}
+              >
+                Sign Up
+              </Button>
+              <Button
+                href="/signin"
+                variant="contained"
+                sx={{
+                  textTransform: "none",
+                  backgroundColor: "#ea3b15",
+                  fontSize: 14,
+                  px: 2,
+                  py: 0.5,
+                }}
+              >
+                Sign In
+              </Button>
+            </Stack>
+          )
         )}
 
-        {/* Right Side */}
-        {user ? (
+        {/* Right: Profile (always visible if user) */}
+        {user && (
           <Box
-            onClick={(e) => setAnchorEl(e.currentTarget)}
+            onClick={(e) => setProfileMenuAnchor(e.currentTarget)}
             sx={{
               display: "flex",
               alignItems: "center",
               gap: 1,
               cursor: "pointer",
-              px: 2,
-              py: 1,
-              border: "1px solid #FFF",
-              "&:hover": { backgroundColor: "#222" },
-              fontFamily: "'Work Sans', sans-serif",
+              px: { xs: 1.5, md: 2 },
+              py: { xs: 0.8, md: 1 },
+              border: "1px solid #CCC",
+              backgroundColor: "#fff",
+              borderRadius: 1,
+              color: "#000",
             }}
           >
             <Avatar src={profilePic} sx={{ width: 32, height: 32 }} />
-            <Typography sx={{ fontSize: 18, color: "#f6f6f6" }}>
-              {fullName}
-            </Typography>
-            <KeyboardArrowDown sx={{ color: "#f6f6f6" }} />
+            <Typography sx={{ fontSize: { xs: 16, md: 18 } }}>{fullName}</Typography>
+            <KeyboardArrowDown />
           </Box>
-        ) : (
-          <Stack
-            direction="row"
-            alignItems="center"
-            spacing={3}
-            sx={{
-              ml: "auto",
-              pr: 2,
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: "18px",
-                fontWeight: 500,
-                color: "#fff",
-                fontFamily: "'Work Sans', sans-serif",
-                whiteSpace: "nowrap",
-              }}
-            >
-              Are you a UM6P researcher? Sign up or sign in to share your research with the world.
-            </Typography>
-
-            <Button
-              href="/signup"
-              variant="contained"
-              sx={{
-                backgroundColor: "#fff",
-                color: "#000",
-                border: "1px solid #ccc",
-                textTransform: "none",
-                fontWeight: 400,
-                fontSize: "16px",
-                py: 1,
-                px: 3,
-                height: "42px",
-                "&:hover": {
-                  backgroundColor: "#f2f2f2",
-                },
-              }}
-            >
-              Sign Up
-            </Button>
-
-            <Button
-              href="/signin"
-              variant="contained"
-              sx={{
-                backgroundColor: "#e04c2c",
-                color: "#fff",
-                border: "1px solid #e04c2c",
-                textTransform: "none",
-                fontWeight: 400,
-                fontSize: "16px",
-                py: 1,
-                px: 3,
-                height: "42px",
-                "&:hover": {
-                  backgroundColor: "#fbeaea",
-                  color: "#e04c2c",
-                },
-              }}
-            >
-              Sign In
-            </Button>
-          </Stack>
         )}
       </Toolbar>
 
-      {/* Notifications */}
+      {/* Notifications Modal */}
       {user && (
         <NotificationsList
           anchorEl={notificationAnchorEl}
@@ -213,13 +199,18 @@ const Navbar = () => {
         />
       )}
 
-      {/* Profile Dropdown */}
-      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
-        <Box sx={{ padding: "10px 20px", minWidth: 240 }}>
+      {/* Profile Menu */}
+      <Menu
+        anchorEl={profileMenuAnchor}
+        open={Boolean(profileMenuAnchor)}
+        onClose={() => setProfileMenuAnchor(null)}
+        PaperProps={{ sx: { width: 280, mt: 0 } }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Box sx={{ padding: 2 }}>
           <Avatar src={profilePic} sx={{ width: 50, height: 50, mx: "auto" }} />
-          <Typography sx={{ mt: 1, fontWeight: 600, textAlign: "center" }}>
-            {fullName}
-          </Typography>
+          <Typography sx={{ mt: 1, fontWeight: 600, textAlign: "center" }}>{fullName}</Typography>
           <Typography variant="body2" sx={{ color: "#999", textAlign: "center" }}>
             {headline}
           </Typography>
@@ -228,8 +219,8 @@ const Navbar = () => {
             variant="outlined"
             fullWidth
             sx={{
-              color: "#e04c2c",
-              borderColor: "#e04c2c",
+              color: "#ea3b15",
+              borderColor: "#ea3b15",
               mt: 2,
               fontWeight: 500,
               textTransform: "none",
@@ -240,7 +231,7 @@ const Navbar = () => {
           </Button>
         </Box>
         <Divider />
-        <MenuItem onClick={handleLogout} sx={{ justifyContent: "center", color: "#e04c2c" }}>
+        <MenuItem onClick={handleLogout} sx={{ justifyContent: "center", color: "#ea3b15" }}>
           Sign Out
         </MenuItem>
       </Menu>

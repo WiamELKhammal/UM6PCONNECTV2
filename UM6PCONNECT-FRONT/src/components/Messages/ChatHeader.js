@@ -1,6 +1,3 @@
-// ===========================
-// ChatHeader.jsx (FRONTEND)
-// ===========================
 import React, { useState, useEffect, useContext } from "react";
 import {
   Box,
@@ -11,17 +8,16 @@ import {
   MenuItem,
   MenuList,
 } from "@mui/material";
-import { PhoneCall, Video, MoreVertical, LayoutGrid } from "lucide-react";
+import { ArrowBack } from "@mui/icons-material";
+import { LayoutGrid, MoreVertical } from "lucide-react";
 import ArchiveChat from "./Actions/ArchiveChat";
 import DeleteChat from "./Actions/DeleteChat";
 import { UserContext } from "../../context/UserContext";
 import moment from "moment";
 import socket from "./socket";
 
-const ChatHeader = ({ recipient, onToggleSidebar }) => {
+const ChatHeader = ({ recipient, onToggleSidebar, onBack, isMobile }) => {
   const { user } = useContext(UserContext);
-  const userId = user?._id;
-
   const [anchorEl, setAnchorEl] = useState(null);
   const [archiveOpen, setArchiveOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -34,46 +30,37 @@ const ChatHeader = ({ recipient, onToggleSidebar }) => {
   useEffect(() => {
     const fetchUserStatus = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/api/lastSeen/user-status/${recipient?.userId}`);
-        const data = await response.json();
-        console.log("[User Status API] Status fetched:", data);
+        const res = await fetch(`http://localhost:5000/api/lastSeen/user-status/${recipient?.userId}`);
+        const data = await res.json();
         setIsRecipientOnline(data.isOnline);
         setLastSeenTime(data.lastSeen);
-      } catch (error) {
-        console.error("Error fetching user status:", error);
+      } catch (err) {
+        console.error("Error fetching status:", err);
       }
     };
 
     fetchUserStatus();
 
-    socket.on("updateUserStatus", ({ userId: updatedUserId, status }) => {
-      if (updatedUserId === recipient?.userId) {
-        console.log(`[Socket] updateUserStatus received for ${updatedUserId}: ${status}`);
+    socket.on("updateUserStatus", ({ userId: uid, status }) => {
+      if (uid === recipient?.userId) {
         setIsRecipientOnline(status === "online");
-        if (status === "offline") {
-          setLastSeenTime(Date.now());
-        }
+        if (status === "offline") setLastSeenTime(Date.now());
       }
     });
 
     return () => {
       socket.off("updateUserStatus");
-      console.log("[Socket] disconnected");
     };
   }, [recipient?.userId]);
 
   useEffect(() => {
     if (user?._id) {
-      console.log("[Socket] join emitted:", user._id);
       socket.emit("join", user._id);
-
-      const heartbeat = setInterval(() => {
-        console.log("[Socket] heartbeat emitted:", user._id);
+      const interval = setInterval(() => {
         socket.emit("heartbeat", user._id);
       }, 30000);
-
       return () => {
-        clearInterval(heartbeat);
+        clearInterval(interval);
         socket.disconnect();
       };
     }
@@ -82,15 +69,13 @@ const ChatHeader = ({ recipient, onToggleSidebar }) => {
   const getLastSeenText = () => {
     if (isRecipientOnline) return "Online";
     if (!lastSeenTime) return "Offline";
-
     const lastSeen = moment(Number(lastSeenTime));
     const now = moment();
-    const diffInMinutes = now.diff(lastSeen, "minutes");
-    const diffInHours = now.diff(lastSeen, "hours");
-
-    if (diffInMinutes < 1) return "Last seen just now";
-    if (diffInMinutes < 60) return `Online ${diffInMinutes} min ago`;
-    if (diffInHours < 24) return `Online at ${lastSeen.format("HH:mm")}`;
+    const diffMins = now.diff(lastSeen, "minutes");
+    const diffHrs = now.diff(lastSeen, "hours");
+    if (diffMins < 1) return "Last seen just now";
+    if (diffMins < 60) return `Online ${diffMins} min ago`;
+    if (diffHrs < 24) return `Online at ${lastSeen.format("HH:mm")}`;
     return `Online on ${lastSeen.format("DD MMM YYYY")}`;
   };
 
@@ -101,53 +86,66 @@ const ChatHeader = ({ recipient, onToggleSidebar }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: "16px 25px",
-          backgroundColor: "#fff",
+          padding: "12px 16px",
           borderBottom: "1px solid #ddd",
-          height: "85px",
+          backgroundColor: "#fff",
+          height: "75px",
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
-          <Box sx={{ position: "relative" }}>
+          {isMobile && (
+            <IconButton onClick={onBack} sx={{ mr: 1, color: "#000" }}>
+              <ArrowBack />
+            </IconButton>
+          )}
+
+          <Box sx={{ position: "relative", mr: 2 }}>
             <Avatar
               src={recipient?.profilePicture || "/assets/images/default-profile.png"}
-              sx={{ width: 55, height: 55, marginRight: "16px" }}
+              sx={{ width: 48, height: 48 }}
             />
             {isRecipientOnline && (
               <Box
                 sx={{
-                  width: "14px",
-                  height: "14px",
+                  width: "12px",
+                  height: "12px",
                   backgroundColor: "#0ABF53",
                   borderRadius: "50%",
-                  border: "2px solid #fbfbfc",
+                  border: "2px solid #fff",
                   position: "absolute",
-                  bottom: 5,
-                  right: 5,
+                  bottom: 2,
+                  right: 2,
                 }}
               />
             )}
           </Box>
 
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-            <Typography sx={{ color: "#1E1E1E", fontSize: "20px", fontWeight: "400" }}>
-              {recipient?.Prenom || "Unknown"} {recipient?.Nom || "User"}
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Typography
+              sx={{
+                color: "#1E1E1E",
+                fontSize: "14px",
+                fontWeight: "500",
+                maxWidth: "150px",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {recipient?.Prenom} {recipient?.Nom}
             </Typography>
-            <Typography sx={{ fontSize: "15px", color: "#828282" }}>
+            <Typography sx={{ fontSize: "12px", color: "#828282" }}>
               {getLastSeenText()}
             </Typography>
           </Box>
         </Box>
 
-        <Box sx={{ display: "flex", alignItems: "center", gap: "20px", justifyContent: "flex-end" }}>
-          <IconButton sx={{ color: "#e04c2c" }}><Video size={22} /></IconButton>
-          <IconButton sx={{ color: "#e04c2c" }}><PhoneCall size={22} /></IconButton>
-          <IconButton sx={{ color: "#e04c2c" }} onClick={onToggleSidebar}><LayoutGrid size={22} /></IconButton>
-          <IconButton
-            sx={{ color: "#e04c2c", width: "38px", height: "38px", borderRadius: "50%" }}
-            onClick={handleOpen}
-          >
-            <MoreVertical size={22} />
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <IconButton onClick={onToggleSidebar} sx={{ color: "#ea3b15" }}>
+            <LayoutGrid size={20} />
+          </IconButton>
+          <IconButton onClick={handleOpen} sx={{ color: "#ea3b15" }}>
+            <MoreVertical size={20} />
           </IconButton>
         </Box>
 
@@ -159,15 +157,25 @@ const ChatHeader = ({ recipient, onToggleSidebar }) => {
           transformOrigin={{ vertical: "top", horizontal: "right" }}
           sx={{ mt: 1 }}
         >
-          <MenuList sx={{ boxShadow: "none" }}>
+          <MenuList>
             <MenuItem onClick={() => { setArchiveOpen(true); handleClose(); }}>Archive Chat</MenuItem>
             <MenuItem onClick={() => { setDeleteOpen(true); handleClose(); }}>Delete Chat</MenuItem>
           </MenuList>
         </Popover>
       </Box>
 
-      <ArchiveChat open={archiveOpen} onClose={() => setArchiveOpen(false)} userId={userId} contactId={recipient?.userId} />
-      <DeleteChat open={deleteOpen} onClose={() => setDeleteOpen(false)} userId={userId} contactId={recipient?.userId} />
+      <ArchiveChat
+        open={archiveOpen}
+        onClose={() => setArchiveOpen(false)}
+        userId={user?._id}
+        contactId={recipient?.userId}
+      />
+      <DeleteChat
+        open={deleteOpen}
+        onClose={() => setDeleteOpen(false)}
+        userId={user?._id}
+        contactId={recipient?.userId}
+      />
     </>
   );
 };

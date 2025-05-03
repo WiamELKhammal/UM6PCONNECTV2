@@ -101,7 +101,7 @@ const ChatMessages = ({ messages, recipient }) => {
 
                   <Box
                     sx={{
-                      backgroundColor: sender ? "#e04c2c" : "#f0f0f0",
+                      backgroundColor: sender ? "#ea3b15" : "#f0f0f0",
                       color: sender ? "#fff" : "#000",
                       padding: "10px 14px",
                       borderRadius: 3,

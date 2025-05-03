@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { Paper, InputBase, Box, IconButton, Collapse } from "@mui/material";
+import { Paper, InputBase, Box, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import Tags from "../pages/Home/Tags";
-import FilterPage from "./FilterPage";
 
-const SearchBar2 = ({ onSearch, tags, onTagClick }) => {
+const SearchBar2 = ({ onSearch, tags, onTagClick, selectedTag }) => { // ✅ receive selectedTag
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const handleFilterToggle = () => {
@@ -19,7 +17,6 @@ const SearchBar2 = ({ onSearch, tags, onTagClick }) => {
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 2 }}>
-      
       {/* Search Bar */}
       <Paper
         component="form"
@@ -33,33 +30,26 @@ const SearchBar2 = ({ onSearch, tags, onTagClick }) => {
           boxShadow: "none",
           backgroundColor: "#FFF",
           border: "1px solid #CCC",
-
         }}
       >
         <IconButton sx={{ color: "#999" }}>
           <SearchIcon />
         </IconButton>
         <InputBase
-          sx={{ ml: 1, flex: 1 }}
+          sx={{ ml: 1, flex: 1, fontSize: "18px" }}
           placeholder="Search..."
           onChange={(e) => onSearch(e.target.value)}
         />
-        <IconButton sx={{ color: "#999" }} onClick={handleFilterToggle}>
-          <FilterListIcon />
-        </IconButton>
       </Paper>
 
       {/* Tags - now below search bar */}
       <Box sx={{ width: "100%", overflowX: "auto" }}>
-        <Tags tags={tags} onTagClick={onTagClick} />
+        <Tags
+          tags={tags}
+          onTagClick={onTagClick}
+          selectedTag={selectedTag} // ✅ pass selectedTag to Tags
+        />
       </Box>
-
-      {/* Filter */}
-      <Collapse in={isFilterOpen}>
-        <Box sx={{ mt: 2 }}>
-          <FilterPage onFilterChange={handleApplyFilter} />
-        </Box>
-      </Collapse>
     </Box>
   );
 };

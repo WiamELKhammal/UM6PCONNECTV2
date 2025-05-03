@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import {
   Box, Typography, Avatar, TextField, InputAdornment, IconButton, Divider, Popover, MenuItem, MenuList
 } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert"; // ✅ Import 3-dot icon
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { UserContext } from "../../context/UserContext";
 import axios from "axios";
 
@@ -18,7 +18,9 @@ const MyFriends = ({ onSelectConversation }) => {
 
     const fetchFollowing = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/follow/following/${user._id}`);
+        const response = await axios.get(`http://localhost:5000/api/follow/following/${user._id}`, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
         setFollowing(response.data);
       } catch (error) {
         console.error("Error fetching following list:", error);
@@ -28,13 +30,11 @@ const MyFriends = ({ onSelectConversation }) => {
     fetchFollowing();
   }, [user]);
 
-  // Handle Popover Open
   const handleOpenMenu = (event, friend) => {
     setAnchorEl(event.currentTarget);
     setSelectedFriend(friend);
   };
 
-  // Handle Popover Close
   const handleCloseMenu = () => {
     setAnchorEl(null);
     setSelectedFriend(null);
@@ -42,14 +42,10 @@ const MyFriends = ({ onSelectConversation }) => {
 
   return (
     <Box sx={{ width: "350px", height: "100vh", bgcolor: "#FFFFFF", borderRight: "1px solid #c8c9c9" }}>
-      {/* Header */}
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px" }}>
-        <Typography variant="h5" sx={{ fontWeight: "bold", color: "#000" }}>
-          My Friends
-        </Typography>
+        <Typography variant="h5" sx={{ fontWeight: "bold", color: "#000" }}>My Friends</Typography>
       </Box>
 
-      {/* Search Bar */}
       <TextField
         variant="outlined"
         fullWidth
@@ -63,7 +59,6 @@ const MyFriends = ({ onSelectConversation }) => {
         sx={{ marginBottom: "1rem", padding: "0px 16px" }}
       />
 
-      {/* Following List */}
       {following.length === 0 ? (
         <Typography variant="body2" color="textSecondary" sx={{ textAlign: "center", marginTop: "20px" }}>
           You are not following anyone yet.
@@ -88,11 +83,8 @@ const MyFriends = ({ onSelectConversation }) => {
                     justifyContent: "space-between",
                   }}
                 >
-                  {/* Profile Picture & Info */}
                   <Box sx={{ display: "flex", alignItems: "center", flex: 1, gap: 2 }}>
                     <Avatar src={friendData?.profilePicture || "/assets/images/default-profile.png"} sx={{ width: 55, height: 55 }} />
-
-                    {/* User Info */}
                     <Box>
                       <Typography sx={{ fontSize: "16px", fontWeight: "500", color: "#1E1E1E" }}>
                         {friendData.Prenom} {friendData.Nom}
@@ -102,33 +94,23 @@ const MyFriends = ({ onSelectConversation }) => {
                       </Typography>
                     </Box>
                   </Box>
-
-                  {/* 3-dot Menu Icon */}
                   <IconButton onClick={(e) => handleOpenMenu(e, friendData)} sx={{ color: "#000" }}>
                     <MoreVertIcon />
                   </IconButton>
                 </Box>
 
-                {/* Divider between friends */}
                 {index < following.length - 1 && <Divider sx={{ height: "1px", bgcolor: "#DDD" }} />}
               </React.Fragment>
             );
           })
       )}
 
-      {/* Popover (Dropdown Menu) */}
       <Popover
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
         onClose={handleCloseMenu}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
         sx={{ mt: 1 }}
       >
         <MenuList sx={{ boxShadow: "none" }}>

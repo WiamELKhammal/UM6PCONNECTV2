@@ -12,19 +12,28 @@ export const UserProvider = ({ children }) => {
   // Fetch fresh user profile
   useEffect(() => {
     const fetchUserProfile = async () => {
-      if (!user || !user._id) return;
+      if (!user || !user._id || !user.token) return;
       try {
-        const res = await axios.get(`http://localhost:5000/api/profile/${user._id}`);
-        setUserState(res.data);
-        localStorage.setItem("user", JSON.stringify(res.data));
+        const res = await axios.get(
+          `http://localhost:5000/api/profile/${user._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
+        const updatedUser = { ...res.data, token: user.token };
+        setUserState(updatedUser);
+        localStorage.setItem("user", JSON.stringify(updatedUser));
       } catch (err) {
         console.error("Failed to fetch profile:", err);
       }
     };
-
+  
     fetchUserProfile();
   }, [user?._id]);
-
+  
+  
   // Update user with new data
   const updateUser = (updatedUserData) => {
     const newUser = { ...user, ...updatedUserData };
