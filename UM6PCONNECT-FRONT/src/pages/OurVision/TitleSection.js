@@ -8,7 +8,7 @@ const TitleSection = ({ title, id, number, borderTop = false }) => {
   id={id}
   sx={{
     position: "sticky",
-    top: "64px", //  push down under navbar
+    top: "50px", // below navbar
     zIndex: 10,
     width: "100%",
     backgroundColor: "#FFF",
