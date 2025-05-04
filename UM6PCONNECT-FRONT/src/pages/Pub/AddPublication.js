@@ -117,7 +117,7 @@ const AddPublication = ({ onClose }) => {
     >
       <IconButton
         onClick={onClose}
-        sx={{ position: "absolute", top: 10, left: 10, color: "#e04c2c" }}
+        sx={{ position: "absolute", top: 10, left: 10, color: "#ea3b15" }}
       >
         <Close />
       </IconButton>
@@ -170,7 +170,7 @@ const AddPublication = ({ onClose }) => {
             )}
           </Box>
         ))}
-        <Button startIcon={<Add />} onClick={addAuthor} sx={{ mb: 2, color: "#e04c2c" }}>
+        <Button startIcon={<Add />} onClick={addAuthor} sx={{ mb: 2, color: "#ea3b15" }}>
           Add Author
         </Button>
 
@@ -184,8 +184,8 @@ const AddPublication = ({ onClose }) => {
             fullWidth
             sx={{
               bgcolor: "#fff",
-              color: "#e04c2c",
-              border: "1px solid #e04c2c",
+              color: "#ea3b15",
+              border: "1px solid #ea3b15",
               boxShadow: "none",
               "&:hover": { boxShadow: "none" },
             }}
@@ -228,7 +228,7 @@ const AddPublication = ({ onClose }) => {
           variant="contained"
           fullWidth
           sx={{
-            bgcolor: "#e04c2c",
+            bgcolor: "#ea3b15",
             color: "white",
             boxShadow: "none",
             "&:hover": { bgcolor: "#b43e24", boxShadow: "none" },
