@@ -17,6 +17,7 @@ import SignUpPage from "./pages/SignUpPage";
 import SignInPage from "./pages/SignInPage";
 import { UserProvider } from "./context/UserContext";
 import ChangeYourTempPass from "./pages/ChangeYourTempPass";
+import ProgramsParent from "./pages/Programs/ProgramsParent";
 import ProgressReport2021 from "./pages/ProgressReport2021";
 import VerifyEmailPage from "./pages/VerifyEmailPage";
 
@@ -26,11 +27,13 @@ import CompleteProfileStepper from "./pages/CompleteProfileStepper/CompleteProfi
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import OurVision from "./pages/OurVision/OurVision";
+import MeetEngageR from "./pages/MeetEngageR/MeetEngageR";
+
 import HomePage from "./pages/Home/HomePage";
 import UserProfile from "./pages/Home/Userprofile/Userprofile";
 import MessageParent from "./components/Messages/MessageParent";
 import theme from "./theme";
-import PrivateRoute from "./components/PrivateRoute"; // ✅ Import this
+import PrivateRoute from "./components/PrivateRoute"; 
 
 const Layout = () => {
   const location = useLocation();
@@ -57,7 +60,7 @@ const Layout = () => {
         <>
           <TopNavBar />
           {showSubNavBar && (
-            <Box sx={{ position: "sticky", top: "80px", zIndex: 1100 }}>
+            <Box sx={{ position: "sticky", top: "50px", zIndex: 1100 }}>
               <SubNavBar />
             </Box>
           )}
@@ -69,6 +72,9 @@ const Layout = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/StudyAndLiveAtUM6P" element={<ProgressReport2021 />} />
         <Route path="/OurVision" element={<OurVision />} />
+        <Route path="/OurFieldsOfWork" element={< MeetEngageR />} />
+
+       
         <Route path="/Our-Researchers" element={<HomePage />} />
         <Route path="/Userprofile/:userId" element={<UserProfile />} />
         <Route path="/signup" element={<SignUpPage />} />
@@ -79,6 +85,7 @@ const Layout = () => {
         <Route path="/verify-email" element={<VerifyEmailPage />} />
 
         <Route path="/ProfilePage" element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
+        <Route path="/Our-Programs" element={<PrivateRoute><ProgramsParent /></PrivateRoute>} />
         <Route path="/profile" element={<PrivateRoute><ProfileContainer /></PrivateRoute>} />
         <Route path="/messages" element={<PrivateRoute><MessageParent /></PrivateRoute>} />
         <Route
