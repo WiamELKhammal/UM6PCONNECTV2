@@ -164,7 +164,7 @@ const ChatMessages = ({ messages, recipient }) => {
                           if (type.startsWith("audio/")) {
                             return (
                               <Grid item xs={12} key={idx}>
-                                <audio controls style={{ width: "400px", margin: "0 auto", backgroundColor: "transparent" }}>
+                                <audio controls style={{ width: "340px", margin: "0 auto", backgroundColor: "transparent" }}>
                                   <source src={file.data} type={type} />
                                 </audio>
                               </Grid>

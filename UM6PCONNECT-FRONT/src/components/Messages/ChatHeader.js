@@ -29,8 +29,16 @@ const ChatHeader = ({ recipient, onToggleSidebar, onBack, isMobile }) => {
 
   useEffect(() => {
     const fetchUserStatus = async () => {
+      if (!recipient?.userId || !user?.token) return;
       try {
-        const res = await fetch(`http://localhost:5000/api/lastSeen/user-status/${recipient?.userId}`);
+        const res = await fetch(
+          `http://localhost:5000/api/lastSeen/user-status/${recipient.userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
         const data = await res.json();
         setIsRecipientOnline(data.isOnline);
         setLastSeenTime(data.lastSeen);
@@ -51,7 +59,7 @@ const ChatHeader = ({ recipient, onToggleSidebar, onBack, isMobile }) => {
     return () => {
       socket.off("updateUserStatus");
     };
-  }, [recipient?.userId]);
+  }, [recipient?.userId, user?.token]);
 
   useEffect(() => {
     if (user?._id) {

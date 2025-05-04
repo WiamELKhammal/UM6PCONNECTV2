@@ -10,14 +10,13 @@ import MessageList from "./MessageList";
 import ChatHeader from "./ChatHeader";
 import ChatMessages from "./ChatMessages";
 import ChatInput from "./ChatInput";
-import Sidebar from "./Sidebar";
 import MyFriends from "./MyFriends";
 import ArchivedChats from "./ArchivedChats";
 import RightSidebar from "./RightSidebar";
 import { UserContext } from "../../context/UserContext";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
+import Sidebar from "./Sidebar";
 
 const Conversations = () => {
   const { user } = useContext(UserContext);
@@ -58,25 +57,35 @@ const Conversations = () => {
 
   return (
     <Box sx={{ display: "flex", height: "100vh", backgroundColor: "#FFF" }}>
-      {/* Sidebar for tab navigation */}
-      <Box sx={{ display: isMobile ? (!selectedConversation ? "block" : "none") : "block" }}>
+      {/* 🖥 Sidebar (Desktop Only) */}
+      {!isMobile && (
         <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
-      </Box>
+      )}
 
-      {/* List of chats/friends */}
+      {/* 📱 Chat List (Always show on desktop, only show on mobile if no conversation is selected) */}
       {(!isMobile || !selectedConversation) && (
         <Box sx={{ width: isMobile ? "100%" : "350px", flexShrink: 0 }}>
           {activeTab === "chats" ? (
-            <MessageList onSelectConversation={handleSelectConversation} />
+            <MessageList
+              onSelectConversation={handleSelectConversation}
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+            />
           ) : activeTab === "archived" ? (
-            <ArchivedChats onSelectConversation={handleSelectConversation} />
+            <ArchivedChats
+              onSelectConversation={handleSelectConversation}
+              setActiveTab={setActiveTab}
+            />
           ) : (
-            <MyFriends onSelectConversation={handleSelectConversation} />
+            <MyFriends
+              onSelectConversation={handleSelectConversation}
+              setActiveTab={setActiveTab}
+            />
           )}
         </Box>
       )}
 
-      {/* Chat section */}
+      {/* 💬 Chat area */}
       {(selectedConversation || !isMobile) && (
         <Box
           sx={{
@@ -140,27 +149,32 @@ const Conversations = () => {
                 transition: "padding-right 0.3s ease-in-out",
               }}
             >
+              {/* 🔙 Mobile back to conversation list */}
               <Box sx={{ position: "relative" }}>
-                {/* Back button for mobile */}
                 {isMobile && (
                   <IconButton
                     onClick={() => setSelectedConversation(null)}
                     sx={{ position: "absolute", top: 20, left: 8, zIndex: 100 }}
                   >
-                    <ArrowBackIcon />
                   </IconButton>
                 )}
                 <ChatHeader
                   recipient={selectedConversation}
                   onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
+                  onBack={() => setSelectedConversation(null)}
+                  isMobile={isMobile}
                 />
               </Box>
+
+              {/* 💬 Messages */}
               <Box sx={{ flex: 1, overflowY: "auto", padding: "1rem" }}>
                 <ChatMessages
                   messages={messages}
                   recipient={selectedConversation}
                 />
               </Box>
+
+              {/* 📥 Input */}
               <ChatInput
                 recipientId={selectedConversation.userId}
                 setMessages={setMessages}
@@ -170,12 +184,24 @@ const Conversations = () => {
         </Box>
       )}
 
-      {/* Right Sidebar (only desktop) */}
-      {!isMobile && sidebarOpen && (
-        <RightSidebar
-          recipient={selectedConversation}
-          onClose={() => setSidebarOpen(false)}
-        />
+      {/* ℹ️ Right Sidebar */}
+      {sidebarOpen && (
+        <Box
+          sx={{
+            position: isMobile ? "fixed" : "relative",
+            top: 0,
+            right: 0,
+            width: isMobile ? "100vw" : "320px",
+            height: "100vh",
+            zIndex: 1300,
+            backgroundColor: "#fff",
+          }}
+        >
+          <RightSidebar
+            recipient={selectedConversation}
+            onClose={() => setSidebarOpen(false)}
+          />
+        </Box>
       )}
     </Box>
   );

@@ -92,7 +92,14 @@ const ChatInput = ({ recipientId, setMessages }) => {
         },
       });
 
-      setMessages((prevMessages) => [...prevMessages, response.data.data]);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          ...response.data.data,
+          text: newMessage.trim(), //  Use decrypted text on client-side
+        },
+      ]);
+      
       socket.emit("sendMessage", response.data.data);
     } catch (error) {
       console.error("Error sending message:", error.response?.data || error.message);

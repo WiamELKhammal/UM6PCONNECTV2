@@ -1,31 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
-  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button, Typography
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+  Typography
 } from "@mui/material";
 import axios from "axios";
+import { UserContext } from "../../../context/UserContext";
 
 const DeleteChat = ({ open, onClose, userId, contactId }) => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null); // ✅ Track errors
+  const [error, setError] = useState(null);
+  const { user } = useContext(UserContext); // ✅ Access user token
 
   const handleDelete = async () => {
-    if (!userId || !contactId) {
-      console.error("Missing required IDs.");
-      setError("User ID or Contact ID is missing.");
+    if (!userId || !contactId || !user?.token) {
+      setError("Missing required IDs or token.");
       return;
     }
 
     setLoading(true);
-    setError(null); // ✅ Reset error before trying again
+    setError(null);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/messages/delete", {
-        userId,
-        contactId,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/messages/delete",
+        { userId, contactId },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`, // ✅ Add token
+          },
+        }
+      );
 
       console.log("Chat deleted successfully:", response.data);
-      onClose(); // ✅ Close modal after deletion
+      onClose();
     } catch (error) {
       console.error("Error deleting chat:", error);
       setError("Failed to delete chat. Please try again.");
@@ -42,7 +54,6 @@ const DeleteChat = ({ open, onClose, userId, contactId }) => {
           Are you sure you want to delete this chat? It will be removed from your side only.
         </DialogContentText>
 
-        {/* ✅ Show Error Message if Deletion Fails */}
         {error && (
           <Typography color="error" sx={{ mt: 2 }}>
             {error}

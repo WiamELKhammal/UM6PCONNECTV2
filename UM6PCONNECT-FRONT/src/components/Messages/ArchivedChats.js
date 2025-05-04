@@ -1,22 +1,41 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
-  Box, Typography, Avatar, TextField, InputAdornment, IconButton, Divider
+  Box,
+  Typography,
+  Avatar,
+  TextField,
+  InputAdornment,
+  IconButton,
+  Divider,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
-import UnarchiveIcon from "@mui/icons-material/Unarchive"; // ✅ Import Unarchive Icon
+import UnarchiveIcon from "@mui/icons-material/Unarchive";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import axios from "axios";
 import { UserContext } from "../../context/UserContext";
 
-const ArchivedChats = ({ onSelectConversation }) => {
+const ArchivedChats = ({ onSelectConversation, setActiveTab }) => {
   const { user } = useContext(UserContext);
   const [conversations, setConversations] = useState([]);
   const [search, setSearch] = useState("");
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     if (!user?._id) return;
 
     const fetchArchivedConversations = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/messages/archived/${user._id}`);
+        const response = await axios.get(
+          `http://localhost:5000/api/messages/archived/${user._id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`,
+            },
+          }
+        );
         setConversations(response.data);
       } catch (error) {
         console.error("Error fetching archived conversations:", error);
@@ -28,11 +47,19 @@ const ArchivedChats = ({ onSelectConversation }) => {
 
   const handleUnarchive = async (contactId) => {
     try {
-      await axios.post("http://localhost:5000/api/messages/archive", {
-        userId: user._id,
-        contactId,
-        archive: false, // ✅ Unarchive chat
-      });
+      await axios.post(
+        "http://localhost:5000/api/messages/archive",
+        {
+          userId: user._id,
+          contactId,
+          archive: false,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
 
       setConversations(conversations.filter(chat => chat.contact._id !== contactId));
     } catch (error) {
@@ -46,19 +73,26 @@ const ArchivedChats = ({ onSelectConversation }) => {
   };
 
   return (
-    <Box sx={{ 
-      width: "350px", 
-      height: "100vh", 
-      bgcolor: "#FFFFFF", 
-      borderRight: "1px solid #c8c9c9" 
-    }}>
-      {/* Header Section */}
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px" }}>
-        {/* "Archived Chats" Title */}
+    <Box
+      sx={{
+        width: { xs: "100%", md: "350px" },
+        height: "100vh",
+        bgcolor: "#FFFFFF",
+        borderRight: "1px solid #c8c9c9",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      {/* Top Header with Back Arrow on Mobile */}
+      <Box sx={{ display: "flex", alignItems: "center", px: 2, py: 1, gap: 1 }}>
+        {isMobile && (
+          <IconButton onClick={() => setActiveTab("chats")} size="small">
+            <ArrowBackIcon />
+          </IconButton>
+        )}
         <Typography variant="h5" sx={{ fontWeight: "bold", color: "#000" }}>
           Archived Chats
         </Typography>
-
       </Box>
 
       {/* Search Bar */}
@@ -69,107 +103,103 @@ const ArchivedChats = ({ onSelectConversation }) => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-            </InputAdornment>
-          ),
+          startAdornment: <InputAdornment position="start" />,
           sx: {
             border: "1px solid #CCC",
             height: "40px",
             "& fieldset": { border: "none" },
           },
         }}
-        sx={{ marginBottom: "1rem", padding: "0px 16px" }}
+        sx={{ mb: 2, px: 2 }}
       />
 
-      {/* Conversations List */}
-      {conversations.length === 0 ? (
-        <Typography variant="body2" color="textSecondary" sx={{ textAlign: "center", marginTop: "20px" }}>
-          No archived messages found.
-        </Typography>
-      ) : (
-        conversations
-          .filter((conv) =>
-            `${conv.contact?.Prenom} ${conv.contact?.Nom}`.toLowerCase().includes(search.toLowerCase())
-          )
-          .map((conv, index) => {
-            const contact = conv.contact || { _id: "", Nom: "Unknown", Prenom: "", profilePicture: "", status: "offline" };
+      {/* Chat List */}
+      <Box sx={{ flex: 1, overflowY: "auto", "&::-webkit-scrollbar": { display: "none" } }}>
+        {conversations.length === 0 ? (
+          <Typography variant="body2" color="textSecondary" sx={{ textAlign: "center", mt: 2 }}>
+            No archived messages found.
+          </Typography>
+        ) : (
+          conversations
+            .filter((conv) =>
+              `${conv.contact?.Prenom} ${conv.contact?.Nom}`.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((conv, index) => {
+              const contact = conv.contact || {
+                _id: "",
+                Nom: "Unknown",
+                Prenom: "",
+                profilePicture: "",
+              };
 
-            return (
-              <React.Fragment key={index}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    padding: "14px 20px",
-                    cursor: "pointer",
-                    "&:hover": { backgroundColor: "#F9FAFB" },
-                    position: "relative",
-                  }}
-                  onClick={() =>
-                    onSelectConversation({
-                      userId: contact._id,
-                      Prenom: contact.Prenom,
-                      Nom: contact.Nom,
-                      profilePicture: contact.profilePicture,
-                    })
-                  }
-                >
-                  {/* Profile Picture */}
-                  <Box sx={{ display: "flex", alignItems: "center", flex: 1, gap: 2 }}>
-                    <Avatar src={contact.profilePicture || "/assets/images/default-profile.png"} sx={{ width: 55, height: 55 }} />
+              return (
+                <React.Fragment key={index}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      padding: "14px 20px",
+                      cursor: "pointer",
+                      "&:hover": { backgroundColor: "#F9FAFB" },
+                    }}
+                    onClick={() =>
+                      onSelectConversation({
+                        userId: contact._id,
+                        Prenom: contact.Prenom,
+                        Nom: contact.Nom,
+                        profilePicture: contact.profilePicture,
+                      })
+                    }
+                  >
+                    <Box sx={{ display: "flex", alignItems: "center", flex: 1, gap: 2 }}>
+                      <Avatar
+                        src={contact.profilePicture || "/assets/images/default-profile.png"}
+                        sx={{ width: 55, height: 55 }}
+                      />
+                      <Box sx={{ flex: 1 }}>
+                        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                          <Typography sx={{ fontSize: "16px", fontWeight: "500", color: "#1E1E1E" }}>
+                            {contact.Prenom} {contact.Nom}
+                          </Typography>
+                          <Typography sx={{ fontSize: "12px", color: "#999" }}>
+                            {formatTime(conv.createdAt)}
+                          </Typography>
+                        </Box>
 
-                    {/* Contact Info */}
-                    <Box sx={{ flex: 1 }}>
-                      {/* Name & Time (Same line, #999 color for time) */}
-                      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <Typography sx={{ fontSize: "16px", fontWeight: "500", color: "#1E1E1E" }}>
-                          {contact.Prenom} {contact.Nom}
-                        </Typography>
-                        <Typography sx={{ fontSize: "12px", fontWeight: "400", color: "#999" }}>
-                          {formatTime(conv.createdAt)}
-                        </Typography>
-                      </Box>
+                        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: "3px" }}>
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: "400",
+                              color: "#5F5F5F",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              maxWidth: "220px",
+                            }}
+                          >
+                            {conv.text || "No messages yet"}
+                          </Typography>
 
-                      {/* Last Message & Unarchive Icon (Same Line) */}
-                      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "3px" }}>
-                        <Typography
-                          sx={{
-                            fontSize: "14px",
-                            fontWeight: "400",
-                            color: "#5F5F5F",
-                            whiteSpace: "nowrap",
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            maxWidth: "220px",
-                          }}
-                        >
-                          {conv.text || "No messages yet"}
-                        </Typography>
-
-                        {/* Unarchive Icon (Same Line as Message) */}
-                        <IconButton
-                          onClick={(e) => {
-                            e.stopPropagation(); // ✅ Prevent click from opening chat
-                            handleUnarchive(contact._id);
-                          }}
-                          sx={{
-                            color: "#ea3b15",
-                            padding: "4px",
-                          }}
-                        >
-                          <UnarchiveIcon fontSize="small" />
-                        </IconButton>
+                          <IconButton
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleUnarchive(contact._id);
+                            }}
+                            sx={{ color: "#ea3b15", padding: "4px" }}
+                          >
+                            <UnarchiveIcon fontSize="small" />
+                          </IconButton>
+                        </Box>
                       </Box>
                     </Box>
                   </Box>
-                </Box>
-                {/* ✅ Divider between conversations */}
-                {index < conversations.length  && <Divider sx={{ height: "1px", bgcolor: "#DDD" }} />}
-              </React.Fragment>
-            );
-          })
-      )}
+                  {index < conversations.length - 1 && <Divider sx={{ height: "1px", bgcolor: "#DDD" }} />}
+                </React.Fragment>
+              );
+            })
+        )}
+      </Box>
     </Box>
   );
 };

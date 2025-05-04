@@ -7,22 +7,26 @@ import {
   InputAdornment,
   IconButton,
   Divider,
-  Tabs,
-  Tab,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import DoneIcon from "@mui/icons-material/Done";
 import DoneAllIcon from "@mui/icons-material/DoneAll";
+import TextsmsIcon from "@mui/icons-material/Textsms";
+import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
 import { UserContext } from "../../context/UserContext";
 import axios from "axios";
 import socket from "../Messages/socket";
-import ArchivedChats from "./ArchivedChats";
-import MyFriends from "./MyFriends";
 
-const MessageList = ({ onSelectConversation, isMobile, activeTab, setActiveTab }) => {
+const MessageList = ({ onSelectConversation, activeTab, setActiveTab }) => {
   const { user } = useContext(UserContext);
   const [conversations, setConversations] = useState([]);
   const [search, setSearch] = useState("");
   const [typingStatuses, setTypingStatuses] = useState({});
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const fetchConversations = async () => {
     try {
@@ -108,157 +112,193 @@ const MessageList = ({ onSelectConversation, isMobile, activeTab, setActiveTab }
         flexDirection: "column",
       }}
     >
-      {isMobile && (
-        <Tabs
-          value={activeTab}
-          onChange={(e, val) => setActiveTab(val)}
-          variant="fullWidth"
-          textColor="primary"
-          indicatorColor="primary"
-        >
-          <Tab label="Chats" value="chats" />
-          <Tab label="Archived" value="archived" />
-          <Tab label="Friends" value="friends" />
-        </Tabs>
-      )}
+      {/* Top Header */}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          px: 2,
+          py: 1,
+        }}
+      >
+        <Typography variant="h5" sx={{ fontWeight: "bold", color: "#000" }}>
+          Chats
+        </Typography>
 
-      {activeTab === "archived" ? (
-        <ArchivedChats onSelectConversation={onSelectConversation} />
-      ) : activeTab === "friends" ? (
-        <MyFriends onSelectConversation={onSelectConversation} />
-      ) : (
-        <>
-          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", p: 2 }}>
-            <Typography variant="h5" sx={{ fontWeight: "bold", color: "#000" }}>Chats</Typography>
+        {/* Mobile Tab Icons */}
+        {isMobile && (
+          <Box sx={{ display: "flex", gap: 1 }}>
+            <IconButton
+              onClick={() => setActiveTab("chats")}
+              sx={{ color: activeTab === "chats" ? "#ea3b15" : "#000" }}
+            >
+              <TextsmsIcon />
+            </IconButton>
+            <IconButton
+              onClick={() => setActiveTab("friends")}
+              sx={{ color: activeTab === "friends" ? "#ea3b15" : "#000" }}
+            >
+              <PersonOutlineIcon />
+            </IconButton>
+            <IconButton
+              onClick={() => setActiveTab("archived")}
+              sx={{ color: activeTab === "archived" ? "#ea3b15" : "#000" }}
+            >
+              <ArchiveOutlinedIcon />
+            </IconButton>
           </Box>
+        )}
+      </Box>
 
-          <TextField
-            variant="outlined"
-            fullWidth
-            placeholder="Search chats"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            InputProps={{
-              startAdornment: <InputAdornment position="start" />,
-              sx: {
-                border: "1px solid #CCC",
-                height: "40px",
-                "& fieldset": { border: "none" },
-              },
-            }}
-            sx={{ mb: 2, px: 2 }}
-          />
+      {/* Search Bar */}
+      <TextField
+        variant="outlined"
+        fullWidth
+        placeholder="Search chats"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        InputProps={{
+          startAdornment: <InputAdornment position="start" />,
+          sx: {
+            border: "1px solid #CCC",
+            height: "40px",
+            "& fieldset": { border: "none" },
+          },
+        }}
+        sx={{ mb: 2, px: 2 }}
+      />
 
-          <Box sx={{ flex: 1, overflowY: "auto", "&::-webkit-scrollbar": { display: "none" } }}>
-            {conversations.length === 0 ? (
-              <Typography variant="body2" color="textSecondary" sx={{ textAlign: "center", mt: 2 }}>
-                No messages yet.
-              </Typography>
-            ) : (
-              conversations
-                .filter((conv) =>
-                  `${conv.contact?.Prenom} ${conv.contact?.Nom}`.toLowerCase().includes(search.toLowerCase())
-                )
-                .map((conv, index) => {
-                  const contact = conv.contact || { _id: "", Nom: "Unknown", Prenom: "", profilePicture: "" };
-                  const unreadCount = conv.unreadCount;
-                  const isTyping = typingStatuses[contact._id];
-                  const isSentByMe = conv.senderId === user._id;
-                  const isSeen = conv.isRead && isSentByMe;
-                  const lastMessageText = isTyping
-                    ? "Typing..."
-                    : conv.text?.trim()
-                      ? conv.text
-                      : conv.files?.length > 0
-                        ? getFileLabel(conv.files[0]?.type)
-                        : "";
+      {/* List */}
+      <Box sx={{ flex: 1, overflowY: "auto", "&::-webkit-scrollbar": { display: "none" } }}>
+        {conversations.length === 0 ? (
+          <Typography variant="body2" color="textSecondary" sx={{ textAlign: "center", mt: 2 }}>
+            No messages yet.
+          </Typography>
+        ) : (
+          conversations
+            .filter((conv) =>
+              `${conv.contact?.Prenom} ${conv.contact?.Nom}`.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((conv, index) => {
+              const contact = conv.contact || {
+                _id: "",
+                Nom: "Unknown",
+                Prenom: "",
+                profilePicture: "",
+              };
+              const unreadCount = conv.unreadCount;
+              const isTyping = typingStatuses[contact._id];
+              const isSentByMe = conv.senderId === user._id;
+              const isSeen = conv.isRead && isSentByMe;
+              const lastMessageText = isTyping
+                ? "Typing..."
+                : conv.text?.trim()
+                ? conv.text
+                : conv.files?.length > 0
+                ? getFileLabel(conv.files[0]?.type)
+                : "";
 
-                  return (
-                    <React.Fragment key={index}>
+              return (
+                <React.Fragment key={index}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      px: 2,
+                      py: 1.5,
+                      cursor: "pointer",
+                      "&:hover": { backgroundColor: "#F9FAFB" },
+                    }}
+                    onClick={() => handleConversationClick(contact)}
+                  >
+                    <Box sx={{ position: "relative" }}>
+                      <Avatar
+                        src={contact.profilePicture || "/assets/images/default-profile.png"}
+                        sx={{ width: 50, height: 50 }}
+                      />
+                      <Box
+                        sx={{
+                          width: 12,
+                          height: 12,
+                          borderRadius: "50%",
+                          backgroundColor: contact.status === "online" ? "#34D399" : "#9CA3AF",
+                          position: "absolute",
+                          bottom: 2,
+                          right: 2,
+                          border: "2px solid white",
+                        }}
+                      />
+                    </Box>
+                    <Box sx={{ flex: 1, ml: 2 }}>
                       <Box
                         sx={{
                           display: "flex",
+                          justifyContent: "space-between",
                           alignItems: "center",
-                          px: 2,
-                          py: 1.5,
-                          cursor: "pointer",
-                          "&:hover": { backgroundColor: "#F9FAFB" },
                         }}
-                        onClick={() => handleConversationClick(contact)}
                       >
-                        <Box sx={{ position: "relative" }}>
-                          <Avatar src={contact.profilePicture || "/assets/images/default-profile.png"} sx={{ width: 50, height: 50 }} />
+                        <Typography sx={{ fontSize: "16px", fontWeight: 500 }}>
+                          {contact.Prenom} {contact.Nom}
+                        </Typography>
+                        <Typography sx={{ fontSize: "12px", color: "#999" }}>
+                          {formatTime(conv.createdAt)}
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          mt: 0.5,
+                        }}
+                      >
+                        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                          {isSentByMe &&
+                            (isSeen ? (
+                              <DoneAllIcon fontSize="small" sx={{ color: "#0ABF53" }} />
+                            ) : (
+                              <DoneIcon fontSize="small" sx={{ color: "#999" }} />
+                            ))}
+                          <Typography
+                            sx={{
+                              fontSize: "14px",
+                              fontWeight: unreadCount > 0 ? 600 : 400,
+                              color: unreadCount > 0 ? "#000" : "#5F5F5F",
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                              maxWidth: "200px",
+                            }}
+                          >
+                            {lastMessageText}
+                          </Typography>
+                        </Box>
+                        {unreadCount > 0 && (
                           <Box
                             sx={{
-                              width: 12,
-                              height: 12,
+                              backgroundColor: "#ea3b15",
+                              color: "#FFF",
+                              fontSize: "12px",
+                              fontWeight: 600,
                               borderRadius: "50%",
-                              backgroundColor: contact.status === "online" ? "#34D399" : "#9CA3AF",
-                              position: "absolute",
-                              bottom: 2,
-                              right: 2,
-                              border: "2px solid white",
+                              px: 1,
+                              minWidth: 24,
+                              textAlign: "center",
                             }}
-                          />
-                        </Box>
-                        <Box sx={{ flex: 1, ml: 2 }}>
-                          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <Typography sx={{ fontSize: "16px", fontWeight: 500 }}>
-                              {contact.Prenom} {contact.Nom}
-                            </Typography>
-                            <Typography sx={{ fontSize: "12px", color: "#999" }}>
-                              {formatTime(conv.createdAt)}
-                            </Typography>
+                          >
+                            {unreadCount}
                           </Box>
-                          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 0.5 }}>
-                            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                              {isSentByMe &&
-                                (isSeen ? (
-                                  <DoneAllIcon fontSize="small" sx={{ color: "#0ABF53" }} />
-                                ) : (
-                                  <DoneIcon fontSize="small" sx={{ color: "#999" }} />
-                                ))}
-                              <Typography
-                                sx={{
-                                  fontSize: "14px",
-                                  fontWeight: unreadCount > 0 ? 600 : 400,
-                                  color: unreadCount > 0 ? "#000" : "#5F5F5F",
-                                  whiteSpace: "nowrap",
-                                  overflow: "hidden",
-                                  textOverflow: "ellipsis",
-                                  maxWidth: "200px",
-                                }}
-                              >
-                                {lastMessageText}
-                              </Typography>
-                            </Box>
-                            {unreadCount > 0 && (
-                              <Box
-                                sx={{
-                                  backgroundColor: "#ea3b15",
-                                  color: "#FFF",
-                                  fontSize: "12px",
-                                  fontWeight: 600,
-                                  borderRadius: "50%",
-                                  px: 1,
-                                  minWidth: 24,
-                                  textAlign: "center",
-                                }}
-                              >
-                                {unreadCount}
-                              </Box>
-                            )}
-                          </Box>
-                        </Box>
+                        )}
                       </Box>
-                      {index < conversations.length - 1 && <Divider sx={{ bgcolor: "#DDD" }} />}
-                    </React.Fragment>
-                  );
-                })
-            )}
-          </Box>
-        </>
-      )}
+                    </Box>
+                  </Box>
+                  {index < conversations.length - 1 && <Divider sx={{ bgcolor: "#DDD" }} />}
+                </React.Fragment>
+              );
+            })
+        )}
+      </Box>
     </Box>
   );
 };

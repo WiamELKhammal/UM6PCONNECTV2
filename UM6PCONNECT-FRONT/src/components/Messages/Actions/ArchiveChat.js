@@ -1,30 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
-  Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
 } from "@mui/material";
 import axios from "axios";
+import { UserContext } from "../../../context/UserContext";
 
 const ArchiveChat = ({ open, onClose, userId, contactId }) => {
   const [loading, setLoading] = useState(false);
+  const { user } = useContext(UserContext); // Get token from context
 
   const handleArchive = async () => {
-    if (!userId || !contactId) {
-      console.error("Missing required IDs.");
+    if (!userId || !contactId || !user?.token) {
+      console.error("Missing required IDs or token.");
       return;
     }
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/messages/archive", {
-        userId,
-        contactId,
-        archive: true, // ✅ Archive the chat
-      });
+      await axios.post(
+        "http://localhost:5000/api/messages/archive",
+        {
+          userId,
+          contactId,
+          archive: true,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
 
       console.log("Chat archived successfully.");
-      onClose(); // ✅ Close modal after action
+      onClose();
     } catch (error) {
-      console.error("Error archiving chat:", error);
+      console.error("Error archiving chat:", error.response?.data || error.message);
     } finally {
       setLoading(false);
     }

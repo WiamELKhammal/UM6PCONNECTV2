@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import { setupGlobalFetch } from "../utils/setupGlobalFetch";
+import { setupAxios } from "../utils/setupAxios";
 
 export const UserContext = createContext();
 
@@ -9,19 +11,13 @@ export const UserProvider = ({ children }) => {
     return storedUser ? JSON.parse(storedUser) : null;
   });
 
-  // Fetch fresh user profile
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (!user || !user._id || !user.token) return;
       try {
-        const res = await axios.get(
-          `http://localhost:5000/api/profile/${user._id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
-          }
-        );
+        const res = await axios.get(`http://localhost:5000/api/profile/${user._id}`, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
         const updatedUser = { ...res.data, token: user.token };
         setUserState(updatedUser);
         localStorage.setItem("user", JSON.stringify(updatedUser));
@@ -29,25 +25,28 @@ export const UserProvider = ({ children }) => {
         console.error("Failed to fetch profile:", err);
       }
     };
-  
+
     fetchUserProfile();
   }, [user?._id]);
-  
-  
-  // Update user with new data
+
+  useEffect(() => {
+    if (user?.token) {
+      setupGlobalFetch(logoutUser, user);
+      setupAxios(logoutUser, user);
+    }
+  }, [user?.token]);
+
   const updateUser = (updatedUserData) => {
     const newUser = { ...user, ...updatedUserData };
     setUserState(newUser);
     localStorage.setItem("user", JSON.stringify(newUser));
   };
 
-  // Logout logic (used in Navbar)
   const logoutUser = () => {
     setUserState(null);
     localStorage.removeItem("user");
   };
 
-  // Sync logout across browser tabs
   useEffect(() => {
     const handleStorageChange = (e) => {
       if (e.key === "user" && !e.newValue) {
