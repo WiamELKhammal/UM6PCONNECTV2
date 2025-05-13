@@ -16,7 +16,7 @@ const cardData = [
         Students live in fully equipped apartments with private rooms, shared kitchens, high-speed internet, and dedicated study space. Common lounges, game rooms, and laundry services support everyday life—while warm, minimalist architecture creates a welcoming, inspiring atmosphere.
       </>
     ),
-    link: "https://www.youtube.com/watch?v=U9cGdRNMdQQ",
+    link: "https://youtu.be/8VjdKsC90Gg",
   },
   {
     title: "Dining & Lifestyle",
@@ -28,7 +28,7 @@ const cardData = [
         Enjoy balanced meals daily in the university restaurant, with diverse, healthy menus including vegetarian options. Grab coffee or a quick bite at the café, or unwind outdoors at the food truck garden—where social life and spontaneity meet.
       </>
     ),
-    link: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    link: "https://youtu.be/pK-KpnjI6Aw",
   },
   {
     title: "Wellness & Sports",
@@ -40,7 +40,7 @@ const cardData = [
         UM6P promotes holistic growth through access to sports, fitness, and wellness spaces. Whether you’re training, relaxing, or recharging, you’ll find the support to maintain a healthy mind and body—so you can lead with clarity and confidence.
       </>
     ),
-    link: "https://www.youtube.com/watch?v=O91DT1pR1ew",
+    link: "https://youtu.be/1WOrAu_Gke8",
   },
   {
     title: "Staff & Family Services",
@@ -52,7 +52,7 @@ const cardData = [
         UM6P is more than a university—it’s a living campus that supports its faculty, staff, and their families. With access to on-site services, family-friendly amenities, childcare support, and integrated wellness programs, we ensure that those who make UM6P’s mission possible can live and work in harmony.
       </>
     ),
-    link: "https://www.youtube.com/watch?v=y6120QOlsfU",
+    link: "https://youtu.be/K_k3CLnZnvU",
   },
 ];
 
