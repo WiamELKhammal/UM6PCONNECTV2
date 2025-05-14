@@ -1,11 +1,7 @@
 const { createClient } = require('redis');
-require('dotenv').config();
 
-const isProduction = process.env.NODE_ENV === 'production';
-
-const redisUrl = isProduction
-  ? process.env.REDIS_URL // Railway : redis.railway.internal
-  : process.env.REDIS_PUBLIC_URL; // Local : proxy.rlwy.net
+// Railway injecte REDIS_URL automatiquement en production
+const redisUrl = process.env.REDIS_URL;
 
 const client = createClient({ url: redisUrl });
 
@@ -16,7 +12,7 @@ client.on('error', (err) => {
 (async () => {
   try {
     await client.connect();
-    console.log("✅ Redis client connected");
+    console.log("✅ Redis client connected to:", redisUrl);
   } catch (err) {
     console.error("❌ Redis connection failed:", err);
   }
