@@ -27,7 +27,7 @@ exports.handleForgotPassword = async (req, res) => {
     user.resetTokenExpiration = Date.now() + 3600000; // 1 hour
     await user.save();
 
-    const resetLink = `http://localhost:3000/reset-password/${token}`;
+    const resetLink = `https://um6p-connect.netlify.app/reset-password/${token}`;
     await sendResetEmail(user.Email, user.Prenom || user.Nom, resetLink);
 
     res.json({ message: "If an account exists, a reset link was sent." });
