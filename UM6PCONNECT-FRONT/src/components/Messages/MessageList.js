@@ -31,7 +31,7 @@ const MessageList = ({ onSelectConversation, activeTab, setActiveTab }) => {
   const fetchConversations = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/messages/all-conversations/${user._id}`,
+        `https://um6pconnectv2-production.up.railway.app/api/messages/all-conversations/${user._id}`,
         {
           headers: {
             Authorization: `Bearer ${user?.token}`,
@@ -61,7 +61,7 @@ const MessageList = ({ onSelectConversation, activeTab, setActiveTab }) => {
   const handleConversationClick = async (contact) => {
     try {
       await axios.post(
-        "http://localhost:5000/api/messages/mark-read",
+        "https://um6pconnectv2-production.up.railway.app/api/messages/mark-read",
         {
           userId: user._id,
           contactId: contact._id,

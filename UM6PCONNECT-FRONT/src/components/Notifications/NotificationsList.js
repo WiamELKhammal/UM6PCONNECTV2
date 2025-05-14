@@ -29,7 +29,7 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
     const fetchNotifications = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get("http://localhost:5000/api/notification", { //  NO userId in URL
+        const response = await axios.get("https://um6pconnectv2-production.up.railway.app/api/notification", { //  NO userId in URL
           headers: {
             Authorization: `Bearer ${user?.token}`, // ✅ still needed
           },
@@ -51,7 +51,7 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
   const markAllAsRead = async () => {
     try {
       await axios.put(
-        "http://localhost:5000/api/notification/markAllAsRead", //  fixed route
+        "https://um6pconnectv2-production.up.railway.app/api/notification/markAllAsRead", //  fixed route
         {},
         {
           headers: {
@@ -69,7 +69,7 @@ const NotificationsList = ({ anchorEl, handleMenuClose, userId }) => {
   const markAsRead = async (notificationId) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/notification/mark-as-read/${notificationId}`,
+        `https://um6pconnectv2-production.up.railway.app/api/notification/mark-as-read/${notificationId}`,
         {},
         {
           headers: {

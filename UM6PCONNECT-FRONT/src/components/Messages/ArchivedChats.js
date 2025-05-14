@@ -29,7 +29,7 @@ const ArchivedChats = ({ onSelectConversation, setActiveTab }) => {
     const fetchArchivedConversations = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/messages/archived/${user._id}`,
+          `https://um6pconnectv2-production.up.railway.app/api/messages/archived/${user._id}`,
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
@@ -48,7 +48,7 @@ const ArchivedChats = ({ onSelectConversation, setActiveTab }) => {
   const handleUnarchive = async (contactId) => {
     try {
       await axios.post(
-        "http://localhost:5000/api/messages/archive",
+        "https://um6pconnectv2-production.up.railway.app/api/messages/archive",
         {
           userId: user._id,
           contactId,

@@ -15,7 +15,7 @@ import { useDropzone } from 'react-dropzone';
 import { io } from 'socket.io-client';
 import { UserContext } from '../../context/UserContext';
 
-const socket = io(process.env.REACT_APP_SOCKET_URL || "http://localhost:5000");
+const socket = io(process.env.REACT_APP_SOCKET_URL || "https://um6pconnectv2-production.up.railway.app");
 
 const MessageModal = ({ open, onClose, recipientId, recipientName }) => {
   const { user } = useContext(UserContext);
@@ -50,7 +50,7 @@ const MessageModal = ({ open, onClose, recipientId, recipientName }) => {
     });
   
     try {
-      const response = await fetch("http://localhost:5000/api/messages/send", {
+      const response = await fetch("https://um6pconnectv2-production.up.railway.app/api/messages/send", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${user?.token}`,
@@ -89,7 +89,7 @@ const MessageModal = ({ open, onClose, recipientId, recipientName }) => {
     const fetchRecipientEmail = async () => {
       if (!user && recipientId) {
         try {
-          const res = await fetch(`http://localhost:5000/api/profile/${recipientId}`);
+          const res = await fetch(`https://um6pconnectv2-production.up.railway.app/api/profile/${recipientId}`);
           const data = await res.json();
           setRecipientEmail(data?.Email || '');
         } catch (err) {

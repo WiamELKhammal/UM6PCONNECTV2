@@ -39,7 +39,7 @@ const Conversations = () => {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/messages/conversation/${user._id}/${selectedConversation.userId}`,
+          `https://um6pconnectv2-production.up.railway.app/api/messages/conversation/${user._id}/${selectedConversation.userId}`,
           {
             headers: {
               Authorization: `Bearer ${user.token}`,

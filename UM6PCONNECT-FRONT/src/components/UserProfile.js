@@ -6,7 +6,7 @@ const UserProfile = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/users/${id}`)
+    fetch(`https://um6pconnectv2-production.up.railway.app/api/users/${id}`)
       .then((res) => res.json())
       .then((data) => setUser(data))
       .catch((err) => console.error("Failed to fetch user:", err));

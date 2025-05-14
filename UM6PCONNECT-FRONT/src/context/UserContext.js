@@ -15,7 +15,7 @@ export const UserProvider = ({ children }) => {
     const fetchUserProfile = async () => {
       if (!user || !user._id || !user.token) return;
       try {
-        const res = await axios.get(`http://localhost:5000/api/profile/${user._id}`, {
+        const res = await axios.get(`https://um6pconnectv2-production.up.railway.app/api/profile/${user._id}`, {
           headers: { Authorization: `Bearer ${user.token}` },
         });
         const updatedUser = { ...res.data, token: user.token };

@@ -22,9 +22,9 @@ import NotificationsList from "./Notifications/NotificationsList"; // import Not
 
 const topNavItems = [
   { label: "HOME", to: "/" },
-  { label: "WORK, STUDY & LIVE AT UM6P", to: "/StudyAndLiveAtUM6P" },
+  { label: "WORK, LIVE & STUDY AT UM6P", to: "/StudyAndLiveAtUM6P" },
   { label: "OUR VISION 2030", to: "/OurVision" },
-  { label: "FIELD OF WORK", to: "/OurFieldsOfWork" }, 
+  { label: "OUR FIELDS OF WORK", to: "/OurFieldsOfWork" }, 
   { label: "MEET & ENGAGE WITH OUR RESEARCHERS", to: "/Our-Researchers" },
 ];
 

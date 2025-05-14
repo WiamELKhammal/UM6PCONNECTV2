@@ -34,7 +34,7 @@ const MyFriends = ({ onSelectConversation, setActiveTab }) => {
     const fetchFollowing = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/follow/following/${user._id}`,
+          `https://um6pconnectv2-production.up.railway.app/api/follow/following/${user._id}`,
           {
             headers: { Authorization: `Bearer ${user.token}` },
           }

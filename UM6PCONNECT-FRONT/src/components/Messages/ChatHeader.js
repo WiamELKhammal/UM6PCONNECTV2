@@ -32,7 +32,7 @@ const ChatHeader = ({ recipient, onToggleSidebar, onBack, isMobile }) => {
       if (!recipient?.userId || !user?.token) return;
       try {
         const res = await fetch(
-          `http://localhost:5000/api/lastSeen/user-status/${recipient.userId}`,
+          `https://um6pconnectv2-production.up.railway.app/api/lastSeen/user-status/${recipient.userId}`,
           {
             headers: {
               Authorization: `Bearer ${user.token}`,

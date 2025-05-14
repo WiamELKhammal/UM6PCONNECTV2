@@ -27,7 +27,7 @@ const DeleteChat = ({ open, onClose, userId, contactId }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/messages/delete",
+        "https://um6pconnectv2-production.up.railway.app/api/messages/delete",
         { userId, contactId },
         {
           headers: {

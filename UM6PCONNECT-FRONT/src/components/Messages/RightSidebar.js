@@ -63,7 +63,7 @@ const RightSidebar = ({ recipient, onClose }) => {
     if (!user?._id || !recipient?.userId) return;
 
     axios
-      .get(`http://localhost:5000/api/messages/files-between/${user._id}/${recipient.userId}`, {
+      .get(`https://um6pconnectv2-production.up.railway.app/api/messages/files-between/${user._id}/${recipient.userId}`, {
         headers: {
           Authorization: `Bearer ${user.token}`,
         },

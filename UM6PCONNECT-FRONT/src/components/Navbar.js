@@ -57,7 +57,7 @@ const Navbar = () => {
       const fetchUnreadCount = async () => {
         try {
           const response = await axios.get(
-            "http://localhost:5000/api/notification/unreadCount",
+            "https://um6pconnectv2-production.up.railway.app/api/notification/unreadCount",
             {
               headers: {
                 Authorization: `Bearer ${user.token}`,

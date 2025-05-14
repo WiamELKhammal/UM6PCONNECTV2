@@ -5,7 +5,7 @@ const UsersList = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/users")
+    fetch("https://um6pconnectv2-production.up.railway.app/api/users")
       .then((res) => res.json())
       .then((data) => {
         const activeUsers = data.filter(user => user.Status === "Active");

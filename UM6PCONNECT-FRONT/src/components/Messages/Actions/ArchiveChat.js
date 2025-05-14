@@ -23,7 +23,7 @@ const ArchiveChat = ({ open, onClose, userId, contactId }) => {
     setLoading(true);
     try {
       await axios.post(
-        "http://localhost:5000/api/messages/archive",
+        "https://um6pconnectv2-production.up.railway.app/api/messages/archive",
         {
           userId,
           contactId,

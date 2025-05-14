@@ -32,7 +32,7 @@ const Navbar = () => {
   useEffect(() => {
     if (user?.token) {
       axios
-        .get("http://localhost:5000/api/notification/unreadCount", {
+        .get("https://um6pconnectv2-production.up.railway.app/api/notification/unreadCount", {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },

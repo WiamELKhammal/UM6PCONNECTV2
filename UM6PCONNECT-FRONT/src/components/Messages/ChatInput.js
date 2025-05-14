@@ -13,7 +13,7 @@ import MicIcon from "@mui/icons-material/Mic";
 import StopIcon from "@mui/icons-material/Stop";
 import CloseIcon from "@mui/icons-material/Close";
 
-const socket = io(process.env.REACT_APP_SOCKET_URL || "http://localhost:5000");
+const socket = io(process.env.REACT_APP_SOCKET_URL || "https://um6pconnectv2-production.up.railway.app");
 
 const ChatInput = ({ recipientId, setMessages }) => {
   const { user } = useContext(UserContext);
@@ -85,7 +85,7 @@ const ChatInput = ({ recipientId, setMessages }) => {
     if (audioBlob) formData.append("file", audioBlob, "voice_message.webm");
 
     try {
-      const response = await axios.post("http://localhost:5000/api/messages/send", formData, {
+      const response = await axios.post("https://um6pconnectv2-production.up.railway.app/api/messages/send", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${user.token}`,
