@@ -37,7 +37,11 @@ const TheWhy = () => {
 
           }}
         >
-UM6P defines research excellence not only by publications, but by the application and measurable results. Over 2600 publications were recorded from 2020–2024, with 140 patents filed, and over 200 research projects in progress. The CORE LABs (Genomics, Materials, Water, and AI) serve as interdisciplinary platforms where students, faculty, and partners solve problems collaboratively.</Typography>
+We believe in science that matters — research that does not remain locked in labs, but lives in the world. At UM6P, research is a catalyst for transformation. Vision 2030 commits to:
+Empowering scientific freedom to pursue breakthrough discoveries
+Fostering collaboration across disciplines and labs
+Telling the story of our science and its impact on African communities
+This is not about following global trends — it’s about setting them.</Typography>
       </Box>
     </Box>
   );

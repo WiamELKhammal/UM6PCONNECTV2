@@ -13,7 +13,7 @@ const Follow = ({ researcherId }) => {
     const fetchFollowing = async () => {
       if (user?._id && user?.token) {
         try {
-          const res = await fetch(`http://localhost:5000/api/follow/following/${user._id}`, {
+          const res = await fetch(`https://um6pconnectv2-production.up.railway.app/api/follow/following/${user._id}`, {
             headers: {
               Authorization: `Bearer ${user.token}`,
             },
@@ -35,8 +35,8 @@ const Follow = ({ researcherId }) => {
 
     setLoading(true);
     const url = isFollowing
-      ? "http://localhost:5000/api/follow/unfollow"
-      : "http://localhost:5000/api/follow/follow";
+      ? "https://um6pconnectv2-production.up.railway.app/api/follow/unfollow"
+      : "https://um6pconnectv2-production.up.railway.app/api/follow/follow";
 
     try {
       await fetch(url, {

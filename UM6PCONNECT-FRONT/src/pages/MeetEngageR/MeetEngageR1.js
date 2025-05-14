@@ -20,7 +20,7 @@ const MeetEngageR1 = () => {
           width: "100%",
           height: "100%",
           boxSizing: "border-box",
-          backgroundImage: "url('/assets/images/herosection/R6.jpg')",
+          backgroundImage: "url('/assets/images/herosection/ACA4.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -55,7 +55,7 @@ const MeetEngageR1 = () => {
               fontWeight: 300,
             }}
           >
-            TITLE HNA 
+            Our Fields Of Work 
           </Typography>
         </Box>
 

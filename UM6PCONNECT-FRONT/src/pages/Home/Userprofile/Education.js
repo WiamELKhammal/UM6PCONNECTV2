@@ -9,7 +9,7 @@ const Education = ({ userId }) => {
     const fetchEducation = async () => {
         try {
             if (!userId) return;
-            const response = await fetch(`http://localhost:5000/api/education/${userId}`);
+            const response = await fetch(`https://um6pconnectv2-production.up.railway.app/api/education/${userId}`);
             const data = await response.json();
             setEducationList(data);
         } catch (error) {

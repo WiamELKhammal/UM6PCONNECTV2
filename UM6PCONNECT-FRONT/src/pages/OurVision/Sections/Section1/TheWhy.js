@@ -36,7 +36,7 @@ const TheWhy = () => {
 
           }}
         >
-Vision 2030 was initiated to ensure that UM6P’s rapid growth stayed aligned with its foundational purpose: impact at scale. The university engaged over 1,000 community members through structured workshops, stakeholder dialogues, and co-creation labs. The goal: translate ambition into a shared, measurable pathway for the decade ahead.        </Typography>
+At the heart of this vision lies a shared belief: that Africa’s future will be shaped by its ability to generate knowledge, build talent, create bold solutions, and uplift communities. Vision 2030 brings this belief to life through four foundational pillars.</Typography>
       </Box>
     </Box>
   );

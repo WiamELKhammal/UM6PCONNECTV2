@@ -30,25 +30,24 @@ const ProgressReport2021 = () => (
     <Box sx={{ borderBottom: "1px solid #fff" }}>
       <TheWhy />
     </Box>
-    <TheWhyVideo />
 
     {/* Pillar 1: Research */}
-    <TitleSection title="Pillar 1: Research" id="pillar1"  borderTop />
+    <TitleSection title="Pillar 1: Research — Inventing What’s Next" id="pillar1"  borderTop />
     <Pilar1 />
     <Pilar1Graph />
 
     {/* Pillar 2: Education */}
-    <TitleSection title="Pillar 2: Education" id="pillar2"  borderTop />
+    <TitleSection title="Pillar 2: Education — Learning to Lead" id="pillar2"  borderTop />
     <Pilar2 />
 
 
     {/* Pillar 3: Entrepreneurship */}
-    <TitleSection title="Pillar 3: Entrepreneurship" id="pillar3"  borderTop />
+    <TitleSection title="Pillar 3: Entrepreneurship — Building What Matters" id="pillar3"  borderTop />
     <Pilar3 />
 
 
     {/* Pillar 4: Social Impact */}
-    <TitleSection title="Pillar 4: Social Impact" id="pillar4"  borderTop />
+    <TitleSection title="Pillar 4: Social Impact — Turning Knowledge into Action" id="pillar4"  borderTop />
     <Pilar4 />
   
   </div>

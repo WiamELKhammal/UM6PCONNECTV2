@@ -34,15 +34,15 @@ const UserAchievements = () => {
         };
   
         // 1. Get follow stats
-        const followRes = await fetch(`http://localhost:5000/api/follow/follow-count/${user._id}`, { headers })
+        const followRes = await fetch(`https://um6pconnectv2-production.up.railway.app/api/follow/follow-count/${user._id}`, { headers })
           .then(res => res.json());
   
         // 2. Get research count
-        const researchRes = await fetch(`http://localhost:5000/api/research/user/${user._id}`, { headers })
+        const researchRes = await fetch(`https://um6pconnectv2-production.up.railway.app/api/research/user/${user._id}`, { headers })
           .then(res => res.json());
   
         // 3. Get profile completion
-        const profileRes = await fetch(`http://localhost:5000/api/complete/profile/${user._id}`, { headers })
+        const profileRes = await fetch(`https://um6pconnectv2-production.up.railway.app/api/complete/profile/${user._id}`, { headers })
           .then(res => res.json());
   
         const completed = parseFloat(profileRes?.completionPercentage) >= 100;
@@ -61,7 +61,7 @@ const UserAchievements = () => {
           completed;
   
         if (shouldBadge && !user.badged) {
-          await fetch(`http://localhost:5000/api/users/${user._id}/badge`, {
+          await fetch(`https://um6pconnectv2-production.up.railway.app/api/users/${user._id}/badge`, {
             method: "PUT",
             headers,
           });

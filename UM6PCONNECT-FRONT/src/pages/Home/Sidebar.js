@@ -29,7 +29,7 @@ const UserProfile = () => {
       const fetchProfile = async () => {
         try {
           const response = await fetch(
-            `http://localhost:5000/api/complete/profile/${user._id}`,
+            `https://um6pconnectv2-production.up.railway.app/api/complete/profile/${user._id}`,
             {
               headers: {
                 Authorization: `Bearer ${user.token}`, //  Ajout du token

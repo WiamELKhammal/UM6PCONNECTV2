@@ -21,10 +21,10 @@ const FollowList = ({ activeTab }) => {
       if (user?.token) {
         try {
           const [followersRes, followingRes] = await Promise.all([
-            fetch(`http://localhost:5000/api/follow/followers/${user._id}`, {
+            fetch(`https://um6pconnectv2-production.up.railway.app/api/follow/followers/${user._id}`, {
               headers: { Authorization: `Bearer ${user.token}` },
             }),
-            fetch(`http://localhost:5000/api/follow/following/${user._id}`, {
+            fetch(`https://um6pconnectv2-production.up.railway.app/api/follow/following/${user._id}`, {
               headers: { Authorization: `Bearer ${user.token}` },
             }),
           ]);
@@ -49,7 +49,7 @@ const FollowList = ({ activeTab }) => {
 
       const tagFetches = users.map((u) => {
         const id = u.follower?._id || u.following?._id;
-        return fetch(`http://localhost:5000/api/tags/user/${id}`)
+        return fetch(`https://um6pconnectv2-production.up.railway.app/api/tags/user/${id}`)
           .then((res) => res.json())
           .then((data) => ({ id, tags: data.tags || [] }))
           .catch(() => ({ id, tags: [] }));
@@ -70,7 +70,7 @@ const FollowList = ({ activeTab }) => {
 
   const handleUnfollow = async (researcherId) => {
     try {
-      await fetch("http://localhost:5000/api/follow/unfollow", {
+      await fetch("https://um6pconnectv2-production.up.railway.app/api/follow/unfollow", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

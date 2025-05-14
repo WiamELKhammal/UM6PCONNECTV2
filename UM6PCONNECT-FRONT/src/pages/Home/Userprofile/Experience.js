@@ -8,7 +8,7 @@ const Experience = ({ userId }) => {
   const fetchExperience = async () => {
     try {
       if (!userId) return;
-      const response = await fetch(`http://localhost:5000/api/experience/${userId}`);
+      const response = await fetch(`https://um6pconnectv2-production.up.railway.app/api/experience/${userId}`);
       const data = await response.json();
       setExperienceList(data);
     } catch (error) {
@@ -96,7 +96,7 @@ const Experience = ({ userId }) => {
                 >
                   {exp.companyLogo ? (
                     <img
-                      src={exp.companyLogo.startsWith("http") ? exp.companyLogo : `http://localhost:5000/${exp.companyLogo}`}
+                      src={exp.companyLogo.startsWith("http") ? exp.companyLogo : `https://um6pconnectv2-production.up.railway.app/${exp.companyLogo}`}
                       alt={exp.companyName}
                       style={{ width: "100%", height: "100%", objectFit: "contain" }}
                     />

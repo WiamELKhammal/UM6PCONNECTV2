@@ -48,10 +48,11 @@ const TheWhy = () => {
               color: "#000",
             }}
           >
-            Education at UM6P is shaped by applied science, immersion, and
-            autonomy. Our curriculum integrates classroom instruction with lab
-            experimentation, fieldwork, and entrepreneurship exposure. Between
-            2020 and 2023:
+Education at UM6P is not a passive experience; it's a journey of action, reflection, and leadership. Vision 2030 redefines what it means to learn, by prioritizing:
+Experiential learning and 'learning by doing'
+Leadership development rooted in collaboration
+Student well-being as a foundation for excellence
+We are shaping leaders who don’t just graduate with degrees — they graduate with purpose.
           </Typography>
         </Grid>
 

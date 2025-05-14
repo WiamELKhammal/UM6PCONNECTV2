@@ -75,32 +75,11 @@ const TheWhy = () => {
 
           }}
         >
-          UM6P embeds innovation and venture creation within its academic and
-          research model. Through StartGate, the university has supported{" "}
-          <Box component="span" sx={{ fontWeight: 600, color: "#000" }}>
-            530+
-          </Box>{" "}
-          project holders and startups since 2020. The top{" "}
-          <Box component="span" sx={{ fontWeight: 600, color: "#000" }}>
-            25
-          </Box>{" "}
-          startups have raised over{" "}
-          <Box component="span" sx={{ fontWeight: 600, color: "#000" }}>
-            $20.6M
-          </Box>
-          , with a collective valuation surpassing{" "}
-          <Box component="span" sx={{ fontWeight: 600, color: "#000" }}>
-            $200M
-          </Box>
-          . Students represent{" "}
-          <Box component="span" sx={{ fontWeight: 600, color: "#000" }}>
-            50%
-          </Box>{" "}
-          of founders, and{" "}
-          <Box component="span" sx={{ fontWeight: 600, color: "#000" }}>
-            14%
-          </Box>{" "}
-          are faculty-led ventures.
+Africa needs builders, not just thinkers. Vision 2030 fuels a new generation of entrepreneurs who turn problems into opportunities and ideas into ventures. Our priorities:
+Igniting entrepreneurial mindsets across all disciplines
+Creating ecosystems where innovation thrives
+Supporting Moroccan-led solutions for African challenges
+Entrepreneurship is not an option — it's our engine for impact.
         </Typography>
       </Box>
 

@@ -80,7 +80,7 @@ const RightSidebar = () => {
     const fetchData = async () => {
       try {
         // Fetch users without token
-        const resUsers = await fetch("http://localhost:5000/api/users");
+        const resUsers = await fetch("https://um6pconnectv2-production.up.railway.app/api/users");
         const usersData = await resUsers.json();
   
         const activeResearchers = usersData.filter(
@@ -90,7 +90,7 @@ const RightSidebar = () => {
         setFilteredResearchers(activeResearchers);
   
         // Fetch tags without token
-        const resTags = await fetch("http://localhost:5000/api/tags");
+        const resTags = await fetch("https://um6pconnectv2-production.up.railway.app/api/tags");
         const tagsData = await resTags.json();
         setTags(tagsData);
       } catch (err) {
@@ -106,7 +106,7 @@ const RightSidebar = () => {
       let tagsMap = {};
       for (const r of researchers) {
         try {
-          const res = await fetch(`http://localhost:5000/api/tags/user/${r._id}`);
+          const res = await fetch(`https://um6pconnectv2-production.up.railway.app/api/tags/user/${r._id}`);
           const data = await res.json();
           tagsMap[r._id] = data.tags || [];
         } catch {
@@ -134,7 +134,7 @@ const RightSidebar = () => {
   
     setSelectedTag(clickedTag); // update selection
   
-    fetch(`http://localhost:5000/api/tags/tag/${clickedTag}`)
+    fetch(`https://um6pconnectv2-production.up.railway.app/api/tags/tag/${clickedTag}`)
       .then((res) => res.json())
       .then((data) =>
         setFilteredResearchers(data.filter((r) => r._id !== user?._id && r.Status === "Active"))

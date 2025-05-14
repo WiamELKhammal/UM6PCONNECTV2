@@ -15,7 +15,7 @@ const DiscoverWorkUser = ({ userId }) => {
   useEffect(() => {
     const fetchResearch = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/research/user/${userId}`);
+        const res = await fetch(`https://um6pconnectv2-production.up.railway.app/api/research/user/${userId}`);
         const data = await res.json();
         setResearchList(data);
       } catch (error) {

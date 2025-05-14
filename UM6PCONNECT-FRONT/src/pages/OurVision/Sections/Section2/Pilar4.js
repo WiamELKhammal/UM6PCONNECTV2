@@ -9,11 +9,11 @@ import SchoolIcon from "@mui/icons-material/School";
 const data = [
   {
     icon: <FingerprintIcon sx={{ fontSize: 30, color: "#ea3b15" }} />,
-    label: "Executives Trained",
+    label: "Empowering People",
     description: (
       <>
-        Short & executive programs<br />
-         Trained 20,500+ individuals in executive or short programs.
+         We’ve trained over 20,500 individuals through short and executive education programs, equipping leaders across sectors with the tools to drive real-world change.
+
 
       </>
     ),
@@ -22,11 +22,10 @@ const data = [
   },
   {
     icon: <SchoolIcon sx={{ fontSize: 30, color: "#ea3b15" }} />,
-    label: "University Partnerships",
+    label: "Building Continental Bridges",
     description: (
       <>
-        Across the African continent<br />
-        Built partnerships with 50+ African universities.
+With 50+ university partnerships across Africa, we’re creating a connected ecosystem of innovation, research, and shared purpose for a thriving continent.
 
       </>
     ),
@@ -34,11 +33,10 @@ const data = [
   },
   {
     icon: <AcUnitIcon sx={{ fontSize: 30, color: "#ea3b15" }} />,
-    label: "Campuses",
+    label: "Expanding Our Reach",
     description: (
       <>
-          5 in Morocco, 1 in Paris<br />
-          Opened campuses in 5 Moroccan cities and launched an international hub in Paris.
+UM6P has launched 5 campuses across Morocco and a new international hub in France & Canada , bringing education and opportunity closer to the communities we serve — locally and globally.
       </>
     ),
     stat: "6",
@@ -68,7 +66,8 @@ const StatsSection = () => {
           color: "#000",
         }}
       >
-UM6P’s work extends beyond academia into real communities. Through training, policy labs, and regional campuses, the university:
+UM6P’s mission goes far beyond the walls of its campuses. We believe that the true measure of a university lies in the lives it transforms — in the ideas that leave the classroom and shape communities.
+Vision 2030 strengthens our public mission to serve society, not as a side initiative, but as a central pillar of our identity. Through training programs, policy labs, and regional campuses, we are bridging the gap between knowledge and impact.
 
       </Typography>
 
@@ -88,7 +87,8 @@ UM6P’s work extends beyond academia into real communities. Through training, p
                 {item.label}
               </Typography>
               <Typography
-                sx={{ fontSize: "20px", color: "#000", lineHeight: 1.8 }}
+                sx={{ fontSize: "20px", color: "#000", lineHeight: 1.8,    textAlign: "justify", 
+ }}
               >
                 {item.description}
               </Typography>

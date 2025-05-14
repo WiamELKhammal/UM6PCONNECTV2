@@ -127,7 +127,7 @@ const CompleteProfileStepper = () => {
 
   
  // Update profile info
-await fetch(`http://localhost:5000/api/profile/update`, {
+await fetch(`https://um6pconnectv2-production.up.railway.app/api/profile/update`, {
   method: "PUT",
   headers: {
     "Content-Type": "application/json",
@@ -138,7 +138,7 @@ await fetch(`http://localhost:5000/api/profile/update`, {
 
 // Update profile picture
 if (formData.profilePicture?.startsWith("data:image")) {
-  await fetch(`http://localhost:5000/api/profilepicture/update-profile-picture`, {
+  await fetch(`https://um6pconnectv2-production.up.railway.app/api/profilepicture/update-profile-picture`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -150,7 +150,7 @@ if (formData.profilePicture?.startsWith("data:image")) {
 
 // Update cover picture
 if (formData.coverPicture?.startsWith("data:image") || formData.coverPicture?.includes("/assets/")) {
-  await fetch(`http://localhost:5000/api/profilepicture/update-cover-picture`, {
+  await fetch(`https://um6pconnectv2-production.up.railway.app/api/profilepicture/update-cover-picture`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
