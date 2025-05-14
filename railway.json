@@ -1,0 +1,6 @@
+{
+  "build": {
+    "root": "UM6PCONNECT-BACK"
+  },
+  "start": "npm start"
+}
