@@ -1,8 +1,10 @@
+require('dotenv').config();
 const { createClient } = require('redis');
 
-const client = createClient({
-  url: process.env.REDIS_URL, // Railway fournit automatiquement REDIS_URL
-});
+// Choisir l'URL Redis selon l'environnement
+const redisUrl = process.env.REDIS_URL || process.env.REDIS_PUBLIC_URL;
+
+const client = createClient({ url: redisUrl });
 
 client.on('error', (err) => {
   console.error('❌ Redis Client Error:', err);
