@@ -1,8 +1,11 @@
-require('dotenv').config();
 const { createClient } = require('redis');
+require('dotenv').config();
 
-// Choisir l'URL Redis selon l'environnement
-const redisUrl = process.env.REDIS_URL || process.env.REDIS_PUBLIC_URL;
+const isProduction = process.env.NODE_ENV === 'production';
+
+const redisUrl = isProduction
+  ? process.env.REDIS_URL // Railway : redis.railway.internal
+  : process.env.REDIS_PUBLIC_URL; // Local : proxy.rlwy.net
 
 const client = createClient({ url: redisUrl });
 
