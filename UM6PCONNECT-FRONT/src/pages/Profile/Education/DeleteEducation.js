@@ -19,7 +19,7 @@ const DeleteEducation = ({ open, onClose, educationId, fetchEducation }) => {
     setLoading(true);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/education/${educationId}`, {
+      const response = await fetch(`https://um6pconnectv2-production.up.railway.app/api/education/${educationId}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
       });

@@ -15,7 +15,7 @@ const ForgotPassword = () => {
 
   const handleSubmit = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/forgot-password", {
+      const res = await fetch("https://um6pconnectv2-production.up.railway.app/api/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

@@ -24,7 +24,7 @@ const SavedList = () => {
 
   useEffect(() => {
     if (user?._id && user?.token) {
-      fetch(`http://localhost:5000/api/save/saved`, {
+      fetch(`https://um6pconnectv2-production.up.railway.app/api/save/saved`, {
         headers: { Authorization: `Bearer ${user.token}` },
       })
         .then((res) => res.json())
@@ -50,7 +50,7 @@ const SavedList = () => {
 
   useEffect(() => {
     savedResearchers.forEach((researcher) => {
-      fetch(`http://localhost:5000/api/tags/user/${researcher._id}`)
+      fetch(`https://um6pconnectv2-production.up.railway.app/api/tags/user/${researcher._id}`)
         .then((res) => res.json())
         .then((data) => {
           setResearcherTags((prevTags) => ({
@@ -64,7 +64,7 @@ const SavedList = () => {
 
   const handleUnsaveResearcher = async (researcherId) => {
     try {
-      await fetch("http://localhost:5000/api/save/unsave", {
+      await fetch("https://um6pconnectv2-production.up.railway.app/api/save/unsave", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

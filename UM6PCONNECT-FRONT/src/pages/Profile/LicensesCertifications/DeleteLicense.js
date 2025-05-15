@@ -13,7 +13,7 @@ const DeleteLicense = ({ open, onClose, licenseId, fetchLicenses }) => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/licenses/${licenseId}`, {
+      const response = await fetch(`https://um6pconnectv2-production.up.railway.app/api/licenses/${licenseId}`, {
         method: "DELETE",
       });
 

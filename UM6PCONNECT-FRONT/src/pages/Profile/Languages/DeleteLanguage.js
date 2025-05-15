@@ -18,7 +18,7 @@ const DeleteLanguage = ({ open, onClose, languageId, fetchLanguages }) => {
     setLoading(true);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/languages/${languageId}`, {
+      const response = await fetch(`https://um6pconnectv2-production.up.railway.app/api/languages/${languageId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

@@ -31,7 +31,7 @@ const Tags = () => {
       if (user?._id && user?.token) {
         try {
           const response = await axios.get(
-            `http://localhost:5000/api/tags/user/${user._id}`,
+            `https://um6pconnectv2-production.up.railway.app/api/tags/user/${user._id}`,
             {
               headers: {
                 Authorization: `Bearer ${user.token}`, // ✅ Attach token
@@ -55,14 +55,14 @@ const Tags = () => {
     if (user?._id) {
       try {
         if (selectedTags.includes(tag)) {
-          await axios.delete(`http://localhost:5000/api/tags/${user._id}/${tag}`, {
+          await axios.delete(`https://um6pconnectv2-production.up.railway.app/api/tags/${user._id}/${tag}`, {
             headers: {
               Authorization: `Bearer ${user.token}`, // ✅ attach token
             },
           });
           setSelectedTags(selectedTags.filter((t) => t !== tag));
         } else {
-          await axios.post("http://localhost:5000/api/tags", 
+          await axios.post("https://um6pconnectv2-production.up.railway.app/api/tags", 
             { name: tag },
             {
               headers: {

@@ -28,7 +28,7 @@ const EditPublication = ({ open, onClose, publicationData, fetchPublications }) 
     if (!publicationData?._id) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/publications/${publicationData._id}`, {
+      const response = await fetch(`https://um6pconnectv2-production.up.railway.app/api/publications/${publicationData._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),

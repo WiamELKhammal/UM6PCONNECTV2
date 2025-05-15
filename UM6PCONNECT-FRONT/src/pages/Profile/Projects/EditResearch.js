@@ -98,7 +98,7 @@ const EditResearch = ({ research, onClose, onUpdate }) => {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/api/research/${formData._id}`,
+        `https://um6pconnectv2-production.up.railway.app/api/research/${formData._id}`,
         {
           method: "PUT",
           headers: {

@@ -68,7 +68,7 @@ const EditProfileForm = ({ open, onClose, onSave }) => {
         researchGate: formData.researchGate,
       };
 
-      const response = await fetch("http://localhost:5000/api/profile/update", {
+      const response = await fetch("https://um6pconnectv2-production.up.railway.app/api/profile/update", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

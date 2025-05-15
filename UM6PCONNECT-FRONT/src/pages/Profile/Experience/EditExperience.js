@@ -127,7 +127,7 @@ const EditExperience = ({ open, onClose, experienceData, fetchExperience }) => {
         return;
       }
   
-      const response = await fetch(`http://localhost:5000/api/experience/${experienceData._id}`, {
+      const response = await fetch(`https://um6pconnectv2-production.up.railway.app/api/experience/${experienceData._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

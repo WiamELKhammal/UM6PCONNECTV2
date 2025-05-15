@@ -17,7 +17,7 @@ const DiscoverWork = () => {
   const fetchResearch = async () => {
     try {
       const token = user?.token;
-      const res = await fetch(`http://localhost:5000/api/research/user/${user._id}`, {
+      const res = await fetch(`https://um6pconnectv2-production.up.railway.app/api/research/user/${user._id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

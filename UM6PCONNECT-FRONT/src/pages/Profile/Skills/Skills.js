@@ -19,7 +19,7 @@ const Skills = () => {
     const fetchSkills = async () => {
         try {
             if (!user?._id) return;
-            const response = await fetch(`http://localhost:5000/api/skills/${user._id}`);
+            const response = await fetch(`https://um6pconnectv2-production.up.railway.app/api/skills/${user._id}`);
             const data = await response.json();
             setSkillsList(data);
         } catch (error) {

@@ -24,7 +24,7 @@ const VerifyEmailPage = () => {
 
         try {
             // On the frontend (VerifyEmailPage.jsx)
-            const response = await fetch("http://localhost:5000/api/verify-otp", {
+            const response = await fetch("https://um6pconnectv2-production.up.railway.app/api/verify-otp", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -58,7 +58,7 @@ const VerifyEmailPage = () => {
         setResendCountdown(60); // ⏱ Lock for 30s
 
         try {
-            const response = await fetch("http://localhost:5000/api/resend-otp", {
+            const response = await fetch("https://um6pconnectv2-production.up.railway.app/api/resend-otp", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email }),

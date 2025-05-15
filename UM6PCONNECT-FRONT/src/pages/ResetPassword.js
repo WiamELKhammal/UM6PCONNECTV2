@@ -30,7 +30,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/api/reset-password/${token}`, {
+      const res = await fetch(`https://um6pconnectv2-production.up.railway.app/api/reset-password/${token}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),

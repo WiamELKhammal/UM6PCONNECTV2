@@ -30,7 +30,7 @@ const AddPublication = ({ open, onClose, fetchPublications }) => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/publications", {
+      const response = await fetch("https://um6pconnectv2-production.up.railway.app/api/publications", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...publication, userId: user._id }),

@@ -51,7 +51,7 @@ const ChangeYourTempPass = () => {
         if (passwordMismatch) return;
 
         try {
-            const response = await axios.post("http://localhost:5000/api/change-password", {
+            const response = await axios.post("https://um6pconnectv2-production.up.railway.app/api/change-password", {
                 tempPassword,
                 newPassword,
                 confirmPassword,

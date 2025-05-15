@@ -18,7 +18,7 @@ const DeleteResearch = ({ open, onClose, researchId, onDelete }) => {
       const storedUser = JSON.parse(localStorage.getItem("user")); // or from context if available
       const token = storedUser?.token;
   
-      const res = await fetch(`http://localhost:5000/api/research/${researchId}`, {
+      const res = await fetch(`https://um6pconnectv2-production.up.railway.app/api/research/${researchId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

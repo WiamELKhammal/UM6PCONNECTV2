@@ -47,7 +47,7 @@ const AddLanguage = ({ open, onClose, fetchLanguages }) => {
         return;
       }
       try {
-        const response = await fetch("http://localhost:5000/api/languages", {
+        const response = await fetch("https://um6pconnectv2-production.up.railway.app/api/languages", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

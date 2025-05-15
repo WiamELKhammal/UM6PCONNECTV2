@@ -13,7 +13,7 @@ const DeletePublication = ({ open, onClose, publicationId, fetchPublications }) 
     setLoading(true);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/publications/${publicationId}`, {
+      const response = await fetch(`https://um6pconnectv2-production.up.railway.app/api/publications/${publicationId}`, {
         method: "DELETE",
       });
 

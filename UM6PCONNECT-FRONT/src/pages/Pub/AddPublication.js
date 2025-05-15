@@ -77,7 +77,7 @@ const AddPublication = ({ onClose }) => {
         file: formData.file || null,
       };
 
-      const res = await fetch("http://localhost:5000/api/publications", {
+      const res = await fetch("https://um6pconnectv2-production.up.railway.app/api/publications", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

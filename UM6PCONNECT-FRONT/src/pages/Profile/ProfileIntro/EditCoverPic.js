@@ -48,7 +48,7 @@ const EditCoverPic = ({ onClose }) => {
   
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/profilepicture/update-cover-picture`, // ✅ REMOVE ${user._id}
+        `https://um6pconnectv2-production.up.railway.app/api/profilepicture/update-cover-picture`, // ✅ REMOVE ${user._id}
         { coverPicture: croppedImage },
         {
           headers: {

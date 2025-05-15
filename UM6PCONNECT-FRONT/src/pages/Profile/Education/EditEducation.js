@@ -31,7 +31,7 @@ const EditEducation = ({ open, onClose, educationData, fetchEducation }) => {
     if (!educationData?._id) return;
 
     try {
-        const response = await fetch(`http://localhost:5000/api/education/${educationData._id}`, {
+        const response = await fetch(`https://um6pconnectv2-production.up.railway.app/api/education/${educationData._id}`, {
             method: "PUT",
             headers: { 
               "Content-Type": "application/json",

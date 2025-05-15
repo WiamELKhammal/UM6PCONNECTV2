@@ -11,7 +11,7 @@ const Save = ({ researcherId, user }) => {
     const fetchSavedResearchers = async () => {
       if (user?._id && user?.token) {
         try {
-          const res = await fetch(`http://localhost:5000/api/save/saved`, {
+          const res = await fetch(`https://um6pconnectv2-production.up.railway.app/api/save/saved`, {
             headers: {
               Authorization: `Bearer ${user.token}`,
             },
@@ -32,8 +32,8 @@ const Save = ({ researcherId, user }) => {
     if (!user?.token) return;
     setLoading(true);
     const url = isSaved
-      ? "http://localhost:5000/api/save/unsave"
-      : "http://localhost:5000/api/save/save";
+      ? "https://um6pconnectv2-production.up.railway.app/api/save/unsave"
+      : "https://um6pconnectv2-production.up.railway.app/api/save/save";
 
     try {
       await fetch(url, {

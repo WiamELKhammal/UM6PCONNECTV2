@@ -13,7 +13,7 @@ const SignInPage = () => {
 
   const handleSignIn = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/signin", {
+      const response = await fetch("https://um6pconnectv2-production.up.railway.app/api/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, keepSignedIn }), // ✅ send keepSignedIn

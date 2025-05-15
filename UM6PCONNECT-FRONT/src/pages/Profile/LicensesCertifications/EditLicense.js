@@ -45,7 +45,7 @@ const EditLicense = ({ open, onClose, licenseData, fetchLicenses }) => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/licenses/${licenseData._id}`, {
+      const response = await fetch(`https://um6pconnectv2-production.up.railway.app/api/licenses/${licenseData._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...license, userId: user._id }),

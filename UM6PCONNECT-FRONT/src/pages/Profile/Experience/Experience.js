@@ -19,7 +19,7 @@ const Experience = () => {
   const fetchExperience = async () => {
     try {
       if (!user?._id || !user?.token) return;
-      const response = await fetch(`http://localhost:5000/api/experience/${user._id}`, {
+      const response = await fetch(`https://um6pconnectv2-production.up.railway.app/api/experience/${user._id}`, {
         headers: {
           "Authorization": `Bearer ${user.token}`,
         },

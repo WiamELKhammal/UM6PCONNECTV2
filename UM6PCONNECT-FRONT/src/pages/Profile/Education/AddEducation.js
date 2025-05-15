@@ -25,7 +25,7 @@ const AddEducation = ({ open, onClose, fetchEducation }) => {
       try {
         console.log("Sending education data:", { ...education, userId: user._id }); // Debugging log
 
-        const response = await fetch("http://localhost:5000/api/education", {
+        const response = await fetch("https://um6pconnectv2-production.up.railway.app/api/education", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...education, userId: user._id }), // Utilisation de user._id

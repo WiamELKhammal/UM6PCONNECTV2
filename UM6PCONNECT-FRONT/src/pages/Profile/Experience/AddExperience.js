@@ -154,7 +154,7 @@ const AddExperience = ({ open, onClose, fetchExperience }) => {
         return setError("Authentication token not found.");
       }
 
-      const res = await fetch("http://localhost:5000/api/experience", {
+      const res = await fetch("https://um6pconnectv2-production.up.railway.app/api/experience", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

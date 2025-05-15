@@ -186,7 +186,7 @@ const SmartAddResearch = ({ open, onClose, onAdd }) => {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/api/research", {
+      const res = await fetch("https://um6pconnectv2-production.up.railway.app/api/research", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

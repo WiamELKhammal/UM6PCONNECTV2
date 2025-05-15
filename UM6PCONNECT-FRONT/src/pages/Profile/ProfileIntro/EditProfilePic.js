@@ -56,7 +56,7 @@ const EditProfilePic = ({ onClose }) => {
   
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/profilepicture/update-profile-picture`,
+        `https://um6pconnectv2-production.up.railway.app/api/profilepicture/update-profile-picture`,
         { profilePicture: croppedImage },
         {
           headers: {
