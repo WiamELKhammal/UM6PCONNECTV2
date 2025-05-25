@@ -27,7 +27,7 @@ const Footer = () => {
         {/* Study & Live Section */}
         <Grid item xs={12} sm={6} md={3}>
           <Typography sx={{ fontWeight: 600, mb: 1 }}>
-            STUDY AND LIVE AT UM6P
+            WORK, LIVE & STUDY AT UM6P
           </Typography>
           <Stack spacing={1}>
             <Link href="#" underline="none" color="#000">Academic Life & Attractiveness</Link>
