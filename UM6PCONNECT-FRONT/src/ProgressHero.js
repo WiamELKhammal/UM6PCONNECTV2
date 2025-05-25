@@ -6,26 +6,27 @@ const ProgressHero = () => {
   return (
     <Box
       sx={{
-        width: "100dvw",
-        height: "100dvh",
+        width: "100vw",
+        height: "100vh",
         position: "relative",
         top: 0,
         left: 0,
         background: "#000",
         zIndex: 999,
+        overflow: "hidden", // ensure no scrollbars
       }}
     >
       <Box
         sx={{
           width: "100%",
           height: "100%",
-          boxSizing: "border-box",
-          backgroundImage: "url('/assets/images/herosection/hero.png')",
+          backgroundImage: "url('/assets/images/herosection/HERO.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           position: "relative",
-          borderBottom:"1px solid #fff"
+          borderLeft: "1px solid #CCC",
+          borderRight: "1px solid #CCC",
         }}
       >
         {/* Dark overlay for contrast */}
@@ -42,8 +43,8 @@ const ProgressHero = () => {
         <Box
           sx={{
             position: "absolute",
-            top: 55,
-            left: { xs: 24, md: 72 },
+            top: { xs: 32, md: 55 },
+            left: { xs: 20, md: 72 },
             zIndex: 2,
           }}
         >
@@ -51,45 +52,44 @@ const ProgressHero = () => {
             sx={{
               color: "#fff",
               fontFamily: "'Work Sans', sans-serif",
-              fontSize: { xs: "32px", md: "45px" },
+              fontSize: { xs: "24px", sm: "32px", md: "45px" },
               fontWeight: 300,
             }}
           >
-            STUDY AND LIVE AT UM6P
-          </Typography>
+            WORK, LIVE & STUDY AT UM6P          </Typography>
         </Box>
 
         {/* Main Hero Text */}
         <Box
           sx={{
             position: "absolute",
-            left: { xs: 24, md: 72 },
-            bottom: { xs: 80, md: 120 },
+            left: { xs: 20, md: 72 },
+            bottom: { xs: 60, md: 120 },
             zIndex: 2,
             display: "flex",
             flexDirection: "column",
-            gap: 1,
+            gap: { xs: 1, md: 2 },
           }}
         >
           <Typography
             sx={{
-              fontSize: { xs: "38px", md: "64px" },
+              fontSize: { xs: "28px", sm: "34px", md: "64px" },
               fontWeight: 300,
               color: "#fff",
               fontFamily: "'Work Sans', sans-serif",
-              lineHeight: 1,
+              lineHeight: 1.1,
             }}
           >
-            A CAMPUS BUILD FOR LEARNING, 
+            A CAMPUS BUILT FOR LEARNING,
           </Typography>
 
           <Typography
             sx={{
-              fontSize: { xs: "38px", md: "64px" },
+              fontSize: { xs: "28px", sm: "34px", md: "64px" },
               fontWeight: 300,
               color: "#fff",
               fontFamily: "'Work Sans', sans-serif",
-              lineHeight: 1,
+              lineHeight: 1.1,
             }}
           >
             DESIGNED FOR IMPACT.
