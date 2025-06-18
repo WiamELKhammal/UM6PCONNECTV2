@@ -111,7 +111,6 @@ const MeetEngageR1 = () => {
     fontWeight: 300,
     fontSize: { xs: "18px", md: "22px" }, // Increased font size
     padding: { xs: "14px 28px", md: "18px 36px" }, // Bigger padding
-    borderRadius: "40px", // Slightly more rounded for a bold look
     boxShadow: "0 4px 12px rgba(255,255,255,0.3)",
     transition: "all 0.3s ease-in-out",
     "&:hover": {
