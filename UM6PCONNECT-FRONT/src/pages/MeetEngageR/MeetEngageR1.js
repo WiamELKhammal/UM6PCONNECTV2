@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import "@fontsource/work-sans/300.css";
 
 const MeetEngageR1 = () => {
@@ -25,7 +25,7 @@ const MeetEngageR1 = () => {
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           position: "relative",
-          borderBottom:"1px solid #fff"
+          borderBottom: "1px solid #fff",
         }}
       >
         {/* Dark overlay for contrast */}
@@ -55,7 +55,7 @@ const MeetEngageR1 = () => {
               fontWeight: 300,
             }}
           >
-            Our Fields Of Work 
+            OUR FIELDS OF WORK  
           </Typography>
         </Box>
 
@@ -95,6 +95,34 @@ const MeetEngageR1 = () => {
             MEETS URGENCY
           </Typography>
         </Box>
+
+        {/* Connect with Us Button - Positioned on same line, right-aligned */}
+        <Button
+  component="a"
+  href="mailto:-email@UM6P.MA"
+  sx={{
+    position: "absolute",
+    bottom: { xs: 80, md: 120 },
+    right: { xs: 24, md: 72 },
+    zIndex: 3,
+    backgroundColor: "#ea3b15",
+    color: "#FFF",
+    fontFamily: "'Work Sans', sans-serif",
+    fontWeight: 300,
+    fontSize: { xs: "18px", md: "22px" }, // Increased font size
+    padding: { xs: "14px 28px", md: "18px 36px" }, // Bigger padding
+    borderRadius: "40px", // Slightly more rounded for a bold look
+    boxShadow: "0 4px 12px rgba(255,255,255,0.3)",
+    transition: "all 0.3s ease-in-out",
+    "&:hover": {
+      backgroundColor: "#ea3b15",
+      transform: "scale(1.05)",
+      boxShadow: "0 6px 16px rgba(255,255,255,0.4)",
+    },
+  }}
+>
+  Connect with Us
+</Button>
       </Box>
     </Box>
   );
